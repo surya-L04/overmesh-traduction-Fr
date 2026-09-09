@@ -5,25 +5,39 @@
 
   const translations = {
     en: {
-      'common.ok': 'OK',
+      'common.confirm': 'Confirm',
       'common.cancel': 'Cancel',
       'common.close': 'Close',
+      'common.ok': 'OK',
       'common.save': 'Save',
       'common.delete': 'Delete',
       'common.clear': 'Clear',
       'common.select': 'Select',
-      'common.loading': 'Loading…'
+      'common.loading': 'Loading…',
+      'nav.nodes': 'Nodes',
+      'nav.chat': 'Chat',
+      'nav.map': 'Map',
+      'nav.bot': 'Bot',
+      'nav.log': 'Log',
+      'nav.settings': 'Settings'
     },
 
     fr: {
-      'common.ok': 'OK',
+      'common.confirm': 'Confirmer',
       'common.cancel': 'Annuler',
       'common.close': 'Fermer',
+      'common.ok': 'OK',
       'common.save': 'Enregistrer',
       'common.delete': 'Supprimer',
       'common.clear': 'Effacer',
       'common.select': 'Sélectionner',
-      'common.loading': 'Chargement…'
+      'common.loading': 'Chargement…',
+      'nav.nodes': 'Nœuds',
+      'nav.chat': 'Discussion',
+      'nav.map': 'Carte',
+      'nav.bot': 'Bot',
+      'nav.log': 'Journal',
+      'nav.settings': 'Paramètres'
     }
   };
 
@@ -62,6 +76,7 @@
 
     currentLanguage = language;
     localStorage.setItem(STORAGE_KEY, language);
+    applyTranslations();
 
     return true;
   }
@@ -70,12 +85,22 @@
     return Object.keys(translations);
   }
 
+  function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = t(key);
+    });
+  }
+
   window.OverMeshI18n = {
     t,
     setLanguage,
     getLanguage,
-    getAvailableLanguages
+    getAvailableLanguages,
+    applyTranslations
   };
 
   window.t = t;
+
+  document.addEventListener('DOMContentLoaded', () => { applyTranslations(); const selector = document.getElementById('language-selector'); if (selector) { selector.value = currentLanguage; selector.addEventListener('change', () => setLanguage(selector.value)); } });
 })();

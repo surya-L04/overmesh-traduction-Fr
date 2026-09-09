@@ -206,12 +206,12 @@
     -webkit-mask-size:contain;mask-size:contain;
     -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" title="OverMesh"></div>
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('nodes')">Nodes</div>
-    <div class="tab" onclick="switchTab('chat')">Chat</div>
-    <div class="tab" onclick="switchTab('map')">Map</div>
-    <div class="tab" onclick="switchTab('bot')">Bot</div>
-    <div class="tab" onclick="switchTab('log')">Log</div>
-    <div class="tab" onclick="switchTab('settings')">Settings</div>
+    <div class="tab active" onclick="switchTab('nodes')" data-i18n="nav.nodes"></div>
+    <div class="tab" onclick="switchTab('chat')" data-i18n="nav.chat"></div>
+    <div class="tab" onclick="switchTab('map')" data-i18n="nav.map"></div>
+    <div class="tab" onclick="switchTab('bot')" data-i18n="nav.bot"></div>
+    <div class="tab" onclick="switchTab('log')" data-i18n="nav.log"></div>
+    <div class="tab" onclick="switchTab('settings')" data-i18n="nav.settings"></div>
   </div>
   <div class="header-sep"></div>
   <div id="radio-selector"><span style="font-size:12px;color:var(--muted)">Loading…</span></div>
@@ -223,6 +223,10 @@
   <span id="last-updated" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
   <button class="btn" id="header-refresh-btn" onclick="loadCurrent(this)" title="Refresh MT and MC state from connected radios"><span class="btn-icon">↻</span><span class="btn-label">Refresh</span></button>
   <button class="btn" id="silent-btn" onclick="toggleSilentMode()" title="Enable Silent Running — suppresses all radio transmissions">Silent</button>
+  <select id="language-selector" class="settings-select" title="Language" aria-label="Language">
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+  </select>
   <div id="alerts-btn-wrap">
     <button class="btn" id="alerts-btn" onclick="toggleAlertsPanel(event)" title="Alert history">&#128276;<span id="alerts-badge">0</span></button>
     <div id="alerts-panel" onclick="event.stopPropagation()"></div>
