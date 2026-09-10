@@ -1022,9 +1022,9 @@
     if (s?.status === 'connecting') {
       const age = Math.floor(_statusAgeSec(s));
       const suffix = age >= 60 ? ` for ${age}s` : '';
-      return ` title="Connecting${suffix}"`;
+      return ` title="Connexion${suffix}"`;
     }
-    return ` title="${fallbackDisconnected || 'Not connected'}"`;
+    return ` title="${fallbackDisconnected || 'Non connecté'}"`;
   }
 
   function normalizeChatNetwork(preferred) {
@@ -1108,7 +1108,7 @@
       const active  = selectedRadioIds.has(id) ? ' active' : '';
       const primary = id === activeRadioId ? ' primary' : '';
       const unread  = inactiveRadioUnread.has(id) ? ' has-unread' : '';
-      const title   = _radioStatusTitle(s, 'Not connected — disable in Settings if not in use');
+      const title   = _radioStatusTitle(s, 'Non connecté — désactiver dans les paramètres si inutilisé');
       return `<button class="radio-btn${active}${primary}${unread}"${title} onclick="toggleRadioSelection('${jsSafe(id)}')">`
            + `<span class="mt-badge">MT</span><span class="status-dot ${cls}"></span>${escHtml(s.name)}</button>`;
     }).join('');
@@ -11133,7 +11133,7 @@ if (targetEl) {
     if (sep) sep.style.display = hasConnectedMtRadios() ? '' : 'none';
     sel.style.display = '';
     // Sync activeMcRadioId — use first connected MC radio if current is gone.
-    // Connecting radios are visible but not selected for send/chat actions.
+    // Connexion radios are visible but not selected for send/chat actions.
     if (!activeMcRadioId || !connectedEntries.find(([id]) => id === activeMcRadioId)) {
       activeMcRadioId = connectedEntries[0]?.[0] || null;
       if (activeMcRadioId) localStorage.setItem('activeMcRadioId', activeMcRadioId);
@@ -15878,7 +15878,7 @@ if (targetEl) {
         <b>Login + Read</b> — authenticates and loads full status + settings.
         <b>Guest Read</b> — no password, only works if the repeater allows public access.
       </div>
-      <div id="mc-remote-result" style="font-size:12px;color:var(--muted);margin-bottom:14px">Not connected.</div>
+      <div id="mc-remote-result" style="font-size:12px;color:var(--muted);margin-bottom:14px">Non connecté.</div>
       <div id="mc-remote-clock-result" style="font-size:12px;color:var(--muted);margin-bottom:14px"></div>
       ${_mcRemoteQuickSettingsHtml()}
       <div style="border-top:1px solid var(--border);padding-top:10px">
@@ -17069,8 +17069,8 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     } else {
       const di = document.getElementById('mc-device-info-content');
       const cl = document.getElementById('mc-channels-list');
-      if (di) di.textContent = 'Not connected.';
-      if (cl) cl.textContent = 'Not connected.';
+      if (di) di.textContent = 'Non connecté.';
+      if (cl) cl.textContent = 'Non connecté.';
     }
   }
 

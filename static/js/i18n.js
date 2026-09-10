@@ -21,6 +21,15 @@
       'nav.log': 'Log',
       'nav.settings': 'Settings',
       'nodes.live': 'Live',
+      'chat.no_messages': 'No messages yet',
+      'chat.message': 'Message...',
+      'chat.send': 'Send',
+      'chat.no_mc_messages': 'No MC messages yet.',
+      'chat.public_channel': 'Public channel…',
+      'chat.advert': 'Advert',
+      'chat.local': 'Local',
+      'chat.no_hops': '(no hops)',
+      'chat.flood': 'Flood',
       'nodes.history': 'History',
       'nodes.search': 'Search nodes...',
         'nodes.search_history': 'Search history...',
@@ -56,90 +65,51 @@
       'nav.log': 'Journal',
       'nav.settings': 'Paramètres',
       'nodes.live': 'En direct',
-      'nodes.history': 'Historique',
-      'nodes.search': 'Rechercher des nœuds…',
-        'nodes.search_history': 'Rechercher dans l’historique…',
-      'nodes.fav_first': 'Favoris en premier',
-      'nodes.mt_ignored': 'MT ignorés',
-      'nodes.mc_ignored': 'MC ignorés',
-      'nodes.name': 'Nom',
-      'nodes.short': 'Court',
-      'nodes.snr': 'SNR',
-      'nodes.battery': 'Batterie',
-      'nodes.hops': 'Sauts',
-      'nodes.distance': 'Distance',
-      'nodes.last_seen': 'Dernière activité',
-      'nodes.note': 'Note',
-      'nodes.radio': 'Radio',
-      'nodes.first_added': 'Première apparition'
+      'chat.mc_send': 'Send',
+      'chat.mc_advert': 'Advert',
+      'chat.mc_local': 'Local',
+      'chat.mc_no_hops': '(no hops)',
+      'chat.mc_flood': 'Flood',
+      'chat.no_messages': 'Aucun message pour le moment',
+      'chat.mc_send': 'Envoyer',
+      'chat.mc_advert': 'Annonce',
+      'chat.mc_local': 'Local',
+      'chat.mc_no_hops': '(sans saut)',
+      'chat.mc_flood': 'Flood',
+      'chat.message': 'Message…',
+      'chat.send': 'Envoyer',
+      'chat.no_mc_messages': 'Aucun message MC pour le moment.',
+      'chat.public_channel': 'Canal public…',
+      'chat.advert': 'Annonce',
+      'chat.local': 'Local',
+      'chat.no_hops': '(sans saut)',
+
     }
   };
 
-  function getLanguage() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-
-    if (saved && translations[saved]) {
-      return saved;
-    }
-
-    return 'en';
-  }
-
-  let currentLanguage = getLanguage();
-
-  function t(key, vars = {}) {
-    let text =
-      translations[currentLanguage]?.[key] ??
-      translations.en?.[key] ??
-      key;
-
-    Object.keys(vars).forEach(name => {
-      text = text.replace(
-        new RegExp(`\\{${name}\\}`, 'g'),
-        String(vars[name])
-      );
-    });
-
-    return text;
-  }
-
-  function setLanguage(language) {
-    if (!translations[language]) {
-      return false;
-    }
-
-    currentLanguage = language;
-    localStorage.setItem(STORAGE_KEY, language);
-    applyTranslations();
-
-    return true;
-  }
-
-  function getAvailableLanguages() {
-    return Object.keys(translations);
-  }
-
   function applyTranslations() {
+    const lang = localStorage.getItem(STORAGE_KEY) || 'en';
+    const t = translations[lang] || translations.en;
+
     document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      el.textContent = t(key);
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.textContent = t[key];
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
-      el.setAttribute('placeholder', t(key));
+      const key = el.dataset.i18nPlaceholder;
+      if (t[key] !== undefined) el.placeholder = t[key];
     });
+
+    const selector = document.getElementById('language-selector');
+    if (selector) {
+      selector.value = lang;
+      selector.addEventListener('change', () => {
+        localStorage.setItem(STORAGE_KEY, selector.value);
+        location.reload();
+      });
+    }
   }
 
-  window.OverMeshI18n = {
-    t,
-    setLanguage,
-    getLanguage,
-    getAvailableLanguages,
-    applyTranslations
-  };
-
-  window.t = t;
-
-  document.addEventListener('DOMContentLoaded', () => { applyTranslations(); const selector = document.getElementById('language-selector'); if (selector) { selector.value = currentLanguage; selector.addEventListener('change', () => setLanguage(selector.value)); } });
+  document.addEventListener('DOMContentLoaded', applyTranslations);
 })();

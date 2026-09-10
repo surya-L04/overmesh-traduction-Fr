@@ -345,8 +345,8 @@
   <div class="panel" id="panel-chat">
     <div class="chat-toolbar">
       <div class="view-toggle" id="chat-net-toggle" style="margin-right:8px;flex-shrink:0;display:none">
-        <div class="btn btn-net-mt active" id="chat-net-mt" onclick="setChatNetwork('mt')" title="Switch to Meshtastic chat">MT</div>
-        <div class="btn btn-net-mc" id="chat-net-mc" onclick="setChatNetwork('mc')" title="Switch to MeshCore chat">MC</div>
+        <div class="btn btn-net-mt active" id="chat-net-mt" onclick="setChatNetwork('mt')" title="Passer à la discussion Meshtastic">MT</div>
+        <div class="btn btn-net-mc" id="chat-net-mc" onclick="setChatNetwork('mc')" title="Passer à la discussion MeshCore">MC</div>
       </div>
       <div id="chat-channels"></div>
       <div id="mc-chat-channels" style="display:none;flex:1;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch"></div>
@@ -355,14 +355,14 @@
     </div>
     <!-- MT pane -->
     <div id="chat-mt-pane" style="display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden">
-      <div id="chat-messages"><div class="chat-empty">No messages yet</div></div>
+      <div id="chat-messages"><div class="chat-empty" data-i18n="chat.no_messages">No messages yet</div></div>
       <div class="chat-input-bar">
-        <input type="text" id="chat-input" placeholder="Message..." maxlength="200"
+        <input type="text" id="chat-input" data-i18n-placeholder="chat.message" placeholder="Message..." maxlength="200"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                oninput="_mtUpdateCharCount()" onkeydown="if(event.key==='Enter')sendChat()">
         <span id="mt-char-counter" style="font-size:11px;color:var(--muted);flex-shrink:0;min-width:28px;text-align:right">200</span>
         <button class="emoji-btn" onclick="toggleEmojiPicker('chat-input',this)" title="Emoji">😊</button>
-        <button class="dm-send" onclick="sendChat()" title="Send message">Send</button>
+        <button class="dm-send" onclick="sendChat()" title="Send message" data-i18n="chat.send">Send</button>
       </div>
     </div>
     <!-- MC pane -->
@@ -370,20 +370,20 @@
       <!-- DM path info bar — only shown in DM tabs -->
       <div id="mc-dm-path-bar" style="display:none;padding:4px 12px;font-size:11px;color:var(--muted);background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0"></div>
       <div id="mc-chat-messages" style="flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px">
-        <div class="chat-empty">No MC messages yet.</div>
+        <div class="chat-empty" data-i18n="chat.no_mc_messages">No MC messages yet.</div>
       </div>
       <div class="chat-input-bar">
-        <input type="text" id="mc-chat-input" placeholder="Public channel…"
+        <input type="text" id="mc-chat-input" data-i18n-placeholder="chat.public_channel" placeholder="Public channel…"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                oninput="_mcUpdateByteCount()" onkeydown="if(event.key==='Enter')sendMcChan()">
         <span id="mc-byte-counter" style="font-size:11px;color:var(--muted);flex-shrink:0;min-width:28px;text-align:right">160</span>
         <button class="emoji-btn" onclick="toggleEmojiPicker('mc-chat-input',this)" title="Emoji">😊</button>
-        <button class="dm-send" id="mc-send-btn" onclick="sendMcChan()" title="Send message to active MC channel">Send</button>
+        <button class="dm-send" id="mc-send-btn" onclick="sendMcChan()" title="Send message to active MC channel" data-i18n="chat.mc_send">Send</button>
         <div id="mc-advert-wrap" style="position:relative;flex-shrink:0">
-          <button class="btn btn-net-mc network-accent-mc" id="mc-advert-btn" style="font-size:12px;padding:0 10px;height:36px;display:inline-flex;align-items:center" onclick="toggleMcAdvertMenu(event)" title="Advertise — announces this node to the MeshCore network">Advert &#9650;</button>
+          <button class="btn btn-net-mc network-accent-mc" id="mc-advert-btn" style="font-size:12px;padding:0 10px;height:36px;display:inline-flex;align-items:center" onclick="toggleMcAdvertMenu(event)" title="Annonce — annonce ce nœud sur le réseau MeshCore"><span data-i18n="chat.mc_advert">Advert</span> &#9650;</button>
           <div id="mc-advert-menu" style="display:none;position:absolute;bottom:calc(100% + 4px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:6px;min-width:140px;z-index:999;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.4)">
-            <button class="mc-advert-item" style="border-bottom:1px solid var(--border)" onclick="mcSendAdvert(false)">Local <span style="color:var(--muted);font-size:11px">(no hops)</span></button>
-            <button class="mc-advert-item" onclick="mcSendAdvert(true)">Flood</button>
+            <button class="mc-advert-item" style="border-bottom:1px solid var(--border)" onclick="mcSendAdvert(false)"><span data-i18n="chat.mc_local">Local</span> <span style="color:var(--muted);font-size:11px" data-i18n="chat.mc_no_hops">(no hops)</span></button>
+            <button class="mc-advert-item" onclick="mcSendAdvert(true)"><span data-i18n="chat.mc_flood">Flood</span></button>
           </div>
         </div>
       </div>
