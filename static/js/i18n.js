@@ -19,7 +19,24 @@
       'nav.map': 'Map',
       'nav.bot': 'Bot',
       'nav.log': 'Log',
-      'nav.settings': 'Settings'
+      'nav.settings': 'Settings',
+      'nodes.live': 'Live',
+      'nodes.history': 'History',
+      'nodes.search': 'Search nodes...',
+        'nodes.search_history': 'Search history...',
+      'nodes.fav_first': 'Fav first',
+      'nodes.mt_ignored': 'MT ignored',
+      'nodes.mc_ignored': 'MC ignored',
+      'nodes.name': 'Name',
+      'nodes.short': 'Short',
+      'nodes.snr': 'SNR',
+      'nodes.battery': 'Battery',
+      'nodes.hops': 'Hops',
+      'nodes.distance': 'Distance',
+      'nodes.last_seen': 'Last Seen',
+      'nodes.note': 'Note',
+      'nodes.radio': 'Radio',
+      'nodes.first_added': 'First Added'
     },
 
     fr: {
@@ -37,7 +54,24 @@
       'nav.map': 'Carte',
       'nav.bot': 'Bot',
       'nav.log': 'Journal',
-      'nav.settings': 'Paramètres'
+      'nav.settings': 'Paramètres',
+      'nodes.live': 'En direct',
+      'nodes.history': 'Historique',
+      'nodes.search': 'Rechercher des nœuds…',
+        'nodes.search_history': 'Rechercher dans l’historique…',
+      'nodes.fav_first': 'Favoris en premier',
+      'nodes.mt_ignored': 'MT ignorés',
+      'nodes.mc_ignored': 'MC ignorés',
+      'nodes.name': 'Nom',
+      'nodes.short': 'Court',
+      'nodes.snr': 'SNR',
+      'nodes.battery': 'Batterie',
+      'nodes.hops': 'Sauts',
+      'nodes.distance': 'Distance',
+      'nodes.last_seen': 'Dernière activité',
+      'nodes.note': 'Note',
+      'nodes.radio': 'Radio',
+      'nodes.first_added': 'Première apparition'
     }
   };
 
@@ -89,6 +123,11 @@
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       el.textContent = t(key);
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.setAttribute('placeholder', t(key));
     });
   }
 

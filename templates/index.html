@@ -256,18 +256,18 @@
     <!-- Toolbar -->
     <div class="toolbar">
       <div class="view-toggle">
-        <div class="btn active" id="btn-live"    onclick="setView('live')"    title="Show currently active nodes">Live</div>
-        <div class="btn"        id="btn-history" onclick="setView('history')" title="Browse all nodes ever seen in the database">History</div>
+        <div class="btn active" id="btn-live"    onclick="setView('live')"    title="Show currently active nodes" data-i18n="nodes.live"></div>
+        <div class="btn"        id="btn-history" onclick="setView('history')" title="Browse all nodes ever seen in the database" data-i18n="nodes.history"></div>
       </div>
 
       <!-- Live controls -->
       <div id="live-controls" style="display:flex;gap:8px;align-items:center">
         <div class="search-wrap">
-          <input id="node-search" type="text" placeholder="Search nodes..." oninput="renderLive()"
+          <input id="node-search" type="text" placeholder="Search nodes..." data-i18n-placeholder="nodes.search" oninput="renderLive()"
             style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 28px 4px 10px;border-radius:6px;font-size:12px;width:180px;">
           <button class="search-clear" onclick="clearSearch('node-search')" title="Clear search">✕</button>
         </div>
-        <button class="btn active" id="fav-filter-btn" onclick="toggleFavFirst()" title="Sort favourited nodes to top">&#9733; Fav first</button>
+        <button class="btn active" id="fav-filter-btn" onclick="toggleFavFirst()" title="Sort favourited nodes to top" >&#9733; <span data-i18n="nodes.fav_first">Fav first</span></button>
         <div class="view-toggle" id="nodes-net-filter" style="margin-left:4px">
           <div id="nodes-mt-pill" class="btn btn-net-mt active" onclick="toggleNodeFilter('mt')" title="Show/hide Meshtastic nodes">MT</div>
           <div id="nodes-mc-pill" class="btn btn-net-mc active" onclick="toggleNodeFilter('mc')" title="Show/hide MeshCore contacts">MC</div>
@@ -277,7 +277,7 @@
       <!-- History controls -->
       <div id="history-controls" style="display:none;gap:8px;align-items:center">
         <div class="search-wrap">
-          <input id="history-search" type="text" placeholder="Search history..." oninput="filterHistory()"
+          <input id="history-search" type="text" placeholder="Search history..." data-i18n-placeholder="nodes.search_history" oninput="filterHistory()"
             style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 28px 4px 10px;border-radius:6px;font-size:12px;width:180px;">
           <button class="search-clear" onclick="clearSearch('history-search')" title="Clear search">✕</button>
         </div>
@@ -285,9 +285,9 @@
           <div id="hist-mt-pill" class="btn btn-net-mt active" onclick="toggleHistoryNet('mt')" title="Show/hide Meshtastic nodes">MT</div>
           <div id="hist-mc-pill" class="btn btn-net-mc active" onclick="toggleHistoryNet('mc')" title="Show/hide MeshCore contacts">MC</div>
         </div>
-        <button class="btn active" id="db-fav-first-btn" onclick="toggleDbFavFirst()" title="Sort favourited nodes to top">&#9733; Fav first</button>
-        <button class="btn" id="db-show-ignored-btn" onclick="toggleShowIgnored()" title="Show only ignored Meshtastic nodes">&#128683; MT ignored</button>
-        <button class="btn" id="mc-show-ignored-btn" onclick="toggleMcShowIgnored()" title="Show only ignored MeshCore contacts">&#128683; MC ignored</button>
+        <button class="btn active" id="db-fav-first-btn" onclick="toggleDbFavFirst()" title="Sort favourited nodes to top" >&#9733; <span data-i18n="nodes.fav_first">Fav first</span></button>
+        <button class="btn" id="db-show-ignored-btn" onclick="toggleShowIgnored()" title="Show only ignored Meshtastic nodes">&#128683; <span data-i18n="nodes.mt_ignored">MT ignored</span></button>
+        <button class="btn" id="mc-show-ignored-btn" onclick="toggleMcShowIgnored()" title="Show only ignored MeshCore contacts">&#128683; <span data-i18n="nodes.mc_ignored">MC ignored</span></button>
       </div>
 
       <div class="toolbar-spacer"></div>
@@ -300,20 +300,20 @@
         <thead>
           <tr>
             <th style="width:32px"></th>
-            <th class="sortable" data-col="long_name"     onclick="setLiveSort('long_name')">Name <span class="sort-arrow"></span></th>
-            <th>Short</th>
-            <th class="sortable" data-col="snr"          onclick="setLiveSort('snr')">SNR <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="battery"      onclick="setLiveSort('battery')">Battery <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="hops_away"    onclick="setLiveSort('hops_away')">Hops <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="_dist" onclick="setLiveSort('_dist')">Distance <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="last_heard_ts" onclick="setLiveSort('last_heard_ts')">Last Seen <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="long_name"     onclick="setLiveSort('long_name')"><span data-i18n="nodes.name">Name</span> <span class="sort-arrow"></span></th>
+            <th><span data-i18n="nodes.short">Short</span></th>
+            <th class="sortable" data-col="snr"          onclick="setLiveSort('snr')"><span data-i18n="nodes.snr">SNR</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="battery"      onclick="setLiveSort('battery')"><span data-i18n="nodes.battery">Battery</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="hops_away"    onclick="setLiveSort('hops_away')"><span data-i18n="nodes.hops">Hops</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="_dist" onclick="setLiveSort('_dist')"><span data-i18n="nodes.distance">Distance</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="last_heard_ts" onclick="setLiveSort('last_heard_ts')"><span data-i18n="nodes.last_seen">Last Seen</span> <span class="sort-arrow"></span></th>
             <th></th>
-            <th>Note</th>
-            <th>Radio</th>
+            <th><span data-i18n="nodes.note">Note</span></th>
+            <th><span data-i18n="nodes.radio">Radio</span></th>
             <th style="width:28px"></th>
           </tr>
         </thead>
-        <tbody id="live-tbody"><tr><td colspan="12" class="no-data">Loading...</td></tr></tbody>
+        <tbody id="live-tbody"><tr><td colspan="12" class="no-data"><span data-i18n="common.loading">Loading...</span></td></tr></tbody>
       </table>
     </div>
 
@@ -323,19 +323,19 @@
         <thead>
           <tr>
             <th style="width:32px"></th>
-            <th class="sortable" data-dbcol="long_name"    onclick="setDbSort('long_name')">Name <span class="sort-arrow"></span></th>
-            <th>Short</th>
-            <th class="sortable" data-dbcol="first_seen"   onclick="setDbSort('first_seen')">First Added <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="last_seen"    onclick="setDbSort('last_seen')">Last Seen <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="last_snr"     onclick="setDbSort('last_snr')">SNR <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="last_battery" onclick="setDbSort('last_battery')">Battery <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="hops_away"    onclick="setDbSort('hops_away')">Hops <span class="sort-arrow"></span></th>
-            <th>Distance</th>
-            <th>Note</th>
+            <th class="sortable" data-dbcol="long_name"    onclick="setDbSort('long_name')"><span data-i18n="nodes.name">Name</span> <span class="sort-arrow"></span></th>
+            <th><span data-i18n="nodes.short">Short</span></th>
+            <th class="sortable" data-dbcol="first_seen"   onclick="setDbSort('first_seen')"><span data-i18n="nodes.first_added">First Added</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="last_seen"    onclick="setDbSort('last_seen')"><span data-i18n="nodes.last_seen">Last Seen</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="last_snr"     onclick="setDbSort('last_snr')"><span data-i18n="nodes.snr">SNR</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="last_battery" onclick="setDbSort('last_battery')"><span data-i18n="nodes.battery">Battery</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="hops_away"    onclick="setDbSort('hops_away')"><span data-i18n="nodes.hops">Hops</span> <span class="sort-arrow"></span></th>
+            <th><span data-i18n="nodes.distance">Distance</span></th>
+            <th><span data-i18n="nodes.note">Note</span></th>
             <th style="width:64px"></th>
           </tr>
         </thead>
-        <tbody id="history-tbody"><tr><td colspan="11" class="no-data">Loading...</td></tr></tbody>
+        <tbody id="history-tbody"><tr><td colspan="11" class="no-data"><span data-i18n="common.loading">Loading...</span></td></tr></tbody>
       </table>
     </div>
 
@@ -499,7 +499,7 @@
       </div>
     </div>
     <div id="map-search-wrap">
-      <input id="map-search-input" type="text" placeholder="Search nodes..." autocomplete="off">
+      <input id="map-search-input" type="text" placeholder="Search nodes..." data-i18n-placeholder="nodes.search" autocomplete="off">
       <button class="search-clear" onclick="clearSearch('map-search-input')" title="Clear search">✕</button>
     </div>
     <div id="map-right-panels"></div>
