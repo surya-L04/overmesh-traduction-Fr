@@ -178,7 +178,7 @@
       <div class="alerts-list">
         ${alerts.map(a => {
           const canLog = a.type !== 'radio';
-          const logBtn = canLog ? `<button class="alert-log-btn" onclick="event.stopPropagation();toggleAlertsPanel();tocFromAlert('${escHtml(a.id)}')" title="Send to Log tab">Log</button>` : '';
+          const logBtn = canLog ? `<button class="alert-log-btn" onclick="event.stopPropagation();toggleAlertsPanel();tocFromAlert('${escHtml(a.id)}')" title="Send to Log tab">Journal</button>` : '';
           const isNodeAlert = (a.type === 'node-new' || a.type === 'node-return') && a.meta;
           const isMsgAlert = a.type === 'message' && a.meta;
           const bodyHtml = isNodeAlert
@@ -685,7 +685,7 @@
         ? `${pad(d.getMonth() + 1)}/${pad(d.getDate())}/${d.getFullYear()}`
         : `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
     if (!opts.weekday) return date;
-    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
     return `${days[d.getDay()]}, ${date}`;
   }
 
@@ -1063,12 +1063,12 @@
         setHeaderNodeCountDivider(false);
         if (mtCount) mtCount.style.display = 'none';
       } else {
-        sel.innerHTML = '<span style="font-size:12px;color:var(--muted)">No radios connected</span>';
+        sel.innerHTML = '<span style="font-size:12px;color:var(--muted)">Aucune radio connectée</span>';
         sel.style.display = '';
         if (mtCount) {
           setHeaderNodeCountDivider(true);
           mtCount.style.display = '';
-          mtCount.textContent = 'No radios connected';
+          mtCount.textContent = 'Aucune radio connectée';
         }
       }
       if (chatNetwork === 'mt' && hasConnectedMcRadios()) setChatNetwork('mc');
@@ -1357,11 +1357,11 @@
         return;
       }
       if (data.type === 'sense_started') {
-        document.getElementById('sense-btn').textContent = 'Sensing…';
+        document.getElementById('sense-btn').textContent = 'Détection…';
         return;
       }
       if (data.type === 'sense_done') {
-        document.getElementById('sense-btn').textContent = 'Sense Mesh';
+        document.getElementById('sense-btn').textContent = 'Détecter le maillage';
         // Remove nodes that didn't respond in this run
         document.querySelectorAll('#sense-nodes .sense-node-card').forEach(c => {
           if (parseInt(c.dataset.run) < _senseRunId) {
@@ -1374,7 +1374,7 @@
         const remaining = Object.keys(_senseResponses).length;
         const _senseTs = Math.floor(Date.now() / 1000);
         document.getElementById('sense-status').innerHTML =
-          `Sense complete — ${data.count} node${data.count !== 1 ? 's' : ''} responded. <span id="sense-status-age" data-ts="${_senseTs}" style="color:var(--muted)">(just now)</span> <span onclick="document.getElementById('sense-status').innerHTML=''" style="cursor:pointer;color:var(--muted);margin-left:4px;font-size:13px" title="Dismiss">×</span>`;
+          `Détection terminée — ${data.count} node${data.count !== 1 ? 's' : ''} réponse(s). <span id="sense-status-age" data-ts="${_senseTs}" style="color:var(--muted)">(just now)</span> <span onclick="document.getElementById('sense-status').innerHTML=''" style="cursor:pointer;color:var(--muted);margin-left:4px;font-size:13px" title="Dismiss">×</span>`;
         senseSummaryUpdate();
         return;
       }
@@ -1774,7 +1774,7 @@
         'Map is the main geographic view. It shows MT nodes, MC contacts, local radios, mesh marks, self notes, overlays, and paths drawn by traceroutes, pings, and traces.',
         'Click any marker to open a popup with quick actions: DM, Ping, Trace, TR, Manage, Show in Nodes, and more depending on the contact type.',
         'MT and MC filter buttons at the top let you hide one network when the map is too busy.',
-        'Heat toggles the Signal heatmap directly from the Map/Sense toolbar. It starts off after each app load. In Map mode it follows the MT/MC map filter buttons: MT shows MT node signal heat, MC shows MC passive/Remote Collector heat. When both are enabled, OM draws separate heat layers with distinct palettes so the sources stay distinguishable.',
+        'Heat toggles the Carte de chaleur du signal directly from the Map/Sense toolbar. It starts off after each app load. In Map mode it follows the MT/MC map filter buttons: MT shows MT node signal heat, MC shows MC passive/Remote Collector heat. When both are enabled, OM draws separate heat layers with distinct palettes so the sources stay distinguishable.',
         'Distance labels use the OM origin: live GPS first, then manual OM position (set in Settings → App), then a connected/local radio position as a fallback. If none is available, distances are shown as unknown.',
         'Marks are mesh waypoints shared over the network. Self Notes are local-only annotations stored in the browser. Overlays are locally drawn shapes and imported GeoJSON.'
       ],
@@ -1814,7 +1814,7 @@
       buttons: [
         ['MT', 'Show or hide Meshtastic markers and paths on the map.'],
         ['MC', 'Show or hide MeshCore markers and paths on the map.'],
-        ['Heat', 'Toggle Signal heatmap. It follows the visible MT/MC selector and uses separate palettes when both networks are visible.'],
+        ['Heat', 'Toggle Carte de chaleur du signal. It follows the visible MT/MC selector and uses separate palettes when both networks are visible.'],
         ['Marks', 'Open the mesh waypoint panel.'],
         ['Self Notes', 'Open the local-only map annotation panel.'],
         ['Overlays', 'Open the overlay editor and import panel.'],
@@ -1840,7 +1840,7 @@
         'Sense/Map is the live RF activity view. It is the best place to watch recent packets, adverts, messages, pings, traces, and resolved path hops.',
         'The left panel is the map. The right panel is the activity/response log. Clicking log entries draws paths on the map; clicking again clears them.',
         'MT and MC show separate Sense panels because the two protocols expose different route metadata.',
-        'The Heat toolbar toggle is connected to Map → Overlays → Signal heatmap. In Sense mode it follows the Sense MT/MC selector: MT heat comes from live MT node positions plus RSSI/SNR, while MC heat comes from passive observations, including Remote Collector imports.'
+        'The Heat toolbar toggle is connected to Map → Overlays → Carte de chaleur du signal. In Sense mode it follows the Sense MT/MC selector: MT heat comes from live MT node positions plus RSSI/SNR, while MC heat comes from passive observations, including Remote Collector imports.'
       ],
       split: [
         {
@@ -2053,8 +2053,8 @@
         'Go to Settings → MeshCore → Remote Collectors. Search for the node by name or paste its pubkey prefix, add a label, and click Add collector. Use Set pos or Pick to set the collector position — this sends set lat/set lon commands to the RPTR and stores the position locally for heatmap use.',
         '--- Triggering a collection ---',
         'Press Collect in the collector row. OM sends an OMCOLLECT command to the RPTR over the mesh. The RPTR signals the RP2040 via serial, which responds with all buffered observations as RELAY| messages. The RPTR re-encrypts each one as a DM back to your OM radio. OM stores them automatically as passive observations.',
-        '--- Signal heatmap ---',
-        'Enable Signal heatmap with the Heat button in Map/Sense or in Map → Overlays → Data layers. With MC enabled in Map mode or selected in Sense mode, Remote Collector observations are included in the MC heat layer. OM prefers node position when known and falls back to collector position when that is all the observation has. RSSI drives intensity when available; SNR is used as fallback.'
+        '--- Carte de chaleur du signal ---',
+        'Enable Carte de chaleur du signal with the Heat button in Map/Sense or in Map → Overlays → Couches de données. With MC enabled in Map mode or selected in Sense mode, Remote Collector observations are included in the MC heat layer. OM prefers node position when known and falls back to collector position when that is all the observation has. RSSI drives intensity when available; SNR is used as fallback.'
       ],
       buttons: [
         ['Collect', 'Trigger an observation dump from this remote collector. Sends OMCOLLECT to the RPTR over the mesh.'],
@@ -2063,7 +2063,7 @@
         ['Pick', 'Pick the collector position on the map. Populates the lat/lon fields — press Set pos to send.'],
         ['Set pos', 'Send set lat and set lon commands to the collector RPTR and save the position locally.'],
         ['↻', 'Reload the signal heatmap from the latest passive observations.'],
-        ['Signal heatmap On/Off', 'Toggle the RSSI coverage heatmap layer on the map.']
+        ['Carte de chaleur du signal On/Off', 'Toggle the RSSI coverage heatmap layer on the map.']
       ]
     },
     {
@@ -2363,7 +2363,7 @@
   function buildMsgEl(m) {
     const t   = _formatAppTime(m.ts);
     const snrStr = (!m.sent && m.snr != null) ? ` · ${m.snr} dB` : '';
-    const logBtn = `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Prefill TOC Log from this message">Log</button>`;
+    const logBtn = `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Prefill TOC Log from this message">Journal</button>`;
     // Clickable sender name for received non-bot messages
     const senderSpan = (nodeId, name) =>
       nodeId && nodeId !== 'bot'
@@ -2907,7 +2907,7 @@ if (targetEl) {
           <button class="act-btn" title="Contact details and share data" onclick="openMtNodeDetails('${jsSafe(n.id)}')">Info/Share</button>
           ${n.latitude != null && n.longitude != null
             ? `<button class="act-btn" title="Show on map" onclick="centerNodeOnMap('${jsSafe(n.id)}')">Map</button>`
-            : `<button class="act-btn" title="No GPS position" style="opacity:0.35;cursor:default" disabled>Map</button>`}
+            : `<button class="act-btn" title="Aucune position GPS" style="opacity:0.35;cursor:default" disabled>Map</button>`}
         </td>
         <td class="notes-cell" onclick="openNoteEdit('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')" title="Personal notes" style="cursor:pointer">
           ${(() => { const p = _parseNotes(n.notes || ''); const s = _notesSummary(p); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
@@ -2988,8 +2988,8 @@ if (targetEl) {
           : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>Ping</button>`;
         const manageButton = mcCanRemoteManage(c)
           ? (radioConnected
-            ? `<button class="act-btn" title="Remote repeater/room management" onclick="openMcRemoteManage('${pk}','${rid}','${jsSafe(c.long_name||c.name||cid||'')}')">Manage</button>`
-            : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>Manage</button>`)
+            ? `<button class="act-btn" title="Remote repeater/room management" onclick="openMcRemoteManage('${pk}','${rid}','${jsSafe(c.long_name||c.name||cid||'')}')">Gérer</button>`
+            : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>Gérer</button>`)
           : '';
         return `<tr data-id="${jsSafe(cid)}" class="${isFav ? 'is-favorite' : ''}${isIgnored ? ' is-ignored' : ''}">
           <td><span class="star ${isFav ? 'starred' : ''}" onclick="toggleMcFav('${jsSafe(cid)}')" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">&#9733;</span></td>
@@ -3032,7 +3032,7 @@ if (targetEl) {
       _refreshMcPassiveSummary(_pRids, _pPres);
     }
 
-    document.getElementById('last-updated').textContent = 'Updated ' + _formatAppTime(new Date(), {seconds: true});
+    document.getElementById('last-updated').textContent = 'Mis à jour ' + _formatAppTime(new Date(), {seconds: true});
     const countEl = document.getElementById('nodes-count');
     const parts = [];
     if (mapShowMt) parts.push(`MT: ${real.length}`);
@@ -3369,7 +3369,7 @@ if (targetEl) {
     if (!hasConnectedMtRadios()) {
       setHeaderNodeCountDivider(true);
       el.style.display = '';
-      el.textContent = 'No radios connected';
+      el.textContent = 'Aucune radio connectée';
       return;
     }
     setHeaderNodeCountDivider(false);
@@ -3794,7 +3794,7 @@ if (targetEl) {
     const statsEl = document.getElementById('passive-intel-stats');
     if (!listEl) return;
     if (!rids.length) {
-      listEl.innerHTML = '<div style="color:var(--muted)">No MC radio connected.</div>';
+      listEl.innerHTML = '<div style="color:var(--muted)">Aucune radio MC connectée.</div>';
       if (statsEl) statsEl.textContent = '—';
       return;
     }
@@ -4279,7 +4279,7 @@ if (targetEl) {
 
   async function sendCollectorCommand(pubkeyPre, command, btn) {
     const rid = _passiveIntelRadioId();
-    if (!rid) { showToast('Remote Collector', 'No MC radio connected.', 'node'); throw new Error('No MC radio connected'); }
+    if (!rid) { showToast('Remote Collector', 'Aucune radio MC connectée.', 'node'); throw new Error('No MC radio connected'); }
     const origText = btn ? btn.textContent : command;
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
     try {
@@ -4328,7 +4328,7 @@ if (targetEl) {
 
   async function fetchCollectorMessages(pubkeyPre, btn) {
     const rid = _passiveIntelRadioId();
-    if (!rid) { showToast('Remote Collector', 'No MC radio connected.', 'node'); return; }
+    if (!rid) { showToast('Remote Collector', 'Aucune radio MC connectée.', 'node'); return; }
     const out = document.getElementById(`collector-msgs-${pubkeyPre}`);
     if (out) { out.style.display = 'block'; out.textContent = 'Requesting stored messages…'; }
     if (btn) btn.disabled = true;
@@ -4839,7 +4839,7 @@ if (targetEl) {
   let _mapLayerVertexMarkers = [];
   let _mapLayerSelectedVertex = -1;
 
-  // Signal heatmap
+  // Carte de chaleur du signal
   let _signalHeatmapLayers = [];
   let _signalHeatmapEnabled = false;
   let _signalHeatmapRefreshTimer = null;
@@ -5570,10 +5570,10 @@ if (targetEl) {
       ? [Number(entry.lat), Number(entry.lon)]
       : _nodeLatLon(entry.from_id, entry.radio_id || activeRadioId);
     const actions = [
-      entry.from_id ? `<button class="btn" onclick="showNodeInList('${safeId}')">List</button>` : '',
+      entry.from_id ? `<button class="btn" onclick="showNodeInList('${safeId}')">Liste</button>` : '',
       entry.from_id ? `<button class="btn" onclick="openMapDM('${safeId}','${safeName}')">DM</button>` : '',
       entry.from_id ? `<button class="btn" onclick="openMapTR('${safeId}','${safeName}','${safeRadio}')">TR</button>` : '',
-      pos ? `<button class="btn" onclick="setMapLock(false);leafletMap&&leafletMap.setView([${pos[0]},${pos[1]}],Math.max(leafletMap.getZoom(),14))">Center</button>` : '',
+      pos ? `<button class="btn" onclick="setMapLock(false);leafletMap&&leafletMap.setView([${pos[0]},${pos[1]}],Math.max(leafletMap.getZoom(),14))">Centrer</button>` : '',
     ].filter(Boolean).join('');
     panel.dataset.detailKind = 'mt-sense';
     panel.dataset.mtEntryKey = entryKey || '';
@@ -6239,7 +6239,7 @@ if (targetEl) {
     const parts = [`<div style="font-size:12px"><b>${escHtml(String(title))}</b>`];
     if (desc) parts.push(`<div style="color:var(--muted);margin-top:4px">${escHtml(String(desc))}</div>`);
     if (defId != null) {
-      parts.push(`<div style="margin-top:6px"><button class="map-popup-btn" onclick="leafletMap.closePopup();tocFromMapLayer(${defId})">Log</button></div>`);
+      parts.push(`<div style="margin-top:6px"><button class="map-popup-btn" onclick="leafletMap.closePopup();tocFromMapLayer(${defId})">Journal</button></div>`);
     }
     parts.push('</div>');
     return parts.join('');
@@ -6608,7 +6608,7 @@ if (targetEl) {
         draggable: true,
         autoPan: true
       });
-      centerMarker.bindTooltip('Center', { permanent: true, direction: 'top', className: 'map-label', offset: [0, -10] });
+      centerMarker.bindTooltip('Centrer', { permanent: true, direction: 'top', className: 'map-label', offset: [0, -10] });
       centerMarker.on('click', e => {
         L.DomEvent.stop(e.originalEvent || e);
         _mapLayerSelectedVertex = 0;
@@ -7101,7 +7101,7 @@ if (targetEl) {
           }
         }
       } catch (e) {
-        console.warn('Signal heatmap MC passive source error:', e);
+        console.warn('Carte de chaleur du signal MC passive source error:', e);
       }
     }
     try {
@@ -7119,7 +7119,7 @@ if (targetEl) {
       _addSignalHeatmapLayer(mtPoints, 'mt');
       _addSignalHeatmapLayer(mcPoints, 'mc');
     } catch (e) {
-      console.warn('Signal heatmap error:', e);
+      console.warn('Carte de chaleur du signal error:', e);
     }
   }
 
@@ -7136,14 +7136,14 @@ if (targetEl) {
       : _mapLayerSelectedVertex >= 0 ? `Selected point: ${_mapLayerSelectedVertex + 1}` : 'No point selected';
     const selectedVertex = _mapLayerSelectedVertex >= 0 ? vertices[_mapLayerSelectedVertex] : null;
     const gf = draft?.geofence || {enter: true, leave: true, notify_app: true, notify_browser: true, networks: 'both'};
-    const tip = !editing ? 'Create simple overlays directly on the map.' : draft.mode === 'point' ? 'Click the map to place the point. Drag the handle to adjust it.' : draft.mode === 'line' ? 'Click to add vertices. Double-click to finish. Drag handles to refine the path.' : 'Click to add corners. Double-click to finish. Drag handles to refine the area.';
+    const tip = !editing ? 'Créez des superpositions simples directement sur la carte.' : draft.mode === 'point' ? "Cliquez sur la carte pour placer le point. Faites glisser la poignée pour l'ajuster." : draft.mode === 'line' ? 'Cliquez pour ajouter des sommets. Double-cliquez pour terminer. Faites glisser les poignées pour affiner le tracé.' : 'Cliquez pour ajouter les angles. Double-cliquez pour terminer. Faites glisser les poignées pour affiner la zone.';
     body.innerHTML = `
       <div style="padding:6px 10px;border-bottom:1px solid var(--border)">
-        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:5px">Data layers</div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:5px">Couches de données</div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:3px 0">
           <div>
-            <span style="font-size:12px;font-weight:600;color:var(--text)">Signal heatmap</span>
-            <span style="font-size:11px;color:var(--muted);margin-left:6px">Follows visible MT/MC selector · MT rainbow, MC violet/orange</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Carte de chaleur du signal</span>
+            <span style="font-size:11px;color:var(--muted);margin-left:6px">Suit le sélecteur MT/MC visible · MT arc-en-ciel, MC violet/orange</span>
           </div>
           <div style="display:flex;gap:5px;align-items:center">
             <button id="signal-heatmap-refresh-btn" class="btn" style="font-size:11px;padding:2px 8px" onclick="_refreshSignalHeatmap()" title="Reload heatmap from latest observations" ${_signalHeatmapEnabled ? '' : 'disabled'}>↻</button>
@@ -7228,11 +7228,11 @@ if (targetEl) {
           <button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerEnabled(${def.id}, ${!def.enabled})" title="${def.enabled ? 'Hide overlay' : 'Show overlay'}">${def.enabled ? '◉' : '○'}</button>
           ${_isPolygonGeofence(def) || (state.editable && (def.data?.features?.[0]?.geometry?.type === 'Polygon' || def.data?.geometry?.type === 'Polygon')) ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerGeofence(${def.id}, ${!def.is_geofence})" title="${def.is_geofence ? 'Disable geofence' : 'Enable geofence'}">${def.is_geofence ? '⌁' : '⊚'}</button>` : ''}
           ${actionBtn}
-          <button class="overlay-mini-btn" onclick="event.stopPropagation();tocFromMapLayer(${def.id})" title="Log this overlay in TOC">Log</button>
+          <button class="overlay-mini-btn" onclick="event.stopPropagation();tocFromMapLayer(${def.id})" title="Log this overlay in TOC">Journal</button>
           <button class="overlay-mini-btn" onclick="event.stopPropagation();deleteMapLayer(${def.id}, '${jsSafe(def.name)}')" title="Delete this overlay">✕</button>
         </div>
       `;
-      }).join('') : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">No overlays yet.</div>'}</div>
+      }).join('') : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">Aucune superposition pour le moment.</div>'}</div>
     `;
     _syncSignalHeatmapControls();
   }
@@ -7647,17 +7647,17 @@ if (targetEl) {
         div.innerHTML = `
           <div id="map-legend-mt">
             <div class="map-legend-title">Meshtastic</div>
-            <div class="map-legend-row"><span class="map-legend-dot" style="background:#86efac"></span>Fresh &lt;30m</div>
-            <div class="map-legend-row"><span class="map-legend-dot" style="background:#facc15"></span>Recent &lt;2h</div>
-            <div class="map-legend-row"><span class="map-legend-dot" style="background:#f85149"></span>Old &gt;2h</div>
-            <div class="map-legend-row"><span class="map-legend-dot" style="background:#6e7681"></span>Unknown</div>
-            <div class="map-legend-row" style="margin-top:4px"><span class="map-legend-dot" style="background:#3b82f6;outline:2px solid #3b82f6;outline-offset:2px"></span>You</div>
+            <div class="map-legend-row"><span class="map-legend-dot" style="background:#86efac"></span>Très récent &lt;30 min</div>
+            <div class="map-legend-row"><span class="map-legend-dot" style="background:#facc15"></span>Récent &lt;2 h</div>
+            <div class="map-legend-row"><span class="map-legend-dot" style="background:#f85149"></span>Ancien &gt;2 h</div>
+            <div class="map-legend-row"><span class="map-legend-dot" style="background:#6e7681"></span>Inconnu</div>
+            <div class="map-legend-row" style="margin-top:4px"><span class="map-legend-dot" style="background:#3b82f6;outline:2px solid #3b82f6;outline-offset:2px"></span>Vous</div>
           </div>
           <div id="map-legend-mc"><div class="map-legend-title" style="margin-top:8px">MeshCore</div>
           <div class="map-legend-row"><span class="map-legend-dot" style="background:#60a5fa"></span>Client</div>
-          <div class="map-legend-row"><span class="map-legend-dot" style="background:#3b82f6;border-radius:2px"></span>Repeater</div>
-          <div class="map-legend-row"><span class="map-legend-dot" style="background:#fb923c;border-radius:2px"></span>Room</div>
-          <div class="map-legend-row" style="margin-top:4px"><svg width="14" height="14" viewBox="0 0 14 14" style="flex-shrink:0"><rect x="2" y="2" width="10" height="10" fill="white" transform="rotate(45,7,7)" rx="1"/><rect x="4" y="4" width="6" height="6" fill="#10b981" transform="rotate(45,7,7)" rx="0.5"/></svg>You (MC)</div>
+          <div class="map-legend-row"><span class="map-legend-dot" style="background:#3b82f6;border-radius:2px"></span>Répéteur</div>
+          <div class="map-legend-row"><span class="map-legend-dot" style="background:#fb923c;border-radius:2px"></span>Salle</div>
+          <div class="map-legend-row" style="margin-top:4px"><svg width="14" height="14" viewBox="0 0 14 14" style="flex-shrink:0"><rect x="2" y="2" width="10" height="10" fill="white" transform="rotate(45,7,7)" rx="1"/><rect x="4" y="4" width="6" height="6" fill="#10b981" transform="rotate(45,7,7)" rx="0.5"/></svg>Vous (MC)</div>
           </div>`;
         return div;
       }
@@ -8348,7 +8348,7 @@ if (targetEl) {
                 title="Delete mark">✕</button>
             </div>`;
           }).join('')
-        : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">No marks yet.</div>';
+        : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">Aucun marqueur pour le moment.</div>';
     }
     const nBody  = document.getElementById('notes-panel-body');
     const nCount = document.getElementById('notes-panel-count');
@@ -8372,7 +8372,7 @@ if (targetEl) {
                 title="Delete note">✕</button>
             </div>`;
           }).join('')
-        : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">No notes yet.</div>';
+        : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">Aucune note pour le moment.</div>';
     }
   }
 
@@ -8623,7 +8623,7 @@ if (targetEl) {
       const statusHtml = m.sent
         ? `<span class="msg-status ${m.status || 'pending'}" data-msgid="${m.id}" style="font-size:10px">${m.status === 'delivered' ? '✓' : m.status === 'failed' ? '✗' : '·'}</span>`
         : '';
-      const logHtml = `<button onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Prefill TOC Log from this message" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:10px;padding:0 2px">Log</button>`;
+      const logHtml = `<button onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Prefill TOC Log from this message" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:10px;padding:0 2px">Journal</button>`;
       return `<div style="display:flex;flex-direction:column;align-items:${m.sent ? 'flex-end' : 'flex-start'}">
         <div style="font-size:10px;color:var(--muted);margin-bottom:2px">${m.sent ? 'You' : escHtml(m.from_name)} · ${t} ${statusHtml} ${logHtml}</div>
         <div style="background:${m.sent ? 'var(--accent-dim)' : 'var(--bg3)'};border:1px solid ${m.sent ? 'var(--accent)' : 'var(--border)'};border-radius:6px;padding:5px 9px;font-size:12px;max-width:90%">${escHtml(m.text)}</div>
@@ -9045,12 +9045,12 @@ if (targetEl) {
       <div><b>Last seen:</b> <span class="map-popup-lh" data-ts="${n.last_heard_ts || 0}">${n.last_heard_ts ? senseTimeAgo(n.last_heard_ts) : '—'}</span></div>
       <div style="color:var(--muted);font-size:11px;margin-top:2px">${n.latitude.toFixed(5)}, ${n.longitude.toFixed(5)}</div>
       <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-        <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(n.id)}')">List</button>
+        <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(n.id)}')">Liste</button>
         ${!n.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">DM</button>` : ''}
         ${!n.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">TR</button>` : ''}
         ${!n.is_local ? `<button class="map-popup-btn" title="Set position" onclick="openMapPos('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Pos</button>` : ''}
         ${!n.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Info</button>` : ''}
-        <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(n.id)}')">Log</button>
+        <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(n.id)}')">Journal</button>
         <button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Trail</button>
         ${!n.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">Delete</button>` : ''}
       </div>`;
@@ -9137,11 +9137,11 @@ if (targetEl) {
                   <b>SNR:</b> ${snrStr(x.snr)} &nbsp; <b>Batt:</b> ${battStr(x.battery)} &nbsp; <b>Dist:</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Seen:</b> ${escHtml(x.last_heard || '—')}
                 </div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap">
-                  <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(x.id)}')">List</button>
+                  <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
                   ${!x.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
                   ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
                   ${!x.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
-                  <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Log</button>
+                  <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
                   <button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Trail</button>
                   ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Delete</button>` : ''}
                 </div>
@@ -9172,11 +9172,11 @@ if (targetEl) {
                 <b>SNR:</b> ${snrStr(x.snr)} &nbsp; <b>Batt:</b> ${battStr(x.battery)} &nbsp; <b>Dist:</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Seen:</b> ${escHtml(x.last_heard || '—')}
               </div>
               <div style="display:flex;gap:4px;flex-wrap:wrap">
-                <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(x.id)}')">List</button>
+                <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
                 ${!x.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
                 ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
                 ${!x.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
-                <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Log</button>
+                <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
                 ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Delete</button>` : ''}
               </div>
             </div>`).join('')}`;
@@ -10602,7 +10602,7 @@ if (targetEl) {
             onclick="settingsToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Disable' : 'Enable'}</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Clear message history for this radio"
-            onclick="settingsMtClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Clear History</button>
+            onclick="settingsMtClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer l’historique</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Remove this radio from OverMesh — config deleted, message history kept on disk"
             onclick="settingsRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Remove</button>
@@ -10617,11 +10617,11 @@ if (targetEl) {
 
   function settingsScanPorts() {
     const sel = document.getElementById('settings-port-select');
-    sel.innerHTML = '<option value="">Scanning…</option>';
+    sel.innerHTML = '<option value="">Analyse…</option>';
     fetch(BASE_PATH + '/api/settings/ports').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
       const available = data.ports.filter(p => !p.in_use);
       if (!available.length) {
-        sel.innerHTML = '<option value="">No available devices found</option>';
+        sel.innerHTML = '<option value="">Aucun périphérique disponible</option>';
         return;
       }
       sel.innerHTML = available.map(p => {
@@ -10630,7 +10630,7 @@ if (targetEl) {
           : p.device;
         return `<option value="${escHtml(p.usb_serial || p.device)}" data-port="${escHtml(p.device)}">${escHtml(label)}</option>`;
       }).join('');
-    }).catch(e => { sel.innerHTML = '<option value="">Scan failed</option>'; console.error('Port scan failed:', e); });
+    }).catch(e => { sel.innerHTML = '<option value="">Échec de l’analyse</option>'; console.error('Port scan failed:', e); });
   }
 
   let _addNodeType = 'serial';
@@ -11440,7 +11440,7 @@ if (targetEl) {
       _mcScanRemaining = _mcScanWindow;
       const btn = document.getElementById('mc-scan-btn');
       const st  = document.getElementById('mc-scan-status');
-      if (btn) { btn.textContent = 'Scanning…'; btn.disabled = true; }
+      if (btn) { btn.textContent = 'Analyse…'; btn.disabled = true; }
       if (st)  { st.style.display = ''; st.textContent = `${_mcScanRemaining}s`; }
       // Log scan start in MC activity
       if (_senseNet === 'mc' && document.getElementById('sense-panel')?.style.display !== 'none') {
@@ -12001,7 +12001,7 @@ if (targetEl) {
           <div class="map-popup-name" style="margin-bottom:2px">${escHtml(item.name || item.id || '?')}<span class="map-popup-local" style="background:rgba(16,185,129,0.15);color:#10b981">MC Radio</span></div>
           <div style="font-size:11px;color:var(--muted);margin-bottom:4px">This radio node · ${escHtml(radioDistance)}</div>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
-            <button class="map-popup-btn" title="Show in Nodes list" onclick="showMcNodeInList('${jsSafe(item.id || '')}')">List</button>
+            <button class="map-popup-btn" title="Show in Nodes list" onclick="showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
           </div>
         </div>`;
     }
@@ -12014,8 +12014,8 @@ if (targetEl) {
     const hops = item.out_path_len ?? null;
     const radioConnected = mcLastStatus[item._rid]?.status === 'connected';
     const pathButton = radioConnected
-      ? `<button class="map-popup-btn" title="Set stored MC route/path" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Path</button>`
-      : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Path</button>`;
+      ? `<button class="map-popup-btn" title="Set stored MC route/path" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Chemin</button>`
+      : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Chemin</button>`;
     const bat = item.battery ?? item.bat_pct ?? item.bat;
     const batStr = bat != null ? `${bat}%` : '—';
     const snrText = item.snr != null ? `${item.snr} dB` : '—';
@@ -12031,13 +12031,13 @@ if (targetEl) {
           <b>SNR:</b> ${snrText} &nbsp; <b>Hops:</b> ${hops !== null ? escHtml(mcPathHopLabel(hops, true)) : '—'} &nbsp; <b>Dist:</b> ${escHtml(distanceText)} &nbsp; <b>Seen:</b> ${tsText}
         </div>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="map-popup-btn" title="Show in Nodes list" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(item.id || '')}')">List</button>
+          <button class="map-popup-btn" title="Show in Nodes list" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
           ${item.type !== 2 ? `<button class="map-popup-btn" title="Send direct message" onclick="leafletMap.closePopup();doMcDm('${safePk}','${safeRid}','${safeName}')">DM</button>` : ''}
           <button class="map-popup-btn" title="Ping (request status)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>
           ${pathButton}
-          ${mcCanRemoteManage(item) ? `<button class="map-popup-btn" title="Remote repeater/room management" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Manage</button>` : ''}
-          <button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(item.id || '')}','${safeRid}')">Sense</button>
-          <button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Log</button>
+          ${mcCanRemoteManage(item) ? `<button class="map-popup-btn" title="Remote repeater/room management" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Gérer</button>` : ''}
+          <button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(item.id || '')}','${safeRid}')">Détection</button>
+          <button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>
           ${item.latitude != null ? `<button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(item.id || '')}','${safeName}')">Trail</button>` : ''}
           <button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Delete</button>
         </div>
@@ -12173,12 +12173,12 @@ if (targetEl) {
         ? `<button class="map-popup-btn" title="Ping (request status)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>`
         : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Ping</button>`;
       const popupPathButton = radioConnected
-        ? `<button class="map-popup-btn" title="Set stored MC route/path" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Path</button>`
-        : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Path</button>`;
+        ? `<button class="map-popup-btn" title="Set stored MC route/path" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Chemin</button>`
+        : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Chemin</button>`;
       const popupManageButton = mcCanRemoteManage(c)
         ? (radioConnected
-          ? `<button class="map-popup-btn" title="Remote repeater/room management" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Manage</button>`
-          : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Manage</button>`)
+          ? `<button class="map-popup-btn" title="Remote repeater/room management" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Gérer</button>`
+          : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Gérer</button>`)
         : '';
       const marker = L.marker([c.latitude, c.longitude], { icon: makeMcIcon(false, c.type ?? 0) });
       const bat = c.battery ?? c.bat_pct ?? c.bat;
@@ -12197,13 +12197,13 @@ if (targetEl) {
         + `<div><b>Last seen:</b> ${tsText}</div>`
         + `<div style="font-size:11px;color:var(--muted)">${c.latitude.toFixed(5)}, ${c.longitude.toFixed(5)}</div>`
         + `<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">`
-        + `<button class="map-popup-btn" title="Show in Nodes list" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(c.id || '')}')">List</button>`
+        + `<button class="map-popup-btn" title="Show in Nodes list" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(c.id || '')}')">Liste</button>`
         + popupDmButton
         + popupPingButton
         + popupPathButton
         + popupManageButton
-        + `<button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(c.id || '')}','${safeRid}')">Sense</button>`
-        + `<button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Log</button>`
+        + `<button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(c.id || '')}','${safeRid}')">Détection</button>`
+        + `<button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>`
         + `<button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(c.id || '')}','${safeName}')">Trail</button>`
         + `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Delete</button>`
         + `</div>`,
@@ -12519,10 +12519,10 @@ if (targetEl) {
     const hide = `document.getElementById('mc-contact-popup').style.display='none'`;
     const btns = [];
     if (c && actionId) {
-      if (c.id) btns.push(`<button class="map-popup-btn" onclick="showMcNodeInList('${jsSafe(c.id)}');${hide}">List</button>`);
+      if (c.id) btns.push(`<button class="map-popup-btn" onclick="showMcNodeInList('${jsSafe(c.id)}');${hide}">Liste</button>`);
       btns.push(`<button class="map-popup-btn" onclick="doMcDm('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}">DM</button>`);
       if (c.type !== 2) btns.push(`<button class="map-popup-btn" onclick="doMcPing('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}">Ping</button>`);
-      if (mcCanRemoteManage(c)) btns.push(`<button class="map-popup-btn" onclick="openMcRemoteManage('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}">Manage</button>`);
+      if (mcCanRemoteManage(c)) btns.push(`<button class="map-popup-btn" onclick="openMcRemoteManage('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}">Gérer</button>`);
     } else if (!c && actionId) {
       btns.push(`<button class="map-popup-btn" onclick="doMcPing('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}" title="Request status from this node — may trigger it to send an advert">Ping</button>`);
     } else if (!c && !actionId) {
@@ -12535,10 +12535,10 @@ if (targetEl) {
     } else if (cLat != null && cLon != null) {
       btns.push(`<button class="map-popup-btn" onclick="centerMcOnMap(${cLat},${cLon});${hide}">Map</button>`);
     } else {
-      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="No GPS position">Map</button>`);
+      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Map</button>`);
     }
     if (actionId) {
-      btns.push(`<button class="map-popup-btn" onclick="tocFromMcNode('${jsSafe(actionId)}','${jsSafe(actionRid)}');${hide}" title="Prefill TOC Log from this contact">Log</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="tocFromMcNode('${jsSafe(actionId)}','${jsSafe(actionRid)}');${hide}" title="Prefill TOC Log from this contact">Journal</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openMcNoteModal('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}" title="Personal notes for this contact">Note</button>`);
     }
     const btnsHtml = btns.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${btns.join('')}</div>` : '';
@@ -12615,7 +12615,7 @@ if (targetEl) {
       const routeKey = _mcChatRouteKey(m);
       if (routeKey) _mcChatRouteByKey[routeKey] = m;
       const logBtn = routeKey
-        ? `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMcMessage('${jsSafe(routeKey)}')" title="Prefill TOC Log from this message">Log</button>`
+        ? `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMcMessage('${jsSafe(routeKey)}')" title="Prefill TOC Log from this message">Journal</button>`
         : '';
       let ts = '';
       if (m.ts) {
@@ -12768,7 +12768,7 @@ if (targetEl) {
     const statOnline = document.getElementById('sense-mc-stat-online');
     const statGps    = document.getElementById('sense-mc-stat-gps');
     if (statTotal)  statTotal.textContent  = `${allContacts.length} contact${allContacts.length !== 1 ? 's' : ''}`;
-    if (statOnline) { statOnline.textContent = `${totalRecent} heard recently`; statOnline.style.color = totalRecent > 0 ? '#22c55e' : 'var(--muted)'; }
+    if (statOnline) { statOnline.textContent = `${totalRecent} entendus récemment`; statOnline.style.color = totalRecent > 0 ? '#22c55e' : 'var(--muted)'; }
     if (statGps)    statGps.textContent    = `${totalGps} GPS`;
     const statusEl = document.getElementById('sense-mc-status');
     if (statusEl)   statusEl.textContent   = '';
@@ -12778,7 +12778,7 @@ if (targetEl) {
       : allContacts;
 
     if (!contacts.length) {
-      container.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:8px 0">${filter ? 'No matches.' : 'No MC contacts.'}</div>`;
+      container.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:8px 0">${filter ? 'Aucun résultat.' : 'Aucun contact MC.'}</div>`;
       return;
     }
 
@@ -12874,7 +12874,7 @@ if (targetEl) {
       : '';
     const gpsLine = hasGps
       ? `<div style="font-size:10px;color:var(--muted);margin-top:3px">GPS: ${lat.toFixed(5)}, ${lon.toFixed(5)}
-           <button onclick="centerMcOnMap(${lat},${lon})" style="font-size:10px;background:none;border:1px solid var(--border);border-radius:3px;padding:0 5px;cursor:pointer;color:var(--accent);margin-left:4px">Center</button>
+           <button onclick="centerMcOnMap(${lat},${lon})" style="font-size:10px;background:none;border:1px solid var(--border);border-radius:3px;padding:0 5px;cursor:pointer;color:var(--accent);margin-left:4px">Centrer</button>
          </div>`
       : '';
     const bat = c.battery ?? c.bat_pct ?? c.bat;
@@ -12899,7 +12899,7 @@ if (targetEl) {
           onclick="doMcDm('${safeId}','${safeRid}','${safeName}')">DM</button>
         <button class="btn-sm"
           onclick="doMcPing('${safeId}','${safeRid}','${safeName}')">Ping</button>
-        ${mcCanRemoteManage(c) ? `<button class="btn-sm" onclick="openMcRemoteManage('${safeId}','${safeRid}','${safeName}')">Manage</button>` : ''}
+        ${mcCanRemoteManage(c) ? `<button class="btn-sm" onclick="openMcRemoteManage('${safeId}','${safeRid}','${safeName}')">Gérer</button>` : ''}
       </div>`;
     detail.style.display = 'block';
   }
@@ -13836,7 +13836,7 @@ if (targetEl) {
       ? indexed.filter(e => _mcSenseLogEntrySearchText(e).includes(filter))
       : indexed;
     if (!entries.length) {
-      el.innerHTML = `<span id="sense-mc-log-empty">${filter ? 'No matches.' : 'No MC activity yet.'}</span>`;
+      el.innerHTML = `<span id="sense-mc-log-empty">${filter ? 'Aucun résultat.' : 'Aucune activité MC pour le moment.'}</span>`;
       return;
     }
     const wasAtBottom = el.scrollHeight - el.scrollTop <= el.clientHeight + 20;
@@ -13864,7 +13864,7 @@ if (targetEl) {
         const probe = e.discover ? ' + repeater probe' : '';
         return `<div style="padding:2px 0;border-bottom:1px solid var(--border)">
           <span style="color:var(--muted)">${_mcLogTs(e)}</span>
-          <span style="margin-left:4px;color:#94a3b8;font-size:10px;font-style:italic">Scan started${probe} · ${escHtml(e.radioName)}</span>
+          <span style="margin-left:4px;color:#94a3b8;font-size:10px;font-style:italic">Scan démarré${probe} · ${escHtml(e.radioName)}</span>
         </div>`;
       }
       if (e.kind === 'discover') {
@@ -14445,7 +14445,7 @@ if (targetEl) {
       const radioName = escHtml(radioStatus.name || radioStatus.node_name || entry.radioId || 'Our radio');
       const path = entry.path || [];
       const hops = entry.hopLen || 0;
-      title.textContent = entry.responderName ? `⟳ ${entry.responderName}` : '⟳ Broadcast Trace';
+      title.textContent = entry.responderName ? `⟳ ${entry.responderName}` : '⟳ Tracer la diffusion';
       let rows = th('Path');
       if (entry.ours) {
         rows += td('From', radioName + ' (our radio)');
@@ -14724,7 +14724,7 @@ if (targetEl) {
         mcLastStatus[n.id].passive_collection = n.passive_collection !== false;
       });
       if (!data.mc_nodes.length) {
-        list.innerHTML = '<p style="color:var(--muted);font-size:12px;margin:0">No MC radios configured.</p>';
+        list.innerHTML = '<p style="color:var(--muted);font-size:12px;margin:0">Aucune radio MC configurée.</p>';
         return;
       }
       list.innerHTML = data.mc_nodes.map(n => {
@@ -14742,17 +14742,17 @@ if (targetEl) {
           <span class="radio-row-status">${escHtml(transport)}</span>
           <span class="radio-row-status" title="Preferred MC path hash size">${escHtml(_mcPathHashModeLabel(n.path_hash_mode ?? 2))}</span>
           ${n.force_flood ? '<span class="radio-row-status" title="MC DMs and pings force flood routing" style="color:var(--yellow)">Flood</span>' : ''}
-          ${n.passive_collection === false ? '<span class="radio-row-status" title="Passive collection disabled" style="color:var(--yellow)">Passive off</span>' : ''}
+          ${n.passive_collection === false ? '<span class="radio-row-status" title="Passive collection disabled" style="color:var(--yellow)">Passif désactivé</span>' : ''}
           <span class="radio-row-status" style="${!n.enabled ? 'color:var(--muted)' : ''}">${n.enabled ? n.status : 'disabled'}</span>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;${n.enabled ? '' : 'color:var(--accent);border-color:var(--accent)'}"
             title="${n.enabled ? 'Pause scanning for this radio — keeps config and message history intact' : 'Resume scanning and connecting to this radio'}"
             onclick="settingsMcToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Disable' : 'Enable'}</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Clear message history for this radio"
-            onclick="settingsMcClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Clear History</button>
+            onclick="settingsMcClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer l’historique</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Clear all contacts for this radio (removes from node flash and OM)"
-            onclick="settingsMcClearContacts('${jsSafe(n.id)}','${jsSafe(n.name)}')">Clear Contacts</button>
+            onclick="settingsMcClearContacts('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer les contacts</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red);margin-left:4px"
             title="Remove this MeshCore radio from OverMesh"
             onclick="settingsMcRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Remove</button>
@@ -14763,7 +14763,7 @@ if (targetEl) {
 
   function settingsMcScanPorts() {
     const sel = document.getElementById('settings-mc-port-select');
-    if (sel) sel.innerHTML = '<option value="">Scanning…</option>';
+    if (sel) sel.innerHTML = '<option value="">Analyse…</option>';
     fetch(BASE_PATH + '/api/settings/ports').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
       // Show all ports not already in use by MT nodes
       const available = (data.ports || []).filter(p => !p.in_use);
@@ -14771,10 +14771,10 @@ if (targetEl) {
         const label = p.description && p.description !== p.device ? `${p.device} — ${p.description}` : p.device;
         return `<option value="${escHtml(p.usb_serial || p.device)}" data-port="${escHtml(p.device)}">${escHtml(label)}</option>`;
       }).join('');
-      const html = available.length ? options : '<option value="">No available devices found</option>';
+      const html = available.length ? options : '<option value="">Aucun périphérique disponible</option>';
       if (sel) sel.innerHTML = html;
     }).catch(e => {
-      if (sel) sel.innerHTML = '<option value="">Scan failed</option>';
+      if (sel) sel.innerHTML = '<option value="">Échec de l’analyse</option>';
       console.error('MC port scan failed:', e);
     });
   }
@@ -16651,7 +16651,7 @@ if (targetEl) {
     if (!panel) return;
     _mcTraceSetButtonState(true);
     panel.dataset.detailKind = 'mc-trace';
-    title.textContent = 'Broadcast Trace';
+    title.textContent = 'Tracer la diffusion';
     body.innerHTML = '<span style="color:var(--muted)">Sending trace…</span>';
     panel.style.display = '';
     _mcPendingTraceTag = null;
@@ -16767,7 +16767,7 @@ if (targetEl) {
 
     const finalSnr = trace.finalSnr;
     const pathResult = trace.pathResult;
-    const entry = { kind: 'trace', name: 'Broadcast Trace', ts, ts_epoch, hopStr, hopLen: hops, typeIdx: 0, pathResult, lat: responderContact?.latitude ?? null, lon: responderContact?.longitude ?? null, radioId: data.radio_id, responderName, finalSnr, path, ours, pathHashSize: data.path_hash_size ?? null };
+    const entry = { kind: 'trace', name: 'Tracer la diffusion', ts, ts_epoch, hopStr, hopLen: hops, typeIdx: 0, pathResult, lat: responderContact?.latitude ?? null, lon: responderContact?.longitude ?? null, radioId: data.radio_id, responderName, finalSnr, path, ours, pathHashSize: data.path_hash_size ?? null };
     if (_mcLogPinnedIdx !== null) _mcLogPinnedIdx++;
     _mcSenseLogEntries.unshift(entry);
     if (_mcSenseLogEntries.length > 200) _mcSenseLogEntries.pop();
@@ -16841,7 +16841,7 @@ if (targetEl) {
 
   async function doMcNeighbors(mode) {
     const radioId = activeMcRadioId;
-    if (!radioId) { showAlert('No MC radio selected.'); return; }
+    if (!radioId) { showAlert('Aucune radio MC sélectionnée.'); return; }
     if (!mode) mode = 'neighbors';
     const btn = document.getElementById('mc-neighbors-btn');
     if (btn) { btn.textContent = '…'; btn.disabled = true; }
@@ -16919,7 +16919,7 @@ if (targetEl) {
 
   async function startMcScan() {
     const radioId = activeMcRadioId;
-    if (!radioId) { showAlert('No MC radio selected.'); return; }
+    if (!radioId) { showAlert('Aucune radio MC sélectionnée.'); return; }
     if (_mcScanActive) return;
     // Immediate feedback — SSE mc_scan_started will take over with countdown
     const btn = document.getElementById('mc-scan-btn');
@@ -16929,12 +16929,12 @@ if (targetEl) {
       const d = await r.json();
       if (!r.ok) {
         if (btn) { btn.textContent = 'Scan'; btn.disabled = false; }
-        showAlert(d.error || 'Scan failed.');
+        showAlert(d.error || 'Échec de l’analyse.');
         return;
       }
     } catch(e) {
       if (btn) { btn.textContent = 'Scan'; btn.disabled = false; }
-      showAlert('Scan failed: ' + e.message);
+      showAlert('Échec de l’analyse: ' + e.message);
     }
   }
 
@@ -17349,7 +17349,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   function mcResetAllPaths(btn) {
     const radioId = mcSettingsRadioId || activeMcRadioId;
     const statusEl = document.getElementById('mc-reset-all-paths-status');
-    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No MC radio selected.</span>'; return; }
+    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucune radio MC sélectionnée.</span>'; return; }
     document.getElementById('confirm-ok').textContent = 'Reset All';
     showConfirm('Reset ALL stored contact routes on this MC radio? This includes manually-set paths.', () => {
     if (statusEl) statusEl.textContent = 'Resetting…';
@@ -17591,7 +17591,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = mcSettingsRadioId || activeMcRadioId;
     const statusEl = document.getElementById('mc-actions-status');
     const btn = document.getElementById('mc-debug-btn');
-    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No MC radio selected.</span>'; return; }
+    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucune radio MC sélectionnée.</span>'; return; }
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/debug_events`, {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({duration: 60}),
@@ -17615,7 +17615,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   function importMcContact(btn) {
     const radioId = mcSettingsRadioId || activeMcRadioId;
     const statusEl = document.getElementById('mc-import-status');
-    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No MC radio selected.</span>'; return; }
+    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucune radio MC sélectionnée.</span>'; return; }
     const link = (document.getElementById('mc-import-link').value || '').trim();
     if (!link) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Paste a meshcore:// share link first.</span>'; return; }
     if (statusEl) statusEl.textContent = 'Importing…';
@@ -17660,7 +17660,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   function importMcChannel() {
     const radioId  = mcSettingsRadioId || activeMcRadioId;
     const statusEl = document.getElementById('mc-import-channel-status');
-    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No MC radio selected.</span>'; return; }
+    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucune radio MC sélectionnée.</span>'; return; }
     const link = (document.getElementById('mc-import-channel-link').value || '').trim();
     const slot = parseInt(document.getElementById('mc-import-ch-slot').value);
     if (isNaN(slot) || slot < 0 || slot > 15) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Slot must be 0–15.</span>'; return; }
@@ -17798,7 +17798,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         n.hw_model ? `<div><b>HW:</b> ${escHtml(n.hw_model)}</div>` : null,
         n.role     ? `<div><b>Role:</b> ${escHtml(n.role)}</div>` : null,
         `<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-          <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(n.from_id)}')">List</button>
+          <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(n.from_id)}')">Liste</button>
           <button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(n.from_id)}','${safeName}')">DM</button>
           <button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">TR</button>
           <button class="map-popup-btn" title="Set position" onclick="openMapPos('${jsSafe(n.from_id)}','${safeName}')">Pos</button>
@@ -18022,7 +18022,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const val  = document.getElementById('sense-cooldown-val');
     if (remaining <= 0) {
       btn.disabled = false;
-      btn.textContent = 'Sense Mesh';
+      btn.textContent = 'Détecter le maillage';
       bar.style.display = 'none';
       return;
     }
@@ -18036,7 +18036,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (r <= 0) {
         clearInterval(_senseTimer);
         btn.disabled = false;
-        btn.textContent = 'Sense Mesh';
+        btn.textContent = 'Détecter le maillage';
         bar.style.display = 'none';
       }
     }, 1000);
@@ -18052,7 +18052,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (w <= 0) {
         clearInterval(_senseWindowTimer);
         _senseWindowTimer = null;
-        if (btn) btn.textContent = 'Sense Mesh';
+        if (btn) btn.textContent = 'Détecter le maillage';
         // sense_done SSE will overwrite status with final count
         if (status) status.textContent = '';
       } else {
@@ -18092,7 +18092,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       document.getElementById('sense-stat-responses').textContent = '0';
       document.getElementById('sense-stat-gps').textContent = '0';
       document.getElementById('sense-stat-snr').textContent = '—';
-      document.getElementById('sense-btn').textContent = 'Sensing…';
+      document.getElementById('sense-btn').textContent = 'Détection…';
       senseStartWindowCountdown(d.window);
       senseCooldownTick(d.cooldown);
     }).catch(e => console.error('Sense trigger failed:', e));
@@ -18443,7 +18443,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const tabsDiv   = document.getElementById('node-cfg-tabs');
     const connected = data.nodes.filter(n => n.status === 'connected');
     if (!connected.length) {
-      tabsDiv.innerHTML = '<span style="color:var(--muted);font-size:12px">No radios connected</span>';
+      tabsDiv.innerHTML = '<span style="color:var(--muted);font-size:12px">Aucune radio connectée</span>';
       _selectedNodeId = '';
       return;
     }
@@ -19793,15 +19793,15 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     plan: {
       cat:'PLAN', label:'PLAN',
       fields:[
-        {name:'Area / Route', hint:'Basecamp, route, work area, or planned collection point'},
-        {name:'Objective', hint:'What should be achieved', multiline:true},
-        {name:'Window / Timing', hint:'Start time, end time, update cadence, or time limit'},
-        {name:'People / Nodes / Assets', hint:'Operators, MC contacts, MT nodes, RPTRs, vehicles, stations (# to mention node)'},
-        {name:'MC / MT Setup', hint:'Radios, channels, contacts, antenna, power, GPS, Silent status', multiline:true},
-        {name:'Checkpoints / Triggers', hint:'When to log POSITION, COMMS, CONTACT, ALERT, or SITREP', multiline:true},
-        {name:'Risks / Constraints', hint:'Weather, power, access, RF path, USB/GPS, time, safety', multiline:true},
-        {name:'Comms Plan', hint:'Who to ping, where to report, fallback channel/path', multiline:true},
-        {name:'Abort / Change Criteria', hint:'When to stop, return, change route, or switch mode'},
+        {name:'Zone / Itinéraire', hint:'Basecamp, route, work area, or planned collection point'},
+        {name:'Objectif', hint:'What should be achieved', multiline:true},
+        {name:'Fenêtre / Horaires', hint:'Start time, end time, update cadence, or time limit'},
+        {name:'Personnes / Nœuds / Ressources', hint:'Operators, MC contacts, MT nodes, RPTRs, vehicles, stations (# to mention node)'},
+        {name:'Configuration MC / MT', hint:'Radios, channels, contacts, antenna, power, GPS, Silent status', multiline:true},
+        {name:'Points de contrôle / Déclencheurs', hint:'When to log POSITION, COMMS, CONTACT, ALERT, or SITREP', multiline:true},
+        {name:'Risques / Contraintes', hint:'Weather, power, access, RF path, USB/GPS, time, safety', multiline:true},
+        {name:'Plan de communications', hint:'Who to ping, where to report, fallback channel/path', multiline:true},
+        {name:'Critères d’abandon / modification', hint:'When to stop, return, change route, or switch mode'},
         {name:'Notes', hint:'Extra planning context', multiline:true},
       ],
     },
@@ -20833,7 +20833,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const btns    = [];
 
     if (n) {
-      btns.push(`<button class="map-popup-btn" onclick="showNodeInList('${safeId}');${hide}">List</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="showNodeInList('${safeId}');${hide}">Liste</button>`);
       if (!n.is_local) {
         btns.push(`<button class="map-popup-btn" onclick="openMapDM('${safeId}','${safeNm}');${hide}">DM</button>`);
         btns.push(`<button class="map-popup-btn" onclick="openMapTR('${safeId}','${safeNm}','${safeRid}');${hide}">TR</button>`);
@@ -20842,17 +20842,17 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (hasMarker) {
         btns.push(`<button class="map-popup-btn" onclick="switchTab('map');${hide};setTimeout(()=>{const m=mapMarkers['${safeId}'];if(m&&leafletMap){leafletMap.setView(m.getLatLng(),Math.max(leafletMap.getZoom(),14));m.openPopup();}},100)">Map</button>`);
       } else {
-        btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="No GPS position">Map</button>`);
+        btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Map</button>`);
       }
-      btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Log</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Journal</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trail</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openNoteEdit('${safeId}','${safeNm}','${safeRid}');${hide}" title="Personal notes for this node">Note</button>`);
     } else {
-      btns.push(`<button class="map-popup-btn" onclick="showNodeInList('${safeId}');${hide}" title="Look up in node history">List</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="showNodeInList('${safeId}');${hide}" title="Look up in node history">Liste</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openMapDM('${safeId}','${safeNm}');${hide}">DM</button>`);
-      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="No GPS position">Map</button>`);
+      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Map</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openMtNodeDetails('${safeId}');${hide}">Info</button>`);
-      btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Log</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Journal</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trail</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openNoteEdit('${safeId}','${safeNm}','${safeRid}');${hide}" title="Personal notes for this node">Note</button>`);
     }
@@ -21172,7 +21172,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       const isActive  = active === m.name.toLowerCase() && missionMode === 'include';
       const isExclude = active === m.name.toLowerCase() && missionMode === 'exclude';
       const chipClass = isExclude ? 'excluded' : isActive ? 'active' : '';
-      const title = isExclude ? `Hiding folder: ${m.name} (click to clear)` : `Filter Mission / Folder: ${m.name}`;
+      const title = isExclude ? `Dossier masqué : ${m.name} (cliquer pour effacer)` : `Filtrer Mission / Dossier : ${m.name}`;
       return `<button class="toc-mission-chip ${chipClass}" onclick="tocFilterMission('${jsSafe(m.name)}')" title="${_tocEscape(title)}">` +
         `<span class="toc-mission-chip-name">📁 ${_tocEscape(m.name)}</span>` +
         `<span class="toc-mission-chip-count">${m.count}</span>` +
@@ -21316,7 +21316,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!entries.length) {
       if (emptyRow) {
         emptyRow.style.display = '';
-        emptyRow.querySelector('td').textContent = _tocAllEntries.length ? 'No matching log entries.' : 'No log entries yet.';
+        emptyRow.querySelector('td').textContent = _tocAllEntries.length ? 'Aucune entrée du journal correspondante.' : 'Aucune entrée du journal pour le moment.';
       }
       return;
     }

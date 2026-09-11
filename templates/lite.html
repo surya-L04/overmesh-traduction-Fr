@@ -493,7 +493,7 @@
   <div class="hdr-sep"></div>
   <div id="hdr-gps">
     <span id="hdr-gps-dot"></span>
-    <span id="hdr-gps-text">No GPS</span>
+    <span id="hdr-gps-text">Pas de GPS</span>
   </div>
   <div class="hdr-sep"></div>
   <div id="hdr-radio">
@@ -511,10 +511,10 @@
 <div id="tab-map" class="tab-panel">
   <div id="map"></div>
   <div id="map-status-bar">
-    <button class="mmpill active" data-mode="map" onclick="mapModeSet('map')">Map</button>
-    <button class="mmpill" data-mode="sense" onclick="mapModeSet('sense')">Sense</button>
+    <button class="mmpill active" data-mode="map" onclick="mapModeSet('map')">Carte</button>
+    <button class="mmpill" data-mode="sense" onclick="mapModeSet('sense')">Détection</button>
     <span class="msep">|</span>
-    <button class="mfpill" id="mf-all" onclick="setMapFilter('all')">All</button>
+    <button class="mfpill" id="mf-all" onclick="setMapFilter('all')">Tous</button>
     <button class="mfpill active" id="mf-mc" onclick="setMapFilter('mc')">MC</button>
     <button class="mfpill" id="mf-mt" onclick="setMapFilter('mt')">MT</button>
     <span id="map-node-count"></span>
@@ -525,12 +525,12 @@
   <div id="map-pick-banner" hidden onclick="cancelMcPositionPick()"></div>
 
   <div id="map-act-panel">
-    <h4>RECENT MESSAGES</h4>
+    <h4>MESSAGES RÉCENTS</h4>
     <div id="trace-hops-panel" hidden>
       <div id="trace-hops-head">
         <span>PATH</span>
         <span id="trace-hops-count"></span>
-        <button class="hop-close-btn" onclick="hideTraceHops()">Close</button>
+        <button class="hop-close-btn" onclick="hideTraceHops()">Fermer</button>
       </div>
       <div id="trace-hops-list"></div>
     </div>
@@ -543,10 +543,10 @@
 <!-- ── NODES TAB ── -->
 <div id="tab-nodes" class="tab-panel" hidden>
   <div id="nodes-filter-bar">
-    <input id="nodes-search" class="form-input" type="search" placeholder="Search nodes…" oninput="renderNodes()" style="flex:1">
-    <button class="fpill active" onclick="setNFilter('all',this)">All</button>
-    <button class="fpill" onclick="setNFilter('fav',this)">★ Fav</button>
-    <button class="fpill" onclick="setNFilter('fresh',this)">Fresh</button>
+    <input id="nodes-search" class="form-input" type="search" placeholder="Rechercher des nœuds…" oninput="renderNodes()" style="flex:1">
+    <button class="fpill active" onclick="setNFilter('all',this)">Tous</button>
+    <button class="fpill" onclick="setNFilter('fav',this)">★ Favori</button>
+    <button class="fpill" onclick="setNFilter('fresh',this)">Récent</button>
     <button class="fpill" onclick="setNFilter('pos',this)">GPS</button>
     <button class="fpill" onclick="setNFilter('mc',this)">MC</button>
     <button class="fpill" onclick="setNFilter('mt',this)">MT</button>
@@ -573,32 +573,32 @@
     </div>
   </div>
   <div id="chat-messages"></div>
-  <div id="chat-empty">Tap the header bar to choose a channel or contact</div>
+  <div id="chat-empty">Appuyez sur la barre d’en-tête pour choisir un canal ou un contact</div>
   <div id="chat-input-bar" hidden>
     <textarea id="chat-input" class="form-input" placeholder="Message…" rows="1"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"
       oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
-    <button id="chat-send" onclick="sendMsg()">Send</button>
+    <button id="chat-send" onclick="sendMsg()">Envoyer</button>
   </div>
 </div>
 
 <!-- ── LOG TAB ── -->
 <div id="tab-log" class="tab-panel" hidden>
   <div id="log-toolbar">
-    <button class="btn btn-accent btn-sm" onclick="openLogForm()">+ New</button>
-    <input id="log-search" class="form-input" type="search" placeholder="Search log…" oninput="renderLog()" style="flex:1;min-width:110px;min-height:28px;padding:4px 8px;font-size:12px">
+    <button class="btn btn-accent btn-sm" onclick="openLogForm()">+ Nouveau</button>
+    <input id="log-search" class="form-input" type="search" placeholder="Rechercher dans le journal…" oninput="renderLog()" style="flex:1;min-width:110px;min-height:28px;padding:4px 8px;font-size:12px">
     <select id="log-cat-filter" class="form-select" style="width:108px;min-height:28px;padding:4px 8px;font-size:12px" onchange="renderLog()">
-      <option value="">All categories</option>
+      <option value="">Toutes les catégories</option>
       <option>SITREP</option><option>COMMS</option><option>POSITION</option>
       <option>CONTACT</option><option>ALERT</option><option>PLAN</option>
       <option>ACTION</option><option>INTEL</option><option>NOTE</option>
     </select>
     <select id="log-mission-filter" class="form-select" style="width:112px;min-height:28px;padding:4px 8px;font-size:12px" onchange="renderLog()">
-      <option value="">All missions</option>
+      <option value="">Toutes les missions</option>
     </select>
     <button class="btn btn-sm" onclick="exportLog('text')">TXT</button>
     <button class="btn btn-sm" onclick="exportLog('json')">JSON</button>
-    <label class="btn btn-sm" style="cursor:pointer">Import
+    <label class="btn btn-sm" style="cursor:pointer">Importer
       <input type="file" accept=".json,.txt" style="display:none" onchange="importLog(event)">
     </label>
   </div>
@@ -617,20 +617,20 @@
 <!-- ── BOTTOM NAV ── -->
 <nav id="bottom-nav">
   <button class="nav-btn active" data-tab="map" onclick="switchTab('map')">
-    <span class="nav-icon">◎</span><span>Map</span>
+    <span class="nav-icon">◎</span><span>Carte</span>
   </button>
   <button class="nav-btn" data-tab="nodes" onclick="switchTab('nodes')">
-    <span class="nav-icon">⬡</span><span>Nodes</span>
+    <span class="nav-icon">⬡</span><span>Nœuds</span>
   </button>
   <button class="nav-btn" data-tab="chat" onclick="switchTab('chat')">
-    <span class="nav-icon">◇</span><span>Chat</span>
+    <span class="nav-icon">◇</span><span>Discussion</span>
     <span id="chat-badge" class="nav-badge" hidden>0</span>
   </button>
   <button class="nav-btn" data-tab="log" onclick="switchTab('log')">
-    <span class="nav-icon">≡</span><span>Log</span>
+    <span class="nav-icon">≡</span><span>Journal</span>
   </button>
   <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
-    <span class="nav-icon">⊞</span><span>Config</span>
+    <span class="nav-icon">⊞</span><span>Configuration</span>
   </button>
 </nav>
 
@@ -641,7 +641,7 @@
 <div id="node-sheet" class="bsheet">
   <div class="sh-handle"></div>
   <div class="sh-head">
-    <h3 id="ns-name">Node</h3>
+    <h3 id="ns-name">Nœud</h3>
     <button class="sh-close" onclick="closeSheet('node-sheet')">✕</button>
   </div>
   <div class="sh-body">
@@ -650,8 +650,8 @@
       <button class="btn btn-sm" id="ns-dm"    onclick="nodeAction('dm')">DM</button>
       <button class="btn btn-sm" id="ns-ping"  onclick="nodeAction('ping')">Ping</button>
       <button class="btn btn-sm" id="ns-trace" onclick="nodeAction('trace')">Traceroute</button>
-      <button class="btn btn-sm" id="ns-map"   onclick="nodeAction('map')">Show on map</button>
-      <button class="btn btn-sm" id="ns-fav"   onclick="nodeAction('fav')">☆ Fav</button>
+      <button class="btn btn-sm" id="ns-map"   onclick="nodeAction('map')">Afficher sur la carte</button>
+      <button class="btn btn-sm" id="ns-fav"   onclick="nodeAction('fav')">☆ Favori</button>
     </div>
     <div id="ns-result" style="margin-top:10px;font-size:12px;color:var(--muted);font-family:monospace;white-space:pre-wrap"></div>
   </div>
@@ -661,13 +661,13 @@
 <div id="log-form-sheet" class="bsheet">
   <div class="sh-handle"></div>
   <div class="sh-head">
-    <h3 id="log-form-title">New Log Entry</h3>
+    <h3 id="log-form-title">Nouvelle entrée du journal</h3>
     <button class="sh-close" onclick="closeSheet('log-form-sheet')">✕</button>
   </div>
   <div class="sh-body">
     <div class="toc-field-row">
       <div class="form-group">
-        <label class="form-label">Category</label>
+        <label class="form-label">Catégorie</label>
         <select id="lf-cat" class="form-select" onchange="onLogCatChange()">
           <option>NOTE</option><option>PLAN</option><option>SITREP</option><option>COMMS</option>
           <option>POSITION</option><option>CONTACT</option><option>ALERT</option>
@@ -675,22 +675,22 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Mission / Folder</label>
-        <input id="lf-mission" class="form-input" list="log-mission-list" placeholder="optional">
+        <label class="form-label">Mission / Dossier</label>
+        <input id="lf-mission" class="form-input" list="log-mission-list" placeholder="facultatif">
         <datalist id="log-mission-list"></datalist>
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">Quick fill</label>
+      <label class="form-label">Remplissage rapide</label>
       <div id="lf-tpl-btns" style="display:flex;gap:6px;flex-wrap:wrap"></div>
     </div>
     <div class="form-group">
-      <label class="form-label">Body</label>
-      <textarea id="lf-body" class="form-textarea" placeholder="Entry text…"></textarea>
+      <label class="form-label">Contenu</label>
+      <textarea id="lf-body" class="form-textarea" placeholder="Texte de l’entrée…"></textarea>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <button class="btn btn-accent" onclick="submitLog()">Save</button>
-      <button class="btn" onclick="clearLogForm()">Clear</button>
+      <button class="btn btn-accent" onclick="submitLog()">Enregistrer</button>
+      <button class="btn" onclick="clearLogForm()">Effacer</button>
       <span id="lf-status" style="font-size:12px;color:var(--muted)"></span>
     </div>
   </div>
@@ -700,16 +700,16 @@
 <div id="log-detail-sheet" class="bsheet">
   <div class="sh-handle"></div>
   <div class="sh-head">
-    <h3 id="ld-cat">Log Entry</h3>
+    <h3 id="ld-cat">Entrée du journal</h3>
     <button class="sh-close" onclick="closeSheet('log-detail-sheet')">✕</button>
   </div>
   <div class="sh-body">
     <div id="ld-ts" style="font-size:11px;color:var(--muted);margin-bottom:8px"></div>
     <div id="ld-body" style="font-size:13px;white-space:pre-wrap;line-height:1.65"></div>
     <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-sm" onclick="editLogEntry()">Edit</button>
-      <button class="btn btn-sm" onclick="duplicateLogEntry()">Duplicate</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteLogEntry()">Delete entry</button>
+      <button class="btn btn-sm" onclick="editLogEntry()">Modifier</button>
+      <button class="btn btn-sm" onclick="duplicateLogEntry()">Dupliquer</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteLogEntry()">Supprimer l’entrée</button>
     </div>
   </div>
 </div>
@@ -718,7 +718,7 @@
 <div id="chat-select-sheet" class="bsheet">
   <div class="sh-handle"></div>
   <div class="sh-head">
-    <h3>Select Channel / Contact</h3>
+    <h3>Sélectionner un canal / contact</h3>
     <button class="sh-close" onclick="closeSheet('chat-select-sheet')">✕</button>
   </div>
   <div id="chat-select-body" class="sh-body" style="padding:0"></div>
@@ -728,7 +728,7 @@
 <div id="activity-sheet" class="bsheet">
   <div class="sh-handle"></div>
   <div class="sh-head">
-    <h3>Recent Activity</h3>
+    <h3>Activité récente</h3>
     <button class="sh-close" onclick="closeSheet('activity-sheet')">✕</button>
   </div>
   <div id="activity-body" class="sh-body" style="padding:0"></div>
@@ -751,14 +751,14 @@
 <div id="confirm-sheet" class="bsheet">
   <div class="sh-handle"></div>
   <div class="sh-head">
-    <h3 id="confirm-title">Confirm</h3>
+    <h3 id="confirm-title">Confirmer</h3>
     <button class="sh-close" onclick="closeSheet('confirm-sheet')">✕</button>
   </div>
   <div class="sh-body">
     <div id="confirm-body" style="font-size:13px;color:var(--muted);line-height:1.55"></div>
     <div class="confirm-actions">
-      <button id="confirm-ok" class="btn btn-danger">Confirm</button>
-      <button class="btn" onclick="closeSheet('confirm-sheet')">Cancel</button>
+      <button id="confirm-ok" class="btn btn-danger">Confirmer</button>
+      <button class="btn" onclick="closeSheet('confirm-sheet')">Annuler</button>
     </div>
   </div>
 </div>
@@ -779,18 +779,18 @@
       </svg>
     </div>
     <div class="ss-wordmark">OVERMESH</div>
-    <div class="ss-tagline">Field Mesh Dashboard</div>
+    <div class="ss-tagline">Tableau de bord du maillage terrain</div>
     <div class="ss-status-wrap"><div class="ss-status">
-      <span class="ss-txt-shutdown">OFFLINE</span>
-      <span class="ss-txt-restart">RESTARTING</span>
+      <span class="ss-txt-shutdown">HORS LIGNE</span>
+      <span class="ss-txt-restart">REDÉMARRAGE EN COURS</span>
     </div></div>
     <div class="ss-anim"><div class="ss-dots">
       <div class="ss-dot"></div><div class="ss-dot"></div>
       <div class="ss-dot"></div><div class="ss-dot"></div>
     </div></div>
     <div class="ss-hint">
-      <div class="ss-hint-label">To restart</div>
-      <code class="ss-hint-cmd" onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">systemctl --user restart overmesh</code>
+      <div class="ss-hint-label">Pour redémarrer</div>
+      <code class="ss-hint-cmd" onclick="navigator.clipboard.writeText(this.textContent)" title="Cliquer pour copier">systemctl --user restart overmesh</code>
     </div>
   </div>
 </div>

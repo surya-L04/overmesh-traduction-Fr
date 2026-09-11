@@ -23,7 +23,7 @@
     <div class="modal-body">
       <p id="confirm-msg" style="margin:0 0 16px;font-size:13px;color:var(--text)"></p>
       <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button class="btn-secondary" onclick="confirmCancel()">Cancel</button>
+        <button class="btn-secondary" onclick="confirmCancel()" data-i18n="map.cancel">Annuler</button>
         <button id="confirm-ok" class="btn-secondary" style="border-color:var(--red);color:var(--red)" onclick="confirmOk()">OK</button>
       </div>
     </div>
@@ -394,15 +394,15 @@
     <!-- Map toolbar -->
     <div class="toolbar" id="map-toolbar" style="padding:4px 8px;flex-shrink:0;margin-bottom:0">
       <div class="view-toggle">
-        <div class="btn active" id="map-btn-map"   onclick="toggleSensePanel(false)" title="Show map view">Map</div>
-        <div class="btn"        id="map-btn-sense" onclick="toggleSensePanel(true)"  title="Open Sense panel — scan and detect nearby nodes">Sense</div>
+        <div class="btn active" id="map-btn-map" data-i18n="map.map"   onclick="toggleSensePanel(false)" title="Show map view">Map</div>
+        <div class="btn"        id="map-btn-sense" data-i18n="map.sense" onclick="toggleSensePanel(true)"  title="Open Sense panel — scan and detect nearby nodes">Sense</div>
       </div>
       <!-- Map mode: MT/MC map filter pill -->
       <div class="view-toggle" id="map-net-filter" style="margin-left:8px">
         <div id="map-mt-pill" class="btn btn-net-mt active" onclick="toggleMapFilter('mt')" title="Show/hide Meshtastic nodes on map">MT</div>
         <div id="map-mc-pill" class="btn btn-net-mc active" onclick="toggleMapFilter('mc')" title="Show/hide MeshCore contacts on map">MC</div>
       </div>
-      <button id="signal-heatmap-toolbar-btn" class="btn" onclick="toggleSignalHeatmap()" title="Toggle signal heatmap. It follows the visible MT/MC selector and uses separate palettes when both are enabled." style="margin-left:8px">Heat</button>
+      <button id="signal-heatmap-toolbar-btn" data-i18n="map.heat" class="btn" onclick="toggleSignalHeatmap()" title="Toggle signal heatmap. It follows the visible MT/MC selector and uses separate palettes when both are enabled." style="margin-left:8px">Heat</button>
       <!-- Sense mode: MT/MC sense selector pill (hidden when Map is active) -->
       <div class="view-toggle" id="sense-net-filter" style="margin-left:8px;display:none">
         <div class="btn btn-net-mt active" id="sense-net-mt" onclick="switchSenseNet('mt')" title="Meshtastic Sense">MT</div>
@@ -420,10 +420,10 @@
         <div id="sense-mt-wrap" style="display:flex;flex-direction:column;flex:1;min-height:0">
           <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;flex-shrink:0">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-              <button id="sense-btn" onclick="triggerSense()" title="One-shot: broadcast position request to entire mesh and collect responses for 60s" style="background:var(--accent);color:#0a0f1e;border:none;border-radius:6px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer">Sense Mesh</button>
+              <button id="sense-btn" onclick="triggerSense()" title="One-shot: broadcast position request to entire mesh and collect responses for 60s" style="background:var(--accent);color:#0a0f1e;border:none;border-radius:6px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer" data-i18n="map.sense_mesh">Sense Mesh</button>
               <div id="sense-mt-toggle" class="view-toggle">
-                <div class="btn active" id="sense-passive-btn" onclick="toggleSensePassive()" title="Continuously capture any heard packets — no broadcast. Each radio tracks its own nodes independently. Nodes are kept for 2h after last heard, then expire. Clear only happens on a manual Sense Mesh run.">Passive</div>
-                <div class="btn" id="sense-active-btn"  onclick="toggleSenseActive()"  title="Periodically broadcast position requests at cooldown interval">Active</div>
+                <div class="btn active" id="sense-passive-btn" data-i18n="map.passive" onclick="toggleSensePassive()" title="Continuously capture any heard packets — no broadcast. Each radio tracks its own nodes independently. Nodes are kept for 2h after last heard, then expire. Clear only happens on a manual Sense Mesh run.">Passive</div>
+                <div class="btn" id="sense-active-btn"  onclick="toggleSenseActive()"  title="Periodically broadcast position requests at cooldown interval" data-i18n="map.active">Active</div>
               </div>
             </div>
             <div id="sense-mt-info" style="display:flex;flex-direction:column;gap:4px">
@@ -433,17 +433,17 @@
             <div id="sense-status" style="font-size:12px;color:var(--accent);min-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
           </div>
           <div id="sense-summary" style="display:none;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;flex-shrink:0">
-            <div class="sense-card-stat"><div id="sense-stat-responses">0</div><div>Responded</div></div>
-            <div class="sense-card-stat"><div id="sense-stat-gps">0</div><div>With GPS</div></div>
-            <div class="sense-card-stat"><div id="sense-stat-snr">—</div><div>Avg SNR</div></div>
+            <div class="sense-card-stat"><div id="sense-stat-responses">0</div><div data-i18n="map.responded">Responded</div></div>
+            <div class="sense-card-stat"><div id="sense-stat-gps">0</div><div data-i18n="map.with_gps">With GPS</div></div>
+            <div class="sense-card-stat"><div id="sense-stat-snr">—</div><div data-i18n="map.avg_snr">Avg SNR</div></div>
           </div>
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-shrink:0">
-            <span style="font-size:11px;color:var(--muted)">Nodes detected</span>
+            <span style="font-size:11px;color:var(--muted)" data-i18n="map.nodes_detected">Nodes detected</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-nodes-search" type="text" placeholder="Filter…" oninput="filterSenseNodes()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <input id="sense-nodes-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="filterSenseNodes()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
               <button class="search-clear" onclick="clearSearch('sense-nodes-search')" title="Clear search">✕</button>
             </div>
-            <button onclick="clearSenseList()" title="Clear detected nodes list" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:11px;color:var(--muted);cursor:pointer;flex-shrink:0;white-space:nowrap">Clear</button>
+            <button data-i18n="map.clear" onclick="clearSenseList()" title="Clear detected nodes list" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:11px;color:var(--muted);cursor:pointer;flex-shrink:0;white-space:nowrap">Clear</button>
           </div>
           <div id="sense-nodes" style="display:flex;flex-direction:column;gap:8px;overflow-y:auto;flex:1;min-height:0"></div>
         </div>
@@ -451,10 +451,10 @@
         <!-- MC sense content -->
         <div id="sense-mc-wrap" style="display:none;flex-direction:column;flex:1;min-height:0">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-shrink:0;flex-wrap:wrap">
-            <button id="mc-scan-btn" class="btn" onclick="startMcScan()" title="Send one MC advert and listen for contact responses during the scan window" style="display:none">Scan</button>
+            <button id="mc-scan-btn" data-i18n="map.scan" class="btn" onclick="startMcScan()" title="Send one MC advert and listen for contact responses during the scan window" style="display:none">Scan</button>
             <span id="mc-scan-status" style="display:none;font-size:11px;color:var(--muted);white-space:nowrap"></span>
-            <button id="mc-trace-btn" class="btn" onclick="doMcTrace()" title="Send one mesh-wide MC Trace probe and draw returned hop data" style="display:none">Trace</button>
-            <button id="mc-neighbors-btn" class="btn" onclick="doMcNeighbors()" title="Show contacts by last known MC path: direct, nearby, recent, or all" style="display:none">Last Heard</button>
+            <button id="mc-trace-btn" data-i18n="map.trace" class="btn" onclick="doMcTrace()" title="Send one mesh-wide MC Trace probe and draw returned hop data" style="display:none">Trace</button>
+            <button id="mc-neighbors-btn" class="btn" onclick="doMcNeighbors()" title="Show contacts by last known MC path: direct, nearby, recent, or all" style="display:none" data-i18n="map.last_heard">Last Heard</button>
             <span style="flex:1"></span>
             <span id="sense-mc-status" style="font-size:11px;color:var(--muted);white-space:nowrap"></span>
           </div>
@@ -469,7 +469,7 @@
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-shrink:0">
             <span style="font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap">MeshCore</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-mc-nodes-search" type="text" placeholder="Filter…" oninput="renderMcSensePanel()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <input id="sense-mc-nodes-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="renderMcSensePanel()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
               <button class="search-clear" onclick="clearSearch('sense-mc-nodes-search');renderMcSensePanel()" title="Clear filter">✕</button>
             </div>
           </div>
@@ -479,12 +479,12 @@
 
       <!-- Map view -->
       <div id="map-view-map" style="flex:1;min-width:0;position:relative">
-    <div id="map-pick-banner">Click on the map to set node position</div>
-    <button id="map-pick-cancel" onclick="cancelMapPick()" title="Cancel position pick">Cancel</button>
-    <div id="wp-pick-banner">Click on the map to place a Mark</div>
-    <button id="wp-pick-cancel" onclick="cancelWaypointPick()" title="Cancel waypoint placement">Cancel</button>
-    <div id="overlay-pick-banner">Overlay edit mode</div>
-    <button id="overlay-pick-cancel" onclick="cancelMapLayerDraft()" title="Cancel overlay editing">Cancel</button>
+    <div id="map-pick-banner">Cliquez sur la carte pour définir la position du nœud</div>
+    <button id="map-pick-cancel" data-i18n="map.cancel" onclick="cancelMapPick()" title="Cancel position pick">Cancel</button>
+    <div id="wp-pick-banner">Cliquez sur la carte pour placer un repère</div>
+    <button id="wp-pick-cancel" data-i18n="map.cancel" onclick="cancelWaypointPick()" title="Cancel waypoint placement">Cancel</button>
+    <div id="overlay-pick-banner">Mode édition du calque</div>
+    <button id="overlay-pick-cancel" data-i18n="map.cancel" onclick="cancelMapLayerDraft()" title="Cancel overlay editing">Cancel</button>
     <div id="map"></div>
     <div id="map-dm-window">
       <div id="map-dm-header">
@@ -493,9 +493,9 @@
       </div>
       <div id="map-dm-msgs"></div>
       <div id="map-dm-input-row">
-        <input id="map-dm-input" type="text" placeholder="Message..." maxlength="200"
+        <input id="map-dm-input" type="text" data-i18n-placeholder="map.message" placeholder="Message…" maxlength="200"
                onkeydown="if(event.key==='Enter')sendMapDM()">
-        <button onclick="sendMapDM()" title="Send direct message">Send</button>
+        <button onclick="sendMapDM()" title="Send direct message" data-i18n="map.send">Send</button>
       </div>
     </div>
     <div id="map-search-wrap">
@@ -506,7 +506,7 @@
     <div id="map-panels-right">
       <div id="marks-panel">
         <div id="marks-panel-hdr" onclick="toggleMarksPanel()">
-          <span style="font-size:12px;font-weight:600;color:var(--text)">Marks</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text)" data-i18n="map.marks">Marks</span>
           <span id="marks-panel-count" style="font-size:11px;color:var(--muted)"></span>
           <span id="marks-panel-chev" style="font-size:10px;color:var(--muted);margin-left:auto">▼</span>
         </div>
@@ -538,7 +538,7 @@
           <div style="padding:8px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:6px">
             <span style="font-size:11px;color:var(--muted);white-space:nowrap">Response log</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-log-search" type="text" placeholder="Filter…" oninput="filterSenseLog()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <input id="sense-log-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="filterSenseLog()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
               <button class="search-clear" onclick="clearSearch('sense-log-search')" title="Clear search">✕</button>
             </div>
           </div>
@@ -554,10 +554,10 @@
           <div style="padding:8px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:6px">
             <span style="font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0">MC activity</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-mc-log-search" type="text" placeholder="Filter…" oninput="renderMcSenseLog()" style="width:100%;font-size:11px;padding:1px 22px 1px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <input id="sense-mc-log-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="renderMcSenseLog()" style="width:100%;font-size:11px;padding:1px 22px 1px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
               <button class="search-clear" onclick="clearSearch('sense-mc-log-search');renderMcSenseLog()" title="Clear filter">✕</button>
             </div>
-            <button onclick="clearMcSenseLog()" style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:10px;color:var(--muted);cursor:pointer;flex-shrink:0" title="Clear MC activity log">Clear</button>
+            <button data-i18n="map.clear" onclick="clearMcSenseLog()" style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:10px;color:var(--muted);cursor:pointer;flex-shrink:0" title="Clear MC activity log">Clear</button>
           </div>
           <div id="sense-mc-log" style="flex:1;min-height:0;overflow-y:auto;padding:8px;font-size:11px;font-family:monospace;color:var(--muted)"><span id="sense-mc-log-empty">No MC activity yet.</span></div>
         </div>
@@ -688,7 +688,7 @@
   <!-- ── TOC Log panel ── -->
   <div class="panel" id="panel-log">
     <div class="toolbar">
-      <span class="section-title">Log</span>
+      <span class="section-title">Journal</span>
       <div class="view-toggle" style="margin-left:4px">
         <button class="btn active" id="log-subtab-toc-btn" onclick="setLogSubtab('toc')" title="Open the TOC log entry view">TOC</button>
         <button class="btn" id="log-subtab-sop-btn" onclick="setLogSubtab('sop')" title="Open the Log SOP reference">SOP</button>
@@ -741,7 +741,7 @@
         <button class="btn" id="toc-clear-btn" onclick="tocClear()" title="Clear all fields" style="flex-shrink:0">Clear</button>
       </div>
       <div class="toc-mission-row">
-        <label for="toc-mission" style="font-size:11px;color:var(--muted);white-space:nowrap">Mission / Folder:</label>
+        <label for="toc-mission" style="font-size:11px;color:var(--muted);white-space:nowrap">Mission / Dossier :</label>
         <input id="toc-mission" type="text" list="toc-mission-list" placeholder="e.g. CD mobile route, Basecamp watch, RC test"
                onfocus="tocShowMissionSuggestions()" oninput="tocShowMissionSuggestions()" onkeydown="tocMissionKeydown(event)"
                class="toc-mission-input">
@@ -749,7 +749,7 @@
       </div>
       <div id="toc-pinned-templates" style="display:none;gap:6px;flex-wrap:wrap;align-items:center"></div>
       <div id="toc-tag-tools" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-        <span style="font-size:11px;color:var(--muted)">Tags:</span>
+        <span style="font-size:11px;color:var(--muted)">Tags :</span>
         <button class="btn" onclick="tocAddTag('Personnel')" title="Add Personnel tag" style="padding:3px 8px;font-size:11px">Personnel</button>
         <button class="btn" onclick="tocAddTag('Recon')" title="Add Recon tag" style="padding:3px 8px;font-size:11px">Recon</button>
         <button class="btn" onclick="tocAddTag('Location')" title="Add Location tag" style="padding:3px 8px;font-size:11px">Location</button>
@@ -774,11 +774,11 @@
     <!-- Missions / folders -->
     <div class="toc-missions-panel">
       <div class="toc-missions-head">
-        <span>Missions / Folders</span>
-        <button class="btn" onclick="tocClearMissionFilter()" title="Show all missions and folders" style="padding:3px 8px;font-size:11px">All</button>
+        <span>Missions / Dossiers</span>
+        <button class="btn" onclick="tocClearMissionFilter()" title="Afficher toutes les missions et tous les dossiers" style="padding:3px 8px;font-size:11px">Tout</button>
       </div>
       <div id="toc-mission-summary" class="toc-mission-summary">
-        <span style="color:var(--muted);font-size:12px">No missions yet.</span>
+        <span style="color:var(--muted);font-size:12px">Aucune mission pour le moment.</span>
       </div>
     </div>
 
@@ -839,7 +839,7 @@
           </tr>
         </thead>
         <tbody id="toc-tbody">
-          <tr id="toc-empty-row"><td colspan="4" style="color:var(--muted);text-align:center;padding:24px 0">No log entries yet.</td></tr>
+          <tr id="toc-empty-row"><td colspan="4" style="color:var(--muted);text-align:center;padding:24px 0">Aucune entrée du journal pour le moment.</td></tr>
         </tbody>
       </table>
     </div>
