@@ -167,13 +167,13 @@
     if (!panel) return;
     const alerts = _alertsLoad();
     if (!alerts.length) {
-      panel.innerHTML = `<div class="alerts-header"><span class="alerts-title">Alerts</span></div><div class="alerts-empty">No alerts yet.</div>`;
+      panel.innerHTML = `<div class="alerts-header"><span class="alerts-title">Alertes</span></div><div class="alerts-empty">Aucune alerte pour le moment.</div>`;
       return;
     }
     panel.innerHTML = `
       <div class="alerts-header">
-        <span class="alerts-title">Alerts</span>
-        <button class="alerts-clear-btn" onclick="clearAllAlerts()">Clear all</button>
+        <span class="alerts-title">Alertes</span>
+        <button class="alerts-clear-btn" onclick="clearAllAlerts()">Tout effacer</button>
       </div>
       <div class="alerts-list">
         ${alerts.map(a => {
@@ -555,7 +555,7 @@
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(payload)
     }).then(r => r.ok ? r.json() : r.json().then(d => { throw new Error(d.error || `HTTP ${r.status}`); }))
-      .then(() => bridgeSettingsStatus('Saved.', true))
+      .then(() => bridgeSettingsStatus('Enregistré.', true))
       .catch(e => bridgeSettingsStatus(String(e.message || e), false));
   }
 
@@ -1079,7 +1079,7 @@
     sel.style.display = '';
     setHeaderNodeCountDivider(false);
     if (mtCount) mtCount.style.display = '';
-    // Auto-set activeRadioId if not set or no longer visible
+    // Auto-set activeRadioId if non défini or no longer visible
     if (!activeRadioId || !connectedEntries.find(([id]) => id === activeRadioId)) {
       activeRadioId = connectedEntries[0]?.[0] || null;
       if (activeRadioId) localStorage.setItem('activeRadioId', activeRadioId);
@@ -1319,7 +1319,7 @@
           senseMarkers = {};
           document.getElementById('sense-nodes')?.replaceChildren();
           const senseLogEl = document.getElementById('sense-log');
-          if (senseLogEl) senseLogEl.innerHTML = '<span id="sense-log-empty" style="color:var(--muted)">No sense run yet.</span>';
+          if (senseLogEl) senseLogEl.innerHTML = '<span id="sense-log-empty" style="color:var(--muted)">Aucune détection effectuée pour le moment.</span>';
         }
         if (activeRadioId === data.radio_id) {
           activeRadioId = null;
@@ -1613,7 +1613,7 @@
       ],
       buttons: [
         ['Settings', 'Open radio setup, app preferences, GPS, offline maps, updates, security, and help.'],
-        ['Show Intro', 'Open the short first-launch overview again.'],
+        ['Afficher l’introduction', 'Rouvrir le bref aperçu du premier lancement.'],
         ['Manual', 'Open this searchable reference. Search by tab name, button name, or feature.'],
         ['Restart', 'Restart the OverMesh server after updates or when the app needs a clean reload.']
       ]
@@ -1706,7 +1706,7 @@
         ['★ Fav first', 'Sort favorited contacts above all others.'],
         ['MT', 'Show or hide MT rows in the shared table.'],
         ['MC', 'Show or hide MC rows in the shared table.'],
-        ['Clear TR lock', 'Release a stuck MT traceroute lock if a previous request did not complete cleanly.'],
+        ['Déverrouiller TR', 'Libérer le verrou de traceroute MT si une requête précédente ne s’est pas terminée correctement.'],
         ['MT ignored', 'Show ignored MT nodes in History view.'],
         ['MC ignored', 'Show ignored MC contacts in History view.'],
         ['Map', 'Center the map on that node/contact and open its popup when a position is known.']
@@ -1861,7 +1861,7 @@
             ['direct', 'Packet arrived with no repeater hops — heard directly.'],
             ['1 hop / 2 hops', 'Hop count from packet metadata. Does not identify which nodes relayed it.'],
             ['cached route', 'A recent traceroute exists for this exact sender. Hover to preview, click to pin.'],
-            ['Clear', 'Clear the MT Sense detected-node list.']
+            ['Effacer', 'Effacer la liste des nœuds détectés par Sense MT.']
           ]
         },
         {
@@ -1897,7 +1897,7 @@
             ['ambiguous', 'Multiple equally plausible matches, cannot determine the exact relay.'],
             ['Path refresh', 'Re-resolve path/contact data for this entry and redraw if better data is available.'],
             ['!', 'Partial path — marker shows a known relay position, not the final contact.'],
-            ['Clear', 'Clear the MC activity log.']
+            ['Effacer', 'Effacer le journal d’activité MC.']
           ]
         }
       ],
@@ -1966,7 +1966,7 @@
         ['👁 (key view)', 'Reveal the channel key/secret for the selected MT channel.'],
         ['Copy URL', 'Copy the channel join URL to the clipboard.'],
         ['Import channel', 'Import a channel key from a URL or share link.'],
-        ['Clear known nodes', 'Clear all remembered remote nodes for this radio from OM history and live cache.']
+        ['Clear known nodes', 'Effacer tous les nœuds distants mémorisés pour this radio from OM history and live cache.']
       ]
     },
     {
@@ -2086,7 +2086,7 @@
         ['Check', 'Check GitHub for a newer version.'],
         ['Update', 'Pull the latest version from GitHub main if the install is clean and fast-forwardable.'],
         ['Restart', 'Restart OM after a successful update to load the new code.'],
-        ['Show Intro', 'Open the first-launch overview.'],
+        ['Afficher l’introduction', 'Ouvrir l’aperçu du premier lancement.'],
         ['Manual', 'Open this searchable manual.'],
         ['New messages', 'Enable or disable in-app browser notifications for incoming messages.'],
         ['New node seen', 'Enable or disable notifications when a new node/contact is first heard.'],
@@ -2213,7 +2213,7 @@
         ['Restart', 'Cleanly reload the OM server process.'],
         ['Refresh', 'Reload visible frontend/backend data from the server.'],
         ['Path refresh', 'Re-resolve and redraw route/path data for a selected message or contact.'],
-        ['Clear TR lock', 'Release a stuck MT traceroute lock so new TR requests can proceed.'],
+        ['Déverrouiller TR', 'Libérer le verrou de traceroute MT pour permettre de nouvelles requêtes TR.'],
         ['Enable', 'Reconnect a disabled configured radio without reconfiguring it.'],
         ['Disable', 'Temporarily disconnect a configured radio without removing its config or history.']
       ]
@@ -2312,11 +2312,11 @@
       : OM_MANUAL_SECTIONS.map(section => ({ section, score: 1, matches: 0 }));
     const sections = ranked.map(r => r.section);
     if (!sections.length) {
-      el.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:12px 0">No manual sections match that search.</div>';
+      el.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:12px 0">Aucune section ne correspond à cette recherche.</div>';
       return;
     }
     const summary = parts.terms.length
-      ? `<div style="font-size:12px;color:var(--muted);padding:2px 0 9px">Showing ${sections.length} section${sections.length !== 1 ? 's' : ''} ranked by relevance.</div>`
+      ? `<div style="font-size:12px;color:var(--muted);padding:2px 0 9px">Affichage de ${sections.length} section${sections.length !== 1 ? 's' : ''} classée(s) par pertinence.</div>`
       : '';
     el.innerHTML = summary + sections.map(section => `
       <div class="manual-section" style="border:1px solid var(--border);background:var(--bg2);border-radius:8px;padding:12px 14px;margin-bottom:10px">
@@ -2422,8 +2422,8 @@
       <div style="display:flex;flex-direction:column;gap:8px;padding:4px 0">
         <button class="btn-primary" onclick="closeModal();doTraceroute('${safeId}','${jsSafe(nodeName)}','${jsSafe(nodeRadioId)}')" title="Run traceroute to this node">Traceroute</button>
         <button class="btn-primary" onclick="closeModal();doDM('${safeId}','${jsSafe(nodeName)}')" title="Send a direct message to this node">Direct Message</button>
-        <button class="btn-primary" onclick="closeModal();doNodeInfo('${safeId}','${jsSafe(nodeName)}')" title="Request node info exchange">Node Info</button>
-        <button class="btn-primary" onclick="closeModal();doReqPos('${safeId}','${jsSafe(nodeName)}')" title="Request GPS position from this node">Request Position</button>
+        <button class="btn-primary" onclick="closeModal();doNodeInfo('${safeId}','${jsSafe(nodeName)}')" title="Demander les informations du nœud">Informations nœud</button>
+        <button class="btn-primary" onclick="closeModal();doReqPos('${safeId}','${jsSafe(nodeName)}')" title="Demander la position GPS à ce nœud">Demander la position</button>
       </div>`);
   }
 
@@ -2436,7 +2436,7 @@
       ? activeMsgs.filter(m => m.is_dm && ((m.sent || m.from_id === 'bot') ? m.to_id : m.from_id) === dmContactId)
       : activeMsgs.filter(m => m.channel === chatChannel && !m.is_dm);
     if (!filtered.length) {
-      container.innerHTML = `<div class="chat-empty">No messages yet</div>`;
+      container.innerHTML = `<div class="chat-empty">Aucun message pour le moment</div>`;
       return;
     }
     container.innerHTML = '';
@@ -2902,12 +2902,12 @@ if (targetEl) {
         <td class="node-actions">
           <button class="act-btn" title="Traceroute" onclick="doTraceroute('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">TR</button>
           <button class="act-btn" title="Direct message" onclick="doDM('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">DM</button>
-          <button class="act-btn" title="Request position" onclick="doReqPos('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Pos</button>
-          <button class="act-btn" title="Request node info exchange over the mesh" onclick="doNodeInfo('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Req</button>
-          <button class="act-btn" title="Contact details and share data" onclick="openMtNodeDetails('${jsSafe(n.id)}')">Info/Share</button>
+          <button class="act-btn" title="Demander la position" onclick="doReqPos('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Pos</button>
+          <button class="act-btn" title="Demander les informations du nœud via le maillage" onclick="doNodeInfo('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Req</button>
+          <button class="act-btn" title="Détails du contact et partage des données" onclick="openMtNodeDetails('${jsSafe(n.id)}')">Infos/Partage</button>
           ${n.latitude != null && n.longitude != null
-            ? `<button class="act-btn" title="Show on map" onclick="centerNodeOnMap('${jsSafe(n.id)}')">Map</button>`
-            : `<button class="act-btn" title="Aucune position GPS" style="opacity:0.35;cursor:default" disabled>Map</button>`}
+            ? `<button class="act-btn" title="Afficher sur la carte" onclick="centerNodeOnMap('${jsSafe(n.id)}')">Carte</button>`
+            : `<button class="act-btn" title="Aucune position GPS" style="opacity:0.35;cursor:default" disabled>Carte</button>`}
         </td>
         <td class="notes-cell" onclick="openNoteEdit('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')" title="Personal notes" style="cursor:pointer">
           ${(() => { const p = _parseNotes(n.notes || ''); const s = _notesSummary(p); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
@@ -2933,7 +2933,7 @@ if (targetEl) {
              (c.id || '').toLowerCase().includes(query);
     });
     if (!real.length && !mcFiltered.length) {
-      tbody.innerHTML = '<tr><td colspan="12" class="no-data">No nodes found</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="12" class="no-data">Aucun nœud trouvé</td></tr>';
     }
     if (mcFiltered.length) {
       // Sort MC contacts: by distance when active, otherwise favourites-first
@@ -3008,11 +3008,11 @@ if (targetEl) {
             ${dmButton}
             ${routeButton}
             ${hasCoords
-              ? `<button class="act-btn" title="Show on map" onclick="centerMcOnMap(${lat},${lon})">Map</button>`
-              : `<button class="act-btn" title="No coordinates available" style="opacity:0.35;cursor:default" disabled>Map</button>`}
+              ? `<button class="act-btn" title="Afficher sur la carte" onclick="centerMcOnMap(${lat},${lon})">Carte</button>`
+              : `<button class="act-btn" title="Coordonnées indisponibles" style="opacity:0.35;cursor:default" disabled>Carte</button>`}
             ${pingButton}
             ${manageButton}
-            <button class="act-btn" title="Contact details and share data" onclick="openMcContactShare('${jsSafe(cid)}','${rid}')">Info/Share</button>
+            <button class="act-btn" title="Détails du contact et partage des données" onclick="openMcContactShare('${jsSafe(cid)}','${rid}')">Infos/Partage</button>
           </td>
           <td class="notes-cell" onclick="openMcNoteModal('${pk}','${rid}','${jsSafe(c.long_name||c.name||'')}')" title="Personal notes" style="cursor:pointer">
             ${(() => { const s = _notesSummary(_parseNotes(mcNotesCache[noteKey] || '{}')); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
@@ -3107,7 +3107,7 @@ if (targetEl) {
       : mcFiltered;
 
     if (!mtNodes.length && !mcSorted.length) {
-      tbody.innerHTML = '<tr><td colspan="11" class="no-data">No nodes in database yet</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" class="no-data">Aucun nœud dans la base de données pour le moment</td></tr>';
       return;
     }
 
@@ -3259,8 +3259,8 @@ if (targetEl) {
         <button class="btn-sm" style="margin-top:6px" onclick="addNoteCustomRow()">+ Add field</button>
       </div>
       <div class="note-modal-actions">
-        <button class="btn-secondary" onclick="${clearCallbackStr}">Clear all</button>
-        <button class="dm-send" onclick="${saveCallbackStr}">Save</button>
+        <button class="btn-secondary" onclick="${clearCallbackStr}">Tout effacer</button>
+        <button class="dm-send" onclick="${saveCallbackStr}">Enregistrer</button>
       </div>`;
   }
 
@@ -3595,7 +3595,7 @@ if (targetEl) {
     openModal('MT Node Details', `
       <div id="mt-detail-rows">${_detailRows(localRows)}</div>
       <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Meshtastic share data</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Données de partage Meshtastic</div>
         <div id="mt-share-qr-area" class="modal-loading" style="padding:10px 0;text-align:left">Preparing contact details…</div>
       </div>
     `);
@@ -3607,7 +3607,7 @@ if (targetEl) {
       .then(({ok, d}) => {
         if (!area) return;
         if (!ok || d.error) {
-          area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">${escHtml(d.error || 'Share data unavailable.')}</div>`;
+          area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">${escHtml(d.error || 'Données de partage indisponibles.')}</div>`;
           return;
         }
         const details = d.details || {};
@@ -3638,12 +3638,12 @@ if (targetEl) {
           <div id="mt-share-link" class="share-link-box">${escHtml(d.uri || '')}</div>
           <div id="mt-share-json" class="share-link-box" style="margin-top:8px">${escHtml(d.json || JSON.stringify(details))}</div>
           <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-            <button class="btn" onclick="copyTextById('mt-share-link')">Copy share data</button>
-            <button class="btn" onclick="copyTextById('mt-share-json')">Copy JSON</button>
+            <button class="btn" onclick="copyTextById('mt-share-link')">Copier les données de partage</button>
+            <button class="btn" onclick="copyTextById('mt-share-json')">Copier le JSON</button>
           </div>`;
       })
       .catch(e => {
-        if (area) area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">Share data export failed: ${escHtml(e.message)}</div>`;
+        if (area) area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">Échec de l’exportation des données de partage : ${escHtml(e.message)}</div>`;
       });
   }
 
@@ -3679,11 +3679,11 @@ if (targetEl) {
     openModal('MC Contact Details', `
       ${_detailRows(rows)}
       <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Passive Intel</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Données passives</div>
         <div id="mc-passive-intel-area" class="modal-loading" style="padding:6px 0;text-align:left;font-size:12px">Loading…</div>
       </div>
       <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">MeshCore share data</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Données de partage MeshCore</div>
         <div id="mc-share-area" class="modal-loading" style="padding:10px 0;text-align:left">Preparing contact details…</div>
       </div>
     `);
@@ -3695,7 +3695,7 @@ if (targetEl) {
         if (!piArea) return;
         piArea.className = '';
         if (!obs || !obs.length) {
-          piArea.innerHTML = '<span style="color:var(--muted)">No passive observations recorded yet.</span>';
+          piArea.innerHTML = '<span style="color:var(--muted)">Aucune observation passive enregistrée pour le moment.</span>';
           return;
         }
         const rows = obs.map(o => {
@@ -3718,10 +3718,10 @@ if (targetEl) {
         const total = obs.length;
         piArea.innerHTML = `<div style="color:var(--muted);margin-bottom:4px">${total} recent observation${total !== 1 ? 's' : ''}</div>${rows}
           <div style="margin-top:6px">
-            <button class="btn btn-small" onclick="_clearMcPassiveObs('${jsSafe(rid)}','${jsSafe(pubkeyPre)}',this)" style="font-size:11px;padding:3px 8px">Clear passive data</button>
+            <button class="btn btn-small" onclick="_clearMcPassiveObs('${jsSafe(rid)}','${jsSafe(pubkeyPre)}',this)" style="font-size:11px;padding:3px 8px">Effacer les données passives</button>
           </div>`;
       })
-      .catch(() => { if (piArea) piArea.innerHTML = '<span style="color:var(--muted)">Passive data unavailable.</span>'; });
+      .catch(() => { if (piArea) piArea.innerHTML = '<span style="color:var(--muted)">Données passives indisponibles.</span>'; });
 
     const area = document.getElementById('mc-share-area');
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(rid)}/contacts/${encodeURIComponent(fullKey)}/share`)
@@ -3729,7 +3729,7 @@ if (targetEl) {
       .then(({ok, d}) => {
         if (!area) return;
         if (!ok || d.error) {
-          area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">${escHtml(d.error || 'Share data unavailable.')}</div>`;
+          area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">${escHtml(d.error || 'Données de partage indisponibles.')}</div>`;
           return;
         }
         area.className = '';
@@ -3742,7 +3742,7 @@ if (targetEl) {
                <div style="display:inline-block;background:#fff;padding:8px;border-radius:6px;line-height:0">
                  <div style="width:180px;height:180px;overflow:hidden">${d.qr_svg}</div>
                </div>
-               <div style="font-size:11px;color:var(--muted);margin-top:6px">Scan with MeshCore app → Menu → Add Contact → Scan QR Code</div>
+               <div style="font-size:11px;color:var(--muted);margin-top:6px">Scanner avec l’application MeshCore → Menu → Ajouter un contact → Scanner le QR Code</div>
              </div>`
           : '';
         area.innerHTML = `
@@ -3753,11 +3753,11 @@ if (targetEl) {
           ${qrHtml}
           <div id="mc-share-link" class="share-link-box">${escHtml(d.uri || '')}</div>
           <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-            <button class="btn" onclick="copyTextById('mc-share-link',this)">Copy share link</button>
+            <button class="btn" onclick="copyTextById('mc-share-link',this)">Copier le lien de partage</button>
           </div>`;
       })
       .catch(e => {
-        if (area) area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">Share data export failed: ${escHtml(e.message)}</div>`;
+        if (area) area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">Échec de l’exportation des données de partage : ${escHtml(e.message)}</div>`;
       });
   }
 
@@ -3772,9 +3772,9 @@ if (targetEl) {
       .then(() => {
         if (_mcPassiveSummaryCache[radioId]) delete _mcPassiveSummaryCache[radioId][pubkeyPre];
         const piArea = document.getElementById('mc-passive-intel-area');
-        if (piArea) piArea.innerHTML = '<span style="color:var(--muted)">Passive data cleared.</span>';
+        if (piArea) piArea.innerHTML = '<span style="color:var(--muted)">Données passives effacées.</span>';
       })
-      .catch(() => { if (btn) { btn.disabled = false; btn.textContent = 'Clear passive data'; } });
+      .catch(() => { if (btn) { btn.disabled = false; btn.textContent = 'Effacer les données passives'; } });
   }
 
   // ---------------------------------------------------------------------------
@@ -3809,7 +3809,7 @@ if (targetEl) {
       const allObs = allResults.flat();
 
       if (!allObs.length) {
-        listEl.innerHTML = '<div style="color:var(--muted)">No passive observations stored yet.</div>';
+        listEl.innerHTML = '<div style="color:var(--muted)">Aucune observation passive enregistrée.</div>';
         if (statsEl) statsEl.textContent = '0 observations';
         return;
       }
@@ -3892,13 +3892,13 @@ if (targetEl) {
               <div style="font-size:11px;color:var(--muted)">${escHtml(sigStr)}${sigStr && typeStr ? ' · ' : ''}${escHtml(typeStr)}</div>
             </div>
             <button class="btn" style="font-size:11px;padding:2px 8px;flex-shrink:0;color:var(--red);border-color:var(--red)"
-              onclick="passiveIntelDeleteEntry('${deleteRids}','${jsSafe(pre)}',this)" title="Delete all observations for this node">Delete</button>
+              onclick="passiveIntelDeleteEntry('${deleteRids}','${jsSafe(pre)}',this)" title="Supprimer toutes les observations de ce nœud">Supprimer</button>
           </div>
           <div style="margin-top:6px;font-size:11px;border-top:1px solid var(--border);padding-top:4px">${recentHtml}</div>
         </div>`;
       }).join('');
     } catch (e) {
-      listEl.innerHTML = `<div style="color:var(--red)">Failed to load: ${escHtml(e.message)}</div>`;
+      listEl.innerHTML = `<div style="color:var(--red)">Échec du chargement : ${escHtml(e.message)}</div>`;
     }
   }
 
@@ -3980,7 +3980,7 @@ if (targetEl) {
     if (!el) return;
     const collectors = _loadCollectors();
     if (!collectors.length) {
-      el.innerHTML = '<div style="color:var(--muted);font-size:12px">No collectors configured.</div>';
+      el.innerHTML = '<div style="color:var(--muted);font-size:12px">Aucun collecteur configuré.</div>';
       return;
     }
     const rid = _passiveIntelRadioId();
@@ -3991,7 +3991,7 @@ if (targetEl) {
       const ck = jsSafe(c.key);
       const latVal = c.lat != null ? c.lat : '';
       const lonVal = c.lon != null ? c.lon : '';
-      const posNote = c.lat != null ? `${Number(c.lat).toFixed(5)}, ${Number(c.lon).toFixed(5)}` : 'not set';
+      const posNote = c.lat != null ? `${Number(c.lat).toFixed(5)}, ${Number(c.lon).toFixed(5)}` : 'non défini';
       const hasPwd = !!_collectorPassword(ck);
       return `<div style="padding:10px 0;border-bottom:1px solid var(--border)">
 
@@ -4016,7 +4016,7 @@ if (targetEl) {
           <div style="${SEC}">Actions</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:4px">
             <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCommand('${ck}','OMCOLLECT',this)" title="Trigger observation dump from this collector">Collect</button>
-            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCommand('${ck}','neighbors',this)" title="Request neighbor list from this node">Neighbors</button>
+            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCommand('${ck}','neighbors',this)" title="Demander la liste des voisins de ce nœud">Voisins</button>
             <button class="btn" style="font-size:11px;padding:2px 10px" onclick="checkCollectorObs('${ck}','${escHtml(c.label||c.key)}',this)" title="Query how many observations are buffered on the RC hardware">RC OBS count</button>
             <button class="btn" style="font-size:11px;padding:2px 10px" onclick="fetchCollectorMessages('${ck}',this)" title="Fetch stored channel messages from this collector">Fetch messages</button>
           </div>
@@ -4033,18 +4033,18 @@ if (targetEl) {
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
             <input id="collector-lat-${ck}" class="settings-input" type="number" step="0.000001" style="width:120px;font-size:11px;font-family:monospace" placeholder="Latitude" value="${escHtml(String(latVal))}">
             <input id="collector-lon-${ck}" class="settings-input" type="number" step="0.000001" style="width:120px;font-size:11px;font-family:monospace" placeholder="Longitude" value="${escHtml(String(lonVal))}">
-            <button class="btn" style="font-size:11px;padding:2px 8px" onclick="startCollectorMapPick('${ck}',${i})" title="Pick position on the map">Pick on map</button>
-            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="setCollectorPosition('${ck}',${i},this)" title="Send lat/lon to the collector node and save locally">Set position</button>
+            <button class="btn" style="font-size:11px;padding:2px 8px" onclick="startCollectorMapPick('${ck}',${i})" title="Choisir une position sur la carte">Choisir sur la carte</button>
+            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="setCollectorPosition('${ck}',${i},this)" title="Send lat/lon to the collector node and save locally">Définir la position</button>
           </div>
         </div>
 
         <!-- Password -->
         <div>
-          <div style="${SEC}">Password <span style="color:var(--fg);font-size:11px;text-transform:none;letter-spacing:normal;margin-left:4px">${hasPwd ? '(saved)' : 'not set'}</span></div>
+          <div style="${SEC}">Password <span style="color:var(--fg);font-size:11px;text-transform:none;letter-spacing:normal;margin-left:4px">${hasPwd ? '(enregistré)' : 'non défini'}</span></div>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
             <input id="collector-pwd-${ck}" class="settings-input" type="password" style="width:160px;font-size:11px" placeholder="New password…" autocomplete="new-password">
-            <button class="btn" style="font-size:11px;padding:2px 8px" onclick="saveCollectorPwd('${ck}')" title="Save this password in browser storage (used for login before commands)">Save password</button>
-            <button class="btn" style="font-size:11px;padding:2px 8px" onclick="changeCollectorPwd('${ck}',this)" title="Login with saved password, then change the node password to what is typed above">Change password</button>
+            <button class="btn" style="font-size:11px;padding:2px 8px" onclick="saveCollectorPwd('${ck}')" title="Save this password in browser storage (used for login before commands)">Enregistrer le mot de passe</button>
+            <button class="btn" style="font-size:11px;padding:2px 8px" onclick="changeCollectorPwd('${ck}',this)" title="Se connecter avec le mot de passe enregistré, puis modifier le mot de passe du nœud avec celui saisi ci-dessus">Modifier le mot de passe</button>
           </div>
         </div>
 
@@ -4288,7 +4288,7 @@ if (targetEl) {
       if (pwd) {
         const ok = await _collectorLogin(rid, pubkeyPre, pwd);
         if (!ok) {
-          showToast('Remote Collector', 'Login failed — check saved password.', 'node');
+          showToast('Remote Collector', 'Échec de la connexion — vérifiez le mot de passe enregistré.', 'node');
           throw new Error('Login failed');
         }
       }
@@ -4305,7 +4305,7 @@ if (targetEl) {
       } else {
         const reply = d.reply?.text || d.reply || '';
         const msg = d.error || reply || 'unknown error';
-        showToast('Remote Collector', `Failed: ${escHtml(msg)}`, 'node');
+        showToast('Remote Collector', `Échec : ${escHtml(msg)}`, 'node');
         const err = new Error(msg);
         err.toastShown = true;
         throw err;
@@ -4330,7 +4330,7 @@ if (targetEl) {
     const rid = _passiveIntelRadioId();
     if (!rid) { showToast('Remote Collector', 'Aucune radio MC connectée.', 'node'); return; }
     const out = document.getElementById(`collector-msgs-${pubkeyPre}`);
-    if (out) { out.style.display = 'block'; out.textContent = 'Requesting stored messages…'; }
+    if (out) { out.style.display = 'block'; out.textContent = 'Demande des messages enregistrés…'; }
     if (btn) btn.disabled = true;
 
     // Login first if password is stored
@@ -4338,7 +4338,7 @@ if (targetEl) {
     if (pwd) {
       const ok = await _collectorLogin(rid, pubkeyPre, pwd);
       if (!ok) {
-        if (out) out.innerHTML = '<span style="color:var(--red)">Login failed — check saved password.</span>';
+        if (out) out.innerHTML = '<span style="color:var(--red)">Échec de la connexion — vérifiez le mot de passe enregistré.</span>';
         if (btn) btn.disabled = false;
         return;
       }
@@ -4378,7 +4378,7 @@ if (targetEl) {
 
       const replyText = d.reply?.text || '';
       if (replyText === 'MSGSTORE_EMPTY') {
-        if (out) out.innerHTML = '<span style="color:var(--muted)">No messages stored on collector.</span>';
+        if (out) out.innerHTML = '<span style="color:var(--muted)">Aucun message enregistré sur le collecteur.</span>';
         if (sseHandler && chatSSE) chatSSE.removeEventListener('message', sseHandler);
         if (btn) btn.disabled = false;
         return;
@@ -4388,7 +4388,7 @@ if (targetEl) {
       if (sseHandler && chatSSE) chatSSE.removeEventListener('message', sseHandler);
 
       if (!received || received.length === 0) {
-        if (out) out.innerHTML = '<span style="color:var(--muted)">No messages received.</span>';
+        if (out) out.innerHTML = '<span style="color:var(--muted)">Aucun message reçu.</span>';
       } else {
         const rows = received.map(m => {
           const dt = m.ts ? new Date(m.ts * 1000).toLocaleString() : '?';
@@ -4451,14 +4451,14 @@ if (targetEl) {
 
   function _trBusyText(remaining) {
     const sec = Math.max(1, parseInt(remaining, 10) || 30);
-    return `Traceroute is temporarily unavailable. A previous TR is still finishing; try again in about ${sec}s.`;
+    return `Le traceroute est temporairement indisponible. A previous TR is still finishing; try again in about ${sec}s.`;
   }
 
   function _showTrBusy(bodyEl, remaining) {
     const msg = _trBusyText(remaining);
     const isMapPanel = !!bodyEl?.closest?.('.map-panel-body');
     const clearAction = isMapPanel ? 'unlockTraceroutePanel(this, true)' : 'unlockTraceroute(true)';
-    const clearBtn = `<button class="btn" style="margin-top:10px" onclick="${clearAction}" title="Cancel the pending traceroute and release the OM TR lock">Clear TR lock</button>`;
+    const clearBtn = `<button class="btn" style="margin-top:10px" onclick="${clearAction}" title="Annuler le traceroute en attente et libérer le verrou TR d’OM">Déverrouiller TR</button>`;
     showToast('Traceroute busy', escHtml(msg), 'node', 'traceroute-busy');
     if (bodyEl) bodyEl.innerHTML = `<div class="modal-error" style="font-weight:600">${escHtml(msg)}</div>${clearBtn}`;
   }
@@ -4523,7 +4523,7 @@ if (targetEl) {
         return nodeEl + linkEl;
       }).join('');
       document.getElementById('modal-body').innerHTML = `
-        <div class="tr-section">Route to node</div>
+        <div class="tr-section">Route vers le nœud</div>
         <div class="tr-chain">${buildChain(d.route, d.snrTowards)}</div>
         <div class="tr-section">Route back</div>
         <div class="tr-chain">${buildChain(d.routeBack, d.snrBack)}</div>`;
@@ -4536,7 +4536,7 @@ if (targetEl) {
     } catch(e) {
       clearInterval(timerId);
       document.getElementById('modal-body').innerHTML =
-        `<div class="modal-error">Request failed: ${escHtml(e.message)}</div>`;
+        `<div class="modal-error">Échec de la requête : ${escHtml(e.message)}</div>`;
     } finally {
       if (_activeTracerouteController === controller) _activeTracerouteController = null;
       _activeTracerouteStartedAt = 0;
@@ -4555,14 +4555,14 @@ if (targetEl) {
       const d = await r.json().catch(() => ({}));
       if (!r.ok) {
         document.getElementById('modal-body').innerHTML =
-          `<div class="modal-error">${escHtml(d.error || 'Traceroute is still running.')}</div>`;
+          `<div class="modal-error">${escHtml(d.error || 'Le traceroute est toujours en cours.')}</div>`;
         return;
       }
       document.getElementById('modal-body').innerHTML =
         '<div class="modal-success">Lock released. You can now send a new traceroute.</div>';
     } catch(e) {
       document.getElementById('modal-body').innerHTML =
-        `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+        `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
@@ -4577,7 +4577,7 @@ if (targetEl) {
       });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) {
-        if (body) body.innerHTML = `<div class="modal-error">${escHtml(d.error || 'Traceroute is still running.')}</div>`;
+        if (body) body.innerHTML = `<div class="modal-error">${escHtml(d.error || 'Le traceroute est toujours en cours.')}</div>`;
         return;
       }
       // Also clear the frontend controller so the guard in openMapTR stops blocking
@@ -4585,13 +4585,13 @@ if (targetEl) {
       if (body) body.innerHTML =
         '<div class="modal-success">Lock released. You can now send a new traceroute.</div>';
     } catch(e) {
-      if (body) body.innerHTML = `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+      if (body) body.innerHTML = `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
   function doDM(nodeId, nodeName) {
     openModal('Direct Message — ' + nodeName, `
-      <div class="modal-node">Send a DM to ${escHtml(nodeName)}</div>
+      <div class="modal-node">Envoyer un message privé à ${escHtml(nodeName)}</div>
       <div class="dm-row">
         <input class="dm-input" id="dm-input" placeholder="Type a message..." maxlength="200"
                onkeydown="if(event.key==='Enter')sendDM('${jsSafe(nodeId)}')">
@@ -4621,39 +4621,39 @@ if (targetEl) {
         status.innerHTML = `<div class="modal-error">${escHtml(d.error)}</div>`;
       }
     } catch(e) {
-      status.innerHTML = `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+      status.innerHTML = `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
   async function doReqPos(nodeId, nodeName) {
-    openModal('Request Position — ' + nodeName,
-      `<div class="modal-loading">Requesting position from ${escHtml(nodeName)}...</div>`);
+    openModal('Demander la position — ' + nodeName,
+      `<div class="modal-loading">Demande de position à ${escHtml(nodeName)}...</div>`);
     try {
       const r = await fetch(BASE_PATH + `/api/node/${encodeURIComponent(nodeId)}/position`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({radio_id: activeRadioId})});
       const d = await r.json();
       document.getElementById('modal-body').innerHTML = r.ok
-        ? `<div class="modal-success">Position request sent. Node should broadcast its location shortly.</div>`
+        ? `<div class="modal-success">Demande de position envoyée. Le nœud devrait diffuser sa position sous peu.</div>`
         : `<div class="modal-error">${escHtml(d.error)}</div>`;
     } catch(e) {
       document.getElementById('modal-body').innerHTML =
-        `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+        `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
   async function doNodeInfo(nodeId, nodeName) {
     if (_nodeInfoTimer) { clearInterval(_nodeInfoTimer); _nodeInfoTimer = null; }
     openModal('Node Info — ' + nodeName,
-      `<div class="modal-loading" id="node-info-status">Requesting telemetry from ${escHtml(nodeName)}… 15s</div>`);
+      `<div class="modal-loading" id="node-info-status">Demande de télémétrie à ${escHtml(nodeName)}… 15s</div>`);
     let countdown = 15;
     _nodeInfoTimer = setInterval(() => {
       countdown--;
       const el = document.getElementById('node-info-status');
       if (!el) { clearInterval(_nodeInfoTimer); _nodeInfoTimer = null; return; }
       if (countdown <= -30) {
-        el.textContent = `No response from ${nodeName}.`;
+        el.textContent = `Aucune réponse de ${nodeName}.`;
         clearInterval(_nodeInfoTimer); _nodeInfoTimer = null;
       } else {
-        el.textContent = `Requesting telemetry from ${nodeName}\u2026 ${countdown}s`;
+        el.textContent = `Demande de télémétrie à ${nodeName}\u2026 ${countdown}s`;
       }
     }, 1000);
     try {
@@ -4673,7 +4673,7 @@ if (targetEl) {
         ? `<a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=14/${lat}/${lon}" target="_blank" style="color:var(--accent)">${lat.toFixed(5)}, ${lon.toFixed(5)}</a>`
         : null;
       const staleNote = d.fresh ? '' :
-        `<div style="color:var(--yellow);font-size:11px;margin-bottom:8px">&#9888; Node did not respond — showing cached data</div>`;
+        `<div style="color:var(--yellow);font-size:11px;margin-bottom:8px">&#9888; Aucune réponse du nœud — affichage des données en cache</div>`;
       document.getElementById('modal-body').innerHTML = staleNote + `
         <table class="info-table">
           <tr><td colspan="2" class="info-section">Identity</td></tr>
@@ -4705,7 +4705,7 @@ if (targetEl) {
     } catch(e) {
       clearInterval(_nodeInfoTimer);
       document.getElementById('modal-body').innerHTML =
-        `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+        `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
@@ -4751,7 +4751,7 @@ if (targetEl) {
           ${isShutdown ? '' : `<div class="om-ss-mesh" aria-hidden="true"><svg viewBox="0 0 72 62"><path class="om-ss-edge" d="M36 7 8 55h56L36 7Z"/><path class="om-ss-edge" d="M8 55 36 36 64 55"/><circle class="om-ss-node" cx="36" cy="7" r="5"/><circle class="om-ss-node" cx="8" cy="55" r="5"/><circle class="om-ss-node" cx="64" cy="55" r="5"/></svg></div>`}
           <div class="om-ss-status">${isShutdown ? 'OverMesh stopped' : 'Restarting OverMesh'}</div>
           <div class="om-ss-dots" aria-hidden="true"><span class="om-ss-dot"></span><span class="om-ss-dot"></span><span class="om-ss-dot"></span><span class="om-ss-dot"></span></div>
-          <div class="om-ss-hint">${isShutdown ? 'Restart OverMesh using the same method you normally use on this machine.<br><span class="om-ss-cmd" onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">systemctl --user start overmesh</span><br>Or launch from the Dashboard.' : 'This page will reconnect after the service comes back.'}</div>
+          <div class="om-ss-hint">${isShutdown ? 'Redémarrez OverMesh avec la méthode que vous utilisez habituellement sur cette machine.<br><span class="om-ss-cmd" onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">systemctl --user start overmesh</span><br>Ou lancez-le depuis le tableau de bord.' : 'Cette page se reconnectera lorsque le service sera de nouveau disponible.'}</div>
         </div>
       </div>`;
   }
@@ -5364,7 +5364,7 @@ if (targetEl) {
               tipLines.push(`To: ${snrTo != null ? snrTo + ' dB' : '—'} &nbsp; Back: ${snrBack != null ? snrBack + ' dB' : '—'}`);
             }
           }
-          if (skipped > 0) tipLines.push(`<em style="color:#a78bfa">${skipped} hop${skipped > 1 ? 's' : ''} — no GPS</em>`);
+          if (skipped > 0) tipLines.push(`<em style="color:#a78bfa">${skipped} hop${skipped > 1 ? 's' : ''} — sans GPS</em>`);
           if (packetPartial) tipLines.push(`<em style="color:#a78bfa">${packetHops} packet hop${packetHops !== 1 ? 's' : ''} — intermediate hops unknown</em>`);
           if (tipLines.length) seg.bindTooltip(tipLines.join('<br>'), {sticky: true, direction: 'top'});
 
@@ -5602,7 +5602,7 @@ if (targetEl) {
       cached,
       source: cached ? (hasHopCount ? 'packet hops + cached route' : 'cached route') : 'packet hop count',
       detail: cached
-        ? `Show cached traceroute for ${cached.nodeName || targetId}`
+        ? `Afficher le traceroute enregistré pour ${cached.nodeName || targetId}`
         : `${hops === 0 ? 'Direct packet' : `${hops} hop${hops !== 1 ? 's' : ''}`} reported by packet metadata`,
     };
   }
@@ -5655,7 +5655,7 @@ if (targetEl) {
       hops,
       cached,
       detail: cached
-        ? `Show cached traceroute for ${cached.nodeName || n.from_id}: ${cachedSummary?.detail || 'route available'}`
+        ? `Afficher le traceroute enregistré pour ${cached.nodeName || n.from_id}: ${cachedSummary?.detail || 'itinéraire disponible'}`
         : 'Packet hop count only',
     };
   }
@@ -5699,7 +5699,7 @@ if (targetEl) {
     _mtRefreshSenseRouteSelection();
     const targetPos = _nodeLatLon(fromId, radioId || activeRadioId);
     if (targetPos && leafletMap) leafletMap.panTo(targetPos);
-    if (!drewRoute && entry) showToast('MT route', 'No sender/local position is available for this packet path yet.', 'node', `mt-sense-route-${fromId}`);
+    if (!drewRoute && entry) showToast('MT route', 'Aucune position de l’émetteur ou locale n’est disponible pour ce chemin de paquet pour le moment.', 'node', `mt-sense-route-${fromId}`);
     if (entry) _showMtSenseEntryDetail(entry, entryKey || routeKey);
   }
 
@@ -5927,7 +5927,7 @@ if (targetEl) {
     const bounds  = leafletMap.getBounds();
     const tiles   = _tilesForBounds(bounds, curZ, maxZ);
     if (!tiles.length) {
-      txt.textContent = 'No tiles at this zoom level.';
+      txt.textContent = 'Aucune tuile à ce niveau de zoom.';
       btn.disabled = false;
       _savingTiles = false;
       return;
@@ -5970,14 +5970,14 @@ if (targetEl) {
 
   function clearTileCache(btn) {
     document.getElementById('confirm-ok').textContent = 'Clear';
-    showConfirm('Clear all cached tiles? Saved region configs are kept but tile counts will be reset.', () => {
+    showConfirm('Effacer toutes les tuiles en cache ? Saved region configs are kept but tile counts will be reset.', () => {
       tileClear().then(() => {
         saveRegions(loadRegions().map(r => ({ ...r, tiles: 0 })));
         renderRegionList();
         refreshTileCacheInfo();
         btnFeedback(btn, '✓ Cleared');
       }).catch(() => {
-        document.getElementById('tile-cache-count').textContent = 'Clear failed — try refreshing';
+        document.getElementById('tile-cache-count').textContent = 'Échec de l’effacement — essayez d’actualiser';
       });
     });
   }
@@ -5985,7 +5985,7 @@ if (targetEl) {
   function refreshTileCacheInfo() {
     tileCount().then(n => {
       document.getElementById('tile-cache-count').textContent =
-        n > 0 ? `${n.toLocaleString()} tiles cached (≈${Math.round(n * 12 / 1024)} MB)` : 'No tiles cached';
+        n > 0 ? `${n.toLocaleString()} tiles cached (≈${Math.round(n * 12 / 1024)} MB)` : 'Aucune tuile en cache';
     }).catch(() => {
       document.getElementById('tile-cache-count').textContent = 'unavailable';
     });
@@ -6024,7 +6024,7 @@ if (targetEl) {
     const list = loadRegions();
     const el = document.getElementById('region-list');
     if (!list.length) {
-      el.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:4px 0">No saved regions yet.</div>';
+      el.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:4px 0">Aucune région enregistrée pour le moment.</div>';
       return;
     }
     el.innerHTML = list.map(r => `
@@ -6053,12 +6053,12 @@ if (targetEl) {
     const resultsEl = document.getElementById('region-search-results');
     if (!q) { resultsEl.style.display = 'none'; return; }
     resultsEl.style.display = 'block';
-    resultsEl.innerHTML = '<div style="padding:6px 10px;color:var(--muted)">Searching…</div>';
+    resultsEl.innerHTML = '<div style="padding:6px 10px;color:var(--muted)">Recherche…</div>';
     fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=6`, {
       headers: { 'Accept-Language': 'en' }
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(results => {
       if (!results.length) {
-        resultsEl.innerHTML = '<div style="padding:6px 10px;color:var(--muted)">No results.</div>';
+        resultsEl.innerHTML = '<div style="padding:6px 10px;color:var(--muted)">Aucun résultat.</div>';
         return;
       }
       resultsEl.innerHTML = results.map((r, i) =>
@@ -6068,7 +6068,7 @@ if (targetEl) {
       ).join('');
       resultsEl._results = results;
     }).catch(() => {
-      resultsEl.innerHTML = '<div style="padding:6px 10px;color:var(--muted)">Search failed — check connection.</div>';
+      resultsEl.innerHTML = '<div style="padding:6px 10px;color:var(--muted)">Échec de la recherche — vérifiez la connexion.</div>';
     });
   }
 
@@ -6143,7 +6143,7 @@ if (targetEl) {
     bar.style.width = '0';
 
     if (!tiles.length) {
-      txt.textContent = 'No tiles in this region for the selected zoom range.';
+      txt.textContent = 'Aucune tuile dans cette région pour la plage de zoom sélectionnée.';
       btn.disabled = false;
       _downloadingRegion = false;
       return;
@@ -6480,7 +6480,7 @@ if (targetEl) {
     }
     if (_sharedTileServerEnabled && _mapAppTileLayersLoaded && !Object.keys(_mapAppTileLayers).length) {
       const empty = L.DomUtil.create('div', '', _baseLayerMenuPanel);
-      empty.textContent = 'No shared local layers found';
+      empty.textContent = 'Aucun calque local partagé trouvé';
       empty.style.cssText = 'padding:4px 10px 6px 10px;font-size:11px;color:var(--muted)';
     }
     addTitle('Online Maps', _sharedTileServerEnabled ? '' : 'Built-in layers. Browser cache may work offline only after viewing/downloading.');
@@ -6495,7 +6495,7 @@ if (targetEl) {
     title.style.cssText = 'padding:6px 10px 4px 10px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;border-top:1px solid var(--border);margin-top:4px';
     if (!_mapLayerDefs.length) {
       const empty = L.DomUtil.create('div', '', _mapLayerMenuPanel);
-      empty.textContent = 'No saved overlays';
+      empty.textContent = 'Aucun calque enregistré';
       empty.style.cssText = 'padding:6px 10px 8px 10px;font-size:12px;color:var(--muted)';
       return;
     }
@@ -7109,7 +7109,7 @@ if (targetEl) {
       _clearSignalHeatmap();
       if (!mtPoints.length && !mcPoints.length) {
         const sourceMsg = sources.mt || sources.mc
-          ? 'No enabled MT/MC source has signal and position yet.'
+          ? 'Aucune source MT/MC active ne dispose encore d’un signal et d’une position.'
           : sources.context === 'sense'
             ? 'Select MT or MC in Sense to show a signal heatmap.'
             : 'Enable the MT or MC map pill to show a signal heatmap.';
@@ -7132,8 +7132,8 @@ if (targetEl) {
     const editing = !!draft;
     const vertices = draft?.vertices || [];
     const selectedLabel = draft?.mode === 'circle'
-      ? (_mapLayerSelectedVertex === 0 ? 'Selected: center' : _mapLayerSelectedVertex === 1 ? 'Selected: radius' : 'No handle selected')
-      : _mapLayerSelectedVertex >= 0 ? `Selected point: ${_mapLayerSelectedVertex + 1}` : 'No point selected';
+      ? (_mapLayerSelectedVertex === 0 ? 'Sélection : centre' : _mapLayerSelectedVertex === 1 ? 'Sélection : rayon' : 'Aucun élément sélectionné')
+      : _mapLayerSelectedVertex >= 0 ? `Point sélectionné : ${_mapLayerSelectedVertex + 1}` : ' Aucun point sélectionné';
     const selectedVertex = _mapLayerSelectedVertex >= 0 ? vertices[_mapLayerSelectedVertex] : null;
     const gf = draft?.geofence || {enter: true, leave: true, notify_app: true, notify_browser: true, networks: 'both'};
     const tip = !editing ? 'Créez des superpositions simples directement sur la carte.' : draft.mode === 'point' ? "Cliquez sur la carte pour placer le point. Faites glisser la poignée pour l'ajuster." : draft.mode === 'line' ? 'Cliquez pour ajouter des sommets. Double-cliquez pour terminer. Faites glisser les poignées pour affiner le tracé.' : 'Cliquez pour ajouter les angles. Double-cliquez pour terminer. Faites glisser les poignées pour affiner la zone.';
@@ -7171,7 +7171,7 @@ if (targetEl) {
           <div style="display:flex;align-items:center;gap:8px">
             <label class="settings-label" for="overlay-editor-color" style="margin:0">Color</label>
             <input id="overlay-editor-color" type="color" value="${escHtml(draft?.color || '#f59e0b')}" style="width:48px;height:28px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:2px" onchange="_mapLayerDraft && (_mapLayerDraft.color=this.value,_renderMapLayerDraft())">
-            <span style="font-size:11px;color:var(--muted)">${draft?.layerId ? 'Editing saved overlay' : 'New overlay'}${draft?.finished ? ' · finished' : ''}</span>
+            <span style="font-size:11px;color:var(--muted)">${draft?.layerId ? 'Modification du calque enregistré' : 'Nouveau calque'}${draft?.finished ? ' · terminé' : ''}</span>
           </div>
           <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text)">
             <input type="checkbox" ${draft?.is_geofence ? 'checked' : ''} ${draft?.mode === 'polygon' || draft?.mode === 'circle' ? '' : 'disabled'} onchange="_mapLayerDraft && (_mapLayerDraft.is_geofence=this.checked)">
@@ -7194,18 +7194,18 @@ if (targetEl) {
               <label style="display:flex;align-items:center;gap:6px;font-size:12px"><input type="radio" name="overlay-gf-net" ${gf.networks === 'mc' ? 'checked' : ''} onchange="_mapLayerDraft && (_mapLayerDraft.geofence.networks='mc')"> MC only</label>
             </div>
           </div>
-          <div style="font-size:11px;color:var(--muted)">${draft?.mode === 'circle' ? `Radius: ${draft?.radius_m ? Math.round(draft.radius_m) + ' m' : 'not set'}` : `Vertices: ${vertices.length}`}${editing && draft?.mode !== 'point' ? ` · ${escHtml(selectedLabel)}` : ''}</div>
+          <div style="font-size:11px;color:var(--muted)">${draft?.mode === 'circle' ? `Rayon : ${draft?.radius_m ? Math.round(draft.radius_m) + ' m' : 'non défini'}` : `Sommets : ${vertices.length}`}${editing && draft?.mode !== 'point' ? ` · ${escHtml(selectedLabel)}` : ''}</div>
           <div style="display:${draft?.mode === 'polygon' && selectedVertex ? 'grid' : 'none'};gap:6px">
             <label class="settings-label" for="overlay-point-label">Point label</label>
             <input id="overlay-point-label" class="settings-input" maxlength="24" value="${escHtml(selectedVertex?.label || String((_mapLayerSelectedVertex >= 0 ? _mapLayerSelectedVertex + 1 : 1)))}" placeholder="1" oninput="_mapLayerDraft && _mapLayerSelectedVertex >= 0 && (_mapLayerDraft.vertices[_mapLayerSelectedVertex].label=this.value,_renderMapLayerDraft())">
           </div>
           <div id="overlay-editor-status" style="font-size:12px;color:var(--muted);min-height:14px"></div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button class="overlay-tool-btn" onclick="saveMapLayerDraft(this)">Save</button>
+            <button class="overlay-tool-btn" onclick="saveMapLayerDraft(this)">Enregistrer</button>
             <button class="overlay-tool-btn" onclick="finishMapLayerDraft()">Finish</button>
-            <button class="overlay-tool-btn" onclick="deleteLastMapLayerVertex(this)">Delete last</button>
-            <button class="overlay-tool-btn" onclick="deleteSelectedMapLayerVertex(this)" ${_mapLayerSelectedVertex < 0 ? 'disabled' : ''}>Delete selected</button>
-            <button class="overlay-tool-btn" onclick="cancelMapLayerDraft()">Cancel</button>
+            <button class="overlay-tool-btn" onclick="deleteLastMapLayerVertex(this)">Supprimer le dernier</button>
+            <button class="overlay-tool-btn" onclick="deleteSelectedMapLayerVertex(this)" ${_mapLayerSelectedVertex < 0 ? 'disabled' : ''}>Supprimer la sélection</button>
+            <button class="overlay-tool-btn" onclick="cancelMapLayerDraft()">Annuler</button>
           </div>
         </div>
       </div>
@@ -7223,9 +7223,9 @@ if (targetEl) {
           <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${escHtml(def.color || '#f59e0b')};flex-shrink:0"></span>
           <div style="flex:1;min-width:0">
             <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(def.name || 'Unnamed')}</div>
-            <div style="font-size:10px;color:var(--muted)">${def.enabled ? 'Visible on map' : 'Hidden'}${def.is_geofence ? ` · geofence (${escHtml((def.geofence?.networks || 'both').toUpperCase())})` : ''} · ${features} feature${features === 1 ? '' : 's'}${state.reason === 'multi' ? ' · split to edit' : ''}</div>
+            <div style="font-size:10px;color:var(--muted)">${def.enabled ? 'Visible sur la carte' : 'Masqué'}${def.is_geofence ? ` · geofence (${escHtml((def.geofence?.networks || 'both').toUpperCase())})` : ''} · ${features} feature${features === 1 ? '' : 's'}${state.reason === 'multi' ? ' · séparer pour modifier' : ''}</div>
           </div>
-          <button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerEnabled(${def.id}, ${!def.enabled})" title="${def.enabled ? 'Hide overlay' : 'Show overlay'}">${def.enabled ? '◉' : '○'}</button>
+          <button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerEnabled(${def.id}, ${!def.enabled})" title="${def.enabled ? 'Masquer le calque' : 'Afficher le calque'}">${def.enabled ? '◉' : '○'}</button>
           ${_isPolygonGeofence(def) || (state.editable && (def.data?.features?.[0]?.geometry?.type === 'Polygon' || def.data?.geometry?.type === 'Polygon')) ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerGeofence(${def.id}, ${!def.is_geofence})" title="${def.is_geofence ? 'Disable geofence' : 'Enable geofence'}">${def.is_geofence ? '⌁' : '⊚'}</button>` : ''}
           ${actionBtn}
           <button class="overlay-mini-btn" onclick="event.stopPropagation();tocFromMapLayer(${def.id})" title="Log this overlay in TOC">Journal</button>
@@ -7241,7 +7241,7 @@ if (targetEl) {
     const wrap = document.getElementById('map-layer-list');
     if (!wrap) return;
     if (!_mapLayerDefs.length) {
-      wrap.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:4px 0">No saved map layers yet.</div>';
+      wrap.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:4px 0">Aucun calque cartographique enregistré pour le moment.</div>';
       return;
     }
     wrap.innerHTML = _mapLayerDefs.map(def => `
@@ -7253,7 +7253,7 @@ if (targetEl) {
         </label>
         ${_isPolygonGeofence(def) || (_mapLayerEditableState(def).editable && (_mapLayerFeatureList(def.data)[0]?.geometry?.type === 'Polygon')) ? `<button class="btn-sm" type="button" onclick="toggleMapLayerGeofence(${def.id}, ${!def.is_geofence})">${def.is_geofence ? 'Geofence on' : 'Geofence off'}</button>` : ''}
         <button class="btn-sm" type="button" onclick="zoomToMapLayer(${def.id})">Zoom</button>
-        <button class="btn-sm" type="button" style="color:var(--danger,#f87171)" onclick="deleteMapLayer(${def.id}, '${jsSafe(def.name)}')">Delete</button>
+        <button class="btn-sm" type="button" style="color:var(--danger,#f87171)" onclick="deleteMapLayer(${def.id}, '${jsSafe(def.name)}')">Supprimer</button>
       </div>
     `).join('');
   }
@@ -7483,7 +7483,7 @@ if (targetEl) {
         if (lonEl) lonEl.value = lon.toFixed(6);
         const st = document.getElementById('mc-actions-status');
         if (st) {
-          st.innerHTML = `<span style="color:var(--accent)">Position set to ${lat.toFixed(5)}, ${lon.toFixed(5)}. Press Save to send it to the MC node.</span>`;
+          st.innerHTML = `<span style="color:var(--accent)">Position définie sur ${lat.toFixed(5)}, ${lon.toFixed(5)}. Appuyez sur Enregistrer pour l’envoyer au nœud MC.</span>`;
         }
       } else if (_mapPickMode === 'om') {
         document.getElementById('om-pos-lat').value = lat.toFixed(6);
@@ -7491,7 +7491,7 @@ if (targetEl) {
         cancelMapPick();
         switchTab('settings');
         switchSettingsTab('app');
-        omManualPosStatus(`Position set to ${lat.toFixed(5)}, ${lon.toFixed(5)}. Save to use it as OM origin.`, true);
+        omManualPosStatus(`Position définie sur ${lat.toFixed(5)}, ${lon.toFixed(5)}. Save to use it as OM origin.`, true);
         setTimeout(() => { const el = document.getElementById('om-pos-lat'); if (el) el.scrollIntoView({behavior: 'smooth', block: 'center'}); }, 80);
       } else if (_mapPickMode === 'mc-remote') {
         cancelMapPick({keepTab: true});
@@ -7501,7 +7501,7 @@ if (targetEl) {
         if (latEl) latEl.value = lat.toFixed(6);
         if (lonEl) lonEl.value = lon.toFixed(6);
         const out = document.getElementById('mc-remote-quick-result');
-        if (out) out.innerHTML = `<span style="color:var(--accent)">Position set to ${lat.toFixed(5)}, ${lon.toFixed(5)}. Press Set to send it to the RPTR.</span>`;
+        if (out) out.innerHTML = `<span style="color:var(--accent)">Position définie sur ${lat.toFixed(5)}, ${lon.toFixed(5)}. Appuyez sur Définir pour l’envoyer au RPTR.</span>`;
       } else if (_mapPickMode === 'rc-collector') {
         const target = _collectorPickTarget;
         cancelMapPick();
@@ -7520,7 +7520,7 @@ if (targetEl) {
         const cb = document.getElementById('node-cfg-fixed-pos');
         if (!cb.checked) { cb.checked = true; toggleFixedCoords(); }
         cancelMapPick();
-        nodeCfgStatus('position', `Position set to ${lat.toFixed(5)}, ${lon.toFixed(5)}. Adjust precision, then Save.`, true);
+        nodeCfgStatus('position', `Position définie sur ${lat.toFixed(5)}, ${lon.toFixed(5)}. Adjust precision, then Save.`, true);
       }
     });
     leafletMap.on('mousemove', (e) => {
@@ -7901,7 +7901,7 @@ if (targetEl) {
             </div>
             <div id="wp-send-status" style="font-size:12px;min-height:14px"></div>
             <div style="display:flex;gap:8px;justify-content:flex-end">
-              <button class="btn" onclick="closeModal()">Cancel</button>
+              <button class="btn" onclick="closeModal()">Annuler</button>
               <button class="btn-primary" onclick="sendWaypoint()">Send</button>
             </div>
           </div>
@@ -7934,8 +7934,8 @@ if (targetEl) {
             </div>
             <div id="note-save-status" style="font-size:12px;min-height:14px"></div>
             <div style="display:flex;gap:8px;justify-content:flex-end">
-              <button class="btn" onclick="closeModal()">Cancel</button>
-              <button class="btn-primary" onclick="saveMapNote()">Save</button>
+              <button class="btn" onclick="closeModal()">Annuler</button>
+              <button class="btn-primary" onclick="saveMapNote()">Enregistrer</button>
             </div>
           </div>
         </div>
@@ -8109,10 +8109,10 @@ if (targetEl) {
             style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer">Edit</button>
           <button onclick="shareNote(${note.id})"
             title="Broadcast this note as a Meshtastic waypoint on the mesh"
-            style="font-size:11px;padding:3px 8px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;color:var(--accent);cursor:pointer">Share</button>
+            style="font-size:11px;padding:3px 8px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;color:var(--accent);cursor:pointer">Partager</button>
           <button onclick="document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete note \u201c${jsSafe(note.name||'this note')}\u201d?',()=>deleteNote(${note.id}))"
             title="Delete this note — local only, does not affect the mesh"
-            style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--red);cursor:pointer">Delete</button>
+            style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--red);cursor:pointer">Supprimer</button>
         </div>
       </div>`;
     noteMarkers[note.id] = L.marker([note.lat, note.lon], {icon})
@@ -8181,8 +8181,8 @@ if (targetEl) {
         </div>
         <div id="note-save-status" style="font-size:12px;min-height:14px"></div>
         <div style="display:flex;gap:8px;justify-content:flex-end">
-          <button class="btn" onclick="closeModal()">Cancel</button>
-          <button class="btn-primary" onclick="saveNoteEdit()">Save</button>
+          <button class="btn" onclick="closeModal()">Annuler</button>
+          <button class="btn-primary" onclick="saveNoteEdit()">Enregistrer</button>
         </div>
       </div>
     `);
@@ -8223,7 +8223,7 @@ if (targetEl) {
     const useNode   = destRadio?.value === 'node' && _wpDestNode !== null;
     const status = document.getElementById('wp-send-status');
     if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Name is required.'; } return; }
-    if (!activeRadioId) { if (status) { status.style.color='var(--red)'; status.textContent='No radio connected.'; } return; }
+    if (!activeRadioId) { if (status) { status.style.color='var(--red)'; status.textContent='Aucune radio connectée.'; } return; }
     if (useNode && !_wpDestNode) { if (status) { status.style.color='var(--red)'; status.textContent='Select a node.'; } return; }
     if (status) { status.style.color='var(--muted)'; status.textContent='Sending…'; }
     try {
@@ -8280,7 +8280,7 @@ if (targetEl) {
                   onclick="openEditWaypointModal(${wp.id})">Edit</button>
           <button style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--red);cursor:pointer"
                   title="Delete this mark — sends expiry packet to the mesh so all nodes remove it"
-                  onclick="document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete this Mark from the mesh?',()=>deleteWaypoint(${wp.id}))">Delete</button>
+                  onclick="document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete this Mark from the mesh?',()=>deleteWaypoint(${wp.id}))">Supprimer</button>
         </div>
       </div>`;
     waypointsData[wp.id] = wp;
@@ -8550,8 +8550,8 @@ if (targetEl) {
         </div>
         <div id="wp-send-status" style="font-size:12px;min-height:14px"></div>
         <div style="display:flex;gap:8px;justify-content:flex-end">
-          <button class="btn" onclick="closeModal()">Cancel</button>
-          <button class="btn-primary" onclick="saveWaypoint()">Save</button>
+          <button class="btn" onclick="closeModal()">Annuler</button>
+          <button class="btn-primary" onclick="saveWaypoint()">Enregistrer</button>
         </div>
       </div>
     `);
@@ -8614,7 +8614,7 @@ if (targetEl) {
     const container = document.getElementById('map-dm-msgs');
     const msgs = getActiveChatMsgs().filter(m => m.is_dm && (m.sent ? m.to_id : m.from_id) === mapDmContactId);
     if (!msgs.length) {
-      container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;margin-top:20px">No messages yet</div>';
+      container.innerHTML = '<div style="color:var(--muted);font-size:12px;text-align:center;margin-top:20px">Aucun message pour le moment</div>';
       return;
     }
     const wasAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 30;
@@ -8729,7 +8729,7 @@ if (targetEl) {
         return nodeEl + linkEl;
       }).join('');
       body.innerHTML = `
-        <div class="tr-section">Route to node</div>
+        <div class="tr-section">Route vers le nœud</div>
         <div class="tr-chain">${buildChain(d.route, d.snrTowards)}</div>
         <div class="tr-section">Route back</div>
         <div class="tr-chain">${buildChain(d.routeBack, d.snrBack)}</div>`;
@@ -8742,7 +8742,7 @@ if (targetEl) {
       if (_showTrMap) _drawTraceRouteOnMap(d);
     } catch(e) {
       clearInterval(timerId);
-      body.innerHTML = `<div class="modal-error">Request failed: ${escHtml(e.message)}</div>`;
+      body.innerHTML = `<div class="modal-error">Échec de la requête : ${escHtml(e.message)}</div>`;
     } finally {
       if (_activeTracerouteController === controller) _activeTracerouteController = null;
       _activeTracerouteStartedAt = 0;
@@ -8755,17 +8755,17 @@ if (targetEl) {
   // ── Map Info overlay ────────────────────────────────────────────────────
   async function openMapInfo(nodeId, nodeName) {
     const { panel, body } = _openMapPanel('Info · ' + nodeName);
-    body.innerHTML = `<div style="color:var(--muted);font-size:12px" class="info-status">Requesting telemetry from ${escHtml(nodeName)}… 15s</div>`;
+    body.innerHTML = `<div style="color:var(--muted);font-size:12px" class="info-status">Demande de télémétrie à ${escHtml(nodeName)}… 15s</div>`;
     let countdown = 15;
     panel._timer = setInterval(() => {
       countdown--;
       const el = body.querySelector('.info-status');
       if (!el) { clearInterval(panel._timer); panel._timer = null; return; }
       if (countdown <= -30) {
-        el.textContent = `No response from ${nodeName}.`;
+        el.textContent = `Aucune réponse de ${nodeName}.`;
         clearInterval(panel._timer); panel._timer = null;
       } else {
-        el.textContent = `Requesting telemetry from ${nodeName}… ${countdown}s`;
+        el.textContent = `Demande de télémétrie à ${nodeName}… ${countdown}s`;
       }
     }, 1000);
     try {
@@ -8781,7 +8781,7 @@ if (targetEl) {
         ? `<a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=14/${lat}/${lon}" target="_blank" style="color:var(--accent)">${lat.toFixed(5)}, ${lon.toFixed(5)}</a>`
         : null;
       const staleNote = d.fresh ? '' :
-        `<div style="color:var(--yellow);font-size:11px;margin-bottom:8px">&#9888; Node did not respond — showing cached data</div>`;
+        `<div style="color:var(--yellow);font-size:11px;margin-bottom:8px">&#9888; Aucune réponse du nœud — affichage des données en cache</div>`;
       body.innerHTML = staleNote + `
         <table class="info-table">
           <tr><td colspan="2" class="info-section">Identity</td></tr>
@@ -8812,7 +8812,7 @@ if (targetEl) {
         </table>`;
     } catch(e) {
       clearInterval(panel._timer); panel._timer = null;
-      body.innerHTML = `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+      body.innerHTML = `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
@@ -8845,7 +8845,7 @@ if (targetEl) {
         const r = await fetch(BASE_PATH + `/api/node/${encodeURIComponent(nodeId)}/gps_history?hours=${hours}`);
         const pts = await r.json();
         if (!Array.isArray(pts) || pts.length === 0) {
-          body.innerHTML = `<div style="color:var(--muted);font-size:12px">No GPS history for this period.</div>${renderPicker(hours)}`;
+          body.innerHTML = `<div style="color:var(--muted);font-size:12px">Aucun historique GPS pour cette période.</div>${renderPicker(hours)}`;
           return;
         }
         const oldest = pts[0].ts, newest = pts[pts.length - 1].ts;
@@ -8879,7 +8879,7 @@ if (targetEl) {
           </div>
           ${renderPicker(hours)}`;
       } catch(e) {
-        body.innerHTML = `<div class="modal-error">Failed: ${escHtml(e.message)}</div>${renderPicker(hours)}`;
+        body.innerHTML = `<div class="modal-error">Échec : ${escHtml(e.message)}</div>${renderPicker(hours)}`;
       }
     }
 
@@ -8911,15 +8911,15 @@ if (targetEl) {
   // ── Map Position overlay ────────────────────────────────────────────────
   async function openMapPos(nodeId, nodeName) {
     const { panel, body } = _openMapPanel('Pos · ' + nodeName);
-    body.innerHTML = `<div class="modal-loading">Requesting position from ${escHtml(nodeName)}...</div>`;
+    body.innerHTML = `<div class="modal-loading">Demande de position à ${escHtml(nodeName)}...</div>`;
     try {
       const r = await fetch(BASE_PATH + `/api/node/${encodeURIComponent(nodeId)}/position`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({radio_id: activeRadioId})});
       const d = await r.json();
       body.innerHTML = r.ok
-        ? `<div class="modal-success">Position request sent. Node should broadcast its location shortly.</div>`
+        ? `<div class="modal-success">Demande de position envoyée. Le nœud devrait diffuser sa position sous peu.</div>`
         : `<div class="modal-error">${escHtml(d.error)}</div>`;
     } catch(e) {
-      body.innerHTML = `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+      body.innerHTML = `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
@@ -9045,14 +9045,14 @@ if (targetEl) {
       <div><b>Last seen:</b> <span class="map-popup-lh" data-ts="${n.last_heard_ts || 0}">${n.last_heard_ts ? senseTimeAgo(n.last_heard_ts) : '—'}</span></div>
       <div style="color:var(--muted);font-size:11px;margin-top:2px">${n.latitude.toFixed(5)}, ${n.longitude.toFixed(5)}</div>
       <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-        <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(n.id)}')">Liste</button>
+        <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(n.id)}')">Liste</button>
         ${!n.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">DM</button>` : ''}
         ${!n.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">TR</button>` : ''}
         ${!n.is_local ? `<button class="map-popup-btn" title="Set position" onclick="openMapPos('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Pos</button>` : ''}
         ${!n.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Info</button>` : ''}
         <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(n.id)}')">Journal</button>
         <button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Trail</button>
-        ${!n.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">Delete</button>` : ''}
+        ${!n.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">Supprimer</button>` : ''}
       </div>`;
   }
 
@@ -9137,13 +9137,13 @@ if (targetEl) {
                   <b>SNR:</b> ${snrStr(x.snr)} &nbsp; <b>Batt:</b> ${battStr(x.battery)} &nbsp; <b>Dist:</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Seen:</b> ${escHtml(x.last_heard || '—')}
                 </div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap">
-                  <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
+                  <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
                   ${!x.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
                   ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
                   ${!x.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
                   <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
                   <button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Trail</button>
-                  ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Delete</button>` : ''}
+                  ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Supprimer</button>` : ''}
                 </div>
               </div>`).join('')}`;
           clusterMarkers[k].setIcon(updatedIcon).setPopupContent(updatedPopup);
@@ -9172,12 +9172,12 @@ if (targetEl) {
                 <b>SNR:</b> ${snrStr(x.snr)} &nbsp; <b>Batt:</b> ${battStr(x.battery)} &nbsp; <b>Dist:</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Seen:</b> ${escHtml(x.last_heard || '—')}
               </div>
               <div style="display:flex;gap:4px;flex-wrap:wrap">
-                <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
+                <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
                 ${!x.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
                 ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
                 ${!x.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
                 <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
-                ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Delete</button>` : ''}
+                ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Supprimer</button>` : ''}
               </div>
             </div>`).join('')}`;
         const marker = L.marker([group[0].latitude, group[0].longitude], {icon: clusterIcon})
@@ -9666,7 +9666,7 @@ if (targetEl) {
     if (!el) return;
     const rules = (_crossSettings && Array.isArray(_crossSettings.rules)) ? _crossSettings.rules : [];
     if (!rules.length) {
-      el.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:10px 12px;border:1px dashed var(--border);border-radius:6px">No cross-system rules yet.</div>';
+      el.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:10px 12px;border:1px dashed var(--border);border-radius:6px">Aucune règle inter-systèmes pour le moment.</div>';
       return;
     }
     el.innerHTML = rules.map(rule => `
@@ -9677,7 +9677,7 @@ if (targetEl) {
             <span style="font-size:11px;color:${rule.enabled ? 'var(--accent)' : 'var(--muted)'}">${rule.enabled ? 'enabled' : 'disabled'}</span>
             <button class="btn-secondary" style="font-size:11px;padding:3px 8px" onclick="crossToggleRule('${jsSafe(rule.id)}')">${rule.enabled ? 'Disable' : 'Enable'}</button>
             <button class="btn-secondary" style="font-size:11px;padding:3px 8px" onclick="crossEditRule('${jsSafe(rule.id)}')">Edit</button>
-            <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red)" onclick="crossDeleteRule('${jsSafe(rule.id)}')">Delete</button>
+            <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red)" onclick="crossDeleteRule('${jsSafe(rule.id)}')">Supprimer</button>
           </div>
         </div>
         <div style="font-size:11px;color:var(--muted)">
@@ -9701,12 +9701,12 @@ if (targetEl) {
     if (sourceSel) {
       sourceSel.innerHTML = srcEntries.length
         ? srcEntries.map(r => `<option value="${escHtml(r.id)}" ${r.id === sourceRadioId ? 'selected' : ''}>${escHtml(r.name)}${r.status !== 'connected' ? ' (' + escHtml(r.status) + ')' : ''}</option>`).join('')
-        : '<option value="">No radios</option>';
+        : '<option value="">Aucune radio</option>';
     }
     if (targetSel) {
       targetSel.innerHTML = dstEntries.length
         ? dstEntries.map(r => `<option value="${escHtml(r.id)}" ${r.id === targetRadioId ? 'selected' : ''}>${escHtml(r.name)}${r.status !== 'connected' ? ' (' + escHtml(r.status) + ')' : ''}</option>`).join('')
-        : '<option value="">No radios</option>';
+        : '<option value="">Aucune radio</option>';
     }
     const srcRadio = sourceSel?.value || sourceRadioId || srcEntries[0]?.id || '';
     const dstRadio = targetSel?.value || targetRadioId || dstEntries[0]?.id || '';
@@ -10475,7 +10475,7 @@ if (targetEl) {
       _localGpsPos = null;
       if (_showPolarGrid) _drawPolarGrid();
       fixEl.style.color = 'var(--muted)';
-      fixEl.textContent = '● Searching…';
+      fixEl.textContent = '● Recherche…';
       if (satsEl) satsEl.textContent = '0';
       if (latEl)  latEl.textContent  = '—';
       if (lonEl)  lonEl.textContent  = '—';
@@ -10576,7 +10576,7 @@ if (targetEl) {
     fetch(BASE_PATH + '/api/gps/push', {method: 'POST'})
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok) { statusEl.textContent = `✗ ${escHtml(d.error || 'Request failed')}`; return; }
+        if (!ok) { statusEl.textContent = `✗ ${escHtml(d.error || 'Échec de la requête')}`; return; }
         const n = d.pushed ? d.pushed.length : 0;
         statusEl.textContent = n ? `✓ Sent to ${n} node(s)` : '✓ Sent (no nodes connected)';
         setTimeout(() => { statusEl.textContent = ''; }, 3000);
@@ -10587,7 +10587,7 @@ if (targetEl) {
   function _renderSettingsRadios(data) {
     const list = document.getElementById('settings-nodes-list');
       if (!data.nodes.length) {
-        list.innerHTML = '<p style="color:var(--muted);font-size:12px;margin:0">No radios configured.</p>';
+        list.innerHTML = '<p style="color:var(--muted);font-size:12px;margin:0">Aucune radio configurée.</p>';
         return;
       }
       list.innerHTML = data.nodes.map(n => {
@@ -10601,14 +10601,14 @@ if (targetEl) {
             title="${n.enabled ? 'Pause scanning for this device — keeps config and message history intact' : 'Resume scanning and connecting to this device'}"
             onclick="settingsToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Disable' : 'Enable'}</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
-            title="Clear message history for this radio"
+            title="Effacer l’historique des messages de cette radio"
             onclick="settingsMtClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer l’historique</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Remove this radio from OverMesh — config deleted, message history kept on disk"
             onclick="settingsRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Remove</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red);margin-left:4px"
             title="Permanently delete this radio and wipe all its message history — cannot be undone"
-            onclick="settingsDeleteNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Delete</button>
+            onclick="settingsDeleteNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Supprimer</button>
         </div>`;
       }).join('');
   }
@@ -10674,7 +10674,7 @@ if (targetEl) {
       if (_addNodeType === 'tcp') document.getElementById('settings-tcp-host').value = '';
       settingsLoadNodes();
       settingsScanPorts();
-    }).catch(e => { err.textContent = 'Request failed.'; console.error('settingsAddNode failed:', e); });
+    }).catch(e => { err.textContent = 'Échec de la requête.'; console.error('settingsAddNode failed:', e); });
   }
 
   function settingsToggleNode(id, enable) {
@@ -10728,7 +10728,7 @@ if (targetEl) {
       }
     }
     document.getElementById('confirm-ok').textContent = 'Clear';
-    showConfirm(`<b>Clear history for ${escHtml(name)}</b><br><br>${opts}`, () => {
+    showConfirm(`<b>Effacer l’historique de ${escHtml(name)}</b><br><br>${opts}`, () => {
       const picked = document.querySelector('input[name="mtclrch"]:checked');
       const val = picked ? picked.value : 'all';
       const url = val === 'all'
@@ -10951,7 +10951,7 @@ if (targetEl) {
   }
 
   async function _sendMtCommand(target, text) {
-    if (!activeRadioId) throw new Error('No active MT radio.');
+    if (!activeRadioId) throw new Error('Aucune radio MT active.');
     const payload = target.kind === 'dm'
       ? { text, channel: 0, dest_id: target.dest_id, radio_id: activeRadioId }
       : { text, channel: target.channel, radio_id: activeRadioId };
@@ -10987,7 +10987,7 @@ if (targetEl) {
 
   async function _sendMcCommand(target, text) {
     const radioId = target.radio_id || activeMcRadioId;
-    if (!radioId) throw new Error('No active MC radio.');
+    if (!radioId) throw new Error('Aucune radio MC active.');
     const chunks = _mcSplitTextByBytes(text, _mcTargetMsgLimit(target.kind, radioId));
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
@@ -11269,7 +11269,7 @@ if (targetEl) {
     const activeName = activeMcRadioId && mcLastStatus[activeMcRadioId]
       ? mcLastStatus[activeMcRadioId].name
       : Object.values(mcLastStatus).filter(s => s.status === 'connected').map(x => x.name).join(', ');
-    radioEl.textContent = '📡 ' + (activeName || 'No MC radio');
+    radioEl.textContent = '📡 ' + (activeName || 'Aucune radio MC');
   }
 
   // -- SSE events from backend (mc_status, mc_node, mc_message) --
@@ -11846,7 +11846,7 @@ if (targetEl) {
             <button class="mc-route-hop-btn" title="Remove hop" ${saving ? 'disabled' : ''} onclick="mcRouteRemoveHop(${idx})">&#10005;</button>
           </div>`;
         }).join('')}</div>`
-      : `<div class="mc-route-summary" style="margin-top:10px">No repeaters selected. Click <b>Set Direct Only</b> to force direct delivery, or <b>Clear path</b> to use automatic/flood routing.</div>`;
+      : `<div class="mc-route-summary" style="margin-top:10px">Aucun répéteur sélectionné. Click <b>Set Direct Only</b> to force direct delivery, or <b>Effacer le chemin</b> to use automatic/flood routing.</div>`;
 
     const candidates = _mcRouteCandidateList(radioId, contactId, query)
       .filter(c => !selected.some(prefix => (c.full_key || c.id || '').toLowerCase().startsWith(String(prefix).toLowerCase())))
@@ -11864,7 +11864,7 @@ if (targetEl) {
             <button ${saving ? 'disabled' : ''} onclick="mcRouteAddHop('${jsSafe(c.full_key || c.id || '')}')">Add</button>
           </div>`;
         }).join('')
-      : `<div style="padding:12px;color:var(--muted);font-size:12px">No known repeaters match this search on ${escHtml(radioLabel)}.</div>`;
+      : `<div style="padding:12px;color:var(--muted);font-size:12px">Aucun répéteur connu ne correspond à cette recherche sur ${escHtml(radioLabel)}.</div>`;
 
     const statusHtml = _mcRouteEditor.statusMessage
       ? `<div class="modal-${_mcRouteEditor.statusKind === 'error' ? 'error' : _mcRouteEditor.statusKind === 'success' ? 'success' : 'loading'}">${escHtml(_mcRouteEditor.statusMessage)}</div>`
@@ -11875,7 +11875,7 @@ if (targetEl) {
         <div style="color:var(--muted);font-size:11px;margin-bottom:4px">Current stored route</div>
         <div>${escHtml(currentSummary)}</div>
       </div>
-      <div style="font-size:12px;color:var(--muted)">Selected repeaters</div>
+      <div style="font-size:12px;color:var(--muted)">Répéteurs sélectionnés</div>
       ${hopHtml}
       <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin:10px 0">
         <div>
@@ -11895,7 +11895,7 @@ if (targetEl) {
       <div class="mc-route-candidates">${candidatesHtml}</div>
       ${statusHtml}
       <div class="mc-route-actions">
-        <button class="btn" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(true)">Clear path</button>
+        <button class="btn" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(true)">Effacer le chemin</button>
         <button class="btn btn-net-mc active" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(false)">${saving ? 'Saving…' : selected.length === 0 ? 'Set Direct Only' : 'Save route'}</button>
       </div>`;
   }
@@ -11969,7 +11969,7 @@ if (targetEl) {
       if (currentTab === 'nodes') renderLive();
       renderMcRouteEditor();
     } catch(e) {
-      state.statusMessage = e.message || 'Request failed.';
+      state.statusMessage = e.message || 'Échec de la requête.';
       state.statusKind = 'error';
       renderMcRouteEditor();
     } finally {
@@ -12001,7 +12001,7 @@ if (targetEl) {
           <div class="map-popup-name" style="margin-bottom:2px">${escHtml(item.name || item.id || '?')}<span class="map-popup-local" style="background:rgba(16,185,129,0.15);color:#10b981">MC Radio</span></div>
           <div style="font-size:11px;color:var(--muted);margin-bottom:4px">This radio node · ${escHtml(radioDistance)}</div>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
-            <button class="map-popup-btn" title="Show in Nodes list" onclick="showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
+            <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
           </div>
         </div>`;
     }
@@ -12031,7 +12031,7 @@ if (targetEl) {
           <b>SNR:</b> ${snrText} &nbsp; <b>Hops:</b> ${hops !== null ? escHtml(mcPathHopLabel(hops, true)) : '—'} &nbsp; <b>Dist:</b> ${escHtml(distanceText)} &nbsp; <b>Seen:</b> ${tsText}
         </div>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="map-popup-btn" title="Show in Nodes list" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
+          <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
           ${item.type !== 2 ? `<button class="map-popup-btn" title="Send direct message" onclick="leafletMap.closePopup();doMcDm('${safePk}','${safeRid}','${safeName}')">DM</button>` : ''}
           <button class="map-popup-btn" title="Ping (request status)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>
           ${pathButton}
@@ -12039,7 +12039,7 @@ if (targetEl) {
           <button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(item.id || '')}','${safeRid}')">Détection</button>
           <button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>
           ${item.latitude != null ? `<button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(item.id || '')}','${safeName}')">Trail</button>` : ''}
-          <button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Delete</button>
+          <button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Supprimer</button>
         </div>
       </div>`;
   }
@@ -12197,7 +12197,7 @@ if (targetEl) {
         + `<div><b>Last seen:</b> ${tsText}</div>`
         + `<div style="font-size:11px;color:var(--muted)">${c.latitude.toFixed(5)}, ${c.longitude.toFixed(5)}</div>`
         + `<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">`
-        + `<button class="map-popup-btn" title="Show in Nodes list" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(c.id || '')}')">Liste</button>`
+        + `<button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(c.id || '')}')">Liste</button>`
         + popupDmButton
         + popupPingButton
         + popupPathButton
@@ -12205,7 +12205,7 @@ if (targetEl) {
         + `<button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(c.id || '')}','${safeRid}')">Détection</button>`
         + `<button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>`
         + `<button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(c.id || '')}','${safeName}')">Trail</button>`
-        + `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Delete</button>`
+        + `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Supprimer</button>`
         + `</div>`,
         { className: 'om-popup', maxWidth: 240 }
       );
@@ -12531,11 +12531,11 @@ if (targetEl) {
     // Map, Log, Note — always after action buttons, matching MT popup order
     const cLat = c?.latitude, cLon = c?.longitude;
     if (hasMarker) {
-      btns.push(`<button class="map-popup-btn" onclick="switchTab('map');${hide};setTimeout(()=>{const m=mcMapMarkerById['${jsSafe(markerId)}'];if(m&&leafletMap){leafletMap.setView(m.getLatLng(),Math.max(leafletMap.getZoom(),14));m.openPopup();}},100)">Map</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="switchTab('map');${hide};setTimeout(()=>{const m=mcMapMarkerById['${jsSafe(markerId)}'];if(m&&leafletMap){leafletMap.setView(m.getLatLng(),Math.max(leafletMap.getZoom(),14));m.openPopup();}},100)">Carte</button>`);
     } else if (cLat != null && cLon != null) {
-      btns.push(`<button class="map-popup-btn" onclick="centerMcOnMap(${cLat},${cLon});${hide}">Map</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="centerMcOnMap(${cLat},${cLon});${hide}">Carte</button>`);
     } else {
-      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Map</button>`);
+      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Carte</button>`);
     }
     if (actionId) {
       btns.push(`<button class="map-popup-btn" onclick="tocFromMcNode('${jsSafe(actionId)}','${jsSafe(actionRid)}');${hide}" title="Prefill TOC Log from this contact">Journal</button>`);
@@ -12589,7 +12589,7 @@ if (targetEl) {
       msgs = msgs.filter(m => m.subtype !== 'system');
     }
     if (!msgs.length) {
-      container.innerHTML = '<div class="chat-empty">No messages yet</div>';
+      container.innerHTML = '<div class="chat-empty">Aucun message pour le moment</div>';
       return;
     }
     const hadNoContent = !container.children.length || !!container.querySelector('.chat-empty');
@@ -13508,7 +13508,7 @@ if (targetEl) {
           if (result.partial) {
             const warnPt = result.points[Math.floor(result.points.length / 2)];
             const warnIcon = L.divIcon({
-              html: `<div style="background:rgba(245,158,11,0.85);color:#fff;font-size:9px;font-weight:700;border-radius:3px;padding:0 3px;line-height:14px;cursor:default" title="Incomplete path: some hops have no GPS position">?hop</div>`,
+              html: `<div style="background:rgba(245,158,11,0.85);color:#fff;font-size:9px;font-weight:700;border-radius:3px;padding:0 3px;line-height:14px;cursor:default" title="Chemin incomplet : certains sauts n’ont pas de position GPS">?hop</div>`,
               iconSize: null, iconAnchor: [14, 7], className: ''
             });
             _mcPathLines.push(L.marker(warnPt, {icon: warnIcon, interactive: false}).addTo(leafletMap));
@@ -14351,9 +14351,9 @@ if (targetEl) {
       const meta = [
         fullId,
         conf,
-        point ? `${Number(point[0]).toFixed(5)}, ${Number(point[1]).toFixed(5)}` : 'no GPS'
+        point ? `${Number(point[0]).toFixed(5)}, ${Number(point[1]).toFixed(5)}` : 'sans GPS'
       ].filter(Boolean).join(' · ');
-      rows.push(`<button class="mc-hop-focus" ${point ? '' : 'disabled'} title="${point ? 'Center map on this hop/RPTR' : 'This hop has no resolved GPS position'}"
+      rows.push(`<button class="mc-hop-focus" ${point ? '' : 'disabled'} title="${point ? 'Centrer la carte sur ce saut/RPTR' : 'Ce saut n’a pas de position GPS résolue'}"
         onclick="event.stopPropagation();_mcFocusLogHop(${entryIdx},${idx})">
         <span class="mc-hop-prefix">${escHtml(hop.hash || '?')}</span>
         <span class="mc-hop-focus-main">
@@ -14368,15 +14368,15 @@ if (targetEl) {
       rows.push(`<button class="mc-hop-focus" disabled title="Hop ID is known, but no contact/GPS match is available yet">
         <span class="mc-hop-prefix">${escHtml(hash)}</span>
         <span class="mc-hop-focus-main">
-          <span class="mc-hop-focus-name">Unresolved hop ${rawIdx + 1}</span>
-          <span class="mc-hop-focus-id">${escHtml(hash)} · no GPS/contact match</span>
+          <span class="mc-hop-focus-name">Saut non résolu ${rawIdx + 1}</span>
+          <span class="mc-hop-focus-id">${escHtml(hash)} · sans correspondance GPS/contact</span>
         </span>
       </button>`);
     });
 
     if (!rows.length) return '';
     return `<details class="mc-hop-details">
-      <summary>Show all hops (${rows.length})</summary>
+      <summary>Afficher tous les sauts (${rows.length})</summary>
       <div class="mc-hop-list">${rows.join('')}</div>
     </details>`;
   }
@@ -14391,12 +14391,12 @@ if (targetEl) {
       const point = _mcHopGpsPoint(hop, pathResult, entry?.radioId);
       const hash = String(hop.hash || '').toLowerCase();
       if (!point) {
-        parts.push(`<span class="mc-hop-prefix" title="No resolved GPS/contact match">${escHtml(hash)}</span>`);
+        parts.push(`<span class="mc-hop-prefix" title="Aucune correspondance GPS/contact">${escHtml(hash)}</span>`);
         return;
       }
       const name = hop.name && hop.name !== hash ? ` ${escHtml(hop.name)}` : '';
       parts.push(`<button class="mc-hop-focus" style="display:inline-flex;width:auto;padding:2px 6px;margin:0 3px 3px 0"
-        title="Center map on ${escHtml(hop.name || hash)}"
+        title="Centrer la carte sur ${escHtml(hop.name || hash)}"
         onclick="event.stopPropagation();_mcFocusLogHop(${entryIdx},${hopIdx})">
         <span class="mc-hop-prefix">${escHtml(hash)}</span><span>${name}</span>
       </button>`);
@@ -14404,7 +14404,7 @@ if (targetEl) {
     // Append unresolved hashes (not matched to any contact with GPS) at the end
     rawHashes.forEach((hash) => {
       if (resolvedHops.some(h => String(h.hash || '').toLowerCase() === hash)) return;
-      parts.push(`<span class="mc-hop-prefix" title="No resolved GPS/contact match">${escHtml(hash)}</span>`);
+      parts.push(`<span class="mc-hop-prefix" title="Aucune correspondance GPS/contact">${escHtml(hash)}</span>`);
     });
     return parts.join('');
   }
@@ -14748,10 +14748,10 @@ if (targetEl) {
             title="${n.enabled ? 'Pause scanning for this radio — keeps config and message history intact' : 'Resume scanning and connecting to this radio'}"
             onclick="settingsMcToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Disable' : 'Enable'}</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
-            title="Clear message history for this radio"
+            title="Effacer l’historique des messages de cette radio"
             onclick="settingsMcClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer l’historique</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
-            title="Clear all contacts for this radio (removes from node flash and OM)"
+            title="Effacer tous les contacts de cette radio (supprime du flash du nœud et d’OM)"
             onclick="settingsMcClearContacts('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer les contacts</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red);margin-left:4px"
             title="Remove this MeshCore radio from OverMesh"
@@ -14833,7 +14833,7 @@ if (targetEl) {
       }
       loadMcSettingsNodes();
       settingsMcScanPorts();
-    }).catch(e => { err.textContent = e.message || 'Request failed.'; });
+    }).catch(e => { err.textContent = e.message || 'Échec de la requête.'; });
   }
 
   const MC_MAX_DM_BYTES = 160;
@@ -15387,7 +15387,7 @@ if (targetEl) {
     if (!block.ok) {
       return `<details style="border-top:1px solid var(--border);padding-top:7px;margin-top:7px">
         <summary style="cursor:pointer;color:var(--muted)">${escHtml(title)} <span style="color:var(--red)">failed</span></summary>
-        <div style="margin-top:6px;color:var(--red);font-size:12px">${escHtml(block.error || 'Request failed')}</div>
+        <div style="margin-top:6px;color:var(--red);font-size:12px">${escHtml(block.error || 'Échec de la requête')}</div>
       </details>`;
     }
     return `<details open style="border-top:1px solid var(--border);padding-top:7px;margin-top:7px">
@@ -15417,7 +15417,7 @@ if (targetEl) {
         ${row('Power save', `<select id="mc-remote-set-powersaving" class="settings-select"><option value="off">Off</option><option value="on">On</option></select>`, "mcRemoteApplySetting('powersaving')", 'get powersaving')}
         ${row('TX power', input('mc-remote-set-tx', 82, '1-22', 'type="number" min="1" max="22" step="1"'), "mcRemoteApplySetting('tx')", 'get tx')}
         ${row('Radio', `${input('mc-remote-set-freq', 88, 'MHz', 'type="number" step="0.001"')} ${input('mc-remote-set-bw', 72, 'BW', 'type="number" step="0.1"')} ${input('mc-remote-set-sf', 54, 'SF', 'type="number" min="5" max="12" step="1"')} ${input('mc-remote-set-cr', 54, 'CR', 'type="number" min="5" max="8" step="1"')}`, "mcRemoteApplySetting('radio')", 'get radio')}
-        ${row('Position', `${input('mc-remote-set-lat', 106, 'lat', 'type="number" step="0.000001"')} ${input('mc-remote-set-lon', 106, 'lon', 'type="number" step="0.000001"')} <button class="btn" onclick="startMcRemoteMapPick()" title="Pick RPTR position from map">Map</button>`, "mcRemoteApplySetting('position')", 'get lat')}
+        ${row('Position', `${input('mc-remote-set-lat', 106, 'lat', 'type="number" step="0.000001"')} ${input('mc-remote-set-lon', 106, 'lon', 'type="number" step="0.000001"')} <button class="btn" onclick="startMcRemoteMapPick()" title="Pick RPTR position from map">Carte</button>`, "mcRemoteApplySetting('position')", 'get lat')}
         ${row('Share location', `<select id="mc-remote-set-advert-loc" class="settings-select"><option value="none">Off (hidden)</option><option value="prefs">On (share coords)</option></select>`, "mcRemoteApplySetting('advert_loc')", 'gps advert')}
         ${row('Owner info', `<input id="mc-remote-set-owner" class="settings-input" style="width:260px" placeholder="owner text">`, "mcRemoteApplySetting('owner')", 'get owner.info')}
         ${row('Path hash', `<select id="mc-remote-set-path-hash" class="settings-select"><option value="0">1 byte</option><option value="1">2 bytes</option><option value="2">3 bytes</option></select>`, "mcRemoteApplySetting('path_hash')", 'get path.hash.mode')}
@@ -15450,7 +15450,7 @@ if (targetEl) {
             <button class="btn" onclick="mcRemoteApplyRegionPreset('custom-allow')">Allow flood</button>
             <button class="btn" onclick="mcRemoteApplyRegionPreset('custom-home')">Home</button>
             <button class="btn" onclick="mcRemoteApplyRegionPreset('custom-default')">Default</button>
-            <button class="btn" onclick="mcRemoteApplyRegionPreset('save')">Save</button>
+            <button class="btn" onclick="mcRemoteApplyRegionPreset('save')">Enregistrer</button>
           </div>
           <div id="mc-remote-region-result" style="font-size:12px;color:var(--muted);margin-top:8px"></div>
         </div>
@@ -15459,7 +15459,7 @@ if (targetEl) {
             <h3 class="settings-subtitle" style="margin:0">Channels</h3>
             <button class="btn" onclick="mcRemoteReadChannels()" title="Read channel list from RPTR" style="padding:0 9px;font-size:14px">↻</button>
           </div>
-          <div id="mc-remote-channels-list" style="font-size:12px;color:var(--muted);margin-bottom:8px">No cache yet.</div>
+          <div id="mc-remote-channels-list" style="font-size:12px;color:var(--muted);margin-bottom:8px">Aucun cache pour le moment.</div>
           <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
             <select id="mc-remote-ch-copy-src" class="settings-select" style="width:200px">
               <option value="">— Copy from OM channel —</option>
@@ -15501,7 +15501,7 @@ if (targetEl) {
     const el = document.getElementById('mc-remote-result');
     if (!el) return;
     if (!data || data.error) {
-      el.innerHTML = `<div class="modal-error">${escHtml(data?.error || 'Request failed')}</div>`;
+      el.innerHTML = `<div class="modal-error">${escHtml(data?.error || 'Échec de la requête')}</div>`;
       return;
     }
     const login = data.login
@@ -15660,7 +15660,7 @@ if (targetEl) {
     const el = document.getElementById('mc-remote-channels-list');
     if (!el) return;
     if (!channels || !channels.length) {
-      el.textContent = 'No channels configured.';
+      el.textContent = 'Aucun canal configuré.';
       return;
     }
     el.innerHTML = channels.map(ch =>
@@ -15694,7 +15694,7 @@ if (targetEl) {
   async function mcRemoteFetchMessages(btn) {
     if (!_mcRemoteManage) return;
     const out = document.getElementById('mc-remote-quick-result');
-    if (out) out.textContent = 'Requesting stored messages from RPTR…';
+    if (out) out.textContent = 'Demande des messages enregistrés au RPTR…';
     if (btn) btn.disabled = true;
 
     // Accumulate MSG| lines received via SSE while waiting for MSGSTORE_END
@@ -15734,7 +15734,7 @@ if (targetEl) {
       // Check for synchronous reply (MSGSTORE_EMPTY or error)
       const replyText = d.reply?.text || '';
       if (replyText === 'MSGSTORE_EMPTY') {
-        if (out) out.innerHTML = '<span style="color:var(--muted)">No messages stored on RPTR.</span>';
+        if (out) out.innerHTML = '<span style="color:var(--muted)">Aucun message enregistré sur le RPTR.</span>';
         if (sseHandler && chatSSE) chatSSE.removeEventListener('message', sseHandler);
         if (btn) btn.disabled = false;
         return;
@@ -15745,7 +15745,7 @@ if (targetEl) {
       if (sseHandler && chatSSE) chatSSE.removeEventListener('message', sseHandler);
 
       if (!received || received.length === 0) {
-        if (out) out.innerHTML = '<span style="color:var(--muted)">No messages received.</span>';
+        if (out) out.innerHTML = '<span style="color:var(--muted)">Aucun message reçu.</span>';
       } else {
         const rows = received.map(m => {
           const dt = m.ts ? new Date(m.ts * 1000).toLocaleString() : '?';
@@ -15857,7 +15857,7 @@ if (targetEl) {
           </select>
         </div>
         <div>
-          <label class="settings-label">Password</label>
+          <label class="settings-label">Mot de passe</label>
           <input id="mc-remote-password" class="settings-input" type="password" style="width:150px" autocomplete="new-password" placeholder="blank if allowed">
         </div>
         <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);padding-bottom:6px">
@@ -16008,7 +16008,7 @@ if (targetEl) {
           label: opts.label || command,
           senseLogAdvertMode: opts.senseLogAdvertMode || null,
         };
-        if (out) out.innerHTML = `<span style="color:#f59e0b">Could not send now. Queued ${escHtml(opts.label || command)} for when Manage closes.</span><div style="margin-top:4px;color:var(--muted)">${escHtml(e.message)}</div>`;
+        if (out) out.innerHTML = `<span style="color:#f59e0b">Impossible d’envoyer maintenant. Mis en file d’attente ${escHtml(opts.label || command)} lorsque Gestion se ferme.</span><div style="margin-top:4px;color:var(--muted)">${escHtml(e.message)}</div>`;
         return null;
       }
       if (out && !opts.silentError) out.innerHTML = `<span style="color:var(--red)">Error: ${escHtml(e.message)}</span>`;
@@ -16271,8 +16271,8 @@ if (targetEl) {
         const bodyEl = document.getElementById('mc-statusreq-body');
         if (bodyEl?.innerHTML.includes('Pinging')) {
           const traceBlock = document.getElementById('mc-ping-trace-block');
-          const msg = '<span style="color:var(--red)">No status reply arrived. Trace data below may still show the route heard by the mesh.</span>';
-          bodyEl.innerHTML = traceBlock ? `${msg}${traceBlock.outerHTML}` : '<span style="color:var(--red)">No status reply or reachability signal arrived. This USB companion firmware may not support remote status responses on this path.</span>';
+          const msg = '<span style="color:var(--red)">Aucune réponse d’état reçue. Trace data below may still show the route heard by the mesh.</span>';
+          bodyEl.innerHTML = traceBlock ? `${msg}${traceBlock.outerHTML}` : '<span style="color:var(--red)">Aucune réponse d’état ni signal d’accessibilité reçu. This USB companion firmware may not support remote status responses on this path.</span>';
         }
         _mcStatusReqPending = null;
       }, 30000)
@@ -16282,7 +16282,7 @@ if (targetEl) {
       const r = await fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/statusreq/${encodeURIComponent(pubkeyPrefix)}`, {method: 'POST'});
       const d = await r.json();
       if (!r.ok) {
-        body.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Request failed.')}</span>`;
+        body.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec de la requête.')}</span>`;
         if (_mcStatusReqPending?.timer) clearTimeout(_mcStatusReqPending.timer);
         _mcStatusReqPending = null;
       } else if (!d.response) {
@@ -16291,8 +16291,8 @@ if (targetEl) {
         _mcStatusReqPending = null;
         const traceBlock = document.getElementById('mc-ping-trace-block');
         const msg = withTrace
-          ? '<span style="color:var(--red)">No STATUS_RESPONSE from node. Trace data below may still show the route heard by the mesh.</span>'
-          : '<span style="color:var(--red)">No STATUS_RESPONSE from node.</span>';
+          ? '<span style="color:var(--red)">Aucune réponse STATUS_RESPONSE du nœud. Trace data below may still show the route heard by the mesh.</span>'
+          : '<span style="color:var(--red)">Aucune réponse STATUS_RESPONSE du nœud.</span>';
         const traceBtn = withTrace ? '' : _mcTraceProbeButton(pubkeyPrefix, radioId, name);
         body.innerHTML = traceBlock ? `${msg}${traceBlock.outerHTML}` : `${msg}${traceBtn}`;
       }
@@ -16382,9 +16382,9 @@ if (targetEl) {
       const pathHashSizeLabel = _mcPathHashSizeLabel(data.observed_path_hash_size ?? pingPath?.inferredPathHashSize ?? pingEntry?.pathHashSize, data.observed_path_hash_mode ?? mcLastStatus[data.radio_id]?.path_hash_mode);
       body.innerHTML = `<table style="border-collapse:collapse;width:100%">
         ${th('Result')}
-        ${td('Status', '<span style="color:#f59e0b">No response</span>')}
+        ${td('Status', '<span style="color:#f59e0b"><span> Aucune réponse</span></span>')}
         ${td('Mode', 'Fallback reachability')}
-        ${td('Note', '<span style="color:var(--muted);font-size:11px">No STATUS_RESPONSE — local RX only.</span>')}
+        ${td('Note', '<span style="color:var(--muted);font-size:11px">Aucune STATUS_RESPONSE — RX local uniquement.</span>')}
         ${pathWarn ? td('Path note', `<span style="color:#f59e0b;font-size:11px">${escHtml(pathWarn)}</span>`) : ''}
         ${th('Observed RF')}
         ${td('Path', observedPathHtml)}
@@ -16669,7 +16669,7 @@ if (targetEl) {
       // Timeout if no TRACE_DATA arrives within 20s
       setTimeout(() => {
         if (_mcPendingTraceTag === d.tag) {
-          body.innerHTML = '<span style="color:var(--red)">No trace response. Firmware may not support send_trace.</span>';
+          body.innerHTML = '<span style="color:var(--red)">Aucune réponse de traceroute. Firmware may not support send_trace.</span>';
           _mcPendingTraceTag = null;
         }
       }, 20000);
@@ -16835,7 +16835,7 @@ if (targetEl) {
       status.innerHTML = `<div class="modal-success">Sent${chunks.length > 1 ? ` as ${chunks.length} messages` : ''}.</div>`;
       input.value = '';
     } catch(e) {
-      status.innerHTML = `<div class="modal-error">Failed: ${escHtml(e.message)}</div>`;
+      status.innerHTML = `<div class="modal-error">Échec : ${escHtml(e.message)}</div>`;
     }
   }
 
@@ -16875,11 +16875,11 @@ if (targetEl) {
       const noContactMsg = {
         neighbors: 'No direct neighbors (out_path_len=0) in contact list.',
         nearby:    'No direct or 1-hop contacts in contact list.',
-        recent:    'No contacts heard in the last 24h.',
+        recent:    'Aucun contact entendu au cours des dernières 24 h.',
         all:       'Contact list is empty.',
       };
       if (!contacts.length) {
-        body.innerHTML = `<span style="color:var(--muted)">${noContactMsg[mode] || 'No contacts.'}</span>`;
+        body.innerHTML = `<span style="color:var(--muted)">${noContactMsg[mode] || 'Aucun contact.'}</span>`;
       } else {
         const hiddenCount = total - contacts.length;
         body.innerHTML = contacts.map(function(n) {
@@ -16977,7 +16977,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="clrch" value="${o.value}"${i===0?' checked':''}> ${o.label}</label>`
         ).join('');
         showConfirm(
-          `<b>Clear history for ${escHtml(name)}</b><br><br>${sel}`,
+          `<b>Effacer l’historique de ${escHtml(name)}</b><br><br>${sel}`,
           () => {
             const picked = document.querySelector('input[name="clrch"]:checked');
             const val = picked ? picked.value : 'all';
@@ -16995,7 +16995,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       .catch(() => {
         // Fallback: just clear all
         document.getElementById('confirm-ok').textContent = 'Clear';
-        showConfirm(`Clear all message history for "${escHtml(name)}"?`, () => {
+        showConfirm(`Effacer tout l’historique des messages de "${escHtml(name)}"?`, () => {
           fetch(BASE_PATH + `/api/mc/${encodeURIComponent(id)}/messages`, {method: 'DELETE'})
             .catch(e => console.error('clearMcHistory failed:', e));
         });
@@ -17004,7 +17004,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
 
   function settingsMcClearContacts(id, name) {
     document.getElementById('confirm-ok').textContent = 'Clear';
-    showConfirm(`Clear all contacts for "${escHtml(name)}"?<br><small style="color:var(--muted)">Removes from node flash and OM. Cannot be undone.</small>`, () => {
+    showConfirm(`Effacer tous les contacts de "${escHtml(name)}"?<br><small style="color:var(--muted)">Supprime du flash du nœud et d’OM. Cette action est irréversible.</small>`, () => {
       fetch(BASE_PATH + `/api/mc/${encodeURIComponent(id)}/contacts/all`, {method: 'DELETE'})
         .then(r => r.json())
         .then(d => {
@@ -17087,7 +17087,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/device_info`)
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok || d.error) { el.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Request failed.')}</span>`; return; }
+        if (!ok || d.error) { el.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec de la requête.')}</span>`; return; }
         const data = d;
         const dev = data.device || {};
         const nodeInfo = data.node_info || {};
@@ -17115,7 +17115,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Max Channels</td><td>${escHtml(String(maxCh))}</td></tr>
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Repeater Mode</td><td>${escHtml(String(rep))}</td></tr>
         </table>`;
-      }).catch(e => { if (el) el.innerHTML = `<span style="color:var(--red)">Failed: ${escHtml(e.message)}</span>`; });
+      }).catch(e => { if (el) el.innerHTML = `<span style="color:var(--red)">Échec : ${escHtml(e.message)}</span>`; });
   }
 
   function loadMcStats(radioId) {
@@ -17127,7 +17127,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/stats`)
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok || d.error) { el.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Request failed.')}</span>`; return; }
+        if (!ok || d.error) { el.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec de la requête.')}</span>`; return; }
         const data = d;
         const core = data.core || {}, radio = data.radio || {}, pkts = data.packets || {};
         function fmtUptime(s) { if (!s) return '—'; const h=Math.floor(s/3600),m=Math.floor((s%3600)/60); return h?`${h}h ${m}m`:`${m}m`; }
@@ -17154,7 +17154,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Direct RX</td><td>${pkts.direct_rx ?? '—'}</td></tr>
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">RX errors</td><td>${pkts.recv_errors ?? '—'}</td></tr>
         </table>`;
-      }).catch(e => { if (el) el.innerHTML = `<span style="color:var(--red)">Failed: ${escHtml(e.message)}</span>`; });
+      }).catch(e => { if (el) el.innerHTML = `<span style="color:var(--red)">Échec : ${escHtml(e.message)}</span>`; });
   }
 
   function loadMcChannelsList(radioId) {
@@ -17168,7 +17168,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       .then(data => {
         if (data.error) { el.innerHTML = `<span style="color:var(--red)">${escHtml(data.error)}</span>`; return; }
         const chs = data.channels || [];
-        if (!chs.length) { el.innerHTML = '<span style="color:var(--muted)">No channels found.</span>'; return; }
+        if (!chs.length) { el.innerHTML = '<span style="color:var(--muted)">Aucun canal trouvé.</span>'; return; }
         el.innerHTML = `<table style="border-collapse:collapse;font-size:12px;width:100%;max-width:560px">
           <tr style="color:var(--muted)">
             <th style="text-align:left;padding:2px 12px 4px 0;font-weight:normal">Slot</th>
@@ -17182,13 +17182,13 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
             <td style="padding:4px 0;color:var(--muted);font-family:monospace">${escHtml(ch.hash || '—')}</td>
             <td style="padding:4px 0;text-align:right;white-space:nowrap">
               ${ch.name
-                ? `<button class="btn" style="padding:2px 8px;font-size:11px" onclick="shareMcChannel('${jsSafe(radioId)}',${parseInt(ch.idx) || 0},'${jsSafe(ch.name || '')}','${jsSafe(ch.hash || '')}')">Info/Share</button>`
-                : `<button class="btn" style="padding:2px 8px;font-size:11px;opacity:.45;cursor:default" disabled>Info/Share</button>`}
+                ? `<button class="btn" style="padding:2px 8px;font-size:11px" onclick="shareMcChannel('${jsSafe(radioId)}',${parseInt(ch.idx) || 0},'${jsSafe(ch.name || '')}','${jsSafe(ch.hash || '')}')">Infos/Partage</button>`
+                : `<button class="btn" style="padding:2px 8px;font-size:11px;opacity:.45;cursor:default" disabled>Infos/Partage</button>`}
               <button class="btn" style="padding:2px 8px;font-size:11px;margin-left:4px" onclick="openMcChEdit('${jsSafe(radioId)}',${parseInt(ch.idx) || 0},'${jsSafe(ch.name || '')}','${jsSafe(ch.hash || '')}')">Edit</button>
             </td>
           </tr>`).join('')}
         </table>`;
-      }).catch(e => { if (el) el.innerHTML = `<span style="color:var(--red)">Failed: ${escHtml(e.message)}</span>`; });
+      }).catch(e => { if (el) el.innerHTML = `<span style="color:var(--red)">Échec : ${escHtml(e.message)}</span>`; });
   }
 
 
@@ -17274,7 +17274,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       body: JSON.stringify({path_hash_mode: requested}),
     }).then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok || d.error) throw new Error(d.error || 'Request failed.');
+        if (!ok || d.error) throw new Error(d.error || 'Échec de la requête.');
         const applied = Number(d.applied ?? requested);
         if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
         mcLastStatus[radioId].path_hash_mode = applied;
@@ -17303,7 +17303,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       body: JSON.stringify({force_flood: !!enabled}),
     }).then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok || d.error) throw new Error(d.error || 'Request failed.');
+        if (!ok || d.error) throw new Error(d.error || 'Échec de la requête.');
         if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
         mcLastStatus[radioId].force_flood = !!d.force_flood;
         loadMcSettingsNodes();
@@ -17329,7 +17329,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       body: JSON.stringify({passive_collection: !!enabled}),
     }).then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok || d.error) throw new Error(d.error || 'Request failed.');
+        if (!ok || d.error) throw new Error(d.error || 'Échec de la requête.');
         if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
         mcLastStatus[radioId].passive_collection = !!d.passive_collection;
         loadMcSettingsNodes();
@@ -17357,7 +17357,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/reset_all_paths`, {method: 'POST'})
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
-        if (!ok || d.error) throw new Error(d.error || 'Request failed.');
+        if (!ok || d.error) throw new Error(d.error || 'Échec de la requête.');
         if (statusEl) statusEl.innerHTML = `<span style="color:var(--accent)">Cleared ${d.cleared} contact routes.</span>`;
         btnFeedback(btn, '✓ Done');
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 8000);
@@ -17647,7 +17647,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       const url    = new URL(link.replace(/^meshcore:\/\//, 'https://meshcore/'));
       const name   = url.searchParams.get('name')   || '';
       const secret = url.searchParams.get('secret') || '';
-      if (!name) { preview.style.display = 'none'; if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No channel name found in link.</span>'; return; }
+      if (!name) { preview.style.display = 'none'; if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucun nom de canal trouvé dans le lien.</span>'; return; }
       document.getElementById('mc-import-ch-name-preview').textContent   = name;
       document.getElementById('mc-import-ch-secret-preview').textContent = secret ? secret.slice(0, 8) + '…' : '(auto-derive from name)';
       preview.style.display = '';
@@ -17670,7 +17670,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       name   = url.searchParams.get('name')   || '';
       secret = url.searchParams.get('secret') || '';
     } catch(e) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Invalid link.</span>'; return; }
-    if (!name) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No channel name in link.</span>'; return; }
+    if (!name) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucun nom de canal dans le lien.</span>'; return; }
     if (statusEl) statusEl.textContent = 'Importing…';
     const body = {name, key_type: secret ? 'custom' : 'auto'};
     if (secret) body.key = secret;
@@ -17798,12 +17798,12 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         n.hw_model ? `<div><b>HW:</b> ${escHtml(n.hw_model)}</div>` : null,
         n.role     ? `<div><b>Role:</b> ${escHtml(n.role)}</div>` : null,
         `<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-          <button class="map-popup-btn" title="Show in Nodes list" onclick="showNodeInList('${jsSafe(n.from_id)}')">Liste</button>
+          <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(n.from_id)}')">Liste</button>
           <button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(n.from_id)}','${safeName}')">DM</button>
           <button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">TR</button>
           <button class="map-popup-btn" title="Set position" onclick="openMapPos('${jsSafe(n.from_id)}','${safeName}')">Pos</button>
           <button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(n.from_id)}','${safeName}')">Info</button>
-          <button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">Delete</button>
+          <button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">Supprimer</button>
         </div>`,
       ].filter(Boolean).join('');
       return rows;
@@ -17851,7 +17851,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     // Helper: rebuild log from current _senseResponses, sorted oldest→newest (prepend = newest on top)
     function _rebuildLog() {
       if (!logEl) return;
-      logEl.innerHTML = '<span id="sense-log-empty" style="color:var(--muted)">No sense run yet.</span>';
+      logEl.innerHTML = '<span id="sense-log-empty" style="color:var(--muted)">Aucune détection effectuée pour le moment.</span>';
       Object.values(_senseResponses)
         .sort((a, b) => (a.ts || 0) - (b.ts || 0))
         .forEach(n => _senseAddLogEntry(n));
@@ -17989,7 +17989,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       }
       senseCooldownTick(d.cooldown_remaining);
       if (d.active) {
-        document.getElementById('sense-status').textContent = `Sensing… ${d.window_remaining}s remaining`;
+        document.getElementById('sense-status').textContent = `Détection… ${d.window_remaining}s restantes`;
         senseStartWindowCountdown(d.window_remaining);
       }
     }).catch(e => console.error('senseInit status fetch failed:', e));
@@ -18056,7 +18056,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         // sense_done SSE will overwrite status with final count
         if (status) status.textContent = '';
       } else {
-        if (status) status.textContent = `Sensing… ${w}s remaining`;
+        if (status) status.textContent = `Détection… ${w}s restantes`;
       }
     }, 1000);
   }
@@ -18144,7 +18144,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         <div class="sense-node-name">${escHtml(label)}</div>
         <div class="sense-node-time">${senseTimeAgo(n.ts)}</div>
       </div>
-      <div class="sense-node-meta">${escHtml(meta) || 'No data'}</div>`;
+      <div class="sense-node-meta">${escHtml(meta) || 'Aucune donnée'}</div>`;
     const clickPos = hasGps
       ? [n.lat, n.lon]
       : (() => { const mn = allNodes.find(nd => nd.id === n.from_id); return mn && mn.latitude != null ? [mn.latitude, mn.longitude] : null; })();
@@ -18557,7 +18557,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         document.getElementById('node-cfg-mqtt-address').value      = d.mqtt_address   || '';
         document.getElementById('node-cfg-mqtt-username').value     = d.mqtt_username  || '';
         document.getElementById('node-cfg-mqtt-password').value     = '';
-        document.getElementById('node-cfg-mqtt-password').placeholder = d.mqtt_pwd_set ? '(set — leave blank to keep)' : '(not set)';
+        document.getElementById('node-cfg-mqtt-password').placeholder = d.mqtt_pwd_set ? '(set — leave blank to keep)' : '(non défini)';
         document.getElementById('node-cfg-mqtt-encryption').checked = !!d.mqtt_encryption;
         document.getElementById('node-cfg-mqtt-json').checked       = !!d.mqtt_json;
         document.getElementById('node-cfg-mqtt-tls').checked        = !!d.mqtt_tls;
@@ -18694,7 +18694,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!radioId) return;
     const label = document.querySelector('#node-cfg-tabs .btn.active')?.textContent || radioId;
     document.getElementById('confirm-ok').textContent = 'Clear';
-    showConfirm(`Clear all remembered remote nodes for "${label}"? The selected radio itself stays intact.`, async () => {
+    showConfirm(`Effacer tous les nœuds distants mémorisés pour "${label}"? La radio sélectionnée elle-même reste intacte.`, async () => {
       const st = document.getElementById('node-cfg-actions-status');
       if (st) st.innerHTML = '<span style="color:var(--muted)">Clearing known nodes…</span>';
       try {
@@ -18763,8 +18763,8 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
             ${pskBadge}
             <span style="font-size:11px;color:${roleColor};width:68px;text-align:right;flex-shrink:0">${roleLabel}</span>
             ${ch.role !== 0
-              ? `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="shareMtChannel(${ch.index})" title="Show channel share data">Info/Share</button>`
-              : `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0;opacity:.45;cursor:default" disabled>Info/Share</button>`}
+              ? `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="shareMtChannel(${ch.index})" title="Afficher les données de partage du canal">Infos/Partage</button>`
+              : `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0;opacity:.45;cursor:default" disabled>Infos/Partage</button>`}
             <button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="openChEdit(${ch.index})" title="Edit channel settings">Edit</button>
           </div>`;
         }).join('');
@@ -18849,7 +18849,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   function importMtChannel() {
     const radioId  = _selectedNodeId;
     const statusEl = document.getElementById('mt-import-channel-status');
-    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">No node selected.</span>'; return; }
+    if (!radioId) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Aucun nœud sélectionné.</span>'; return; }
     const link = (document.getElementById('mt-import-channel-link').value || '').trim();
     const slot = parseInt(document.getElementById('mt-import-ch-slot').value);
     if (isNaN(slot) || slot < 0 || slot > 7) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Slot must be 0–7.</span>'; return; }
@@ -18889,7 +18889,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       .then(({ok, d}) => {
         if (!area) return;
         if (!ok || d.error) {
-          area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">${escHtml(d.error || 'Share data unavailable.')}</div>`;
+          area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">${escHtml(d.error || 'Données de partage indisponibles.')}</div>`;
           return;
         }
         area.className = '';
@@ -18909,12 +18909,12 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           <div id="channel-share-link" class="share-link-box">${escHtml(d.uri || '')}</div>
           <div id="channel-share-json" class="share-link-box" style="margin-top:8px">${escHtml(d.json || JSON.stringify(d.details || {}))}</div>
           <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-            <button class="btn" onclick="copyTextById('channel-share-link',this)">Copy share data</button>
-            <button class="btn" onclick="copyTextById('channel-share-json',this)">Copy JSON</button>
+            <button class="btn" onclick="copyTextById('channel-share-link',this)">Copier les données de partage</button>
+            <button class="btn" onclick="copyTextById('channel-share-json',this)">Copier le JSON</button>
           </div>`;
       })
       .catch(e => {
-        if (area) area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">Share data export failed: ${escHtml(e.message)}</div>`;
+        if (area) area.innerHTML = `<div class="modal-error" style="padding:0;text-align:left">Échec de l’exportation des données de partage : ${escHtml(e.message)}</div>`;
       });
   }
 
@@ -20210,8 +20210,8 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       btn.title = _tocEditingId ? 'Save changes to this log entry' : 'Add log entry';
     }
     if (clrBtn) {
-      clrBtn.textContent = _tocEditingId ? 'Cancel' : 'Clear';
-      clrBtn.title = _tocEditingId ? 'Cancel editing and discard changes' : 'Clear all fields';
+      clrBtn.textContent = _tocEditingId ? 'Annuler' : 'Effacer';
+      clrBtn.title = _tocEditingId ? 'Annuler la modification et abandonner les changements' : 'Effacer tous les champs';
     }
     if (st) st.textContent = _tocEditingId ? `Editing entry #${_tocEditingId}` : '';
   }
@@ -20504,7 +20504,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (mo) {
         const [, , name, defId, tail] = mo;
         const c = _TOC_OVL_COLOR;
-        const badge = `<button onclick="tocShowOverlayOnMap(${Number(defId)||0})" title="Show on map" style="background:${c}22;color:${c};border:1px solid ${c}55;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600;cursor:pointer">@${_tocEscape(name)}</button>`;
+        const badge = `<button onclick="tocShowOverlayOnMap(${Number(defId)||0})" title="Afficher sur la carte" style="background:${c}22;color:${c};border:1px solid ${c}55;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600;cursor:pointer">@${_tocEscape(name)}</button>`;
         return badge + _tocEscape(tail);
       }
       return _tocEscape(part);
@@ -20840,9 +20840,9 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         btns.push(`<button class="map-popup-btn" onclick="openMapInfo('${safeId}','${safeNm}');${hide}">Info</button>`);
       }
       if (hasMarker) {
-        btns.push(`<button class="map-popup-btn" onclick="switchTab('map');${hide};setTimeout(()=>{const m=mapMarkers['${safeId}'];if(m&&leafletMap){leafletMap.setView(m.getLatLng(),Math.max(leafletMap.getZoom(),14));m.openPopup();}},100)">Map</button>`);
+        btns.push(`<button class="map-popup-btn" onclick="switchTab('map');${hide};setTimeout(()=>{const m=mapMarkers['${safeId}'];if(m&&leafletMap){leafletMap.setView(m.getLatLng(),Math.max(leafletMap.getZoom(),14));m.openPopup();}},100)">Carte</button>`);
       } else {
-        btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Map</button>`);
+        btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Carte</button>`);
       }
       btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Journal</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trail</button>`);
@@ -20850,7 +20850,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     } else {
       btns.push(`<button class="map-popup-btn" onclick="showNodeInList('${safeId}');${hide}" title="Look up in node history">Liste</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openMapDM('${safeId}','${safeNm}');${hide}">DM</button>`);
-      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Map</button>`);
+      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Carte</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openMtNodeDetails('${safeId}');${hide}">Info</button>`);
       btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Journal</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trail</button>`);
@@ -21160,7 +21160,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const missionMode = document.getElementById('toc-filter-mission-mode')?.value || 'include';
     const stats = _tocMissionStats();
     if (!stats.length) {
-      wrap.innerHTML = '<span style="color:var(--muted);font-size:12px">No missions yet. Add a Mission / Folder name to any log entry.</span>';
+      wrap.innerHTML = '<span style="color:var(--muted);font-size:12px">Aucune mission pour le moment. Add a Mission / Folder name to any log entry.</span>';
       return;
     }
     wrap.innerHTML = stats.map(m => {
@@ -21385,7 +21385,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       : '';
     const coords = _tocExtractCoords(e.body);
     const mapBtn = coords
-      ? `<button onclick="tocShowOnMap(${coords.lat},${coords.lon},'${jsSafe(e.category)}')" title="Show coordinates on map" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
+      ? `<button onclick="tocShowOnMap(${coords.lat},${coords.lon},'${jsSafe(e.category)}')" title="Afficher les coordonnées sur la carte" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
           onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">⌖</button>`
       : '';
     tr.innerHTML = `
@@ -21565,7 +21565,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!list) return;
     const hits = _tocMcShareContactList(input?.value || '');
     if (!hits.length) {
-      list.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:10px 0">No matching MC contacts.</div>';
+      list.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:10px 0">Aucun contact MC correspondant.</div>';
       return;
     }
     list.innerHTML = hits.map(c => {
@@ -21579,7 +21579,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   }
 
   async function _tocShareViaMcSend(entry, targetId) {
-    if (!activeMcRadioId) throw new Error('No active MC radio.');
+    if (!activeMcRadioId) throw new Error('Aucune radio MC active.');
     if (!targetId) throw new Error('Pick an MC contact to share to.');
     const limit = _mcTargetMsgLimit('dm', activeMcRadioId);
     const { chunks } = _omLogShareEncode(entry, limit);
@@ -21620,7 +21620,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap">
           <span>Share this Log entry to <b>${escHtml(label)}</b>?</span>
           <span style="display:flex;gap:6px">
-            <button class="btn" onclick="tocRenderMcSharePicker(${id})" style="padding:3px 8px;font-size:11px">Cancel</button>
+            <button class="btn" onclick="tocRenderMcSharePicker(${id})" style="padding:3px 8px;font-size:11px">Annuler</button>
             <button class="btn-primary" onclick="tocConfirmMcShareTarget(${id},'${jsSafe(targetId)}','${jsSafe(label)}')" style="padding:3px 10px;font-size:11px">Send</button>
           </span>
         </div>`;
@@ -21639,7 +21639,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         showToast('TOC Log', `Shared Log entry to ${label} as ${count} MC DM${count === 1 ? '' : 's'}.`, 'node');
       })
       .catch(e => {
-        if (status) status.innerHTML = `<span style="color:var(--red)">Failed: ${escHtml(String(e?.message || e || 'MC Log share failed.'))}</span>`;
+        if (status) status.innerHTML = `<span style="color:var(--red)">Échec : ${escHtml(String(e?.message || e || 'MC Log share failed.'))}</span>`;
       });
   }
 
