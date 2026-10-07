@@ -9,7 +9,7 @@
   // Badge marking a node whose most recent packet arrived via an MQTT gateway
   // (rather than directly over RF). Rendered next to the node name.
   function mqttTag(viaMqtt) {
-    return viaMqtt ? ' <span class="mqtt-tag" title="Last heard via an MQTT gateway, not direct RF">MQTT</span>' : '';
+    return viaMqtt ? ' <span class="mqtt-tag" title="Dernière réception via une passerelle MQTT, pas directement par RF">MQTT</span>' : '';
   }
 
   // Set of MT node ids currently ignored (derived from the live node list).
@@ -549,7 +549,7 @@
       bridge_ingest_token: document.getElementById('bridge-ingest-token')?.value || '',
     };
     Object.assign(_appSettings, payload);
-    bridgeSettingsStatus('Saving...');
+    bridgeSettingsStatus('Enregistrement…');
     fetch(BASE_PATH + '/api/settings/app', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -584,7 +584,7 @@
     const payload = {auth_enabled: enabled};
     if (username) payload.auth_username = username;
     if (password) payload.auth_password = password;
-    _authStatus('Saving...', null);
+    _authStatus('Enregistrement…', null);
     fetch(BASE_PATH + '/api/settings/auth', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -604,7 +604,7 @@
     const username = document.getElementById('auth-username')?.value.trim() || '';
     const password = document.getElementById('auth-password')?.value || '';
     if (!username && !password) { _authStatus('Provide a username and/or password.', false); return; }
-    _authStatus('Saving...', null);
+    _authStatus('Enregistrement…', null);
     fetch(BASE_PATH + '/api/settings/auth', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -1855,7 +1855,7 @@
           ],
           buttons: [
             ['Sense Mesh', 'Diffuser une demande de Détection MT active et collecter les réponses pendant l’intervalle configuré.'],
-            ['Passive', 'Capturer en continu les paquets MT reçus sans transmettre.'],
+            ['Passif', 'Capturer en continu les paquets MT reçus sans transmettre.'],
             ['Active', 'Exécuter périodiquement les demandes de Détection MT selon l’intervalle configuré.'],
             ['Response log', 'Liste des paquets MT/réponses de Détection. Les lignes avec un chemin enregistré affichent un aperçu au survol et permettent de l’épingler ou de le retirer d’un clic.'],
             ['direct', 'Paquet reçu sans saut de répéteur — reçu directement.'],
@@ -2382,7 +2382,7 @@
     }
     // Emoji reaction — fallback standalone render (used only when target message not found in DOM)
     if (m.is_emoji) {
-      const sender = m.sent ? 'You' : escHtml(m.from_name || m.from_id);
+      const sender = m.sent ? 'Vous' : escHtml(m.from_name || m.from_id);
       const el = document.createElement('div');
       el.className = 'chat-msg received';
       el.innerHTML = `<div class="msg-meta">${radioPart}${sender} · ${t}${snrStr}${logBtn}</div><div class="emoji-chip">${escHtml(m.text)}<span class="emoji-label">reaction</span></div>`;
@@ -2421,7 +2421,7 @@
     openModal(nodeName, `
       <div style="display:flex;flex-direction:column;gap:8px;padding:4px 0">
         <button class="btn-primary" onclick="closeModal();doTraceroute('${safeId}','${jsSafe(nodeName)}','${jsSafe(nodeRadioId)}')" title="Run traceroute to this node">Traceroute</button>
-        <button class="btn-primary" onclick="closeModal();doDM('${safeId}','${jsSafe(nodeName)}')" title="Send a direct message to this node">Message direct</button>
+        <button class="btn-primary" onclick="closeModal();doDM('${safeId}','${jsSafe(nodeName)}')" title="Envoyer un message direct à ce nœud">Message direct</button>
         <button class="btn-primary" onclick="closeModal();doNodeInfo('${safeId}','${jsSafe(nodeName)}')" title="Demander les informations du nœud">Informations nœud</button>
         <button class="btn-primary" onclick="closeModal();doReqPos('${safeId}','${jsSafe(nodeName)}')" title="Demander la position GPS à ce nœud">Demander la position</button>
       </div>`);
@@ -2516,8 +2516,8 @@ if (targetEl) {
         if (!r.ok) throw new Error(await r.text());
       } catch(e) {
         input.value = text;
-        showAlert(String(e?.message || e || 'Send failed.'));
-        console.error('Send failed:', e);
+        showAlert(String(e?.message || e || 'Échec de l’envoi.'));
+        console.error('Échec de l’envoi:', e);
       }
     };
     if (_silentMode) { showSilentConfirm('L’envoi est impossible lorsque le mode silencieux est activé.'); return; }
@@ -3485,7 +3485,7 @@ if (targetEl) {
     if (refreshBtn) {
       refreshBtn.classList.add('refreshing');
       const label = refreshBtn.querySelector('.btn-label');
-      if (label) label.textContent = 'Refreshing';
+      if (label) label.textContent = 'Actualisation…';
     }
     loadLive(); // always refresh node data, status bar, header count, map
     initMc();   // refresh MC radios, contacts, channels, pills, and map markers
@@ -3498,7 +3498,7 @@ if (targetEl) {
       if (!refreshBtn) return;
       refreshBtn.classList.remove('refreshing');
       const label = refreshBtn.querySelector('.btn-label');
-      if (label) label.textContent = 'Refresh';
+      if (label) label.textContent = 'Actualiser';
     }, 1200);
   }
 
@@ -3585,12 +3585,12 @@ if (targetEl) {
       ['Hardware', n.hw_model],
       ['Radio', n.radio_name || n.radio_id],
       ['SNR', n.snr != null ? `${n.snr} dB` : ''],
-      ['Battery', battDisplay(n.battery)],
-      ['Hops', n.hops_away],
+      ['Batterie', battDisplay(n.battery)],
+      ['Sauts', n.hops_away],
       ['Distance', _mtNodeDistanceLabel(n)],
       ['Latitude', n.latitude],
       ['Longitude', n.longitude],
-      ['Last seen', nodeLastHeardLabel(n)],
+      ['Dernière activité', nodeLastHeardLabel(n)],
     ];
     openModal('MT Node Details', `
       <div id="mt-detail-rows">${_detailRows(localRows)}</div>
@@ -3623,14 +3623,14 @@ if (targetEl) {
           ['Radio', details.radio_name || details.radio_id || n.radio_name || n.radio_id],
           ['SNR', details.snr != null ? `${details.snr} dB` : ''],
           ['RSSI', details.rssi != null ? `${details.rssi} dBm` : ''],
-          ['Battery', battDisplay(details.battery)],
+          ['Batterie', battDisplay(details.battery)],
           ['Voltage', details.voltage],
-          ['Hops', details.hops_away],
+          ['Sauts', details.hops_away],
           ['Distance', _mtNodeDistanceLabel(n)],
           ['Latitude', details.latitude],
           ['Longitude', details.longitude],
           ['Altitude', details.altitude],
-          ['Last seen', nodeLastHeardLabel(n)],
+          ['Dernière activité', nodeLastHeardLabel(n)],
         ];
         if (detailBox) detailBox.innerHTML = _detailRows(rows);
         area.className = '';
@@ -3663,12 +3663,12 @@ if (targetEl) {
       ['Pubkey hex', fullKey],
       ['Radio', radio.name || radio.node_name || rid],
       ['Source', c.archived_only ? 'OM archive' : (c.source_state || 'live')],
-      ['Path', c.out_path || ''],
-      ['Hops', c.out_path_len != null ? mcPathHopLabel(c.out_path_len, true) : ''],
+      ['Chemin', c.out_path || ''],
+      ['Sauts', c.out_path_len != null ? mcPathHopLabel(c.out_path_len, true) : ''],
       ['Distance', _mcNodeDistanceLabel(c, rid)],
       ['Latitude', lat],
       ['Longitude', lon],
-      ['Last seen', c.last_heard_ts ? senseTimeAgo(c.last_heard_ts) : (c.last_seen || '')],
+      ['Dernière activité', c.last_heard_ts ? senseTimeAgo(c.last_heard_ts) : (c.last_seen || '')],
       ...(c.last_rc_heard_ts ? [
         ['RC last heard', senseTimeAgo(c.last_rc_heard_ts)],
         ['RC signal', `RSSI ${c.last_rc_rssi ?? '?'} · SNR ${c.last_rc_snr != null ? (c.last_rc_snr > 0 ? '+' : '') + c.last_rc_snr.toFixed(1) : '?'}`],
@@ -3680,7 +3680,7 @@ if (targetEl) {
       ${_detailRows(rows)}
       <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
         <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Données passives</div>
-        <div id="mc-passive-intel-area" class="modal-loading" style="padding:6px 0;text-align:left;font-size:12px">Loading…</div>
+        <div id="mc-passive-intel-area" class="modal-loading" style="padding:6px 0;text-align:left;font-size:12px">Chargement…</div>
       </div>
       <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
         <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Données de partage MeshCore</div>
@@ -3734,7 +3734,7 @@ if (targetEl) {
         }
         area.className = '';
         const det = d.details || {};
-        const name = escHtml(det.name || 'Unknown');
+        const name = escHtml(det.name || 'Inconnu');
         const keyFull = escHtml(det.full_key || '');
         const keyShort = keyFull ? `&lt;${keyFull.slice(0,8)}…${keyFull.slice(-8)}&gt;` : '';
         const qrHtml = d.qr_svg
@@ -3778,7 +3778,7 @@ if (targetEl) {
   }
 
   // ---------------------------------------------------------------------------
-  // Passive Intel Manager (Settings → MC)
+  // Informations passives Manager (Settings → MC)
   // ---------------------------------------------------------------------------
 
   function _passiveIntelRadioId() {
@@ -3798,7 +3798,7 @@ if (targetEl) {
       if (statsEl) statsEl.textContent = '—';
       return;
     }
-    listEl.innerHTML = '<div style="color:var(--muted)">Loading…</div>';
+    listEl.innerHTML = '<div style="color:var(--muted)">Chargement…</div>';
     try {
       // Fetch from all connected radios in parallel
       const allResults = await Promise.all(rids.map(async rid => {
@@ -3935,7 +3935,7 @@ if (targetEl) {
         }).then(r => r.json()).catch(() => ({deleted: 0}))
       ));
       const total = results.reduce((s, d) => s + (d.deleted || 0), 0);
-      showToast('Passive Intel', `Anciennes observations supprimées : ${total}${total !== 1 ? 's' : ''}.`, 'node');
+      showToast('Informations passives', `Anciennes observations supprimées : ${total}${total !== 1 ? 's' : ''}.`, 'node');
       loadPassiveIntelManager();
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = 'Run TTL cleanup'; }
@@ -4022,7 +4022,7 @@ if (targetEl) {
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             <input id="collector-cmd-${ck}" class="settings-input" style="width:200px;font-size:11px;font-family:monospace" placeholder="Custom command…">
-            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCustomCmd('${ck}',this)" title="Send custom command to this collector">Envoyer</button>
+            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCustomCmd('${ck}',this)" title="Envoyer une commande personnalisée à ce collecteur">Envoyer</button>
           </div>
           <div id="collector-msgs-${ck}" style="margin-top:6px;font-size:11px;display:none"></div>
         </div>
@@ -4034,7 +4034,7 @@ if (targetEl) {
             <input id="collector-lat-${ck}" class="settings-input" type="number" step="0.000001" style="width:120px;font-size:11px;font-family:monospace" placeholder="Latitude" value="${escHtml(String(latVal))}">
             <input id="collector-lon-${ck}" class="settings-input" type="number" step="0.000001" style="width:120px;font-size:11px;font-family:monospace" placeholder="Longitude" value="${escHtml(String(lonVal))}">
             <button class="btn" style="font-size:11px;padding:2px 8px" onclick="startCollectorMapPick('${ck}',${i})" title="Choisir une position sur la carte">Choisir sur la carte</button>
-            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="setCollectorPosition('${ck}',${i},this)" title="Send lat/lon to the collector node and save locally">Définir la position</button>
+            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="setCollectorPosition('${ck}',${i},this)" title="Envoyer la latitude/longitude au nœud collecteur et enregistrer localement">Définir la position</button>
           </div>
         </div>
 
@@ -4101,7 +4101,7 @@ if (targetEl) {
     const key   = (keyEl?.value || '').trim().slice(0, 64);
     const label = (labelEl?.value || '').trim();
     if (!key || key.length < 8) {
-      if (statEl) statEl.textContent = 'Enter at least 8 characters of the collector pubkey.';
+      if (statEl) statEl.textContent = 'Saisissez au moins 8 caractères de la clé publique du collecteur.';
       return;
     }
     const collectors = _loadCollectors();
@@ -4304,7 +4304,7 @@ if (targetEl) {
         return d;
       } else {
         const reply = d.reply?.text || d.reply || '';
-        const msg = d.error || reply || 'unknown error';
+        const msg = d.error || reply || 'erreur inconnue';
         showToast('Collecteur distant', `Échec : ${escHtml(msg)}`, 'node');
         const err = new Error(msg);
         err.toastShown = true;
@@ -4486,14 +4486,14 @@ if (targetEl) {
     const modalBody = document.getElementById('modal-body');
     if (!await _trCanStart(modalBody)) return;
     document.getElementById('modal-body').innerHTML =
-      `<div class="modal-loading" id="tr-modal-status">Sending traceroute… 30s</div>`;
+      `<div class="modal-loading" id="tr-modal-status">Envoi du traceroute… 30s</div>`;
     const controller = {};
     _activeTracerouteController = controller;
     _activeTracerouteStartedAt = Date.now();
     const timerId = trTimerStart(s => {
       const el = document.getElementById('tr-modal-status');
       if (!el) return;
-      if (s <= 30) el.textContent = `Sending traceroute… ${30 - s}s`;
+      if (s <= 30) el.textContent = `Envoi du traceroute… ${30 - s}s`;
       else el.textContent = 'Waiting for traceroute cleanup…';
     });
     try {
@@ -4606,7 +4606,7 @@ if (targetEl) {
     const msg = input?.value.trim();
     if (!msg) return;
     const status = document.getElementById('dm-status');
-    status.innerHTML = '<div class="modal-loading">Sending...</div>';
+    status.innerHTML = '<div class="modal-loading">Envoi…</div>';
     try {
       const r = await fetch(BASE_PATH + `/api/node/${encodeURIComponent(nodeId)}/dm`, {
         method: 'POST',
@@ -4615,7 +4615,7 @@ if (targetEl) {
       });
       const d = await r.json();
       if (r.ok) {
-        status.innerHTML = '<div class="modal-success">Sent.</div>';
+        status.innerHTML = '<div class="modal-success">Envoyé.</div>';
         input.value = '';
       } else {
         status.innerHTML = `<div class="modal-error">${escHtml(d.error)}</div>`;
@@ -5012,30 +5012,30 @@ if (targetEl) {
   }
 
   const TILE_LAYERS = {
-    osm:              { label: 'OuverteStreetMap',   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19 },
-    voyager:          { label: 'Voyager',         url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    voyager_nolabels: { label: 'Voyager No Labels', url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    positron:         { label: 'Positron',        url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    dark_matter:      { label: 'Dark Matter',     url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    dark_nolabels:    { label: 'Dark No Labels',  url: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    esri_gray_dark:   { label: 'Esri Dark Gray',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, HERE, Garmin, © OuverteStreetMap contributors, and the GIS User Community', maxZoom: 16 },
-    stamen_toner_lite:{ label: 'Toner Lite',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
-    stamen_toner_dark:{ label: 'Toner Dark',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
-    stamen_terrain:   { label: 'Stamen Terrain',  url: 'https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    osm:              { label: 'OpenStreetMap',   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19 },
+    voyager:          { label: 'Voyager',         url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    voyager_nolabels: { label: 'Voyager No Labels', url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    positron:         { label: 'Positron',        url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    dark_matter:      { label: 'Dark Matter',     url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    dark_nolabels:    { label: 'Dark No Labels',  url: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    esri_gray_dark:   { label: 'Esri Dark Gray',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, HERE, Garmin, © OpenStreetMap contributors, and the GIS User Community', maxZoom: 16 },
+    stamen_toner_lite:{ label: 'Toner Lite',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    stamen_toner_dark:{ label: 'Toner Dark',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    stamen_terrain:   { label: 'Stamen Terrain',  url: 'https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
     esri_sat:         { label: 'Esri Satellite',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri', maxZoom: 18 },
     esri_streets:     { label: 'Esri Streets',    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, DeLorme, NAVTEQ, USGS, Intermap, NRCAN', maxZoom: 19 },
     esri_topo:        { label: 'Esri Topo',       url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri', maxZoom: 18 },
-    topo:             { label: 'OuverteTopoMap',     url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://opentopomap.org">OpenTopoMap</a>', maxZoom: 17 },
-    stadia_outdoors:  { label: 'Stadia Outdoors', url: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    topo:             { label: 'OpenTopoMap',     url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://opentopomap.org">OpenTopoMap</a>', maxZoom: 17 },
+    stadia_outdoors:  { label: 'Stadia Outdoors', url: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
     esri_hillshade:   { label: 'Esri Hillshade',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, Airbus DS, USGS, NGA, NASA, CGIAR', maxZoom: 16 },
-    tf_landscape:     { label: 'TF Landscape ★',  url: 'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
-    tf_outdoors:      { label: 'TF Outdoors ★',   url: 'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
-    tf_pioneer:       { label: 'TF Pioneer ★',    url: 'https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
-    tf_atlas:         { label: 'TF Atlas ★',      url: 'https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
-    mt_hybrid:        { label: 'MT Satellite Hybrid ★', url: 'https://api.maptiler.com/maps/hybrid-v4-dark/{z}/{x}/{y}.jpg?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
-    mt_topo:          { label: 'MT Topo ★',          url: 'https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
-    mt_streets:       { label: 'MT Streets ★',       url: 'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
-    mt_winter:        { label: 'MT Winter ★',        url: 'https://api.maptiler.com/maps/winter-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
+    tf_landscape:     { label: 'TF Landscape ★',  url: 'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
+    tf_outdoors:      { label: 'TF Outdoors ★',   url: 'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
+    tf_pioneer:       { label: 'TF Pioneer ★',    url: 'https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
+    tf_atlas:         { label: 'TF Atlas ★',      url: 'https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
+    mt_hybrid:        { label: 'MT Satellite Hybrid ★', url: 'https://api.maptiler.com/maps/hybrid-v4-dark/{z}/{x}/{y}.jpg?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
+    mt_topo:          { label: 'MT Topo ★',          url: 'https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
+    mt_streets:       { label: 'MT Streets ★',       url: 'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
+    mt_winter:        { label: 'MT Winter ★',        url: 'https://api.maptiler.com/maps/winter-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
   };
 
   function allTileLayers() {
@@ -5086,7 +5086,7 @@ if (targetEl) {
     if (_mapAppTileLayersLoading) return;
     if (_mapAppTileLayersLoaded && !opts.force) return;
     _mapAppTileLayersLoading = true;
-    _sharedTileStatus('Loading shared local tile layers...');
+    _sharedTileStatus('Chargement des couches cartographiques locales partagées…');
     try {
       const r = await fetch(`${_sharedTileServerUrl}/services`, {cache: 'no-store'});
       if (!r.ok) throw new Error(String(r.status));
@@ -5110,7 +5110,7 @@ if (targetEl) {
       refreshBaseLayerPanelOptions();
       const saved = (() => { try { return localStorage.getItem('mapTileLayer') || ''; } catch(e) { return ''; } })();
       if (saved && _mapAppTileLayers[saved] && _activeTileLayer) setTileLayer(saved);
-      _sharedTileStatus(Object.keys(next).length ? `Loaded ${Object.keys(next).length} shared local layer(s).` : 'Shared tile server is running, but no MBTiles were found.', true);
+      _sharedTileStatus(Object.keys(next).length ? `Loaded ${Object.keys(next).length} shared local layer(s).` : 'Le serveur de cartes partagé fonctionne, mais aucun fichier MBTiles n’a été trouvé.', true);
     } catch (e) {
       _mapAppTileLayers = {};
       _mapAppTileLayersLoaded = true;
@@ -5540,8 +5540,8 @@ if (targetEl) {
       ['Received', ts],
       ['SNR', entry.snr != null ? `${entry.snr} dB` : ''],
       ['RSSI', entry.rssi != null ? `${entry.rssi} dBm` : ''],
-      ['Hops', entry.hops != null ? (Number(entry.hops) === 0 ? 'Direct' : `${entry.hops} hop${Number(entry.hops) !== 1 ? 's' : ''}`) : ''],
-      ['Battery', battDisplay(entry.battery)],
+      ['Sauts', entry.hops != null ? (Number(entry.hops) === 0 ? 'Direct' : `${entry.hops} hop${Number(entry.hops) !== 1 ? 's' : ''}`) : ''],
+      ['Batterie', battDisplay(entry.battery)],
       ['Voltage', entry.voltage != null ? `${Number(entry.voltage).toFixed ? Number(entry.voltage).toFixed(2) : entry.voltage} V` : ''],
       ['Position', position],
       ['Altitude', entry.alt != null ? `${entry.alt} m` : ''],
@@ -5793,7 +5793,7 @@ if (targetEl) {
     if (!input) return;
     const key = input.value.trim();
     localStorage.setItem('thunderforestApiKey', key);
-    if (status) { status.textContent = key ? 'Saved. Select a TF layer on the map to apply.' : 'Key cleared.'; status.style.color = 'var(--accent)'; setTimeout(() => { if (status) status.textContent = ''; }, 3000); }
+    if (status) { status.textContent = key ? 'Enregistré. Sélectionnez une couche TF sur la carte pour l’appliquer.' : 'Clé effacée.'; status.style.color = 'var(--accent)'; setTimeout(() => { if (status) status.textContent = ''; }, 3000); }
   }
 
   function saveMapTilerKey() {
@@ -5802,7 +5802,7 @@ if (targetEl) {
     if (!input) return;
     const key = input.value.trim();
     localStorage.setItem('mapTilerApiKey', key);
-    if (status) { status.textContent = key ? 'Saved. Select Satellite Hybrid on the map to apply.' : 'Key cleared.'; status.style.color = 'var(--accent)'; setTimeout(() => { if (status) status.textContent = ''; }, 3000); }
+    if (status) { status.textContent = key ? 'Enregistré. Sélectionnez Satellite Hybrid sur la carte pour l’appliquer.' : 'Clé effacée.'; status.style.color = 'var(--accent)'; setTimeout(() => { if (status) status.textContent = ''; }, 3000); }
   }
 
   // ---- Offline Tile Cache (IndexedDB, no external deps) ----
@@ -5970,7 +5970,7 @@ if (targetEl) {
 
   function clearTileCache(btn) {
     document.getElementById('confirm-ok').textContent = 'Effacer';
-    showConfirm('Effacer toutes les tuiles en cache ? Saved region configs are kept but tile counts will be reset.', () => {
+    showConfirm('Effacer toutes les tuiles en cache ? Les configurations de régions enregistrées seront conservées, mais le nombre de tuiles sera réinitialisé.', () => {
       tileClear().then(() => {
         saveRegions(loadRegions().map(r => ({ ...r, tiles: 0 })));
         renderRegionList();
@@ -6032,7 +6032,7 @@ if (targetEl) {
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:6px">
             <span style="font-size:13px;font-weight:500">${escHtml(r.name)}</span>
-            <span style="font-size:10px;padding:1px 5px;border-radius:3px;background:var(--bg);border:1px solid var(--border);color:var(--muted);white-space:nowrap">${escHtml(r.layerLabel || 'OuverteStreetMap')}</span>
+            <span style="font-size:10px;padding:1px 5px;border-radius:3px;background:var(--bg);border:1px solid var(--border);color:var(--muted);white-space:nowrap">${escHtml(r.layerLabel || 'OpenStreetMap')}</span>
           </div>
           <div style="font-size:11px;color:var(--muted)">zoom ${r.minZ}–${r.maxZ} · ${r.tiles.toLocaleString()} tiles · ≈${Math.round(r.tiles * 12 / 1024)} MB · ${_formatAppDate(r.date)}</div>
         </div>
@@ -6091,7 +6091,7 @@ if (targetEl) {
     document.getElementById('region-config-title').textContent = name;
     document.getElementById('region-config').style.display = 'block';
     document.getElementById('region-dl-progress').style.display = 'none';
-    document.getElementById('region-dl-btn').désactivé = false;
+    document.getElementById('region-dl-btn').disabled = false;
     const sel = document.getElementById('region-dl-layer');
     sel.innerHTML = Object.entries(allTileLayers()).map(([k, def]) =>
       `<option value="${k}">${escHtml(def.label)}</option>`).join('');
@@ -6228,7 +6228,7 @@ if (targetEl) {
       renderRegionList();
       refreshTileCacheInfo();
     } catch (err) {
-      showAlert('Delete failed — tiles not removed: ' + err.message);
+      showAlert('Échec de la suppression — les tuiles n’ont pas été supprimées : ' + err.message);
     } });
   }
 
@@ -6475,7 +6475,7 @@ if (targetEl) {
       });
     };
     if (_sharedTileServerEnabled) {
-      addTitle('Locally Stored Maps', 'From OPS-TOC shared MBTiles. Works offline.');
+      addTitle('Cartes stockées localement', 'À partir des MBTiles partagés par OPS-TOC. Fonctionne hors ligne.');
       Object.entries(_mapAppTileLayers).forEach(([key, def]) => addLayer(key, def));
     }
     if (_sharedTileServerEnabled && _mapAppTileLayersLoaded && !Object.keys(_mapAppTileLayers).length) {
@@ -6727,7 +6727,7 @@ if (targetEl) {
     let feature = null;
     if (!data || typeof data !== 'object') throw new Error('Layer has no GeoJSON data.');
     if (data.type === 'FeatureCollection') {
-      if (!Array.isArray(data.features) || data.features.length !== 1) throw new Error('Only single-feature overlays can be edited in the map for now.');
+      if (!Array.isArray(data.features) || data.features.length !== 1) throw new Error('Pour le moment, seules les superpositions à fonctionnalité unique peuvent être modifiées sur la carte.');
       feature = data.features[0];
     } else if (data.type === 'Feature') {
       feature = data;
@@ -7016,10 +7016,10 @@ if (targetEl) {
     const overlayBtn = document.getElementById('signal-heatmap-overlay-btn');
     if (overlayBtn) {
       overlayBtn.classList.toggle('active', _signalHeatmapEnabled);
-      overlayBtn.textContent = _signalHeatmapEnabled ? 'On' : 'Off';
+      overlayBtn.textContent = _signalHeatmapEnabled ? 'Activée' : 'Désactivée';
     }
     const refreshBtn = document.getElementById('signal-heatmap-refresh-btn');
-    if (refreshBtn) refreshBtn.désactivé = !_signalHeatmapEnabled;
+    if (refreshBtn) refreshBtn.disabled = !_signalHeatmapEnabled;
   }
 
   function _signalHeatmapIntensity(rssi, snr) {
@@ -7111,7 +7111,7 @@ if (targetEl) {
         const sourceMsg = sources.mt || sources.mc
           ? 'Aucune source MT/MC active ne dispose encore d’un signal et d’une position.'
           : sources.context === 'sense'
-            ? 'Select MT or MC in Sense to show a signal heatmap.'
+            ? 'Sélectionnez MT ou MC dans Sense pour afficher une carte de chaleur du signal.'
             : 'Activez le bouton de carte MT ou MC pour afficher la carte thermique du signal.';
         showToast('Signal Heatmap', sourceMsg, 'node');
         return;
@@ -7147,7 +7147,7 @@ if (targetEl) {
           </div>
           <div style="display:flex;gap:5px;align-items:center">
             <button id="signal-heatmap-refresh-btn" class="btn" style="font-size:11px;padding:2px 8px" onclick="_refreshSignalHeatmap()" title="Reload heatmap from latest observations" ${_signalHeatmapEnabled ? '' : 'désactivé'}>↻</button>
-            <button id="signal-heatmap-overlay-btn" class="overlay-tool-btn ${_signalHeatmapEnabled ? 'active' : ''}" onclick="toggleSignalHeatmap()" title="Toggle signal strength heatmap on the map">${_signalHeatmapEnabled ? 'On' : 'Off'}</button>
+            <button id="signal-heatmap-overlay-btn" class="overlay-tool-btn ${_signalHeatmapEnabled ? 'active' : ''}" onclick="toggleSignalHeatmap()" title="Activer ou désactiver la carte de chaleur du signal">${_signalHeatmapEnabled ? 'Activée' : 'Désactivée'}</button>
           </div>
         </div>
       </div>
@@ -7271,7 +7271,7 @@ if (targetEl) {
       console.error('loadMapLayers failed:', e);
       if (!opts.silent) {
         const statusEl = document.getElementById('map-layer-status');
-        if (statusEl) statusEl.textContent = `Failed to load layers: ${e.message || e}`;
+        if (statusEl) statusEl.textContent = `Échec to load layers: ${e.message || e}`;
       }
     }
   }
@@ -7803,7 +7803,7 @@ if (targetEl) {
     _wpDestNode = null;
     _wpMarkerEmoji = '📍';
     // Fetch channels for selector
-    let channels = [{index:0, name:'Primary'}];
+    let channels = [{index:0, name:'Principal'}];
     try {
       const ctrl = new AbortController();
       const timeout = setTimeout(() => ctrl.abort(), 3000);
@@ -8052,7 +8052,7 @@ if (targetEl) {
       });
       const data = await res.json().catch(() => ({}));
       if (data.ok) {
-        if (status) { status.style.color='var(--green)'; status.textContent='Saved!'; }
+        if (status) { status.style.color='var(--green)'; status.textContent='Enregistré !'; }
         setTimeout(closeModal, 800);
       } else {
         if (status) { status.style.color='var(--red)'; status.textContent=data.error||'Save failed'; }
@@ -8110,7 +8110,7 @@ if (targetEl) {
           <button onclick="shareNote(${note.id})"
             title="Diffuser cette note comme point de repère Meshtastic sur le maillage"
             style="font-size:11px;padding:3px 8px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;color:var(--accent);cursor:pointer">Partager</button>
-          <button onclick="document.getElementById('confirm-ok').textContent='Supprimer';showConfirm('Delete note \u201c${jsSafe(note.name||'cette note')}\u201d?',()=>deleteNote(${note.id}))"
+          <button onclick="document.getElementById('confirm-ok').textContent='Supprimer';showConfirm("Supprimer la note \u201c${jsSafe(note.name||'cette note')}\u201d ?",()=>deleteNote(${note.id}))"
             title="Supprimer cette note — uniquement en local, sans modifier le maillage"
             style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--red);cursor:pointer">Supprimer</button>
         </div>
@@ -8203,7 +8203,7 @@ if (targetEl) {
       const data = await res.json().catch(() => ({}));
       if (data.ok) {
         _editNoteId = null;
-        if (status) { status.style.color='var(--green)'; status.textContent='Saved!'; }
+        if (status) { status.style.color='var(--green)'; status.textContent='Enregistré !'; }
         setTimeout(closeModal, 800);
       } else {
         if (status) { status.style.color='var(--red)'; status.textContent=data.error||'Save failed'; }
@@ -8224,7 +8224,7 @@ if (targetEl) {
     const status = document.getElementById('wp-send-status');
     if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Le nom est obligatoire.'; } return; }
     if (!activeRadioId) { if (status) { status.style.color='var(--red)'; status.textContent='Aucune radio connectée.'; } return; }
-    if (useNode && !_wpDestNode) { if (status) { status.style.color='var(--red)'; status.textContent='Select a node.'; } return; }
+    if (useNode && !_wpDestNode) { if (status) { status.style.color='var(--red)'; status.textContent='Sélectionnez un nœud.'; } return; }
     if (status) { status.style.color='var(--muted)'; status.textContent='Envoi…'; }
     try {
       const res = await fetch(BASE_PATH + '/api/waypoints/send', {
@@ -8235,10 +8235,10 @@ if (targetEl) {
       });
       const data = await res.json().catch(() => ({}));
       if (data.ok) {
-        if (status) { status.style.color='var(--green)'; status.textContent = 'Sent!'; }
+        if (status) { status.style.color='var(--green)'; status.textContent = 'Envoyé !'; }
         setTimeout(closeModal, 1000);
       } else {
-        if (status) { status.style.color='var(--red)'; status.textContent = data.error || 'Send failed'; }
+        if (status) { status.style.color='var(--red)'; status.textContent = data.error || 'Échec de l’envoi'; }
       }
       // sent === 0: error already shown, modal stays open so user can retry
     } catch(e) {
@@ -8367,7 +8367,7 @@ if (targetEl) {
               <button onclick="event.stopPropagation();openEditNoteModal(${note.id})"
                 style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:3px;flex-shrink:0;line-height:1"
                 title="Modifier la note">✎</button>
-              <button onclick="event.stopPropagation();document.getElementById('confirm-ok').textContent='Supprimer';showConfirm('Delete note \u201c${jsSafe(note.name||'cette note')}\u201d?',()=>deleteNote(${note.id}))"
+              <button onclick="event.stopPropagation();document.getElementById('confirm-ok').textContent='Supprimer';showConfirm("Supprimer la note \u201c${jsSafe(note.name||'cette note')}\u201d ?",()=>deleteNote(${note.id}))"
                 style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:3px;flex-shrink:0;line-height:1"
                 title="Supprimer la note">✕</button>
             </div>`;
@@ -8464,7 +8464,7 @@ if (targetEl) {
     const isNode = _wpDestNode !== null;
 
     // Fetch channels
-    let channels = [{index:0, name:'Primary'}];
+    let channels = [{index:0, name:'Principal'}];
     try {
       const ctrl = new AbortController();
       const timeout = setTimeout(() => ctrl.abort(), 3000);
@@ -8694,14 +8694,14 @@ if (targetEl) {
     }; }
     if (!await _trCanStart(body)) return;
 
-    body.innerHTML = '<div style="color:var(--muted);font-size:12px" class="tr-status">Sending traceroute… 30s</div>';
+    body.innerHTML = '<div style="color:var(--muted);font-size:12px" class="tr-status">Envoi du traceroute… 30s</div>';
     const controller = {};
     _activeTracerouteController = controller;
     _activeTracerouteStartedAt = Date.now();
     const timerId = trTimerStart(s => {
       const el = body.querySelector('.tr-status');
       if (!el) return;
-      if (s <= 30) el.textContent = `Sending traceroute… ${30 - s}s`;
+      if (s <= 30) el.textContent = `Envoi du traceroute… ${30 - s}s`;
       else el.textContent = 'Waiting for traceroute cleanup…';
     });
     try {
@@ -9302,7 +9302,7 @@ if (targetEl) {
         <input type="checkbox" value="${ch.index}"
           ${listenChannels.includes(ch.index) ? 'checked' : ''}
           onchange="saveBotConfig()">
-        CH${ch.index}${ch.name && ch.name !== 'Primary' ? ' · ' + escHtml(ch.name) : ''}
+        CH${ch.index}${ch.name && ch.name !== 'Principal' ? ' · ' + escHtml(ch.name) : ''}
       </label>
     `).join('');
 
@@ -9312,7 +9312,7 @@ if (targetEl) {
         <input type="checkbox" value="${ch.index}"
           ${motdChannels.includes(ch.index) ? 'checked' : ''}
           onchange="saveBotConfig()">
-        CH${ch.index}${ch.name && ch.name !== 'Primary' ? ' · ' + escHtml(ch.name) : ''}
+        CH${ch.index}${ch.name && ch.name !== 'Principal' ? ' · ' + escHtml(ch.name) : ''}
       </label>
     `).join('');
 
@@ -9375,7 +9375,7 @@ if (targetEl) {
       body: JSON.stringify(rid ? { radio_id: rid } : {})
     })
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(d => { status.textContent = d.ok ? 'Sent!' : (d.error || 'Failed'); })
+      .then(d => { status.textContent = d.ok ? 'Envoyé !' : (d.error || 'Échec'); })
       .catch(() => { status.textContent = 'Erreur'; });
     setTimeout(() => { document.getElementById('motd-test-status').textContent = ''; }, 4000);
   }
@@ -9892,7 +9892,7 @@ if (targetEl) {
       _crossSettings = data.cross || {rules: payload.rules || []};
       renderCrossRulesList();
       _crossFillEditor(_crossSettings.rules.find(r => r.id === _crossEditId) || _crossSettings.rules[0] || _crossRuleBlank());
-      if (statusEl) statusEl.textContent = 'Saved.';
+      if (statusEl) statusEl.textContent = 'Enregistré.';
       _crossDirty = false;
     } catch (e) {
       if (statusEl) statusEl.textContent = String(e.message || e);
@@ -9929,18 +9929,18 @@ if (targetEl) {
     const restartBtn = document.getElementById('settings-update-restart-btn');
     const running = !!state?.running;
     if (checkBtn) {
-      checkBtn.désactivé = running;
+      checkBtn.disabled = running;
       if (!running) checkBtn.textContent = 'Vérifier';
     }
     if (runBtn) {
-      let désactivéReason = '';
-      if (!info?.managed) désactivéReason = 'Cette installation n’est pas gérée par Git.';
-      else if (info?.dirty) désactivéReason = 'Des modifications locales sont présentes. La mise à jour est bloquée tant qu’elles ne sont pas validées ou nettoyées.';
-      else if ((info?.ahead || 0) > 0) désactivéReason = `Des commits locaux sont en avance sur GitHub de ${info.ahead}. Envoyez-les ou réconciliez d’abord l’historique.`;
-      else if (!info?.update_available) désactivéReason = 'Aucune mise à jour GitHub n’est disponible.';
-      runBtn.désactivé = running || !!désactivéReason;
+      let disabledReason = '';
+      if (!info?.managed) disabledReason = 'Cette installation n’est pas gérée par Git.';
+      else if (info?.dirty) disabledReason = 'Des modifications locales sont présentes. La mise à jour est bloquée tant qu’elles ne sont pas validées ou nettoyées.';
+      else if ((info?.ahead || 0) > 0) disabledReason = `Des commits locaux sont en avance sur GitHub de ${info.ahead}. Envoyez-les ou réconciliez d’abord l’historique.`;
+      else if (!info?.update_available) disabledReason = 'Aucune mise à jour GitHub n’est disponible.';
+      runBtn.disabled = running || !!disabledReason;
       runBtn.textContent = running ? 'Mise à jour…' : 'Mettre à jour';
-      runBtn.title = running ? 'Mise à jour en cours.' : (désactivéReason || 'Récupérer la dernière version du code OverMesh depuis GitHub.');
+      runBtn.title = running ? 'Mise à jour en cours.' : (disabledReason || 'Récupérer la dernière version du code OverMesh depuis GitHub.');
     }
     if (restartBtn) restartBtn.style.display = state?.ok && /Restart required/i.test(state?.message || '') ? '' : 'none';
   }
@@ -9995,7 +9995,7 @@ if (targetEl) {
     const checkBtn = btn || document.getElementById('settings-update-check-btn');
     const summary = document.getElementById('settings-update-summary');
     if (checkBtn && fetchRemote) {
-      checkBtn.désactivé = true;
+      checkBtn.disabled = true;
       checkBtn.textContent = 'Vérification…';
     }
     if (summary && fetchRemote) summary.innerHTML = '<span style="color:var(--muted)">Vérification de GitHub…</span>';
@@ -10014,16 +10014,16 @@ if (targetEl) {
       if (fetchRemote && checkBtn) btnFeedback(checkBtn, '✓ Vérifié', 2000);
     } catch(e) {
       _renderUpdateStatus({error: String(e.message || e)});
-      if (checkBtn) { checkBtn.textContent = 'Vérifier'; checkBtn.désactivé = false; }
+      if (checkBtn) { checkBtn.textContent = 'Vérifier'; checkBtn.disabled = false; }
     } finally {
-      if (!fetchRemote && checkBtn) { checkBtn.textContent = 'Vérifier'; checkBtn.désactivé = false; }
+      if (!fetchRemote && checkBtn) { checkBtn.textContent = 'Vérifier'; checkBtn.disabled = false; }
     }
   }
 
   async function runOverMeshUpdate() {
     await settingsLoadUpdateStatus(false);
     const runBtn = document.getElementById('settings-update-run-btn');
-    if (runBtn?.désactivé) {
+    if (runBtn?.disabled) {
       showAlert(runBtn.title || 'La mise à jour est actuellement indisponible.');
       return;
     }
@@ -10095,7 +10095,7 @@ if (targetEl) {
           </span>
         </label>`).join('');
     // Disable the delete buttons when there is nothing to act on.
-    document.querySelectorAll('#node-cleanup-modal .node-cleanup-del').forEach(b => b.désactivé = empty);
+    document.querySelectorAll('#node-cleanup-modal .node-cleanup-del').forEach(b => b.disabled = empty);
     document.getElementById('node-cleanup-modal').classList.add('open');
     _updateNodeCleanupCount();
   }
@@ -10106,7 +10106,7 @@ if (targetEl) {
     const el = document.getElementById('node-cleanup-count');
     if (el) el.textContent = total ? `${sel} sur ${total} sélectionnés` : '';
     const selBtn = document.getElementById('node-cleanup-del-selected');
-    if (selBtn) selBtn.désactivé = sel === 0;
+    if (selBtn) selBtn.disabled = sel === 0;
   }
 
   let _nodeCleanupBusy = false;
@@ -10157,7 +10157,7 @@ if (targetEl) {
       if (progBar) progBar.style.width = `${total ? Math.round((done / total) * 100) : 0}%`;
     };
     const restoreButtons = () => {
-      [cancelBtn, delAll, delSel].forEach(b => { if (b) b.désactivé = false; });
+      [cancelBtn, delAll, delSel].forEach(b => { if (b) b.disabled = false; });
       if (activeBtn) activeBtn.innerHTML = prevLabel;
       if (progWrap) progWrap.style.display = 'none';
       if (progBar) progBar.style.width = '0%';
@@ -10165,7 +10165,7 @@ if (targetEl) {
     };
 
     _nodeCleanupBusy = true;
-    [cancelBtn, delAll, delSel].forEach(b => { if (b) b.désactivé = true; });
+    [cancelBtn, delAll, delSel].forEach(b => { if (b) b.disabled = true; });
     if (activeBtn) activeBtn.innerHTML = '<span class="node-cleanup-spinner"></span>Deleting…';
     if (progWrap) progWrap.style.display = 'block';
     if (countEl) countEl.classList.add('busy');
@@ -10439,7 +10439,7 @@ if (targetEl) {
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.désactivé = true;
+      if (gpsBtn) gpsBtn.disabled = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10453,7 +10453,7 @@ if (targetEl) {
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.désactivé = true;
+      if (gpsBtn) gpsBtn.disabled = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10467,7 +10467,7 @@ if (targetEl) {
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.désactivé = true;
+      if (gpsBtn) gpsBtn.disabled = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10481,7 +10481,7 @@ if (targetEl) {
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.désactivé = true;
+      if (gpsBtn) gpsBtn.disabled = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10496,7 +10496,7 @@ if (targetEl) {
     if (lonEl)  lonEl.textContent  = pos.lon  != null ? pos.lon.toFixed(6)  : '—';
     if (altEl)  altEl.textContent  = pos.alt  != null ? pos.alt + ' m'      : '—';
     if (speedEl) speedEl.textContent = pos.speed != null ? pos.speed.toFixed(1) + ' m/s' : '—';
-    if (gpsBtn) gpsBtn.désactivé = !hasFix;
+    if (gpsBtn) gpsBtn.disabled = !hasFix;
     if (hasFix) {
       _gpsPlaceMarker(pos.lat, pos.lon, pos.alt, pos.sats);
       if (mapLocked && leafletMap) leafletMap.panTo([pos.lat, pos.lon], { animate: true, duration: 0.6 });
@@ -11464,7 +11464,7 @@ if (targetEl) {
         if (_mcScanTimer) { clearInterval(_mcScanTimer); _mcScanTimer = null; }
         const b = document.getElementById('mc-scan-btn');
         const s = document.getElementById('mc-scan-status');
-        if (b) { b.textContent = 'Scanner'; b.désactivé = false; }
+        if (b) { b.textContent = 'Scanner'; b.disabled = false; }
         if (s) s.textContent = '';
       }, (_mcScanWindow + 10) * 1000);
       return;
@@ -11843,7 +11843,7 @@ if (targetEl) {
             </div>
             <button class="mc-route-hop-btn" title="Monter" ${idx === 0 || saving ? 'désactivé' : ''} onclick="mcRouteMoveHop(${idx}, -1)">&#8593;</button>
             <button class="mc-route-hop-btn" title="Descendre" ${idx === selected.length - 1 || saving ? 'désactivé' : ''} onclick="mcRouteMoveHop(${idx}, 1)">&#8595;</button>
-            <button class="mc-route-hop-btn" title="Supprimer le saut" ${saving ? 'désactivé' : ''} onclick="mcRouteRemoveHop(${idx})">&#10005;</button>
+            <button class="mc-route-hop-btn" title="Supprimer le saut" ${saving ? 'disabled' : ''} onclick="mcRouteRemoveHop(${idx})">&#10005;</button>
           </div>`;
         }).join('')}</div>`
       : `<div class="mc-route-summary" style="margin-top:10px">Aucun répéteur sélectionné. Cliquez sur <b>Direct uniquement</b> pour forcer la livraison directe, ou sur <b>Effacer le chemin</b> pour utiliser le routage automatique/inondation.</div>`;
@@ -11861,7 +11861,7 @@ if (targetEl) {
               <div>${escHtml(label)}</div>
               <div class="mc-route-hop-meta">${escHtml(meta)}</div>
             </div>
-            <button ${saving ? 'désactivé' : ''} onclick="mcRouteAddHop('${jsSafe(c.full_key || c.id || '')}')">Ajouter</button>
+            <button ${saving ? 'disabled' : ''} onclick="mcRouteAddHop('${jsSafe(c.full_key || c.id || '')}')">Ajouter</button>
           </div>`;
         }).join('')
       : `<div style="padding:12px;color:var(--muted);font-size:12px">Aucun répéteur connu ne correspond à cette recherche sur ${escHtml(radioLabel)}.</div>`;
@@ -11880,7 +11880,7 @@ if (targetEl) {
       <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin:10px 0">
         <div>
           <label class="settings-label">Hachage de chemin pour cette route</label>
-          <select class="settings-select" onchange="mcRouteSetPathHashMode(this.value)" ${saving ? 'désactivé' : ''}>
+          <select class="settings-select" onchange="mcRouteSetPathHashMode(this.value)" ${saving ? 'disabled' : ''}>
             <option value="0"${Number(pathHashMode) === 0 ? ' selected' : ''}>1B/saut - compatible ancien format</option>
             <option value="1"${Number(pathHashMode) === 1 ? ' selected' : ''}>2B/saut - équilibré</option>
             <option value="2"${Number(pathHashMode) === 2 ? ' selected' : ''}>3B/saut - plus précis</option>
@@ -11890,13 +11890,13 @@ if (targetEl) {
       </div>
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Rechercher des répéteurs connus</div>
       <div class="mc-route-search-row">
-        <input id="mc-route-search" class="mc-route-search" value="${escHtml(query)}" placeholder="Rechercher des répéteurs…" oninput="mcRouteSetQuery(this.value)" ${saving ? 'désactivé' : ''}>
+        <input id="mc-route-search" class="mc-route-search" value="${escHtml(query)}" placeholder="Rechercher des répéteurs…" oninput="mcRouteSetQuery(this.value)" ${saving ? 'disabled' : ''}>
       </div>
       <div class="mc-route-candidates">${candidatesHtml}</div>
       ${statusHtml}
       <div class="mc-route-actions">
-        <button class="btn" ${saving ? 'désactivé' : ''} onclick="saveMcRouteEditor(true)">Effacer le chemin</button>
-        <button class="btn btn-net-mc active" ${saving ? 'désactivé' : ''} onclick="saveMcRouteEditor(false)">${saving ? 'Enregistrement…' : selected.length === 0 ? 'Direct uniquement' : 'Enregistrer la route'}</button>
+        <button class="btn" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(true)">Effacer le chemin</button>
+        <button class="btn btn-net-mc active" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(false)">${saving ? 'Enregistrement…' : selected.length === 0 ? 'Direct uniquement' : 'Enregistrer la route'}</button>
       </div>`;
   }
 
@@ -14124,7 +14124,7 @@ if (targetEl) {
     const raw = msg?.path_hash_size ?? (msg?.path_hash_mode != null ? Number(msg.path_hash_mode) + 1 : null);
     const size = Number(raw);
     if (!Number.isFinite(size) || size <= 0) return null;
-    return { label: `${size}B`, detail: `Primary received copy uses ${size}-byte path hashes.` };
+    return { label: `${size}B`, detail: `La copie reçue principale utilise des empreintes de chemin de ${size} octets.` };
   }
 
   function _mcAltPathMeta(msg) {
@@ -14365,7 +14365,7 @@ if (targetEl) {
 
     rawHashes.forEach((hash, rawIdx) => {
       if (resolvedHops.some(h => String(h.hash || '').toLowerCase() === hash)) return;
-      rows.push(`<button class="mc-hop-focus" disabled title="Hop ID is known, but no contact/GPS match is available yet">
+      rows.push(`<button class="mc-hop-focus" disabled title="L’identifiant du saut est connu, mais aucun contact ou emplacement GPS correspondant n’est encore disponible">
         <span class="mc-hop-prefix">${escHtml(hash)}</span>
         <span class="mc-hop-focus-main">
           <span class="mc-hop-focus-name">Saut non résolu ${rawIdx + 1}</span>
@@ -14446,12 +14446,12 @@ if (targetEl) {
       const path = entry.path || [];
       const hops = entry.hopLen || 0;
       title.textContent = entry.responderName ? `⟳ ${entry.responderName}` : '⟳ Tracer la diffusion';
-      let rows = th('Path');
+      let rows = th('Chemin');
       if (entry.ours) {
         rows += td('From', radioName + ' (our radio)');
       } else {
         rows += td('Overheard by', radioName);
-        rows += td('Initiated by', 'Unknown node');
+        rows += td('Initiated by', 'Nœud inconnu');
       }
       const resolvedHops = entry.pathResult?.hops || [];
       if (resolvedHops.length) {
@@ -14499,8 +14499,8 @@ if (targetEl) {
       const advHashBytes = contact?.out_path_hash_size ?? (contact?.out_path_hash_mode != null ? contact.out_path_hash_mode + 1 : null);
       const advHashSuffix = advHashBytes != null ? ` · ${advHashBytes}saut` : '';
       let rows = td('Type', escHtml(typeLabel));
-      rows += td('Path', hopLabel + escHtml(advHashSuffix));
-      rows += td('Last seen', escHtml(_mcContactSeenLabel(contact)));
+      rows += td('Chemin', hopLabel + escHtml(advHashSuffix));
+      rows += td('Dernière activité', escHtml(_mcContactSeenLabel(contact)));
       if (entry.lat != null && entry.lon != null) rows += td('Position', `${entry.lat.toFixed(5)}, ${entry.lon.toFixed(5)}`);
       if (contact && contact.out_path_len > 0 && contact.out_path) {
         rows += th('Via');
@@ -14531,13 +14531,13 @@ if (targetEl) {
       const msgMeta = _mcResolveEntryPath(entry);
       title.textContent = entry.name || '?';
       const chanLabel = mcKnownChannels[entry.channel] || (entry.channel === 0 ? 'Public channel' : `Channel ${entry.channel}`);
-      const hopLabel = _mcMessageHopMeta(entry, msgMeta.path)?.detail || 'Unknown';
+      const hopLabel = _mcMessageHopMeta(entry, msgMeta.path)?.detail || 'Inconnu';
       const msgHashBytes = entry.pathHashSize ?? (entry.pathHashMode != null ? Number(entry.pathHashMode) + 1 : null) ?? (() => { const c = (mcContacts[entry.radioId] || {})[entry.fromId]; return c?.out_path_hash_size ?? (c?.out_path_hash_mode != null ? c.out_path_hash_mode + 1 : null); })();
       const msgHashSuffix = msgHashBytes != null ? ` · ${msgHashBytes}saut` : '';
       const altMeta = _mcAltPathMeta(entry);
       const confMeta = _mcRxConfidenceMeta(entry);
       let rows = td('Via', escHtml(chanLabel));
-      rows += td('Path', hopLabel + escHtml(msgHashSuffix));
+      rows += td('Chemin', hopLabel + escHtml(msgHashSuffix));
       if (altMeta) rows += td('Other copies', escHtml(`${altMeta.count} alternate path${altMeta.count !== 1 ? 's' : ''}`));
       if (confMeta) rows += td('Confidence', escHtml(confMeta.label));
       rows += td('Route source', escHtml(msgMeta.quality || 'unknown') + (msgMeta.refreshed ? ' · refreshed' : ''));
@@ -14742,7 +14742,7 @@ if (targetEl) {
           <span class="radio-row-status">${escHtml(transport)}</span>
           <span class="radio-row-status" title="Preferred MC path hash size">${escHtml(_mcPathHashModeLabel(n.path_hash_mode ?? 2))}</span>
           ${n.force_flood ? '<span class="radio-row-status" title="MC DMs and pings force flood routing" style="color:var(--yellow)">Flood</span>' : ''}
-          ${n.passive_collection === false ? '<span class="radio-row-status" title="Passive collection désactivé" style="color:var(--yellow)">Passif désactivé</span>' : ''}
+          ${n.passive_collection === false ? '<span class="radio-row-status" title="Collecte passive désactivée" style="color:var(--yellow)">Passif désactivé</span>' : ''}
           <span class="radio-row-status" style="${!n.enabled ? 'color:var(--muted)' : ''}">${n.enabled ? n.status : 'désactivé'}</span>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;${n.enabled ? '' : 'color:var(--accent);border-color:var(--accent)'}"
             title="${n.enabled ? 'Pause scanning for this radio — keeps config and message history intact' : 'Resume scanning and connecting to this radio'}"
@@ -14806,7 +14806,7 @@ if (targetEl) {
     } else if (_addMcNodeType === 'ble') {
       const bt_address = document.getElementById('settings-mc-bt-address').value.trim();
       const bt_pin = document.getElementById('settings-mc-bt-pin').value.trim();
-      if (!bt_address) { err.textContent = 'Enter a Bluetooth address.'; return; }
+      if (!bt_address) { err.textContent = 'Saisissez une adresse Bluetooth.'; return; }
       body.bt_address = bt_address;
       if (bt_pin) body.bt_pin = bt_pin;
     } else {
@@ -14818,7 +14818,7 @@ if (targetEl) {
       body.usb_serial = val && val !== port ? val : '';
       body.port = port;
     }
-    err.textContent = 'Adding…';
+    err.textContent = 'Ajout…';
     fetch(BASE_PATH + '/api/settings/mc_nodes/add', {
       method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(body),
@@ -15143,7 +15143,7 @@ if (targetEl) {
         const ts_epoch = Math.floor(Date.now() / 1000);
         const ts = _formatAppTime(ts_epoch, {seconds: true});
         const chanName = mcKnownChannels[opts.channel] || (opts.channel === 0 ? 'Public' : `CH${opts.channel}`);
-        const entry = { kind: 'sent_message', name: mcLastStatus[activeMcRadioId]?.name || 'You', text: chunk.length > 60 ? chunk.slice(0,60)+'…' : chunk, ts, ts_epoch, radioId: activeMcRadioId, channel: opts.channel, chanName };
+        const entry = { kind: 'sent_message', name: mcLastStatus[activeMcRadioId]?.name || 'Vous', text: chunk.length > 60 ? chunk.slice(0,60)+'…' : chunk, ts, ts_epoch, radioId: activeMcRadioId, channel: opts.channel, chanName };
         _mcSenseLogEntries.unshift(entry);
         if (_mcSenseLogEntries.length > 200) _mcSenseLogEntries.pop();
         try { localStorage.setItem('mcSenseLog', JSON.stringify(_mcSenseLogEntries.slice(0,100))); } catch(_e) {}
@@ -15822,11 +15822,11 @@ if (targetEl) {
       return;
     }
     const [radioId, idx] = sel.value.split(':');
-    if (out) out.textContent = 'Loading channel from OM…';
+    if (out) out.textContent = 'Chargement du canal depuis OM…';
     try {
       const r = await fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/channels/${idx}/share`);
       const d = await r.json();
-      if (!r.ok || !d.ok) throw new Error(d.error || 'Failed to get channel');
+      if (!r.ok || !d.ok) throw new Error(d.error || 'Échec to get channel');
       const secretHex = d.details?.secret_hex || '';
       if (!secretHex) throw new Error('Channel key not available');
       const nameEl = document.getElementById('mc-remote-ch-name');
@@ -16113,20 +16113,20 @@ if (targetEl) {
         commands = ['region denyf *', 'region save'];
         label = 'Legacy unscoped flood denied';
       } else if (kind === 'custom-put') {
-        if (!custom) throw new Error('Enter a region code first.');
+        if (!custom) throw new Error('Saisissez d’abord un code de région.');
         commands = parent ? [`region put ${custom} ${parent}`] : [`region put ${custom}`];
         label = `Region ${custom} created/updated`;
       } else if (kind === 'custom-allow') {
-        if (!custom) throw new Error('Enter a region code first.');
+        if (!custom) throw new Error('Saisissez d’abord un code de région.');
         commands = [`region allowf ${custom}`];
         label = `Flood allowed for ${custom}`;
       } else if (kind === 'custom-home') {
-        if (!custom || custom === '*') throw new Error('Enter a named region code first.');
+        if (!custom || custom === '*') throw new Error('Saisissez d’abord un code de région nommé.');
         commands = [`region home ${custom}`];
         label = `Home region set to ${custom}`;
       } else if (kind === 'custom-default') {
         const defaultRegion = _mcRemoteValidateRegionName(customRaw, false, true);
-        if (!defaultRegion) throw new Error('Enter a region code or <null> first.');
+        if (!defaultRegion) throw new Error('Saisissez d’abord un code de région ou <null>.');
         commands = [`region default ${defaultRegion}`];
         label = `Default scope set to ${defaultRegion}`;
       } else if (kind === 'save') {
@@ -16174,7 +16174,7 @@ if (targetEl) {
         if (val('mc-remote-set-flood-advert-int')) commands.push(`set flood.advert.interval ${num('mc-remote-set-flood-advert-int', 'flood advert interval', 0, 168)}`);
       }
       if (kind === 'flood_max') commands.push(`set flood.max ${num('mc-remote-set-flood-max', 'flood max', 0, 64)}`);
-      if (!commands.length || commands.some(c => !c.trim() || c.endsWith(' '))) throw new Error('Enter a value first.');
+      if (!commands.length || commands.some(c => !c.trim() || c.endsWith(' '))) throw new Error('Saisissez d’abord une valeur.');
       for (const command of commands) await mcRemoteRunCommand(command);
       // update cache with applied values
       if (kind === 'name') _mcRemoteSaveCache({name: val('mc-remote-set-name')});
@@ -16232,10 +16232,10 @@ if (targetEl) {
   }
 
   async function mcRemoteReboot(btn) {
-    if (!confirm('Send reboot command to the RPTR? It will disconnect briefly.')) return;
+    if (!confirm('Envoyer la commande de redémarrage au RPTR ? Il sera brièvement déconnecté.')) return;
     if (btn) btn.disabled = true;
     const out = document.getElementById('mc-remote-quick-result');
-    if (out) out.textContent = 'Sending reboot…';
+    if (out) out.textContent = 'Envoi du redémarrage…';
     try {
       await mcRemoteRunCommand('reboot', 'mc-remote-quick-result', {silentError: false});
       if (out) out.innerHTML = '<span style="color:var(--accent)">Reboot sent — node will restart in a moment.</span>';
@@ -16387,13 +16387,13 @@ if (targetEl) {
         ${td('Note', '<span style="color:var(--muted);font-size:11px">Aucune STATUS_RESPONSE — RX local uniquement.</span>')}
         ${pathWarn ? td('Path note', `<span style="color:#f59e0b;font-size:11px">${escHtml(pathWarn)}</span>`) : ''}
         ${th('Observed RF')}
-        ${td('Path', observedPathHtml)}
+        ${td('Chemin', observedPathHtml)}
         ${td('Observed hops', data.observed_path_len != null ? data.observed_path_len : '—')}
-        ${td('Path hash', pathHashSizeLabel)}
+        ${td('Empreinte du chemin', pathHashSizeLabel)}
         ${td('Observed RSSI', data.observed_rssi != null ? data.observed_rssi + ' dBm' : '—')}
         ${td('Observed SNR', data.observed_snr != null ? data.observed_snr.toFixed(1) + ' dB' : '—')}
         ${td('Payload type', data.observed_payload_type ? escHtml(data.observed_payload_type) : '—')}
-        ${td('Route type', data.observed_route_type ? escHtml(data.observed_route_type) : '—')}
+        ${td('Type de route', data.observed_route_type ? escHtml(data.observed_route_type) : '—')}
       </table>${_mcLogHopListHtml(pingEntry, pingPath, pingEntryIdx)}${(!pendingReq?.withTrace && !pingPath) ? _mcTraceProbeButton(data.pubkey_pre || '', data.radio_id || '', pingContact?.long_name || pingContact?.name || data.pubkey_pre || '') : ''}`;
       // Fallback reachability = NO STATUS_RESPONSE (the observed RF may be from an
       // unrelated node), so do NOT stamp the contact's last_seen / path / signal — the
@@ -16441,12 +16441,12 @@ if (targetEl) {
     const pathHashSizeLabel = _mcPathHashSizeLabel(data.observed_path_hash_size ?? pingPath?.inferredPathHashSize ?? pingEntry?.pathHashSize, data.observed_path_hash_mode ?? mcLastStatus[data.radio_id]?.path_hash_mode);
     body.innerHTML = `<table style="border-collapse:collapse;width:100%">
       ${th('General')}
-      ${td('Battery', _fmtBat(data.bat))}
+      ${td('Batterie', _fmtBat(data.bat))}
       ${td('Uptime', _fmtUptime(data.uptime))}
       ${th('Radio')}
       ${td('Noise floor', data.noise_floor != null ? data.noise_floor + ' dBm' : '—')}
-      ${td('Last RSSI', data.last_rssi != null ? data.last_rssi + ' dBm' : '—')}
-      ${td('Last SNR', data.last_snr != null ? data.last_snr.toFixed(1) + ' dB' : '—')}
+      ${td('Dernier RSSI', data.last_rssi != null ? data.last_rssi + ' dBm' : '—')}
+      ${td('Dernier SNR', data.last_snr != null ? data.last_snr.toFixed(1) + ' dB' : '—')}
       ${th('Traffic')}
       ${td('Received', data.nb_recv ?? '—')}
       ${td('Sent', data.nb_sent ?? '—')}
@@ -16454,18 +16454,18 @@ if (targetEl) {
       ${td('Airtime TX', _fmtAt(data.airtime))}
       ${td('Airtime RX', _fmtAt(data.rx_airtime))}
       ${th('Routing')}
-      ${td('Sent flood', data.sent_flood ?? '—')}
-      ${td('Sent direct', data.sent_direct ?? '—')}
+      ${td('Envoyés en diffusion', data.sent_flood ?? '—')}
+      ${td('Envoyés en direct', data.sent_direct ?? '—')}
       ${td('Recv flood', data.recv_flood ?? '—')}
       ${td('Recv direct', data.recv_direct ?? '—')}
       ${td('Flood dups', data.flood_dups ?? '—')}
       ${td('Direct dups', data.direct_dups ?? '—')}
-      ${th('Path')}
-      ${td('Path', observedPathHtml)}
+      ${th('Chemin')}
+      ${td('Chemin', observedPathHtml)}
       ${td('Hops', data.observed_path_len != null ? mcPathHopLabel(Number(data.observed_path_len), true) : (pingEntry?.hopStr ?? '—'))}
-      ${td('Path hash', pathHashSizeLabel)}
+      ${td('Empreinte du chemin', pathHashSizeLabel)}
       ${pathWarn ? td('Path note', `<span style="color:#f59e0b;font-size:11px">${escHtml(pathWarn)}</span>`) : ''}
-      ${data.observed_route_type ? td('Route type', escHtml(data.observed_route_type)) : ''}
+      ${data.observed_route_type ? td('Type de route', escHtml(data.observed_route_type)) : ''}
     </table>${_mcLogHopListHtml(pingEntry, pingPath, pingEntryIdx)}${(!pendingReq?.withTrace && !pingPath) ? _mcTraceProbeButton(data.pubkey_pre || '', data.radio_id || '', pingContact?.long_name || pingContact?.name || data.pubkey_pre || '') : ''}`;
     // Draw path to pinged node on Sense map
     if (pingPath) {
@@ -16820,7 +16820,7 @@ if (targetEl) {
     const text = input?.value.trim();
     if (!text) return;
     const status = document.getElementById('mc-dm-status');
-    status.innerHTML = '<div class="modal-loading">Sending...</div>';
+    status.innerHTML = '<div class="modal-loading">Envoi…</div>';
     try {
       const chunks = _mcSplitTextByBytes(text, _mcTargetMsgLimit('dm', radioId));
       for (let i = 0; i < chunks.length; i++) {
@@ -16911,7 +16911,7 @@ if (targetEl) {
           : `${contacts.length} contact${contacts.length !== 1 ? 's' : ''} (${direct} direct)`;
       }
     } catch(e) {
-      if (status) status.textContent = 'Last Heard error.';
+      if (status) status.textContent = 'Erreur lors de la dernière réception.';
     } finally {
       if (btn) { btn.textContent = 'Dernière activité'; btn.disabled = false; }
     }
@@ -17083,7 +17083,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!radioId) return;
     const el = document.getElementById('mc-device-info-content');
     if (!el) return;
-    el.textContent = 'Loading…';
+    el.textContent = 'Chargement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/device_info`)
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
@@ -17123,7 +17123,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!radioId) return;
     const el = document.getElementById('mc-stats-content');
     if (!el) return;
-    el.textContent = 'Loading…';
+    el.textContent = 'Chargement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/stats`)
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
@@ -17147,7 +17147,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">RX airtime</td><td>${fmtAir(radio.rx_air_secs)}</td></tr>
           <tr><td colspan="2" style="padding:8px 0 4px;font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.05em">Packets</td></tr>
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Received</td><td>${pkts.recv ?? '—'}</td></tr>
-          <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Sent</td><td>${pkts.sent ?? '—'}</td></tr>
+          <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Envoyés</td><td>${pkts.sent ?? '—'}</td></tr>
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Flood TX</td><td>${pkts.flood_tx ?? '—'}</td></tr>
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Direct TX</td><td>${pkts.direct_tx ?? '—'}</td></tr>
           <tr><td style="color:var(--muted);padding:2px 16px 2px 0">Flood RX</td><td>${pkts.flood_rx ?? '—'}</td></tr>
@@ -17162,7 +17162,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!radioId) return;
     const el = document.getElementById('mc-channels-list');
     if (!el) return;
-    el.textContent = 'Loading…';
+    el.textContent = 'Chargement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/channels`)
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(data => {
@@ -17225,7 +17225,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Saved — reboot may be needed.</span>';
           btnFeedback(btn, '✓ Enregistré');
         } else {
-          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
         }
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 4000);
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17248,10 +17248,10 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         if (d.ok) {
           if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
           mcLastStatus[radioId].tx_power = val;
-          if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Saved.</span>';
+          if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Enregistré.</span>';
           btnFeedback(btn, '✓ Enregistré');
         } else {
-          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
         }
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 3000);
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17336,7 +17336,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         const cb = document.getElementById('mc-passive-collection');
         if (cb) cb.checked = !!d.passive_collection;
         if (statusEl) {
-          statusEl.innerHTML = `<span style="color:var(--accent)">${d.passive_collection ? 'Passive collection enabled.' : 'Passive collection désactivé.'}</span>`;
+          statusEl.innerHTML = `<span style="color:var(--accent)">${d.passive_collection ? 'Passive collection enabled.' : 'Collecte passive désactivée.'}</span>`;
           setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 5000);
         }
       }).catch(e => {
@@ -17364,7 +17364,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         if (currentTab === 'nodes') renderLive();
       }).catch(e => {
         if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`;
-        btnFeedback(btn, '✗ Failed');
+        btnFeedback(btn, '✗ Échec');
       });
     });
   }
@@ -17387,7 +17387,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Renamed.</span>';
           btnFeedback(btn, '✓ Enregistré');
         } else {
-          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
         }
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 3000);
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17417,7 +17417,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       .then(d => {
         if (statusEl) statusEl.innerHTML = d.ok
           ? '<span style="color:var(--accent)">Coords set.</span>'
-          : `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+          : `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
         if (d.ok) btnFeedback(btn, '✓ Enregistré');
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 3000);
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17441,7 +17441,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           btn.style.color = newPolicy === 1 ? 'var(--accent)' : '';
           if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Partage de position mis à jour.</span>';
         } else {
-          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
         }
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 3000);
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17460,7 +17460,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         .then(d => {
           if (statusEl) statusEl.innerHTML = d.ok
             ? '<span style="color:var(--accent)">Reboot sent.</span>'
-            : `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+            : `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
           if (d.ok) btnFeedback(btn, '✓ Rebooting…', 3000);
           setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 4000);
         }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17515,7 +17515,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       body: JSON.stringify(body),
     }).then(r => r.json().then(d => ({ok: r.ok, d}))).then(({ok, d}) => {
       if (!ok || d.error) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Save failed.')}</span>`; return; }
-      if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Saved.</span>';
+      if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Enregistré.</span>';
       btnFeedback(btn, '✓ Enregistré');
       loadMcChannelsList(radioId);
       closeMcChEdit();
@@ -17596,7 +17596,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({duration: 60}),
     }).then(r => r.json()).then(d => {
-      if (!d.ok) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error||'Failed')}</span>`; return; }
+      if (!d.ok) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error||'Échec')}</span>`; return; }
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Debug logging ON — watch the server log, then send a Ping. Auto-stops in 60s.</span>';
       if (btn) btn.disabled = true;
       let remaining = 60;
@@ -17632,7 +17632,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           // Refresh contacts so the new entry appears in Nodes with full_key populated
           setTimeout(() => _refreshMcContactsForNotification(radioId), 1500);
         } else {
-          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
+          if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`;
         }
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
   }
@@ -17678,7 +17678,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       method: 'POST', headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(body),
     }).then(r => r.json().then(d => ({ok: r.ok, d}))).then(({ok, d}) => {
-      if (!ok || d.error) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`; return; }
+      if (!ok || d.error) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`; return; }
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Channel imported.</span>';
       document.getElementById('mc-import-channel-link').value = '';
       document.getElementById('mc-import-channel-preview').style.display = 'none';
@@ -17964,8 +17964,8 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (pBtn) pBtn.classList.toggle('active', lsPassive);
     if (aBtn) aBtn.classList.toggle('active', lsActive);
     const status = document.getElementById('sense-status');
-    if (lsActive)       status.textContent = 'Active scanning…';
-    else if (lsPassive) status.textContent = 'Passive listening…';
+    if (lsActive)       status.textContent = 'Analyse active…';
+    else if (lsPassive) status.textContent = 'Écoute passive…';
 
     fetch(BASE_PATH + '/api/mesh/sense/status').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       _senseCooldownVal = d.cooldown;
@@ -17982,10 +17982,10 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       localStorage.setItem('sensePassive',    d.passive    ? '1' : '0');
       localStorage.setItem('senseActiveAuto', d.active_auto ? '1' : '0');
       if (d.passive && !d.active) {
-        document.getElementById('sense-status').textContent = 'Passive listening…';
+        document.getElementById('sense-status').textContent = 'Écoute passive…';
       }
       if (d.active_auto && !d.active) {
-        document.getElementById('sense-status').textContent = 'Active scanning…';
+        document.getElementById('sense-status').textContent = 'Analyse active…';
       }
       senseCooldownTick(d.cooldown_remaining);
       if (d.active) {
@@ -18000,7 +18000,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       document.getElementById('sense-passive-btn').classList.toggle('active', d.passive);
       localStorage.setItem('sensePassive', d.passive ? '1' : '0');
       const status = document.getElementById('sense-status');
-      if (d.passive) status.textContent = 'Passive listening…';
+      if (d.passive) status.textContent = 'Écoute passive…';
       else if (!document.getElementById('sense-active-btn').classList.contains('active')) status.textContent = '';
     }).catch(e => console.error('toggleSensePassive failed:', e));
   }
@@ -18010,7 +18010,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       document.getElementById('sense-active-btn').classList.toggle('active', d.active_auto);
       localStorage.setItem('senseActiveAuto', d.active_auto ? '1' : '0');
       const status = document.getElementById('sense-status');
-      if (d.active_auto) status.textContent = 'Active scanning…';
+      if (d.active_auto) status.textContent = 'Analyse active…';
       else if (!document.getElementById('sense-passive-btn').classList.contains('active')) status.textContent = '';
     }).catch(e => console.error('toggleSenseActive failed:', e));
   }
@@ -18587,7 +18587,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
 
   function _formatMtDeviceRoleLabel(name) {
     const raw = String(name || '').trim();
-    if (!raw) return 'Unknown';
+    if (!raw) return 'Inconnu';
     return raw.split('_').map(part => {
       if (part === 'TAK') return 'TAK';
       return part.charAt(0) + part.slice(1).toLowerCase();
@@ -18617,7 +18617,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({long_name, short_name})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('owner', d.error || 'Saved.', !d.error);
+      nodeCfgStatus('owner', d.error || 'Enregistré.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('owner', 'Error: ' + escHtml(String(e)), false));
   }
@@ -18632,7 +18632,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({role, led_heartbeat_désactivé})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('device', d.error || 'Saved. Reboot may be needed.', !d.error);
+      nodeCfgStatus('device', d.error || 'Enregistré. Reboot may be needed.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('device', 'Error: ' + escHtml(String(e)), false));
   }
@@ -18649,7 +18649,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({region, modem_preset, tx_power, hop_limit})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('lora', d.error || 'Saved. Reboot node to apply region/preset.', !d.error);
+      nodeCfgStatus('lora', d.error || 'Enregistré. Reboot node to apply region/preset.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('lora', 'Error: ' + escHtml(String(e)), false));
   }
@@ -18718,7 +18718,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
 
   function clearGpsHistory(btn) {
     document.getElementById('confirm-ok').textContent = 'Effacer';
-    showConfirm('Delete all GPS movement history for all nodes? This cannot be undone.', async () => {
+    showConfirm('Supprimer tout l’historique des déplacements GPS de tous les nœuds ? Cette action est irréversible.', async () => {
       const st = document.getElementById('gps-clear-status');
       if (st) st.innerHTML = '<span style="color:var(--muted)">Clearing…</span>';
       try {
@@ -18727,7 +18727,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         if (r.ok) btnFeedback(btn, '✓ Effacé');
         if (st) st.innerHTML = r.ok
           ? '<span style="color:var(--green)">GPS history cleared.</span>'
-          : `<span style="color:#f87171">${escHtml(d.error || 'Failed.')}</span>`;
+          : `<span style="color:#f87171">${escHtml(d.error || 'Échec.')}</span>`;
       } catch(e) {
         if (st) st.innerHTML = `<span style="color:#f87171">Error: ${escHtml(e.message)}</span>`;
       } finally {
@@ -18859,7 +18859,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({url: link, index: slot}),
     }).then(r => r.json().then(d => ({ok: r.ok, d}))).then(({ok, d}) => {
-      if (!ok || d.error) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`; return; }
+      if (!ok || d.error) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Échec')}</span>`; return; }
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Channel imported.</span>';
       document.getElementById('mt-import-channel-link').value = '';
       document.getElementById('mt-import-channel-preview').style.display = 'none';
@@ -18945,7 +18945,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const psk_type = document.getElementById('node-cfg-ch-psk-type').value;
     const psk_hex  = document.getElementById('node-cfg-ch-psk-hex').value.trim();
     if (psk_type === 'custom' && !psk_hex) {
-      nodeCfgStatus('channels', 'Enter a custom PSK hex string.', false); return;
+      nodeCfgStatus('channels', 'Saisissez une chaîne PSK hexadécimale personnalisée.', false); return;
     }
     nodeCfgStatus('channels', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/channels/${_editingChIndex}`, {
@@ -18954,7 +18954,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       body: JSON.stringify({role, name, psk_type, psk_hex})
     }).then(r => r.json().then(d => ({ok: r.ok, d}))).then(({ok, d}) => {
       if (!ok || d.error) { nodeCfgStatus('channels', d.error || 'Save failed.', false); return; }
-      nodeCfgStatus('channels', 'Saved.', true);
+      nodeCfgStatus('channels', 'Enregistré.', true);
       btnFeedback(btn, '✓ Enregistré');
       loadNodeChannels();
       closeChEdit();
@@ -19118,7 +19118,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (fixed_position) {
       if (isNaN(fixed_lat) || isNaN(fixed_lon) ||
           fixed_lat < -90 || fixed_lat > 90 || fixed_lon < -180 || fixed_lon > 180) {
-        nodeCfgStatus('position', 'Invalid coordinates. Use "Select on map" or enter a valid lat/lon.', false);
+        nodeCfgStatus('position', 'Coordonnées invalides. Utilisez « Sélectionner sur la carte » ou saisissez une latitude/longitude valide.', false);
         return;
       }
     }
@@ -19135,7 +19135,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
                             lon: fixed_position ? fixed_lon : null,
                             alt: fixed_alt})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('position', d.error || 'Saved.', !d.error);
+      nodeCfgStatus('position', d.error || 'Enregistré.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('position', 'Error: ' + escHtml(String(e)), false));
   }
@@ -19171,7 +19171,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({power_saving: is_power_saving, shutdown_after_secs: on_battery_shutdown_after_secs})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('power', d.error || 'Saved.', !d.error);
+      nodeCfgStatus('power', d.error || 'Enregistré.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('power', 'Error: ' + escHtml(String(e)), false));
   }
@@ -19196,7 +19196,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({screen_on_secs, flip_screen, display_units: units})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('display', d.error || 'Saved.', !d.error);
+      nodeCfgStatus('display', d.error || 'Enregistré.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Done');
     }).catch(e => nodeCfgStatus('display', 'Error: ' + escHtml(String(e)), false));
   }
@@ -19212,7 +19212,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({tel_device: device_update_interval, tel_env: environment_update_interval})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('telemetry', d.error || 'Saved.', !d.error);
+      nodeCfgStatus('telemetry', d.error || 'Enregistré.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('telemetry', 'Error: ' + escHtml(String(e)), false));
   }
@@ -19236,7 +19236,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
                             mqtt_password: password, mqtt_encryption: encryption, mqtt_json: json_enabled,
                             mqtt_tls: tls, mqtt_map: map_reporting})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
-      nodeCfgStatus('mqtt', d.error || 'Saved.', !d.error);
+      nodeCfgStatus('mqtt', d.error || 'Enregistré.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
       if (!d.error && password) {
         document.getElementById('node-cfg-mqtt-password').value = '';
@@ -19275,7 +19275,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     }).then(d => {
-      nodeCfgStatus('bluetooth', d.error || 'Saved. Reboot to apply.', !d.error);
+      nodeCfgStatus('bluetooth', d.error || 'Enregistré. Reboot to apply.', !d.error);
       if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('bluetooth', 'Error: ' + escHtml(String(e)), false));
   }
@@ -19298,7 +19298,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       return r.json();
     }).then(d => {
-      nodeCfgStatus('network', d.error || 'Saved. Reboot to apply.', !d.error);
+      nodeCfgStatus('network', d.error || 'Enregistré. Reboot to apply.', !d.error);
       if (!d.error) {
         btnFeedback(btn, '✓ Enregistré');
         const pskEl = document.getElementById('node-cfg-wifi-psk');
@@ -21531,7 +21531,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   }
 
   function tocDelete(id, btn) {
-    showConfirm('Delete this log entry?', () => {
+    showConfirm('Supprimer cette entrée du journal ??', () => {
       fetch(`/api/toc/${id}`, {method:'DELETE'}).then(r => r.json()).then(data => {
         if (!data.ok) return;
         _tocAllEntries = _tocAllEntries.filter(e => Number(e.id) !== Number(id));
@@ -21650,7 +21650,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       ? (allNodes || []).find(n => n.id === msg.from_id && (!msg.radio_id || !n.radio_id || n.radio_id === msg.radio_id))
         || (allNodes || []).find(n => n.id === msg.from_id)
       : null;
-    const senderName = msg.sent ? 'You' : (msg.from_name || msg.from_id || '?');
+    const senderName = msg.sent ? 'Vous' : (msg.from_name || msg.from_id || '?');
     const mention = !msg.sent && msg.from_id && msg.from_id !== 'bot'
       ? _tocMentionToken('mt', msg.from_name || msg.from_id, msg.from_id)
       : senderName;
@@ -21659,7 +21659,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       ts: msg.ts || Math.floor(Date.now() / 1000),
       sender: mention,
       senderName,
-      target: msg.is_dm ? (msg.sent ? (msg.to_name || msg.to_id || '?') : 'You') : `CH${msg.channel ?? 0}`,
+      target: msg.is_dm ? (msg.sent ? (msg.to_name || msg.to_id || '?') : 'Vous') : `CH${msg.channel ?? 0}`,
       network: msg.is_dm ? 'Meshtastic DM' : `Meshtastic CH${msg.channel ?? 0}`,
       text: msg.text || '',
       signal: msg.snr != null ? `SNR ${msg.snr} dB` : '',
@@ -21677,14 +21677,14 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const sent = msg.sent || msg.from_id === 'me';
     const mention = !sent && msg.from_id
       ? _tocMentionToken('mc', name || msg.from_id, msg.from_id, msg.radio_id || '')
-      : 'You';
+      : 'Vous';
     const contact = !sent && msg.from_id ? _mcResolveMessageContact(msg) : null;
     _tocPickTemplate({
       category: 'COMMS',
       ts: msg.ts || Math.floor(Date.now() / 1000),
       sender: mention,
       senderName: name || msg.from_id || '?',
-      target: sent ? (msg.to_name || msg.to_id || `CH${msg.channel ?? 0}`) : (msg.subtype === 'dm' ? 'You' : `CH${msg.channel ?? 0}`),
+      target: sent ? (msg.to_name || msg.to_id || `CH${msg.channel ?? 0}`) : (msg.subtype === 'dm' ? 'Vous' : `CH${msg.channel ?? 0}`),
       network: msg.subtype === 'dm' ? 'MeshCore DM' : `MeshCore CH${msg.channel ?? 0}`,
       text: _mcMsgText(msg, name),
       signal: msg.rx_snr != null ? `SNR ${msg.rx_snr} dB` : '',
@@ -21706,7 +21706,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       Source: 'Meshtastic node report',
       'Accuracy / Confidence': 'Reported',
       'Movement / Heading': '',
-      'Last Heard / Seen': n.last_heard_ts ? _formatAppDateTime(n.last_heard_ts) : '',
+      'Dernière réception / vue': n.last_heard_ts ? _formatAppDateTime(n.last_heard_ts) : '',
       Notes: [
         n.snr != null ? `Signal: SNR ${n.snr} dB` : '',
         n.hops_away != null ? `Hops: ${n.hops_away}` : '',
@@ -21741,7 +21741,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       Source: 'MeshCore contact data',
       'Accuracy / Confidence': 'Reported',
       'Movement / Heading': '',
-      'Last Heard / Seen': seenTs ? _formatAppDateTime(seenTs) : '',
+      'Dernière réception / vue': seenTs ? _formatAppDateTime(seenTs) : '',
       Notes: [
         c.last_snr != null ? `Signal: SNR ${c.last_snr} dB` : '',
         c.out_path_len != null ? `Hops: ${mcPathHopLabel(c.out_path_len, true)}` : '',

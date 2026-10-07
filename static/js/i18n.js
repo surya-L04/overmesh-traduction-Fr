@@ -147,29 +147,84 @@
     }
   };
 
-  function applyTranslations() {
-    const lang = localStorage.getItem(STORAGE_KEY) || 'en';
-    const t = translations[lang] || translations.en;
+  function getLanguage() {
+    const saved = localStorage.getItem(STORAGE_KEY);
 
+    if (saved && translations[saved]) {
+      return saved;
+    }
+
+    return 'en';
+  }
+
+  let currentLanguage = getLanguage();
+
+  function t(key, vars = {}) {
+    let text =
+      translations[currentLanguage]?.[key] ??
+      translations.en?.[key] ??
+      key;
+
+    Object.keys(vars).forEach(name => {
+      text = text.replace(
+        new RegExp(`\\{${name}\\}`, 'g'),
+        String(vars[name])
+      );
+    });
+
+    return text;
+  }
+
+  function setLanguage(language) {
+    if (!translations[language]) {
+      return false;
+    }
+
+    currentLanguage = language;
+    localStorage.setItem(STORAGE_KEY, language);
+    applyTranslations();
+
+    return true;
+  }
+
+  function getAvailableLanguages() {
+    return Object.keys(translations);
+  }
+
+  function applyTranslations() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.dataset.i18n;
-      if (t[key] !== undefined) el.textContent = t[key];
+      const key = el.getAttribute('data-i18n');
+      el.textContent = t(key);
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.dataset.i18nPlaceholder;
-      if (t[key] !== undefined) el.placeholder = t[key];
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.placeholder = t(key);
     });
 
     const selector = document.getElementById('language-selector');
+
     if (selector) {
-      selector.value = lang;
-      selector.addEventListener('change', () => {
-        localStorage.setItem(STORAGE_KEY, selector.value);
-        location.reload();
-      });
+      selector.value = currentLanguage;
+
+      if (!selector.dataset.i18nBound) {
+        selector.dataset.i18nBound = '1';
+        selector.addEventListener('change', () => {
+          setLanguage(selector.value);
+        });
+      }
     }
   }
+
+  window.OverMeshI18n = {
+    t,
+    setLanguage,
+    getLanguage,
+    getAvailableLanguages,
+    applyTranslations
+  };
+
+  window.t = t;
 
   document.addEventListener('DOMContentLoaded', applyTranslations);
 })();
