@@ -591,7 +591,7 @@
       body: JSON.stringify(payload)
     }).then(r => r.ok ? r.json() : r.json().then(d => { throw new Error(d.error || `HTTP ${r.status}`); }))
       .then(() => {
-        _authStatus(enabled ? 'Authentication enabled.' : 'Authentication désactivé.', true);
+        _authStatus(enabled ? 'Authentification activée.' : 'Authentification désactivée.', true);
       })
       .catch(e => {
         _authStatus(String(e.message || e), false);
