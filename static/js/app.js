@@ -60,8 +60,8 @@
     if (btn) {
       btn.classList.toggle('active', active);
       btn.title = active
-        ? 'Silent Running active — click to disable'
-        : 'Enable Silent Running — suppresses all radio transmissions';
+        ? 'Mode silencieux actif — cliquer pour désactiver'
+        : 'Activer le mode silencieux — bloque toutes les transmissions radio';
     }
   }
 
@@ -178,7 +178,7 @@
       <div class="alerts-list">
         ${alerts.map(a => {
           const canLog = a.type !== 'radio';
-          const logBtn = canLog ? `<button class="alert-log-btn" onclick="event.stopPropagation();toggleAlertsPanel();tocFromAlert('${escHtml(a.id)}')" title="Send to Log tab">Journal</button>` : '';
+          const logBtn = canLog ? `<button class="alert-log-btn" onclick="event.stopPropagation();toggleAlertsPanel();tocFromAlert('${escHtml(a.id)}')" title="Envoyer vers l’onglet Journal">Journal</button>` : '';
           const isNodeAlert = (a.type === 'node-new' || a.type === 'node-return') && a.meta;
           const isMsgAlert = a.type === 'message' && a.meta;
           const bodyHtml = isNodeAlert
@@ -195,7 +195,7 @@
                 <div class="alert-entry-body">${bodyHtml}</div>
                 <div class="alert-entry-ts">${_formatAppDateTime(a.ts)}${logBtn}</div>
               </div>
-              <button class="alert-dismiss-btn" onclick="event.stopPropagation();dismissAlert('${escHtml(a.id)}')" title="Dismiss">×</button>
+              <button class="alert-dismiss-btn" onclick="event.stopPropagation();dismissAlert('${escHtml(a.id)}')" title="Fermer">×</button>
             </div>
           </div>`;
         }).join('')}
@@ -303,7 +303,7 @@
     toast.innerHTML = `
       <div class="toast-head">
         <div class="toast-title">${escHtml(title)}</div>
-        <button class="toast-close" type="button" title="Close notification" aria-label="Close notification">×</button>
+        <button class="toast-close" type="button" title="Fermer la notification" aria-label="Fermer la notification">×</button>
       </div>
       <div class="toast-body">${body}</div>`;
     const closeBtn = toast.querySelector('.toast-close');
@@ -591,7 +591,7 @@
       body: JSON.stringify(payload)
     }).then(r => r.ok ? r.json() : r.json().then(d => { throw new Error(d.error || `HTTP ${r.status}`); }))
       .then(() => {
-        _authStatus(enabled ? 'Authentication enabled.' : 'Authentication disabled.', true);
+        _authStatus(enabled ? 'Authentication enabled.' : 'Authentication désactivé.', true);
       })
       .catch(e => {
         _authStatus(String(e.message || e), false);
@@ -611,7 +611,7 @@
       body: JSON.stringify({auth_username: username, auth_password: password})
     }).then(r => r.ok ? r.json() : r.json().then(d => { throw new Error(d.error || `HTTP ${r.status}`); }))
       .then(() => {
-        _authStatus('Credentials saved.', true);
+        _authStatus('Identifiants enregistrés.', true);
         const pwEl = document.getElementById('auth-password');
         if (pwEl) pwEl.value = '';
       })
@@ -1374,7 +1374,7 @@
         const remaining = Object.keys(_senseResponses).length;
         const _senseTs = Math.floor(Date.now() / 1000);
         document.getElementById('sense-status').innerHTML =
-          `Détection terminée — ${data.count} node${data.count !== 1 ? 's' : ''} réponse(s). <span id="sense-status-age" data-ts="${_senseTs}" style="color:var(--muted)">(just now)</span> <span onclick="document.getElementById('sense-status').innerHTML=''" style="cursor:pointer;color:var(--muted);margin-left:4px;font-size:13px" title="Dismiss">×</span>`;
+          `Détection terminée — ${data.count} node${data.count !== 1 ? 's' : ''} réponse(s). <span id="sense-status-age" data-ts="${_senseTs}" style="color:var(--muted)">(just now)</span> <span onclick="document.getElementById('sense-status').innerHTML=''" style="cursor:pointer;color:var(--muted);margin-left:4px;font-size:13px" title="Fermer">×</span>`;
         senseSummaryUpdate();
         return;
       }
@@ -1539,7 +1539,7 @@
       const id = chatChannel.slice(3);
       const msg = getActiveChatMsgs().find(m => m.is_dm && dmContactId(m) === id);
       const name = msg ? dmContactName(msg) : id;
-      input.placeholder = `DM to ${name}…`;
+      input.placeholder = `DM à ${name}…`;
     } else {
       const ch = chatChannels?.find(c => c.index === chatChannel);
       input.placeholder = ch ? `${ch.name}…` : 'Message…';
@@ -1603,113 +1603,113 @@
 
   const OM_MANUAL_SECTIONS = [
     {
-      title: 'Start Here',
+      title: 'Pour commencer',
       tags: 'overview first launch setup radios update local dashboard intro',
       body: [
-        'OverMesh is a local dashboard for Meshtastic (MT) and MeshCore (MC) radios. It runs in your browser and talks to radios connected to this machine via USB serial, TCP/WiFi, or Bluetooth.',
-        'Normal flow: add radios in Settings, watch activity in Sense/Map, inspect nodes in the Nodes tab, send traffic in Chat, and use Map for positions, overlays, routes, and field context.',
-        'MT and MC can be used together or separately. When both are active, the Nodes table, Chat, and Map show combined data. The Cross-system bridge tab appears when both are configured.',
-        'Authentication is optional. Enable it in Settings → App → Security if the device is on a shared or accessible network. When enabled, a login page protects the dashboard and a Log out button appears in the power menu.'
+        'OverMesh est un tableau de bord local pour les radios Meshtastic (MT) et MeshCore (MC). Il fonctionne dans votre navigateur et communique avec les radios connectées à cette machine via USB série, TCP/WiFi ou Bluetooth.',
+        'Déroulement normal : ajoutez les radios dans Paramètres, surveillez l’activité dans Détection/Carte, consultez les nœuds dans l’onglet Nœuds, envoyez du trafic dans Chat et utilisez Carte pour les positions, calques, itinéraires et informations de terrain.',
+        'MT et MC peuvent être utilisés ensemble ou séparément. Lorsque les deux sont actifs, les onglets Nœuds, Chat et Carte affichent les données combinées. L’onglet Pont inter-systèmes apparaît lorsque les deux systèmes sont configurés.',
+        'L’authentification est facultative. Activez-la dans Paramètres → Application → Sécurité si l’appareil se trouve sur un réseau partagé ou accessible. Lorsqu’elle est activée, une page de connexion protège le tableau de bord et un bouton Déconnexion apparaît dans le menu d’alimentation.'
       ],
       buttons: [
-        ['Settings', 'Open radio setup, app preferences, GPS, offline maps, updates, security, and help.'],
+        ['Paramètres', 'Ouvrir la configuration des radios, les préférences de l’application, le GPS, les cartes hors ligne, les mises à jour, la sécurité et l’aide.'],
         ['Afficher l’introduction', 'Rouvrir le bref aperçu du premier lancement.'],
-        ['Manual', 'Open this searchable reference. Search by tab name, button name, or feature.'],
-        ['Restart', 'Restart the OverMesh server after updates or when the app needs a clean reload.']
+        ['Manuel', 'Ouvrir cette documentation consultable. Recherchez par nom d’onglet, nom de bouton ou fonctionnalité.'],
+        ['Redémarrer', 'Redémarrer le serveur OverMesh après une mise à jour ou lorsque l’application nécessite un rechargement propre.']
       ]
     },
     {
       title: 'Top Bar and Global Controls',
       tags: 'header top bar status pills radio selector silent running power restart shutdown refresh logout auth',
       body: [
-        'The top bar shows active radios, the current tab, Silent Running state, refresh, and server power actions.',
-        'Radio pills show each connected MT and MC radio by name. A green/active pill means OM has an open connection to that radio right now.',
-        'Silent Running is enforced by the backend. When active it blocks all OM-initiated transmissions — DMs, pings, adverts, bot replies, and trace packets — regardless of what the browser tries to send.',
-        'The power menu (⏻) contains Restart, Shut down, and Log out. Log out is only shown when authentication is enabled.'
+        'La barre supérieure affiche les radios actives, l’onglet courant, l’état du mode Silencieux, l’actualisation et les actions d’alimentation du serveur.',
+        'Les indicateurs radio affichent chaque radio MT et MC connectée par son nom. Un indicateur vert/actif signifie qu’OM dispose actuellement d’une connexion ouverte avec cette radio.',
+        'Le mode Silencieux est appliqué par le serveur. Lorsqu’il est actif, il bloque toutes les transmissions initiées par OM — messages privés, pings, annonces, réponses du bot et paquets de trace — quelle que soit la demande envoyée par le navigateur.',
+        'Le menu d’alimentation (⏻) contient Redémarrer, Arrêter et Déconnexion. Déconnexion apparaît uniquement lorsque l’authentification est activée.'
       ],
       buttons: [
-        ['Nodes', 'Open the node/contact table.'],
-        ['Chat', 'Open MT or MC text messaging.'],
-        ['Map', 'Open the main map, markers, marks, notes, and overlays.'],
-        ['Sense/Map', 'Open live RF activity and path visualization.'],
-        ['Bot', 'Configure and monitor automatic bot replies.'],
-        ['Settings', 'Open app, radio, update, GPS, offline-map, security, and help controls.'],
-        ['Refresh', 'Reload visible app data from the backend.'],
-        ['Silent Running', 'Toggle monitor-only mode. Blocks all OM transmissions when active.'],
-        ['Restart', 'Restart the OverMesh service/process.'],
-        ['Shut down', 'Stop the OverMesh server.'],
-        ['Log out', 'End the current session and return to the login screen. Only visible when authentication is enabled.']
+        ['Nœuds', 'Ouvrir le tableau des nœuds/contacts.'],
+        ['Chat', 'Ouvrir la messagerie texte MT ou MC.'],
+        ['Carte', 'Ouvrir la carte principale, les repères, marqueurs, notes et calques.'],
+        ['Détection/Carte', 'Ouvrir l’activité RF en direct et la visualisation des chemins.'],
+        ['Bot', 'Configurer et surveiller les réponses automatiques du bot.'],
+        ['Paramètres', 'Ouvrir les réglages de l’application, des radios, des mises à jour, du GPS, des cartes hors ligne, de la sécurité et de l’aide.'],
+        ['Actualiser', 'Recharger les données visibles de l’application depuis le serveur.'],
+        ['Mode silencieux', 'Activer/désactiver le mode surveillance seule. Bloque toutes les transmissions d’OM lorsqu’il est actif.'],
+        ['Redémarrer', 'Redémarrer le service/processus OverMesh.'],
+        ['Arrêter', 'Arrêter le serveur OverMesh.'],
+        ['Déconnexion', 'Terminer la session actuelle et revenir à la page de connexion. Visible uniquement lorsque l’authentification est activée.']
       ]
     },
     {
-      title: 'Nodes',
+      title: 'Nœuds',
       tags: 'nodes contacts table favorites ignored map dm traceroute route path mc mt ping trace info position manual path lock flood',
       body: [
-        'Nodes lists known Meshtastic nodes and MeshCore contacts. Use it to check identity, last-heard time, battery, signal, position, route state, and to take actions like DM, ping, trace, or route edit.',
-        'The table is shared, but MT and MC route information means different things because the protocols expose different metadata.',
-        'Info/Share opens full contact details. MT shows identity and public-key data. MC shows name, type, full public key, source state, path data, distance, and a MeshCore share link/QR when available.',
-        'Favorites are per-radio. A starred contact sorts above non-starred ones when Fav first is active. Favorites and ignored contacts are tracked by radio so the same contact on two different radios can be treated independently.'
+        'La section Nœuds liste les nœuds Meshtastic connus et les contacts MeshCore. Utilisez cette section pour vérifier l’identité, la dernière activité, la batterie, le signal, la position et l’état du routage, et pour effectuer des actions comme DM, Ping, Trace ou modifier un chemin.',
+        'Le tableau est commun, mais les informations de routage MT et MC ont une signification différente, car les protocoles fournissent des métadonnées différentes.',
+        'Info/Partage ouvre les détails complets du contact. MT affiche l’identité et les données de clé publique. MC affiche le nom, le type, la clé publique complète, l’état de la source, les données de chemin, la distance et un lien/QR de partage MeshCore lorsqu’il est disponible.',
+        'Les favoris sont propres à chaque radio. Lorsqu’un contact est marqué comme favori, il apparaît avant les autres lorsque « Favoris en premier » est activé. Les favoris et les contacts ignorés sont gérés par radio afin qu’un même contact présent sur deux radios différentes puisse être traité indépendamment.'
       ],
       split: [
         {
-          title: 'MT Nodes',
+          title: 'Nœuds MT',
           kind: 'mt',
           body: [
-            'MT rows show Meshtastic node IDs, names, signal (SNR/RSSI), battery, position, hops, and Last Seen.',
-            'Hops is the radio/nodeDB view of repeater distance. It is informational — it tells you hop count but not which nodes were involved. Use TR for exact route nodes.',
-            'TR sends a real Meshtastic traceroute. When a response arrives OM draws the route-to-node and route-back on the map with SNR coloring per segment. If an intermediate node has no GPS, OM draws a bypass segment and marks the gap.',
-            'Last Seen comes from real received packets when available. NodeDB-only timestamps are treated more cautiously and may lag behind actual activity.'
+            'Les lignes MT affichent les identifiants des nœuds Meshtastic, leurs noms, le signal (SNR/RSSI), la batterie, la position, les sauts et la dernière activité.',
+            'Les sauts indiquent la distance en répéteurs vue par la radio/nodeDB. Cette information donne le nombre de sauts, mais pas les nœuds concernés. Utilisez TR pour obtenir les nœuds exacts du chemin.',
+            'TR envoie un véritable traceroute Meshtastic. Lorsqu’une réponse arrive, OM affiche sur la carte le chemin aller et retour avec le SNR de chaque segment. Si un nœud intermédiaire n’a pas de GPS, OM affiche un segment de contournement et signale l’absence de position.',
+            'La dernière activité provient des paquets réellement reçus lorsqu’ils sont disponibles. Les horodatages provenant uniquement de la NodeDB sont moins fiables et peuvent être en retard sur l’activité réelle.'
           ],
           buttons: [
-            ['TR', 'Send an MT traceroute and draw route-to-node / route-back if the node responds.'],
-            ['Pos', 'Request an MT position broadcast from this node.'],
-            ['Info', 'Request MT node info and telemetry.'],
-            ['Info/Share', 'Open MT contact details, public-key data, and copyable share data.'],
-            ['DM', 'Open a direct message thread with this MT node.'],
-            ['Ignore', 'Hide this MT node from normal Live and History views.'],
-            ['Unignore', 'Restore an ignored MT node. Find ignored nodes under History → MT ignored.']
+            ['TR', 'Envoyer un traceroute MT et afficher le chemin aller / retour si le nœud répond.'],
+            ['Pos', 'Demander une diffusion de position MT depuis ce nœud.'],
+            ['Info', 'Demander les informations et la télémétrie du nœud MT.'],
+            ['Info/Share', 'Ouvrir les détails du contact MT, les données de clé publique et les données de partage copiables.'],
+            ['DM', 'Ouvrir une conversation privée avec ce nœud MT.'],
+            ['Ignorer', 'Masquer ce nœud MT des vues En direct et Historique.'],
+            ['Ne plus ignorer', 'Réafficher un nœud MT ignoré. Les nœuds ignorés se trouvent dans Historique → MT ignorés.']
           ]
         },
         {
-          title: 'MC Contacts',
+          title: 'Contacts MC',
           kind: 'mc',
           body: [
-            'MC rows include short hash chips before names. These match the hop-hash IDs shown in Sense/Map path entries, pings, and traces — use them to identify relays.',
-            'Path labels in the Hops column: direct = no stored repeater, flood = open/automatic routing, route = a stored route exists, 1 hop / 2 hops = known stored repeater count.',
-            'The ➤ indicator next to a contact name means a stored route path exists on the device for that contact. A 🔒➤ indicator means the path was manually set by you — it is protected and will not be cleared by the Force Flood setting. A plain ➤ means an auto-learned route; Force Flood will clear it before DMs and pings.',
-            'MC path hashes may be 1, 2, or 3 bytes. Short hashes can collide on busy meshes, so OM marks uncertain matches as likely/estimated/ambiguous rather than treating every hop as confirmed.',
-            'Route editing lets you pick a repeater contact as the next hop and choose the path hash size (1B/2B/3B). The Settings → MeshCore default hash mode is used as the starting point, but you can override it per-contact.',
-            'Ping popups show the path hash width when it is known: 1B/hop, 2B/hop, or 3B/hop. Direct responses have no relay hashes, so the path row can be empty while the hop row correctly says direct.',
-            'If a Ping only proves fallback reachability, use Trace Probe deliberately from the ping popup. It sends one MC Trace broadcast and folds any returned hop data back into the same popup.',
-            'Clearing a manual route (via Route → Clear) removes the 🔒 lock and reverts to flood routing when Force Flood is on, or leaves the path empty for the firmware to re-learn when Force Flood is off.',
-            'MC contacts are kept in an archive so contacts seen on previous sessions are available even after a contact list refresh or reconnect. The archive merges with live data — live data takes priority for path and seen-time fields.'
+            'Les lignes MC affichent de courts identifiants de hachage avant les noms. Ils correspondent aux identifiants de saut affichés dans les chemins de Détection/Carte, les pings et les traces — utilisez-les pour identifier les relais.',
+            'Libellés des chemins dans la colonne Sauts : direct = aucun répéteur enregistré, flood = routage ouvert/automatique, route = un chemin enregistré existe, 1 saut / 2 sauts = nombre connu de répéteurs enregistrés.',
+            'L’indicateur ➤ à côté d’un nom de contact signifie qu’un chemin enregistré existe sur l’appareil pour ce contact. L’indicateur 🔒➤ signifie que le chemin a été défini manuellement par vous — il est protégé et ne sera pas supprimé par le réglage Forcer le Flood. Un simple ➤ indique un chemin appris automatiquement ; Forcer le Flood le supprimera avant les messages privés et les pings.',
+            'Les hachages de chemin MC peuvent faire 1, 2 ou 3 octets. Les hachages courts peuvent entrer en collision sur les maillages très actifs ; OM marque donc les correspondances incertaines comme probables/estimées/ambiguës au lieu de considérer chaque saut comme confirmé.',
+            'La modification d’un chemin permet de choisir un contact répéteur comme prochain saut et de sélectionner la taille du hachage de chemin (1B/2B/3B). Le mode de hachage par défaut de Paramètres → MeshCore est utilisé au départ, mais vous pouvez le modifier pour chaque contact.',
+            'Les fenêtres de ping affichent la taille du hachage de chemin lorsqu’elle est connue : 1B/saut, 2B/saut ou 3B/saut. Les réponses directes ne contiennent aucun hachage de relais ; la ligne du chemin peut donc être vide tandis que la ligne des sauts indique correctement direct.',
+            'Si un Ping prouve uniquement que la liaison de secours fonctionne, utilisez volontairement Trace Probe depuis la fenêtre du ping. Il envoie une diffusion Trace MC et réintègre les données de sauts reçues dans la même fenêtre.',
+            'Effacer un chemin manuel (via Route → Effacer) supprime le verrou 🔒 et revient au routage flood lorsque Forcer le Flood est activé, ou laisse le chemin vide afin que le firmware puisse le réapprendre lorsque Forcer le Flood est désactivé.',
+            'Les contacts MC sont conservés dans une archive afin que les contacts vus lors des sessions précédentes restent disponibles après une actualisation de la liste ou une reconnexion. L’archive est fusionnée avec les données en direct — celles-ci sont prioritaires pour le chemin et l’heure de dernière activité.'
           ],
           buttons: [
-            ['Ping', 'Check MC reachability and signal; draws observed path hops when the response includes path metadata.'],
-            ['Trace', 'Send one deliberate MC broadcast trace packet and draw the resolved hop chain on the map.'],
-            ['Trace Probe', 'Optional trace from a Ping popup when the targeted status response did not provide enough path data.'],
-            ['Route', 'Open the route editor to set or clear a stored hop path for this MC contact.'],
-            ['Manage', 'Open remote repeater/room-server management for supported MC node types (repeaters and room servers only).'],
-            ['Info/Share', 'Open full MC contact details: public key, type, source state, distance, MeshCore share link, and QR code.'],
-            ['★', 'Favorite this MC contact so it sorts above non-favorited rows.'],
-            ['Ignore', 'Hide this MC contact from normal views.'],
-            ['Unignore', 'Restore an ignored MC contact. Find ignored contacts under History → MC ignored.'],
-            ['➤', 'Auto-learned stored route exists. Force Flood will clear it before DMs/pings.'],
-            ['🔒➤', 'Manually set stored route. Protected from Force Flood — only cleared when you explicitly use Route → Clear.']
+            ['Ping', 'Vérifier la liaison MC et le signal ; affiche les sauts observés lorsque la réponse contient les informations de chemin.'],
+            ['Trace', 'Envoyer un paquet de trace MC et afficher sur la carte la chaîne de sauts résolue.'],
+            ['Trace Probe', 'Trace facultatif depuis une fenêtre de Ping lorsque la réponse d’état ne fournit pas suffisamment de données de chemin.'],
+            ['Route', 'Ouvrir l’éditeur de chemin pour définir ou effacer un chemin de sauts enregistré pour ce contact MC.'],
+            ['Manage', 'Ouvrir la gestion à distance des répéteurs/serveurs de salle pour les types de nœuds MC pris en charge.'],
+            ['Info/Share', 'Ouvrir les détails complets du contact MC : clé publique, type, état de la source, distance, lien de partage MeshCore et code QR.'],
+            ['★', 'Ajouter ce contact MC aux favoris pour l’afficher avant les autres contacts.'],
+            ['Ignore', 'Masquer ce contact MC des vues normales.'],
+            ['Unignore', 'Réafficher un contact MC ignoré. Les contacts ignorés se trouvent dans Historique → MC ignorés.'],
+            ['➤', 'Un chemin enregistré a été appris automatiquement. Forcer le Flood le supprimera avant les messages privés et les pings.'],
+            ['🔒➤', 'Chemin enregistré défini manuellement. Protégé contre Forcer le Flood — il n’est supprimé que si vous utilisez explicitement Route → Effacer.']
           ]
         }
       ],
       buttons: [
-        ['Live', 'Show currently active MT nodes and MC contacts.'],
-        ['History', 'Browse all remembered MT nodes and MC contacts including ones not heard recently.'],
-        ['Search', 'Filter visible rows by name, short name, ID, or radio metadata.'],
-        ['★ Fav first', 'Sort favorited contacts above all others.'],
+        ['En direct', 'Afficher les nœuds MT et contacts MC actuellement actifs.'],
+        ['Historique', 'Parcourir tous les nœuds MT et contacts MC mémorisés, y compris ceux qui n’ont pas été entendus récemment.'],
+        ['Rechercher', 'Filtrer les lignes visibles par nom, nom court, identifiant ou métadonnées radio.'],
+        ['★ Favoris en premier', 'Afficher les contacts favoris avant tous les autres.'],
         ['MT', 'Show or hide MT rows in the shared table.'],
         ['MC', 'Show or hide MC rows in the shared table.'],
         ['Déverrouiller TR', 'Libérer le verrou de traceroute MT si une requête précédente ne s’est pas terminée correctement.'],
-        ['MT ignored', 'Show ignored MT nodes in History view.'],
-        ['MC ignored', 'Show ignored MC contacts in History view.'],
-        ['Map', 'Center the map on that node/contact and open its popup when a position is known.']
+        ['MT ignorés', 'Afficher les nœuds MT ignorés dans la vue Historique.'],
+        ['MC ignorés', 'Afficher les contacts MC ignorés dans la vue Historique.'],
+        ['Carte', 'Centrer la carte sur ce nœud/contact et ouvrir sa fenêtre contextuelle lorsqu’une position est connue.']
       ]
     },
     {
@@ -1725,214 +1725,214 @@
           title: 'MT Chat',
           kind: 'mt',
           body: [
-            'MT messages can show a small route badge next to the timestamp: direct, 1 hop, 2 hops, etc.',
-            'A plain hop badge comes from packet hop metadata — it gives hop count only, not exact repeaters. Use TR from the Nodes tab when you need exact route nodes.',
-            'A cached-route badge means OM has a recent traceroute for that exact sender. Click it to draw the cached MT route on the map.',
-            'Channel tabs at the top of MT Chat correspond to configured MT channels. A dot indicator on a tab means there are unread messages on that channel.'
+            'Les messages MT peuvent afficher un petit indicateur de chemin à côté de l’heure : direct, 1 saut, 2 sauts, etc.',
+            'Un indicateur de sauts simple provient des métadonnées de sauts du paquet — il indique uniquement le nombre de sauts, pas les répéteurs exacts. Utilisez TR depuis l’onglet Nœuds lorsque vous avez besoin des nœuds exacts du chemin.',
+            'Un indicateur de chemin enregistré signifie qu’OM dispose d’un traceroute récent pour cet émetteur précis. Cliquez dessus pour afficher le chemin MT enregistré sur la carte.',
+            'Les onglets de canal en haut de la discussion MT correspondent aux canaux MT configurés. Un point sur un onglet indique qu’il contient des messages non lus.'
           ],
           buttons: [
-            ['Route badge', 'Shows packet hop count, or a cached-route link when a recent traceroute exists for that exact peer.'],
-            ['Reply', 'Insert a reply prefix into the input for this MT sender.'],
-            ['TR', 'Run a traceroute from the Nodes tab when you need exact route nodes.'],
-            ['Channel tab', 'Switch between configured MT channels.']
+            ['Indicateur de chemin', 'Affiche le nombre de sauts du paquet ou un lien vers le chemin enregistré lorsqu’un traceroute récent existe pour ce correspondant.'],
+            ['Répondre', 'Insérer un préfixe de réponse dans le champ de saisie pour cet émetteur MT.'],
+            ['TR', 'Lancer un traceroute depuis l’onglet Nœuds lorsque vous avez besoin des nœuds exacts du chemin.'],
+            ['Onglet de canal', 'Basculer entre les canaux MT configurés.']
           ]
         },
         {
           title: 'MC Chat',
           kind: 'mc',
           body: [
-            'MC messages have a strict byte budget set by the firmware. The budget depends on channel name length and sender name overhead. OM tracks this and shows a byte counter.',
-            'When a message exceeds the safe byte limit, OM splits it into numbered parts automatically. Each part is sent with a short (1/N) prefix.',
-            'MC Reply inserts a native bracketed mention where possible, so MC app users see a proper @mention in their client.',
-            'Received MC messages show a hop badge when path metadata is available. Click the badge to open Sense/Map and pin the matching path entry.',
-            'A badge like flood mode describes the routing mode for that message. A detail like 2B/hop describes the hop-hash size used in path metadata. They are independent facts — a flood-mode message can still carry 2B/hop path data.',
-            'MC channel slots are numbered 0–N. Channel 0 is usually the default public channel. Each slot can be renamed and given a custom key in Settings → MeshCore.'
+            'Les messages MC ont une limite stricte en octets définie par le firmware. Cette limite dépend de la longueur du nom du canal et du nom de l’émetteur. OM la suit et affiche un compteur d’octets.',
+            'Lorsqu’un message dépasse la limite sûre en octets, OM le divise automatiquement en parties numérotées. Chaque partie est envoyée avec un court préfixe (1/N).',
+            'Répondre MC insère si possible une mention native entre crochets, afin que les utilisateurs de l’application MC voient une véritable @mention dans leur client.',
+            'Les messages MC reçus affichent un indicateur de sauts lorsque les métadonnées du chemin sont disponibles. Cliquez dessus pour ouvrir Détection/Carte et afficher le chemin correspondant.',
+            'Un indicateur comme flood décrit le mode de routage du message. Une information comme 2B/saut indique la taille du hachage de saut utilisée dans les métadonnées du chemin. Ce sont deux informations indépendantes — un message en mode flood peut tout de même contenir des données de chemin en 2B/saut.',
+            'Les canaux MC sont numérotés de 0 à N. Le canal 0 est généralement le canal public par défaut. Chaque canal peut être renommé et recevoir une clé personnalisée dans Paramètres → MeshCore.'
           ],
           buttons: [
-            ['Route badge', 'Shows MC path metadata: direct/hop count/flood mode and hash size; click to open Sense/Map and inspect the message path.'],
-            ['Reply', 'Insert a native MC mention/reply prefix when the sender is a known contact.'],
-            ['Advert', 'Send the MC radio advert so other nodes can discover and add this radio.'],
-            ['Byte counter', 'Shows remaining safe bytes for the current input. Turns red when a split will occur.'],
-            ['DM tab', 'Open or switch to a direct message thread with a specific MC contact.'],
-            ['DM tab close (×)', 'Close a DM tab without deleting message history.'],
-            ['Channel tab', 'Switch between MC channel slots.'],
-            ['Delete History', 'Delete the saved message history for the current channel or DM thread.']
+            ['Indicateur de chemin', 'Affiche les métadonnées du chemin MC : direct/nombre de sauts/mode flood et taille du hachage ; cliquez dessus pour ouvrir Détection/Carte et examiner le chemin du message.'],
+            ['Répondre', 'Insérer un préfixe natif de mention/réponse MC lorsque l’émetteur est un contact connu.'],
+            ['Annonce', 'Envoyer l’annonce de la radio MC afin que les autres nœuds puissent découvrir et ajouter cette radio.'],
+            ['Compteur d’octets', 'Affiche le nombre d’octets sûrs restants pour la saisie actuelle. Devient rouge lorsqu’un découpage sera nécessaire.'],
+            ['Onglet DM', 'Ouvrir ou sélectionner une conversation privée avec un contact MC précis.'],
+            ['Fermer l’onglet DM (×)', 'Fermer un onglet DM sans supprimer l’historique des messages.'],
+            ['Onglet de canal', 'Basculer entre les canaux MC.'],
+            ['Supprimer l’historique', 'Supprimer l’historique enregistré des messages du canal actuel ou de la conversation DM.']
           ]
         }
       ],
       buttons: [
-        ['MT', 'Switch Chat to the Meshtastic network.'],
-        ['MC', 'Switch Chat to the MeshCore network.'],
-        ['Send', 'Transmit the current message. Blocked when Silent Running is active.'],
-        ['Emoji', 'Open the emoji picker to insert a character into the current input.']
+        ['MT', 'Basculer Chat sur le réseau Meshtastic.'],
+        ['MC', 'Basculer Chat sur le réseau MeshCore.'],
+        ['Envoyer', 'Transmettre le message actuel. Bloqué lorsque le mode Silencieux est actif.'],
+        ['Émojis', 'Ouvrir le sélecteur d’émojis pour insérer un caractère dans le champ de saisie actuel.']
       ]
     },
     {
-      title: 'Map',
+      title: 'Carte',
       tags: 'map markers pins filters overlays marks notes traceroute gps paths layers center popup polar grid distance',
       body: [
-        'Map is the main geographic view. It shows MT nodes, MC contacts, local radios, mesh marks, self notes, overlays, and paths drawn by traceroutes, pings, and traces.',
-        'Click any marker to open a popup with quick actions: DM, Ping, Trace, TR, Manage, Show in Nodes, and more depending on the contact type.',
-        'MT and MC filter buttons at the top let you hide one network when the map is too busy.',
-        'Heat toggles the Carte de chaleur du signal directly from the Map/Sense toolbar. It starts off after each app load. In Map mode it follows the MT/MC map filter buttons: MT shows MT node signal heat, MC shows MC passive/Remote Collector heat. When both are enabled, OM draws separate heat layers with distinct palettes so the sources stay distinguishable.',
-        'Distance labels use the OM origin: live GPS first, then manual OM position (set in Settings → App), then a connected/local radio position as a fallback. If none is available, distances are shown as unknown.',
-        'Marks are mesh waypoints shared over the network. Self Notes are local-only annotations stored in the browser. Overlays are locally drawn shapes and imported GeoJSON.'
+        'La carte est la vue géographique principale. Elle affiche les nœuds MT, les contacts MC, les radios locales, les repères du maillage, les notes personnelles, les calques et les chemins issus des traceroutes, pings et traces.',
+        'Cliquez sur un repère pour ouvrir une fenêtre avec les actions rapides : DM, Ping, Trace, TR, Manage, Afficher dans Nœuds, et d’autres actions selon le type de contact.',
+        'Les boutons de filtrage MT et MC en haut permettent de masquer un réseau lorsque la carte est trop chargée.',
+        'Chaleur active ou désactive la carte de chaleur du signal directement depuis la barre d’outils Carte/Détection. Elle est désactivée au chargement de l’application. En mode Carte, elle suit les boutons de filtrage MT/MC : MT affiche la chaleur du signal des nœuds MT, MC affiche la chaleur des données passives/collecteur distant MC. Lorsque les deux sont activés, OM affiche des calques de chaleur séparés avec des palettes distinctes afin de différencier les sources.',
+        'Les distances utilisent l’origine OM : d’abord le GPS en direct, puis la position OM manuelle (définie dans Paramètres → Application), puis la position d’une radio connectée/locale en dernier recours. Si aucune position n’est disponible, les distances sont indiquées comme inconnues.',
+        'Les repères sont des points de passage du maillage partagés sur le réseau. Les notes personnelles sont des annotations locales enregistrées dans le navigateur. Les calques sont des formes dessinées localement ou des GeoJSON importés.'
       ],
       split: [
         {
-          title: 'MT Map',
+          title: 'Carte MT',
           kind: 'mt',
           body: [
-            'MT route lines come from traceroute results or cached traceroute replay. Each segment is colored by SNR quality: green = good, yellow = fair, red = marginal.',
-            'Hover a segment to see SNR for that hop. If an intermediate node has no GPS fix, OM draws a bypass segment and labels it with how many hops had no map position.',
-            'Cached traceroutes are stored per sender. If a new TR result arrives for the same sender, it replaces the cached version.'
+            'Les chemins MT proviennent des résultats de traceroute ou de la relecture d’un traceroute enregistré. Chaque segment est coloré selon la qualité du SNR : vert = bon, jaune = moyen, rouge = limite.',
+            'Survolez un segment pour voir le SNR de ce saut. Si un nœud intermédiaire n’a pas de position GPS, OM dessine un segment de contournement et indique combien de sauts n’avaient pas de position sur la carte.',
+            'Les traceroutes enregistrés sont conservés par émetteur. Si un nouveau résultat TR arrive pour le même émetteur, il remplace la version enregistrée.'
           ],
           buttons: [
-            ['TR', 'Run a traceroute from this MT node popup and draw the result on the map.'],
-            ['Pos', 'Request a position broadcast from this MT node.']
+            ['TR', 'Lancer un traceroute depuis la fenêtre de ce nœud MT et afficher le résultat sur la carte.'],
+            ['Pos', 'Demander une diffusion de position depuis ce nœud MT.']
           ]
         },
         {
-          title: 'MC Map',
+          title: 'Carte MC',
           kind: 'mc',
           body: [
-            'MC route lines come from adverts, messages, pings, traces, and stored contact routes. OM draws all hops it can resolve from the available path metadata.',
-            'Ping popups use the same path display as Sense. When path hashes are present, the popup lists hop IDs and the hash width (1B/hop, 2B/hop, or 3B/hop).',
-            'A warning marker (!) means OM only knows a relay chain or partial path for this entry — the marker is not the final sender/contact position.',
-            'MC path segments are SNR-colored when signal data is available in the packet metadata. Hover a segment to see its SNR value.',
-            'MC map markers are differentiated by node type: client, room server, and repeater each have a distinct shape and color.'
+            'Les chemins MC proviennent des annonces, messages, pings, traces et routes de contacts enregistrées. OM affiche tous les sauts qu’il peut résoudre à partir des métadonnées de chemin disponibles.',
+            'Les fenêtres Ping utilisent le même affichage du chemin que Détection. Lorsque les hachages de chemin sont présents, la fenêtre affiche les identifiants des sauts et la taille du hachage (1B/saut, 2B/saut ou 3B/saut).',
+            'Un marqueur d’avertissement (!) signifie qu’OM ne connaît qu’une chaîne de relais ou un chemin partiel pour cette entrée — le marqueur ne correspond pas à la position finale de l’émetteur/contact.',
+            'Les segments des chemins MC sont colorés selon le SNR lorsque les données de signal sont disponibles dans les métadonnées du paquet. Survolez un segment pour voir sa valeur SNR.',
+            'Les repères MC sont différenciés selon le type de nœud : client, serveur de salle et répéteur ont chacun une forme et une couleur distinctes.'
           ],
           buttons: [
-            ['Ping', 'Run an MC reachability check from this contact popup and draw the observed path.'],
-            ['Trace', 'Run one MC broadcast trace and draw resolved hops.'],
-            ['Trace Probe', 'Optional Ping popup action for path discovery when targeted status gives no route.'],
-            ['Manage', 'Open remote repeater/room-server management for supported node types.'],
-            ['!', 'Partial or relay-only path warning — marker position is a known relay, not the final contact.']
+            ['Ping', 'Effectuer une vérification de liaison MC depuis la fenêtre de ce contact et afficher le chemin observé.'],
+            ['Trace', 'Lancer une trace de diffusion MC et afficher les sauts résolus.'],
+            ['Trace Probe', 'Action Ping facultative pour découvrir le chemin lorsque le statut ciblé ne fournit aucune route.'],
+            ['Manage', 'Ouvrir la gestion à distance des répéteurs/serveurs de salle pour les types de nœuds pris en charge.'],
+            ['!', 'Avertissement de chemin partiel ou limité aux relais — la position du marqueur correspond à un relais connu, pas au contact final.']
           ]
         }
       ],
       buttons: [
-        ['MT', 'Show or hide Meshtastic markers and paths on the map.'],
-        ['MC', 'Show or hide MeshCore markers and paths on the map.'],
-        ['Heat', 'Toggle Carte de chaleur du signal. It follows the visible MT/MC selector and uses separate palettes when both networks are visible.'],
-        ['Marks', 'Open the mesh waypoint panel.'],
-        ['Self Notes', 'Open the local-only map annotation panel.'],
-        ['Overlays', 'Open the overlay editor and import panel.'],
-        ['Add Mark', 'Create a mesh waypoint at the tapped/clicked map position.'],
-        ['Add Note', 'Create a local-only map note at the current position.'],
-        ['Point', 'Start drawing a point overlay.'],
-        ['Line', 'Start drawing a line or route overlay.'],
-        ['Area', 'Start drawing a polygon area overlay.'],
-        ['Circle', 'Start drawing a circular overlay.'],
-        ['Finish', 'Complete the current overlay shape.'],
-        ['Layer menu', 'Choose map tile source and open map layer tools.'],
-        ['Polar Grid', 'Show or hide the range/bearing polar grid overlay centered on the OM origin.'],
-        ['Customize', 'Adjust polar grid ring count, range, and label appearance.'],
-        ['Save', 'Save the current mark, note, overlay, or edited settings.'],
-        ['Cancel', 'Cancel the current map edit or drawing operation.'],
-        ['Zoom', 'Zoom the map to a saved overlay bounding box or a known node position.']
+        ['MT', 'Afficher ou masquer les repères et chemins Meshtastic sur la carte.'],
+        ['MC', 'Afficher ou masquer les repères et chemins MeshCore sur la carte.'],
+        ['Chaleur', 'Activer ou désactiver la carte de chaleur du signal. Elle suit le sélecteur MT/MC visible et utilise des palettes séparées lorsque les deux réseaux sont visibles.'],
+        ['Repères', 'Ouvrir le panneau des repères du maillage.'],
+        ['Notes personnelles', 'Ouvrir le panneau des annotations locales de la carte.'],
+        ['Calques', 'Ouvrir l’éditeur de calques et le panneau d’importation.'],
+        ['Ajouter un repère', 'Créer un repère du maillage à la position sélectionnée sur la carte.'],
+        ['Ajouter une note', 'Créer une note locale sur la carte à la position actuelle.'],
+        ['Point', 'Commencer à dessiner un calque ponctuel.'],
+        ['Ligne', 'Commencer à dessiner un calque de ligne ou d’itinéraire.'],
+        ['Zone', 'Commencer à dessiner un calque de zone polygonale.'],
+        ['Cercle', 'Commencer à dessiner un calque circulaire.'],
+        ['Terminer', 'Terminer la forme du calque actuel.'],
+        ['Menu des calques', 'Choisir la source des tuiles cartographiques et ouvrir les outils de calques.'],
+        ['Grille polaire', 'Afficher ou masquer la grille polaire de portée/azimut centrée sur l’origine OM.'],
+        ['Personnaliser', 'Régler le nombre d’anneaux, la portée et l’apparence des libellés de la grille polaire.'],
+        ['Enregistrer', 'Enregistrer le repère, la note, le calque ou les paramètres modifiés.'],
+        ['Annuler', 'Annuler la modification ou l’opération de dessin en cours sur la carte.'],
+        ['Zoom', 'Zoomer la carte sur la zone englobante d’un calque enregistré ou sur la position connue d’un nœud.']
       ]
     },
     {
-      title: 'Sense/Map',
+      title: 'Détection/Carte',
       tags: 'sense activity passive active live rf map mc path hops ping trace log warning path refresh snr rssi signal',
       body: [
-        'Sense/Map is the live RF activity view. It is the best place to watch recent packets, adverts, messages, pings, traces, and resolved path hops.',
-        'The left panel is the map. The right panel is the activity/response log. Clicking log entries draws paths on the map; clicking again clears them.',
-        'MT and MC show separate Sense panels because the two protocols expose different route metadata.',
-        'The Heat toolbar toggle is connected to Map → Overlays → Carte de chaleur du signal. In Sense mode it follows the Sense MT/MC selector: MT heat comes from live MT node positions plus RSSI/SNR, while MC heat comes from passive observations, including Remote Collector imports.'
+        'Détection/Carte est la vue d’activité radio en direct. C’est l’endroit idéal pour suivre les paquets récents, annonces, messages, pings, traces et sauts de chemin résolus.',
+        'Le panneau de gauche est la carte. Le panneau de droite est le journal d’activité/réponses. Cliquer sur une entrée du journal dessine les chemins sur la carte ; cliquer à nouveau les efface.',
+        'MT et MC disposent de panneaux Détection distincts, car les deux protocoles fournissent des métadonnées de chemin différentes.',
+        'Le bouton Chaleur de la barre d’outils est lié à Carte → Calques → Carte de chaleur du signal. En mode Détection, il suit le sélecteur MT/MC : la chaleur MT utilise les positions des nœuds MT en direct avec le RSSI/SNR, tandis que la chaleur MC utilise les observations passives, y compris les importations du collecteur distant.'
       ],
       split: [
         {
-          title: 'MT Sense/Map',
+          title: 'Détection/Carte MT',
           kind: 'mt',
           body: [
-            'MT Sense logs heard packets and active Sense responses. Each entry can show SNR, RSSI, a message preview, and hop count from packet metadata.',
-            'When Heat is on and MT is selected in Sense, MT nodes with both position and RSSI/SNR contribute to the heatmap.',
-            'A plain hop badge (e.g. 2 hops) comes from packet metadata and shows count only — no repeater identity. Use TR from Nodes to get exact route nodes.',
-            'When a cached traceroute exists for the exact sender, hovering its log row previews the cached route on the map. Clicking pins that route; clicking again clears the pin.',
-            'Active Sense periodically broadcasts a Sense request on a configured cooldown. Passive captures heard packets without transmitting anything.'
+            'La Détection MT journalise les paquets reçus et les réponses actives de Détection. Chaque entrée peut afficher le SNR, le RSSI, un aperçu du message et le nombre de sauts issu des métadonnées du paquet.',
+            'Lorsque Chaleur est activée et que MT est sélectionné dans Détection, les nœuds MT disposant à la fois d’une position et d’un RSSI/SNR contribuent à la carte de chaleur.',
+            'Un indicateur de sauts simple (par exemple 2 sauts) provient des métadonnées du paquet et indique uniquement le nombre de sauts — pas l’identité des répéteurs. Utilisez TR depuis Nœuds pour obtenir les nœuds exacts du chemin.',
+            'Lorsqu’un traceroute enregistré existe pour l’émetteur exact, survolez sa ligne dans le journal pour prévisualiser le chemin enregistré sur la carte. Cliquez pour épingler ce chemin ; cliquez à nouveau pour retirer l’épingle.',
+            'La Détection active diffuse périodiquement une demande de Détection selon l’intervalle configuré. Le mode Passif capture les paquets reçus sans rien transmettre.'
           ],
           buttons: [
-            ['Sense Mesh', 'Broadcast an active MT Sense request and collect responses for the cooldown window.'],
-            ['Passive', 'Continuously capture heard MT packets without transmitting.'],
-            ['Active', 'Periodically run MT Sense requests on the configured cooldown schedule.'],
-            ['Response log', 'MT packet/Sense response list. Cached-route rows preview on hover and pin/unpin on click.'],
-            ['direct', 'Packet arrived with no repeater hops — heard directly.'],
-            ['1 hop / 2 hops', 'Hop count from packet metadata. Does not identify which nodes relayed it.'],
-            ['cached route', 'A recent traceroute exists for this exact sender. Hover to preview, click to pin.'],
-            ['Effacer', 'Effacer la liste des nœuds détectés par Sense MT.']
+            ['Sense Mesh', 'Diffuser une demande de Détection MT active et collecter les réponses pendant l’intervalle configuré.'],
+            ['Passive', 'Capturer en continu les paquets MT reçus sans transmettre.'],
+            ['Active', 'Exécuter périodiquement les demandes de Détection MT selon l’intervalle configuré.'],
+            ['Response log', 'Liste des paquets MT/réponses de Détection. Les lignes avec un chemin enregistré affichent un aperçu au survol et permettent de l’épingler ou de le retirer d’un clic.'],
+            ['direct', 'Paquet reçu sans saut de répéteur — reçu directement.'],
+            ['1 hop / 2 hops', 'Nombre de sauts issu des métadonnées du paquet. N’indique pas quels nœuds ont relayé le paquet.'],
+            ['cached route', 'Un traceroute récent existe pour cet émetteur exact. Survolez pour prévisualiser, cliquez pour épingler.'],
+            ['Effacer', 'Effacer la liste des nœuds détectés par la Détection MT.']
           ]
         },
         {
-          title: 'MC Sense/Map',
+          title: 'Détection/Carte MC',
           kind: 'mc',
           body: [
-            'MC Sense logs adverts, channel messages, DMs, pings, traces, scans, and bot replies. It is the primary place to inspect MC routing.',
-            'When Heat is on and MC is selected in Sense, MC passive observations contribute to the heatmap. Remote Collector observations are included through the same passive-observation store.',
-            'Scan and Trace are separate on purpose. Scan sends the normal MC advert/scan request and listens for contact responses; it does not secretly run Trace.',
-            'Trace sends one mesh-wide broadcast trace probe, then waits for TRACE_DATA and draws any returned hop chain. The amber warning and cooldown are there because this is active mesh traffic.',
+            'La Détection MC journalise les annonces, messages de canal, messages privés, pings, traces, scans et réponses du bot. C’est l’endroit principal pour examiner le routage MC.',
+            'Lorsque Chaleur est activée et que MC est sélectionné dans Détection, les observations passives MC contribuent à la carte de chaleur. Les observations du collecteur distant sont incluses dans le même stockage des observations passives.',
+            'Scan et Trace sont volontairement séparés. Scan envoie la demande normale d’annonce/scan MC et attend les réponses des contacts ; il n’exécute pas Trace en arrière-plan.',
+            'Trace envoie une sonde de trace diffusée sur tout le maillage, puis attend TRACE_DATA et affiche toute chaîne de sauts reçue. L’avertissement et le délai d’attente sont présents car il s’agit d’un trafic actif sur le maillage.',
             'Route source badges explain where OM resolved the path from: live = this packet\'s RX-log metadata (best), cached = stored contact route, inferred = fallback line, refreshed = newer data changed the entry after it was logged.',
-            'Flood mode is a routing/delivery mode label, not a byte count. 1B/hop, 2B/hop, and 3B/hop describe the hop-hash width used in path metadata. A flood-mode packet can still carry 2B/hop path data — these are independent.',
-            'Observed path hops appear as clickable hash IDs. Click a hop ID to center the map on that relay when OM knows its position.',
-            'Path segments use SNR-quality coloring (green/yellow/red) when signal data is available. Hover a segment to see its SNR value.',
-            'Confidence labels: likely = best candidate selected but another match existed; estimated = short/ambiguous hash, treat as probable route not proof; ambiguous = candidates too close to call.',
-            'MC hop count badges read "1 hop" / "2 hops" to avoid confusing "h" with hours in age labels.'
+            'Le mode Flood indique un mode de routage/livraison et non un nombre d’octets. 1B/saut, 2B/saut et 3B/saut indiquent la taille du hachage de saut utilisée dans les métadonnées du chemin. Un paquet en mode Flood peut donc contenir des données de chemin en 2B/saut : ces informations sont indépendantes.',
+            'Les sauts observés apparaissent sous forme d’identifiants de hachage cliquables. Cliquez sur un identifiant de saut pour centrer la carte sur ce relais lorsque OM connaît sa position.',
+            'Les segments du chemin utilisent une couleur correspondant à la qualité du SNR (vert/jaune/rouge) lorsque les données de signal sont disponibles. Survolez un segment pour voir sa valeur SNR.',
+            'Indicateurs de confiance : likely = meilleur candidat sélectionné, mais une autre correspondance existait ; estimated = hachage court ou ambigu, considérer comme un chemin probable et non comme une preuve ; ambiguous = plusieurs candidats également plausibles, impossible de déterminer le relais exact.',
+            'Les indicateurs de sauts MC affichent « 1 saut » / « 2 sauts » afin d’éviter de confondre « h » avec les heures dans les indications d’ancienneté.'
           ],
           buttons: [
-            ['Scan', 'Send the MC scan advert and collect contact responses for the scan window (default 60 s). Does not run Trace.'],
-            ['Trace', 'Send one mesh-wide MC Trace probe, draw returned hops, then enter cooldown.'],
-            ['⚠️ Trace broadcasts', 'Reminder that Trace is a mesh-wide broadcast action. Use it deliberately on quiet mesh windows.'],
-            ['MC activity', 'Right panel: MC event log. Click entries to draw/clear path on the map.'],
+            ['Scanner', 'Envoyer l’annonce de scan MC et recueillir les réponses des contacts pendant la fenêtre de scan (60 s par défaut). N’exécute pas Trace.'],
+            ['Trace', 'Envoyer une sonde Trace MC sur tout le maillage, afficher les sauts reçus, puis passer en délai d’attente.'],
+            ['⚠️ Trace broadcasts', 'Rappel : Trace est une action diffusée sur tout le maillage. Utilisez-la volontairement pendant les périodes calmes du maillage.'],
+            ['Activité MC', 'Panneau droit : journal des événements MC. Cliquez sur une entrée pour afficher ou effacer son chemin sur la carte.'],
             ['live', 'Path resolved from this packet\'s own RX-log metadata. Best quality source.'],
             ['cached', 'Path from stored MC contact route. May not match this exact packet\'s routing.'],
-            ['inferred', 'OM drew a fallback line (sender→receiver or partial known segment).'],
-            ['refreshed', 'Path was updated after OM re-resolved it with newer data.'],
-            ['flood mode', 'Routing was open/automatic for this message.'],
-            ['1B/2B/3B per hop', 'Hop-hash width in the path metadata. 2B/hop is more collision-resistant than 1B/hop.'],
-            ['1 hop / 2 hops', 'Known MC relay count for this path entry.'],
-            ['Hop ID', 'Clickable relay hash; click to center the map on that relay position.'],
-            ['likely', 'Best hash match selected; another candidate existed.'],
-            ['estimated', 'Short/ambiguous hash — probable route, not confirmed.'],
-            ['ambiguous', 'Multiple equally plausible matches, cannot determine the exact relay.'],
-            ['Path refresh', 'Re-resolve path/contact data for this entry and redraw if better data is available.'],
-            ['!', 'Partial path — marker shows a known relay position, not the final contact.'],
+            ['inferred', 'OM a tracé une ligne de secours (émetteur→récepteur ou segment partiellement connu).'],
+            ['refreshed', 'Le chemin a été mis à jour après une nouvelle résolution par OM avec des données plus récentes.'],
+            ['mode Flood', 'Le routage était ouvert/automatique pour ce message.'],
+            ['1B/2B/3B par saut', 'Taille du hachage de saut dans les métadonnées du chemin. 2B/saut résiste mieux aux collisions que 1B/saut.'],
+            ['1 saut / 2 sauts', 'Nombre connu de relais MC pour cette entrée de chemin.'],
+            ['ID du saut', 'Hachage du relais cliquable ; cliquez dessus pour centrer la carte sur la position de ce relais.'],
+            ['likely', 'Meilleure correspondance de hachage sélectionnée ; un autre candidat existait.'],
+            ['estimated', 'Hachage court/ambigu — chemin probable, non confirmé.'],
+            ['ambiguous', 'Plusieurs correspondances également plausibles, impossible de déterminer le relais exact.'],
+            ['Actualiser le chemin', 'Résoudre à nouveau les données du chemin/contact pour cette entrée et redessiner si de meilleures données sont disponibles.'],
+            ['!', 'Chemin partiel — le marqueur indique la position d’un relais connu, pas celle du contact final.'],
             ['Effacer', 'Effacer le journal d’activité MC.']
           ]
         }
       ],
       buttons: [
-        ['Map', 'Show the map panel.'],
-        ['Sense', 'Open the live RF Sense side panels.'],
-        ['MT', 'Show MT Sense controls and MT response log.'],
-        ['MC', 'Show MC Sense contacts and MC activity log.'],
-        ['Filter', 'Search/filter the visible Sense contact list or activity log by name or ID.'],
-        ['📍', 'Indicates a known position or a map-focus action for this entry.']
+        ['Carte', 'Afficher le panneau de carte.'],
+        ['Détection', 'Ouvrir les panneaux latéraux de détection RF en direct.'],
+        ['MT', 'Afficher les commandes de détection MT et le journal des réponses MT.'],
+        ['MC', 'Afficher les contacts de détection MC et le journal d’activité MC.'],
+        ['Filtrer', 'Rechercher/filtrer la liste des contacts ou le journal d’activité de la Détection par nom ou identifiant.'],
+        ['📍', 'Indique une position connue ou une action de centrage de la carte pour cette entrée.']
       ]
     },
     {
       title: 'Bot',
       tags: 'bot commands motd ping test ack sitrep joke dot relay automatic replies per radio settings activity snr rssi rf info',
       body: [
-        'The bot handles incoming text commands automatically. It is configured per radio — each MT and MC radio can have its own bot settings, label, enabled commands, and MOTD.',
-        'Bot transmissions use the same safeguards as manual sends: Silent Running blocks them, byte limits are respected, and MT bot responses use the correct channel.',
-        'Use the Activity tab to see what the bot received and what it replied with.',
-        'MT bot responses to test and ping commands include RF metadata: SNR and RSSI when available. MC test replies replace RF/SNR with the observed hop path in the form Hops(x): ID, ID plus the path hash byte width, for example Hops(2): AA0, BB0 | 2byte.',
-        'The sitrep command returns a summary of recently heard contacts. Entries are separated by semicolons for clarity — for example: TMP-rpt, 7m ago; CD-MC, 11m ago; CF878292, 32m ago.'
+        'Le bot traite automatiquement les commandes texte reçues. Il est configuré par radio : chaque radio MT et MC peut avoir ses propres paramètres de bot, son libellé, ses commandes activées et son message du jour (MOTD).',
+        'Les transmissions du bot utilisent les mêmes protections que les envois manuels : le mode Silencieux les bloque, les limites de taille sont respectées et les réponses du bot MT utilisent le canal approprié.',
+        'Utilisez l’onglet Activité pour voir ce que le bot a reçu et les réponses qu’il a envoyées.',
+        'Les réponses du bot MT aux commandes test et ping incluent les métadonnées RF : SNR et RSSI lorsqu’elles sont disponibles. Les réponses MC à la commande test remplacent les informations RF/SNR par le chemin de sauts observé sous la forme Hops(x) : ID, ID, avec la largeur en octets du hachage du chemin, par exemple Hops(2) : AA0, BB0 | 2byte.',
+        'La commande sitrep renvoie un résumé des contacts récemment entendus. Les entrées sont séparées par des points-virgules pour plus de clarté — par exemple : TMP-rpt, il y a 7 min ; CD-MC, il y a 11 min ; CF878292, il y a 32 min.'
       ],
       buttons: [
-        ['Enable bot', 'Turn bot command handling on for the selected radio.'],
-        ['Settings', 'Open per-radio bot configuration: commands, response channel, MOTD, label.'],
-        ['Activity', 'Show recent bot command/reply log for this radio.'],
-        ['Test MOTD', 'Preview or send the configured message-of-the-day for this radio.'],
-        ['Save', 'Save bot command enable/disable, MOTD text, and response settings.'],
-        ['Same channel', 'Send bot response on the same channel the command arrived on.'],
-        ['DM', 'Send bot response as a direct message when supported.'],
-        ['ping', 'Bot replies with PONG + RF metadata (SNR, RSSI).'],
-        ['test', 'MT replies with RF metadata. MC replies with observed hop ID prefixes, direct/unknown path status, and byte width when known.'],
-        ['ack', 'Bot replies with a short acknowledgement + RF metadata.'],
-        ['sitrep', 'Bot replies with last-heard contacts, total count, and recently-heard count.'],
-        ['cmd', 'Bot replies with a list of enabled commands.'],
+        ['Activer le bot', 'Activer le traitement des commandes du bot pour la radio sélectionnée.'],
+        ['Paramètres', 'Ouvrir la configuration du bot pour cette radio : commandes, canal de réponse, message du jour et libellé.'],
+        ['Activité', 'Afficher le journal récent des commandes et réponses du bot pour cette radio.'],
+        ['Tester le message du jour', 'Prévisualiser ou envoyer le message du jour configuré pour cette radio.'],
+        ['Enregistrer', 'Enregistrer l’activation ou la désactivation des commandes du bot, le message du jour et les paramètres de réponse.'],
+        ['Même canal', 'Envoyer la réponse du bot sur le même canal que celui sur lequel la commande a été reçue.'],
+        ['DM', 'Envoyer la réponse du bot sous forme de message direct lorsque cette fonction est prise en charge.'],
+        ['ping', 'Le bot répond avec PONG + les métadonnées RF (SNR, RSSI).'],
+        ['test', 'MT répond avec les métadonnées RF. MC répond avec les préfixes d’identifiants des sauts observés, l’état du chemin direct/inconnu et la largeur en octets lorsqu’elle est connue.'],
+        ['ack', 'Le bot répond avec un bref accusé de réception + les métadonnées RF.'],
+        ['sitrep', 'Le bot répond avec les derniers contacts entendus, le nombre total et le nombre de contacts entendus récemment.'],
+        ['cmd', 'Le bot répond avec la liste des commandes activées.'],
         ['motd', 'Bot replies with the configured message-of-the-day text.'],
         ['joke', 'Bot replies with a random mesh-themed joke.'],
         ['.', 'Dot command — bot acknowledges receipt of a lone period (mesh connectivity check).'],
@@ -1940,93 +1940,93 @@
       ]
     },
     {
-      title: 'Settings - Meshtastic',
+      title: 'Paramètres - Meshtastic',
       tags: 'settings meshtastic mt radios add remove serial tcp wifi channels lora gps telemetry mqtt bluetooth reboot shutdown node config key import',
       body: [
-        'Settings → Meshtastic manages MT radios and MT node configuration.',
-        'Add radios by USB serial port or TCP/WiFi host and port. OM remembers USB serial numbers so a radio reconnects to the right config even if the device path (e.g. /dev/ttyUSB0) changes.',
-        'Node settings write directly to the connected node over the Meshtastic API. Some settings require a node reboot to take effect.',
-        'MT channel keys can be viewed (eye icon) and exported as a URL that others can use to import the channel directly. Import a channel key from a meshcore:// or similar URL using the import field.'
+        'Paramètres → Meshtastic gère les radios MT et la configuration des nœuds MT.',
+        'Ajouter des radios via port série USB ou hôte et port TCP/WiFi. OM remembers USB serial numbers so a radio reconnects to the right config even if the device path (e.g. /dev/ttyUSB0) changes.',
+        'Les paramètres du nœud sont écrits directement sur le nœud connecté via l’API Meshtastic. Certains paramètres nécessitent un redémarrage du nœud pour prendre effet.',
+        'Les clés des canaux MT peuvent être affichées (icône œil) et exportées sous forme d’URL permettant à d’autres utilisateurs d’importer directement le canal. Importez une clé de canal depuis une URL meshcore:// ou similaire à l’aide du champ d’importation.'
       ],
       buttons: [
-        ['Serial', 'Add a Meshtastic radio by USB serial device path.'],
-        ['TCP / WiFi', 'Add a Meshtastic radio by host/IP and TCP port.'],
+        ['Série', 'Ajouter une radio Meshtastic via son chemin de périphérique série USB.'],
+        ['TCP / WiFi', 'Ajouter une radio Meshtastic via l’hôte/IP et le port TCP.'],
         ['↻', 'Rescan available serial ports.'],
-        ['Add', 'Add the selected radio to OM.'],
-        ['Enable', 'Allow OM to connect this configured radio.'],
-        ['Disable', 'Keep the radio configured but tell OM not to connect to it.'],
-        ['Remove', 'Remove the radio from OM (keeps message DB).'],
-        ['Delete', 'Remove the radio and delete its associated message database.'],
-        ['Edit', 'Open or edit a channel or node config item.'],
-        ['Save', 'Write the current node/channel/settings block to the radio.'],
-        ['Turn off', 'Set the MT node screen timeout to 10 seconds.'],
-        ['Always on', 'Set the MT node screen timeout to never sleep.'],
-        ['Reboot', 'Ask the connected MT node to reboot.'],
-        ['Shutdown', 'Ask the connected MT node to shut down (if firmware supports it).'],
-        ['👁 (key view)', 'Reveal the channel key/secret for the selected MT channel.'],
-        ['Copy URL', 'Copy the channel join URL to the clipboard.'],
-        ['Import channel', 'Import a channel key from a URL or share link.'],
-        ['Clear known nodes', 'Effacer tous les nœuds distants mémorisés pour this radio from OM history and live cache.']
+        ['Ajouter', 'Ajouter la radio sélectionnée à OM.'],
+        ['Activer', 'Autoriser OM à se connecter à cette radio configurée.'],
+        ['Désactiver', 'Conserver la radio configurée mais demander à OM de ne pas s’y connecter.'],
+        ['Retirer', 'Retirer la radio d’OM (conserve la base de données des messages).'],
+        ['Supprimer', 'Supprimer la radio et sa base de données de messages associée.'],
+        ['Modifier', 'Ouvrir ou modifier un élément de configuration de canal ou de nœud.'],
+        ['Enregistrer', 'Écrire sur la radio le bloc actuel de nœud/canal/paramètres.'],
+        ['Éteindre', 'Régler le délai d’extinction de l’écran du nœud MT à 10 secondes.'],
+        ['Toujours allumé', 'Régler l’écran du nœud MT pour qu’il ne se mette jamais en veille.'],
+        ['Redémarrer', 'Demander au nœud MT connecté de redémarrer.'],
+        ['Arrêter', 'Demander au nœud MT connecté de s’arrêter (si le firmware le permet).'],
+        ['👁 (voir la clé)', 'Afficher la clé/le secret du canal MT sélectionné.'],
+        ['Copier l’URL', 'Copier l’URL de connexion au canal dans le presse-papiers.'],
+        ['Importer un canal', 'Importer une clé de canal depuis une URL ou un lien de partage.'],
+        ['Effacer les nœuds connus', 'Effacer de l’historique et du cache en direct d’OM tous les nœuds distants mémorisés pour cette radio.']
       ]
     },
     {
-      title: 'Settings - MeshCore',
+      title: 'Paramètres - MeshCore',
       tags: 'settings meshcore mc radios serial tcp wifi bluetooth bt channels tx power coords position advert scan reboot import contacts radio params route flood qr share hash mode manual path lock repeater remote manage stats debug archive',
       body: [
-        'Settings → MeshCore manages MC radios, device identity, radio parameters, channels, coordinates, TX power, path hash mode, and position sharing.',
-        'Add MC radios by USB serial, TCP/WiFi, or Bluetooth LE (BT address in AA:BB:CC:DD:EE:FF format, optional PIN).',
-        'MC capabilities vary by firmware version. If a function returns an error or "unavailable", the radio or firmware may not support it.',
-        'Path Hash Mode selects the preferred per-hop hash width (1B, 2B, or 3B) used when storing a route for a contact. OM tries the selected mode first and falls back if the radio rejects it. Wider hashes are more collision-resistant on dense meshes.',
-        'Always use flood routing clears the stored contact path before each DM and status ping so the firmware routes via flood/automatic mode. Exception: contacts where you have manually set a path via the Route editor keep their path regardless of this setting — they show a 🔒➤ indicator in the Nodes tab. Clearing the path for that contact (Route → Clear) removes the lock.',
-        'Share position in adverts controls whether the MC radio includes its GPS coordinates in mesh advertisement packets. Enable this so other nodes and OM instances can see the radio on the map. When you set or change the coordinates, OM automatically sends an advertisement to propagate the update to the mesh immediately.',
-        'Set Coords writes static GPS coordinates to the MC device and immediately re-advertises so other nodes get the position update without waiting for the next scheduled advert.',
-        'MC node stats (Fetch) query live packet counters and airtime from the device.',
-        'Debug Events logs all raw serial events from the MC radio to a file for 60 seconds. Use it to diagnose ping/status timeouts — check the OverMesh server log file during or after the window.',
-        'MC channel slots are numbered 0 to max_channels-1. Each slot has a name and a 16-byte secret key. The channel hash (2-char hex) identifies the slot on the mesh. Channel Info/Share exports a meshcore://channel/add link and QR code when the secret is available.',
-        'Import Contact accepts an official meshcore://contact/add share link and writes the contact to the selected MC radio NVS storage.',
-        'Remote Manage opens a login/read/command interface for MC repeater and room-server nodes. Only visible for contacts identified as repeaters or room servers.',
-        'Remote Manage also has Quick settings for common RPTR/room-server options: name, repeat, power save, TX power, radio parameters, position, owner info, path hash mode, loop detect, advert timers, flood max, neighbour discovery, and local/flood adverts. After Admin Login + Read, OM best-effort pre-fills these fields from safe remote get commands; Read settings runs that prefill again. The Map button lets you pick RPTR coordinates directly from the map before pressing Set.',
-        'Remember stores the RPTR admin password in this browser for this radio/contact pair, similar to the MeshCore Android app. Uncheck it before Login + Read to remove the saved password.',
-        'Remote Local advert and Flood advert try to send immediately while connected. They are manual actions so settings can be changed without forcing an advert during the admin session.'
+        'Paramètres → MeshCore gère les radios MC, l’identité de l’appareil, les paramètres radio, les canaux, les coordonnées, la puissance TX, le mode de hachage du chemin et le partage de position.',
+        'Ajouter des radios MC via série USB, TCP/WiFi ou Bluetooth LE (adresse BT au format AA:BB:CC:DD:EE:FF, PIN facultatif).',
+        'Les capacités MC varient selon la version du firmware. Si une fonction renvoie une erreur ou « unavailable », la radio ou le firmware peut ne pas la prendre en charge.',
+        'Le mode de hachage du chemin sélectionne la largeur de hachage préférée par saut (1B, 2B ou 3B) utilisée lors de l’enregistrement d’une route pour un contact. OM essaie d’abord le mode sélectionné et utilise une autre largeur si la radio le refuse. Les hachages plus larges résistent mieux aux collisions sur les maillages denses.',
+        'L’option « Toujours utiliser le routage flood » efface le chemin de contact enregistré avant chaque DM et ping d’état afin que le firmware utilise le mode flood/automatique. Exception : les contacts pour lesquels vous avez défini manuellement un chemin via l’éditeur Route conservent leur chemin quelle que soit cette option — ils affichent l’indicateur 🔒➤ dans l’onglet Nœuds. Effacer le chemin de ce contact (Route → Effacer) supprime le verrouillage.',
+        '« Partager la position dans les annonces » contrôle si la radio MC inclut ses coordonnées GPS dans les paquets d’annonce du maillage. Activez cette option afin que les autres nœuds et instances OM puissent voir la radio sur la carte. Lorsque vous définissez ou modifiez les coordonnées, OM envoie automatiquement une annonce pour propager immédiatement la mise à jour sur le maillage.',
+        '« Définir les coordonnées » écrit les coordonnées GPS statiques sur l’appareil MC et relance immédiatement une annonce afin que les autres nœuds reçoivent la mise à jour sans attendre la prochaine annonce planifiée.',
+        'Les statistiques du nœud MC (Récupérer) interrogent les compteurs de paquets et le temps d’occupation radio en direct de l’appareil.',
+        'Les événements de débogage enregistrent tous les événements série bruts de la radio MC dans un fichier pendant 60 secondes. Utilisez cette fonction pour diagnostiquer les délais d’expiration des pings/états — consultez le journal du serveur OverMesh pendant ou après cette période.',
+        'Les emplacements de canaux MC sont numérotés de 0 à max_channels-1. Chaque emplacement possède un nom et une clé secrète de 16 octets. Le hachage du canal (hexadécimal sur 2 caractères) identifie l’emplacement sur le maillage. Informations/Partage du canal exporte un lien meshcore://channel/add et un QR code lorsque le secret est disponible.',
+        'Importer un contact accepte un lien de partage officiel meshcore://contact/add et écrit le contact dans le stockage NVS de la radio MC sélectionnée.',
+        'Gestion à distance ouvre une interface de connexion/lecture/commande pour les nœuds MC répéteurs et serveurs de salon. Visible uniquement pour les contacts identifiés comme répéteurs ou serveurs de salon.',
+        'La Gestion à distance propose également des paramètres rapides pour les options courantes des RPTR/serveurs de salon : nom, répétition, économie d’énergie, puissance TX, paramètres radio, position, informations du propriétaire, mode de hachage du chemin, détection de boucle, temporisations des annonces, flood max, découverte des voisins et annonces locales/flood. Après Connexion administrateur + Lecture, OM préremplit au mieux ces champs à partir de commandes get distantes sûres ; Lire les paramètres relance ce préremplissage. Le bouton Carte permet de choisir directement les coordonnées du RPTR sur la carte avant d’appuyer sur Définir.',
+        'Mémoriser enregistre le mot de passe administrateur du RPTR dans ce navigateur pour cette paire radio/contact, comme dans l’application Android MeshCore. Décochez cette option avant Connexion + Lecture pour supprimer le mot de passe enregistré.',
+        'Les actions Annonce locale à distance et Annonce flood tentent d’envoyer immédiatement lorsqu’elles sont connectées. Ce sont des actions manuelles qui permettent de modifier les paramètres sans forcer une annonce pendant la session d’administration.'
       ],
       buttons: [
-        ['Serial', 'Add an MC radio by USB serial device path.'],
-        ['TCP / WiFi', 'Add an MC radio by host/IP and TCP port.'],
-        ['BT', 'Add an MC BLE radio by Bluetooth address and optional PIN.'],
-        ['Add', 'Add the configured MC radio to OM.'],
-        ['Enable', 'Allow OM to connect this MC radio.'],
-        ['Disable', 'Keep the MC radio configured but disconnected.'],
-        ['Remove', 'Remove the MC radio from OM settings.'],
-        ['Advert', 'Send a mesh advertisement from this MC radio so other nodes learn its identity.'],
-        ['Scan', 'Flood-advertise and open the scan window to collect MC contacts.'],
-        ['Import', 'Import an MC contact from a meshcore:// share link.'],
-        ['Save Radio Params', 'Write frequency (MHz), bandwidth (kHz), spreading factor (SF7–12), and coding rate (CR5–8) to the radio.'],
-        ['Save TX Power', 'Write MC transmit power in dBm. Cannot exceed the radio hardware maximum.'],
-        ['Save Path Mode', 'Write the preferred MC path hash width (1B/2B/3B) to the radio default and OM config.'],
-        ['Always use flood routing', 'Before each DM/ping, clear stored contact paths so the firmware uses flood routing. Manually-set (🔒) paths are exempt.'],
-        ['Rename', 'Write a new device name to the MC radio (shown in adverts and contacts).'],
-        ['Select on map', 'Pick static GPS coordinates for this MC radio by clicking on the map.'],
-        ['Set Coords', 'Write the entered coordinates to the MC radio and immediately re-advertise to push the position to the mesh.'],
-        ['Share position in adverts', 'Enable (1) or disable (0) whether the radio includes its coordinates in mesh advertisement packets. Enable so other OM instances and MC nodes can see its position. Toggle calls re-advertise immediately.'],
-        ['Fetch (Stats)', 'Query live packet and airtime statistics from the MC radio.'],
-        ['Debug Events', 'Enable verbose serial event logging for 60 s. Check the OM server log to diagnose ping/status issues.'],
-        ['Set (channel)', 'Set or edit an MC channel slot by name and key type (auto/keep/random/custom).'],
-        ['Delete (channel)', 'Clear an MC channel slot and delete its stored message history.'],
-        ['Share (channel)', 'Export a meshcore://channel/add link and QR code for this channel slot.'],
-        ['Reboot Device', 'Send a reboot command to the connected MC radio.'],
-        ['Manage', 'Open remote repeater/room-server login, CLI commands, and Quick settings for this MC node.'],
-        ['Remember', 'Store or remove the RPTR admin password in this browser for this radio/contact pair.'],
-        ['Read settings', 'Best-effort read of current RPTR settings into the Quick settings fields using safe get commands.'],
-        ['Map (Manage)', 'Pick a remote RPTR/room-server position from the map, then press Set in Manage to write lat/lon.'],
+        ['Série', 'Ajouter une radio MC via son chemin de périphérique série USB.'],
+        ['TCP / WiFi', 'Ajouter une radio MC via l’hôte/IP et le port TCP.'],
+        ['BT', 'Ajouter une radio MC BLE via son adresse Bluetooth et un PIN facultatif.'],
+        ['Ajouter', 'Ajouter la radio MC configurée à OM.'],
+        ['Activer', 'Autoriser OM à se connecter à cette radio MC.'],
+        ['Désactiver', 'Conserver la radio MC configurée mais déconnectée.'],
+        ['Retirer', 'Retirer la radio MC des paramètres d’OM.'],
+        ['Annonce', 'Envoyer une annonce depuis cette radio MC afin que les autres nœuds apprennent son identité.'],
+        ['Scanner', 'Envoyer une annonce flood et ouvrir la fenêtre de scan pour collecter les contacts MC.'],
+        ['Importer', 'Importer un contact MC depuis un lien de partage meshcore://.'],
+        ['Enregistrer les paramètres radio', 'Écrire la fréquence (MHz), la bande passante (kHz), le facteur d’étalement (SF7–12) et le taux de codage (CR5–8) sur la radio.'],
+        ['Enregistrer la puissance TX', 'Écrire la puissance d’émission MC en dBm. Elle ne peut pas dépasser le maximum matériel de la radio.'],
+        ['Enregistrer le mode de chemin', 'Écrire la largeur de hachage de chemin MC préférée (1B/2B/3B) dans la valeur par défaut de la radio et la configuration OM.'],
+        ['Toujours utiliser le routage flood', 'Avant chaque DM/ping, effacer les chemins de contact enregistrés afin que le firmware utilise le routage flood. Les chemins définis manuellement (🔒) sont exemptés.'],
+        ['Renommer', 'Écrire un nouveau nom d’appareil sur la radio MC (affiché dans les annonces et les contacts).'],
+        ['Sélectionner sur la carte', 'Choisir les coordonnées GPS statiques de cette radio MC en cliquant sur la carte.'],
+        ['Définir les coordonnées', 'Écrire les coordonnées saisies sur la radio MC et relancer immédiatement une annonce pour diffuser la position sur le maillage.'],
+        ['Partager la position dans les annonces', 'Activer (1) ou désactiver (0) l’inclusion des coordonnées de la radio dans les paquets d’annonce du maillage. Activez cette option afin que les autres instances OM et les nœuds MC puissent voir sa position. Le changement relance immédiatement une annonce.'],
+        ['Récupérer (statistiques)', 'Interroger les statistiques en direct des paquets et du temps d’occupation radio de la radio MC.'],
+        ['Événements de débogage', 'Activer la journalisation détaillée des événements série pendant 60 s. Consulter le journal du serveur OM pour diagnostiquer les problèmes de ping/état.'],
+        ['Définir (canal)', 'Définir ou modifier un emplacement de canal MC par nom et type de clé (auto/conserver/aléatoire/personnalisée).'],
+        ['Supprimer (canal)', 'Effacer un emplacement de canal MC et supprimer son historique de messages enregistré.'],
+        ['Partager (canal)', 'Exporter un lien meshcore://channel/add et un QR code pour cet emplacement de canal.'],
+        ['Redémarrer l’appareil', 'Envoyer une commande de redémarrage à la radio MC connectée.'],
+        ['Gérer', 'Ouvrir la connexion distante au répéteur/serveur de salon, les commandes CLI et les paramètres rapides pour ce nœud MC.'],
+        ['Mémoriser', 'Enregistrer ou supprimer le mot de passe administrateur RPTR dans ce navigateur pour cette paire radio/contact.'],
+        ['Lire les paramètres', 'Lire au mieux les paramètres actuels du RPTR dans les champs de paramètres rapides à l’aide de commandes get sûres.'],
+        ['Carte (gestion)', 'Choisir sur la carte la position d’un RPTR/serveur de salon distant, puis appuyer sur Définir dans Gestion pour écrire latitude/longitude.'],
         ['Local advert', 'Ask the managed RPTR/room-server to send a local zero-hop advert.'],
         ['Flood advert', 'Ask the managed RPTR/room-server to send a flood advert.']
       ]
     },
     {
-      title: 'Remote Collector (RC)',
+      title: 'Collecteur distant (CD)',
       tags: 'remote collector rc rptr repeater passive intel observations heatmap signal rssi snr firmware hardware t114 rp2040 serial uart solar omcollect coverage',
       body: [
-        'A Remote Collector is your own MeshCore RPTR deployed at a remote vantage point — hilltop, rooftop, solar-powered — running custom OverMesh firmware. It passively logs every node it hears and delivers that intel back to your OM instance over the mesh as encrypted DMs.',
+        'Un collecteur distant est votre propre RPTR MeshCore déployé sur un point d’observation distant — sommet de colline, toit, alimentation solaire — exécutant un firmware OverMesh personnalisé. Il enregistre passivement chaque nœud qu’il entend et transmet ces informations à votre instance OM via le maillage sous forme de DM chiffrés.',
         'The RC gives you a second set of ears on the mesh from a different RF vantage point. You see which nodes reach the hilltop, at what signal strength, and when — intel that your base radio can never collect because it is in a different location.',
         '--- What the RPTR hears ---',
         'OBS|ADV — full mesh advertisements: sender pubkey, RSSI, SNR, timestamp. Full identity, useful for passive intel.',
@@ -2048,98 +2048,98 @@
         '--- RP2040 collector script ---',
         'MicroPython script (main.py) runs on the RP2040-PiZero. Reads OBS|ADV and OBS|RX lines from UART0 (GP0/GP1 at 115200 baud), maintains a 200-entry ring buffer, and responds to the OMCOLLECT trigger by sending all buffered entries back to the T114 via RELAY| commands.',
         '--- Configuring the RC node ---',
-        'Use OM Settings → MeshCore → Remote Manage to configure the T114: set name, position (lat/lon), advert intervals (local 2h, flood 13h recommended), and admin password. Radio parameters must match your mesh (SLO mesh: 869.618 MHz, BW 62.5, SF8, CR8).',
+        'Utilisez Paramètres → MeshCore → Gestion à distance pour configurer le T114 : nom, position (latitude/longitude), intervalles d’annonce (local 2 h, flood 13 h recommandé) et mot de passe administrateur. Les paramètres radio doivent correspondre à votre maillage (maillage SLO : 869,618 MHz, BW 62,5, SF8, CR8).',
         '--- Adding a collector to OM ---',
-        'Go to Settings → MeshCore → Remote Collectors. Search for the node by name or paste its pubkey prefix, add a label, and click Add collector. Use Set pos or Pick to set the collector position — this sends set lat/set lon commands to the RPTR and stores the position locally for heatmap use.',
+        'Allez dans Paramètres → MeshCore → Collecteurs distants. Recherchez le nœud par son nom ou saisissez le préfixe de sa clé publique, ajoutez un libellé, puis cliquez sur Ajouter un collecteur. Utilisez Définir la position ou Choisir pour définir la position du collecteur — cela envoie les commandes set lat/set lon au RPTR et enregistre la position localement pour la carte de chaleur.',
         '--- Triggering a collection ---',
         'Press Collect in the collector row. OM sends an OMCOLLECT command to the RPTR over the mesh. The RPTR signals the RP2040 via serial, which responds with all buffered observations as RELAY| messages. The RPTR re-encrypts each one as a DM back to your OM radio. OM stores them automatically as passive observations.',
         '--- Carte de chaleur du signal ---',
-        'Enable Carte de chaleur du signal with the Heat button in Map/Sense or in Map → Overlays → Couches de données. With MC enabled in Map mode or selected in Sense mode, Remote Collector observations are included in the MC heat layer. OM prefers node position when known and falls back to collector position when that is all the observation has. RSSI drives intensity when available; SNR is used as fallback.'
+        'Activez la Carte de chaleur du signal avec le bouton Chaleur dans Carte/Détection ou via Carte → Superpositions → Couches de données. Lorsque MC est activé en mode Carte ou sélectionné en mode Détection, les observations des collecteurs distants sont incluses dans la couche de chaleur MC. OM privilégie la position du nœud lorsqu’elle est connue et utilise sinon la position du collecteur lorsque c’est la seule position disponible pour l’observation. Le RSSI détermine l’intensité lorsqu’il est disponible ; le SNR est utilisé comme solution de repli.',
       ],
       buttons: [
-        ['Collect', 'Trigger an observation dump from this remote collector. Sends OMCOLLECT to the RPTR over the mesh.'],
-        ['Neighbors', 'Request the neighbor list from the collector RPTR node.'],
-        ['Send (custom)', 'Send a custom remote admin command to the collector RPTR.'],
+            ['Collecter', 'Déclencher une récupération des observations depuis ce collecteur distant. Envoie OMCOLLECT au RPTR via le maillage.']
+            ['Voisins', 'Demander la liste des voisins au nœud RPTR collecteur.'],
+            ['Envoyer (personnalisé)', 'Envoyer une commande d’administration distante personnalisée au RPTR collecteur.'],
         ['Pick', 'Pick the collector position on the map. Populates the lat/lon fields — press Set pos to send.'],
-        ['Set pos', 'Send set lat and set lon commands to the collector RPTR and save the position locally.'],
+            ['Définir la position', 'Envoyer les commandes set lat et set lon au RPTR collecteur et enregistrer localement la position.'],
         ['↻', 'Reload the signal heatmap from the latest passive observations.'],
         ['Carte de chaleur du signal On/Off', 'Toggle the RSSI coverage heatmap layer on the map.']
       ]
     },
     {
-      title: 'Settings - App',
+      title: 'Paramètres - Application',
       tags: 'settings app appearance zoom accent notifications sounds offline maps gps update manual intro cache regions auth security login password',
       body: [
-        'Settings → App controls UI zoom, accent color, notification sounds, GPS, offline maps, updates, security/authentication, and help.',
-        'Notification sounds play on new MT/MC messages and node-seen events. Connect/disconnect events play a distinct two-tone radio sound.',
-        'The updater pulls from GitHub main. It refuses dirty worktrees, locally-ahead commits, or non-Git installs. On PEP 668 externally-managed Python it retries with --break-system-packages automatically.',
-        'Distance units switch all distance displays and polar-grid labels between kilometres and miles.',
-        'Manual OM position is an app-only fallback origin for distances and map context. It does not write coordinates to any radio — use Set Coords in MeshCore settings or the node GPS settings in Meshtastic settings for that.',
-        'Authentication (Security section): set a username and password to protect the OverMesh dashboard. When enabled, a login page appears on first load and after logout. The session persists in a browser cookie until you log out or the server restarts. Leave the password field blank when saving to keep the current password unchanged.',
-        'Offline maps are stored in browser IndexedDB and are per-browser/profile. They are not shared between browsers or devices.'
+        'Paramètres → L’application contrôle le zoom de l’interface, la couleur d’accentuation, les sons de notification, le GPS, les cartes hors ligne, les mises à jour, la sécurité/authentification et l’aide.',
+        'Les sons de notification sont joués lors de nouveaux messages MT/MC et lorsqu’un nœud est détecté. Les événements de connexion/déconnexion utilisent un son radio distinct à deux tons.',
+        'Le programme de mise à jour récupère les dernières versions depuis la branche principale de GitHub. Il refuse les répertoires de travail avec des modifications locales, les commits locaux en avance ou les installations sans Git. Avec Python géré par PEP 668, il réessaie automatiquement avec --break-system-packages.',
+        'Les unités de distance permettent d’afficher toutes les distances et les libellés de la grille polaire en kilomètres ou en miles.',
+        'La position OM manuelle est une origine de secours utilisée uniquement par l’application pour les distances et le contexte cartographique. Elle n’écrit aucune coordonnée sur les radios — utilisez « Définir les coordonnées » dans les paramètres MeshCore ou les paramètres GPS du nœud dans Meshtastic pour cela.',
+        'Authentification (section Sécurité) : définissez un nom d’utilisateur et un mot de passe pour protéger le tableau de bord OverMesh. Lorsqu’elle est activée, une page de connexion apparaît au premier chargement et après la déconnexion. La session est conservée dans un cookie du navigateur jusqu’à la déconnexion ou au redémarrage du serveur. Laissez le champ du mot de passe vide lors de l’enregistrement pour conserver le mot de passe actuel.',
+        'Les cartes hors ligne sont stockées dans IndexedDB du navigateur et sont propres à chaque navigateur/profil. Elles ne sont pas partagées entre les navigateurs ou les appareils.'
       ],
       buttons: [
-        ['−', 'Decrease UI zoom level.'],
-        ['+', 'Increase UI zoom level.'],
-        ['Reset (accent)', 'Reset the accent color to the default.'],
-        ['Distance units', 'Switch between kilometres and miles for all distance labels.'],
-        ['Check', 'Check GitHub for a newer version.'],
-        ['Update', 'Pull the latest version from GitHub main if the install is clean and fast-forwardable.'],
-        ['Restart', 'Restart OM after a successful update to load the new code.'],
+        ['−', 'Diminuer le niveau de zoom de l’interface.'],
+        ['+', 'Augmenter le niveau de zoom de l’interface.'],
+        ['Réinitialiser (accentuation)', 'Rétablir la couleur d’accentuation par défaut.'],
+        ['Unités de distance', 'Basculer entre les kilomètres et les miles pour tous les libellés de distance.'],
+        ['Vérifier', 'Rechercher une version plus récente sur GitHub.'],
+        ['Mettre à jour', 'Récupérer la dernière version depuis la branche principale de GitHub si l’installation est propre et peut être mise à jour sans conflit.'],
+        ['Redémarrer', 'Redémarrer OM après une mise à jour réussie pour charger le nouveau code.'],
         ['Afficher l’introduction', 'Ouvrir l’aperçu du premier lancement.'],
-        ['Manual', 'Open this searchable manual.'],
-        ['New messages', 'Enable or disable in-app browser notifications for incoming messages.'],
-        ['New node seen', 'Enable or disable notifications when a new node/contact is first heard.'],
-        ['Clear cache', 'Delete all cached offline map tiles from this browser.'],
-        ['Save current map view', 'Download and cache map tiles for the current map viewport at the current zoom.'],
-        ['Search (maps)', 'Find a named region/place to download offline map tiles for.'],
-        ['GPS receiver', 'Select and configure the local GPS source (USB NMEA, u-blox, internal).'],
-        ['Manual OM position', 'Set a fallback app origin for distances when no live GPS fix is available.'],
-        ['Set from map', 'Pick the manual OM position by clicking on the map.'],
-        ['Send to nodes now', 'Push the current GPS fix to all connected radios immediately.'],
-        ['Save (Security)', 'Save the authentication username and password. Leave password blank to keep the current one.'],
-        ['Disable auth', 'Remove authentication — dashboard will be accessible without login.']
+        ['Manuel', 'Ouvrir ce manuel avec recherche.'],
+        ['Nouveaux messages', 'Activer ou désactiver les notifications du navigateur dans l’application pour les messages entrants.'],
+        ['Nouveau nœud détecté', 'Activer ou désactiver les notifications lorsqu’un nouveau nœud/contact est détecté pour la première fois.'],
+        ['Vider le cache', 'Supprimer toutes les tuiles cartographiques hors ligne mises en cache dans ce navigateur.'],
+        ['Enregistrer la vue actuelle de la carte', 'Télécharger et mettre en cache les tuiles cartographiques de la zone actuellement visible au niveau de zoom actuel.'],
+        ['Rechercher (cartes)', 'Rechercher une région ou un lieu nommé pour télécharger ses tuiles cartographiques hors ligne.'],
+        ['Récepteur GPS', 'Sélectionner et configurer la source GPS locale (NMEA USB, u-blox, interne).'],
+        ['Position OM manuelle', 'Définir une position d’origine de secours pour les distances lorsqu’aucune position GPS réelle n’est disponible.'],
+        ['Définir depuis la carte', 'Choisir la position OM manuelle en cliquant sur la carte.'],
+        ['Envoyer aux nœuds maintenant', 'Envoyer immédiatement la position GPS actuelle à toutes les radios connectées.'],
+        ['Enregistrer (Sécurité)', 'Enregistrer le nom d’utilisateur et le mot de passe d’authentification. Laisser le mot de passe vide pour conserver l’actuel.'],
+        ['Désactiver l’authentification', 'Supprimer l’authentification — le tableau de bord sera accessible sans connexion.']
       ]
     },
     {
-      title: 'Settings - Cross-System Bridge',
+      title: 'Paramètres - Pont inter-systèmes',
       tags: 'settings cross system bridge mt mc relay webhook automation ingest token forward message',
       body: [
-        'The Cross-system tab is visible when both MT and MC radios are configured. It controls MT↔MC message forwarding and automation webhooks.',
-        'Channel bridge rules define which MT channel maps to which MC channel slot and in which direction(s) messages are forwarded. Only manually configured rules are active — there is no auto-bridge.',
-        'Outbound webhooks post a JSON payload to configured URLs when a message is received. Use a shared secret for HMAC verification on the receiving end.',
-        'Inbound API accepts POST requests to /api/bridge/send. Authenticate with Authorization: Bearer TOKEN or the X-OverMesh-Token header. The payload specifies the network, radio, channel/destination, and message text.'
+        'L’onglet Pont inter-systèmes est visible lorsque les radios MT et MC sont toutes les deux configurées. Il contrôle le transfert des messages MT↔MC et les webhooks d’automatisation.',
+        'Les règles de pont entre canaux définissent quel canal MT correspond à quel emplacement de canal MC et dans quelles directions les messages sont transférés. Seules les règles configurées manuellement sont actives — il n’y a pas de pont automatique.',
+        'Les webhooks sortants envoient une charge utile JSON aux URL configurées lorsqu’un message est reçu. Utilisez un secret partagé pour vérifier le HMAC du côté destinataire.',
+        'L’API entrante accepte les requêtes POST vers /api/bridge/send. Authentifiez-vous avec Authorization: Bearer TOKEN ou l’en-tête X-OverMesh-Token. La charge utile indique le réseau, la radio, le canal/la destination et le texte du message.'
       ],
       buttons: [
-        ['Enable bridge', 'Turn on MT↔MC message forwarding for the configured rules.'],
-        ['Add rule', 'Create a new MT↔MC channel forwarding rule.'],
-        ['Enable webhooks', 'Send outbound HTTP POST notifications when messages are received.'],
-        ['Enable ingest', 'Accept inbound HTTP POST messages via the bridge API endpoint.'],
-        ['Save', 'Save bridge, webhook, and ingest settings.']
+        ['Activer le pont', 'Activer le transfert des messages MT↔MC selon les règles configurées.'],
+        ['Ajouter une règle', 'Créer une nouvelle règle de transfert de canal MT↔MC.'],
+        ['Activer les webhooks', 'Envoyer des notifications HTTP POST sortantes lorsque des messages sont reçus.'],
+        ['Activer la réception', 'Accepter les messages HTTP POST entrants via le point d’accès de l’API du pont.'],
+        ['Enregistrer', 'Enregistrer les paramètres du pont, des webhooks et de la réception.']
       ]
     },
     {
       title: 'Overlays and Geofences',
       tags: 'overlays geojson geofence zones area circle alerts enter leave map import split edit polygon log toc intel',
       body: [
-        'Map overlays are local GeoJSON shapes: points, lines, areas (polygons), or circles. Use them for routes, zones, boundaries, and reference markers.',
-        'Area and circle overlays can be configured as geofences. A geofence watches node/contact positions and fires an alert when a tracked node enters or leaves the zone.',
-        'Geofences can watch MT, MC, or both networks independently. Alert types are enter, leave, or both.',
-        'Imported multi-feature GeoJSON renders as one combined overlay. Use Split to break it into individual editable overlays.',
-        'Use the Log button (in the overlay sidebar list or in a feature popup on the map) to prefill a TOC INTEL entry for that overlay. The entry includes the overlay name as an @mention, the centroid/center coordinates, and feature count.',
-        'Inside the TOC Log, type @ followed by overlay name letters to search and insert an overlay @mention. Clicking the amber @[Name] badge switches to the Map tab and zooms to that overlay.'
+        'Les superpositions cartographiques sont des formes GeoJSON locales : points, lignes, zones (polygones) ou cercles. Utilisez-les pour les itinéraires, les zones, les limites et les repères.',
+        'Les superpositions de zones et de cercles peuvent être configurées comme géorepérages. Un géorepérage surveille les positions des nœuds/contacts et déclenche une alerte lorsqu’un nœud suivi entre dans la zone ou la quitte.',
+        'Les géorepérages peuvent surveiller indépendamment le réseau MT, le réseau MC ou les deux. Les types d’alerte sont entrée, sortie ou les deux.',
+        'Un GeoJSON importé contenant plusieurs entités est affiché comme une seule superposition combinée. Utilisez « Séparer » pour le diviser en superpositions individuelles modifiables.',
+        'Utilisez le bouton Journal (dans la liste des superpositions de la barre latérale ou dans la fenêtre d’une entité sur la carte) pour préremplir une entrée INTEL du TOC pour cette superposition. L’entrée contient le nom de la superposition sous forme de @mention, les coordonnées du centroïde/centre et le nombre d’entités.',
+        'Dans le journal TOC, saisissez @ suivi des premières lettres du nom d’une superposition pour la rechercher et insérer une @mention. Cliquez sur le badge ambré @[Nom] pour passer à l’onglet Carte et zoomer sur cette superposition.'
       ],
       buttons: [
-        ['Import', 'Import pasted or uploaded GeoJSON data as a new overlay.'],
-        ['Edit', 'Edit a saved single-feature overlay shape on the map.'],
-        ['Split', 'Split a multi-feature overlay into individual editable overlays.'],
-        ['Geofence', 'Enable or disable geofence behavior for an area or circle overlay.'],
-        ['Alert on enter', 'Notify when a tracked node/contact enters this geofence zone.'],
-        ['Alert on leave', 'Notify when a tracked node/contact leaves this geofence zone.'],
-        ['Both', 'Track both MT and MC positions for this geofence.'],
-        ['MT only', 'Track only Meshtastic positions for this geofence.'],
-        ['MC only', 'Track only MeshCore positions for this geofence.'],
-        ['Log', 'Prefill a TOC INTEL entry for this overlay (sidebar list or feature popup).']
+        ['Importer', 'Importer des données GeoJSON collées ou téléversées comme nouvelle superposition.'],
+        ['Modifier', 'Modifier sur la carte une superposition enregistrée comportant une seule entité.'],
+        ['Séparer', 'Séparer une superposition multi-entités en superpositions individuelles modifiables.'],
+        ['Géorepérage', 'Activer ou désactiver le géorepérage pour une superposition de zone ou de cercle.'],
+        ['Alerte à l’entrée', 'Notifier lorsqu’un nœud/contact suivi entre dans cette zone de géorepérage.'],
+        ['Alerte à la sortie', 'Notifier lorsqu’un nœud/contact suivi quitte cette zone de géorepérage.'],
+        ['Les deux', 'Suivre les positions MT et MC pour ce géorepérage.'],
+        ['MT uniquement', 'Suivre uniquement les positions Meshtastic pour ce géorepérage.'],
+        ['MC uniquement', 'Suivre uniquement les positions MeshCore pour ce géorepérage.'],
+        ['Journal', 'Préremplir une entrée INTEL du TOC pour cette superposition (liste de la barre latérale ou fenêtre d’une entité).']
       ]
     },
     {
@@ -2158,64 +2158,64 @@
         'Log entries can be prefilled from multiple sources: a node row (Log button), an MT/MC map popup (Log button), a message (Log button), an alert panel entry (Log button), and now also from overlay sidebars and feature popups.',
         'The SOP sub-tab includes Quick Start buttons for Mobile plan, SITREP, Basecamp open, RC collect, and Degraded comms. Clicking one switches back to TOC and pre-fills the matching template.',
         'Ctrl+Enter submits the current entry. When editing an existing entry, the Clear button becomes Cancel.',
-        'Entries can be tagged. The tag filter searches across all entry tags. The mention filter lists all nodes/contacts mentioned in any entry and lets you filter by one.',
+        'Les entrées peuvent être étiquetées. Le filtre par étiquette recherche parmi toutes les étiquettes des entrées. Le filtre par mention liste tous les nœuds/contacts mentionnés dans les entrées et permet de filtrer sur l’un d’eux.',
         'Share (⇄) sends the entry body via the active MC chat target. Export downloads all entries as JSON or TXT. Import restores from a previously exported JSON or TXT file.',
         'The date/time field sets the timestamp for new entries — useful for backdating field notes. Leave it at now to auto-timestamp.'
       ],
       buttons: [
-        ['TOC', 'Open the Log entry composer, filters, table, import, and export controls.'],
-        ['SOP', 'Open the Log procedure reference and Quick Start template actions.'],
-        ['Mission / Folder', 'Group related reports into a named mission/folder and filter or group by it later.'],
-        ['PLAN', 'Pre-move or pre-watch plan: objective, route/area, timing, assets, MC/MT setup, risks, comms plan, and abort criteria.'],
-        ['SITREP', 'Current state update after a plan starts, during watch, at handover, or on meaningful change.'],
-        ['WEATHER', 'Conditions affecting operations: temperature, wind, precipitation, visibility, pressure, forecast, and RF impact.'],
-        ['+GPS', 'Insert local/manual coordinates into the current entry. Also works by typing +GPS in a Log text field.'],
-        ['Log', 'Prefill a new TOC entry from a node, contact, message, alert, or overlay.'],
-        ['Missions / Folders', 'Show all created missions/folders with counts and last activity. Click one to filter/select it.'],
-        ['Missions', 'Group the visible log table by Mission / Folder.'],
-        ['⌖', 'Show the coordinates found in this entry on the map.'],
-        ['⇄', 'Share this entry body via active MC chat target.'],
-        ['⧉', 'Duplicate this entry.'],
-        ['✎', 'Edit this entry.'],
-        ['✕', 'Delete this entry.'],
-        ['Export TXT', 'Download all TOC entries as plain text.'],
-        ['Export JSON', 'Download all TOC entries as JSON.'],
-        ['Import', 'Restore TOC entries from a previously exported JSON or TXT file.'],
-        ['Ctrl+Enter', 'Submit the current entry without clicking the button.']
+        ['Journal TOC', 'Ouvrir le composeur d’entrées du Journal, les filtres, le tableau et les commandes d’importation et d’exportation.'],
+        ['SOP', 'Ouvrir la référence de procédure du Journal et les actions des modèles de démarrage rapide.'],
+        ['Mission / Dossier', 'Regrouper les rapports associés dans une mission/un dossier nommé et filtrer ou regrouper les entrées selon celui-ci.'],
+        ['PLAN', 'Plan avant déplacement ou surveillance : objectif, itinéraire/zone, horaires, ressources, configuration MC/MT, risques, plan de communications et critères d’abandon.'],
+        ['SITREP', 'Mise à jour de l’état actuel après le début d’un plan, pendant la surveillance, lors d’une relève ou en cas de changement important.'],
+        ['WEATHER', 'Conditions affectant les opérations : température, vent, précipitations, visibilité, pression, prévisions et impact sur la RF.'],
+        ['+GPS', 'Insérer les coordonnées locales/manuelles dans l’entrée actuelle. Fonctionne également en saisissant +GPS dans un champ de texte du Journal.'],
+        ['Journal', 'Préremplir une nouvelle entrée TOC à partir d’un nœud, contact, message, alerte ou superposition.'],
+        ['Missions / Dossiers', 'Afficher toutes les missions/tous les dossiers créés avec leur nombre d’entrées et leur dernière activité. Cliquez sur l’un d’eux pour le sélectionner ou le filtrer.'],
+        ['Missions', 'Regrouper le tableau du journal visible par Mission / Dossier.'],
+        ['⌖', 'Afficher sur la carte les coordonnées trouvées dans cette entrée.'],
+        ['⇄', 'Partager le contenu de cette entrée via la cible de discussion MC active.'],
+        ['⧉', 'Dupliquer cette entrée.'],
+        ['✎', 'Modifier cette entrée.'],
+        ['✕', 'Supprimer cette entrée.'],
+        ['Export TXT', 'Télécharger toutes les entrées TOC au format texte brut.'],
+        ['Export JSON', 'Télécharger toutes les entrées TOC au format JSON.'],
+        ['Importer', 'Restaurer les entrées TOC depuis un fichier JSON ou TXT précédemment exporté.'],
+        ['Ctrl+Enter', 'Valider l’entrée actuelle sans cliquer sur le bouton.']
       ]
     },
     {
-      title: 'Version and Updates',
+      title: 'Version et mises à jour',
       tags: 'version update github build release restart dirty worktree fast forward requirements',
       body: [
-        'OM versions use YYYY.MM.DD.N format. The Settings updater shows the current version, the latest GitHub version, the exact Git build hash, and whether the install is clean and up to date.',
-        'The updater performs a safe fast-forward pull. It refuses to update if the local checkout is dirty (uncommitted changes), ahead of GitHub, not a Git repository, or already current.',
-        'When requirements.txt changes, the updater installs the new dependencies after pulling. On PEP 668 externally-managed Python systems (e.g. Debian/Ubuntu with system Python), it retries with --break-system-packages and logs that step.',
-        'After any update, use Restart so the new code is loaded by the server process.'
+        'Les versions d’OM utilisent le format AAAA.MM.JJ.N. Le programme de mise à jour des paramètres affiche la version actuelle, la dernière version disponible sur GitHub, le hash exact du build Git et indique si l’installation est propre et à jour.',
+        'Le programme de mise à jour effectue une mise à jour fast-forward sûre. Il refuse la mise à jour si la copie locale contient des modifications non validées, est en avance sur GitHub, n’est pas un dépôt Git ou est déjà à jour.',
+        'Lorsque requirements.txt est modifié, le programme de mise à jour installe les nouvelles dépendances après la récupération du code. Sur les systèmes Python gérés par PEP 668 (par exemple Debian/Ubuntu avec Python système), il réessaie avec --break-system-packages et journalise cette étape.',
+        'Après toute mise à jour, utilisez Redémarrer afin que le nouveau code soit chargé par le processus serveur.'
       ],
       buttons: [
-        ['Check', 'Fetch version and build status from GitHub origin.'],
-        ['Update', 'Run a safe fast-forward update from GitHub main.'],
-        ['Restart', 'Restart the OM server so the updated code takes effect.']
+        ['Vérifier', 'Récupérer la version et l’état du build depuis l’origine GitHub.'],
+        ['Mettre à jour', 'Effectuer une mise à jour fast-forward sûre depuis la branche principale de GitHub.'],
+        ['Redémarrer', 'Redémarrer le serveur OM pour que le code mis à jour soit pris en compte.']
       ]
     },
     {
-      title: 'Limits and Troubleshooting',
+      title: 'Limites et dépannage',
       tags: 'limits troubleshooting restart hard refresh no path direct usb firmware cache stale reconnect serial fd leak brownout',
       body: [
-        'After any code update, restart OverMesh and hard-refresh the browser (Ctrl+Shift+R) if the UI looks stale or buttons do not match the manual.',
-        'Some MC path data depends on firmware version and packet type. Older firmware packets or missing RX-log metadata may only provide sender/receiver or a partial path rather than full hop data.',
+        'Après toute mise à jour du code, redémarrez OverMesh et actualisez complètement le navigateur (Ctrl+Shift+R) si l’interface semble obsolète ou si les boutons ne correspondent pas au manuel.',
+        'Certaines données de chemin MC dépendent de la version du firmware et du type de paquet. Les paquets provenant d’un ancien firmware ou l’absence de métadonnées du journal RX peuvent ne fournir que l’émetteur/récepteur ou un chemin partiel au lieu de toutes les étapes.',
         'If a USB radio stops responding after an OM restart, unplug and replug it. The reconnect loop will pick it up once the OS re-exposes the serial port. A brief connection loop in logs (EAGAIN on open) usually means a previous process left the port\'s file descriptor open — OM attempts to release leaked FDs automatically.',
         'On MC: if the radio connects (shows in status) but messages do not send or receive, and channel utilization reads 0%, the radio\'s LoRa chip may have locked up from a USB power brownout during TX. A physical power cycle (disconnect USB power, wait 5 s, reconnect) is the fix. Using a powered USB hub or a dedicated port helps prevent this.',
-        'The MT traceroute lock prevents stacked TR requests. If a previous TR did not complete (no response from node), the lock may stay set. Use Clear TR lock to release it.'
+        'Le verrou de traceroute MT empêche l’empilement des requêtes TR. Si une requête TR précédente ne s’est pas terminée (aucune réponse du nœud), le verrou peut rester actif. Utilisez Déverrouiller TR pour le libérer.'
       ],
       buttons: [
-        ['Restart', 'Cleanly reload the OM server process.'],
-        ['Refresh', 'Reload visible frontend/backend data from the server.'],
-        ['Path refresh', 'Re-resolve and redraw route/path data for a selected message or contact.'],
+        ['Redémarrer', 'Recharger proprement le processus serveur OM.'],
+        ['Actualiser', 'Recharger depuis le serveur les données visibles du frontend et du backend.'],
+        ['Actualiser le chemin', 'Recalculer et redessiner les données de route/chemin pour le message ou contact sélectionné.'],
         ['Déverrouiller TR', 'Libérer le verrou de traceroute MT pour permettre de nouvelles requêtes TR.'],
-        ['Enable', 'Reconnect a disabled configured radio without reconfiguring it.'],
-        ['Disable', 'Temporarily disconnect a configured radio without removing its config or history.']
+        ['Activer', 'Reconnecter une radio configurée et désactivée sans la reconfigurer.'],
+        ['Désactiver', 'Déconnecter temporairement une radio configurée sans supprimer sa configuration ni son historique.']
       ]
     }
   ];
@@ -2345,8 +2345,8 @@
     event.stopPropagation();
     const name = Array.from(document.querySelectorAll('.channel-tab[data-dm-id]'))
       .find(el => el.dataset.dmId === id)?.dataset.dmName || id;
-    document.getElementById('confirm-ok').textContent = 'Delete';
-    showConfirm(`Close DM tab with ${name}?`, () => {
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
+    showConfirm(`Fermer l’onglet DM avec ${name} ?`, () => {
       closedDmTabs.add(id);
       saveClosedDmTabs();
       unreadChannels.delete('dm:' + id);
@@ -2363,7 +2363,7 @@
   function buildMsgEl(m) {
     const t   = _formatAppTime(m.ts);
     const snrStr = (!m.sent && m.snr != null) ? ` · ${m.snr} dB` : '';
-    const logBtn = `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Prefill TOC Log from this message">Journal</button>`;
+    const logBtn = `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Préremplir le Journal TOC à partir de ce message">Journal</button>`;
     // Clickable sender name for received non-bot messages
     const senderSpan = (nodeId, name) =>
       nodeId && nodeId !== 'bot'
@@ -2402,7 +2402,7 @@
       ? `<div class="msg-status ${m.status || 'pending'}" data-msgid="${escHtml(m.id)}">${m.status === 'delivered' ? '✓' : m.status === 'failed' ? '✗' : '·'}</div>`
       : '';
     const replyBtn = !m.sent
-      ? `<button class="msg-reply-btn" onclick="replyToMt('${jsSafe(m.from_name || '')}')">↩ Reply</button>`
+      ? `<button class="msg-reply-btn" onclick="replyToMt('${jsSafe(m.from_name || '')}')">↩ Répondre</button>`
       : '';
     const routeMeta = _mtMessageRouteMeta(m);
     const routeBtn = routeMeta
@@ -2421,7 +2421,7 @@
     openModal(nodeName, `
       <div style="display:flex;flex-direction:column;gap:8px;padding:4px 0">
         <button class="btn-primary" onclick="closeModal();doTraceroute('${safeId}','${jsSafe(nodeName)}','${jsSafe(nodeRadioId)}')" title="Run traceroute to this node">Traceroute</button>
-        <button class="btn-primary" onclick="closeModal();doDM('${safeId}','${jsSafe(nodeName)}')" title="Send a direct message to this node">Direct Message</button>
+        <button class="btn-primary" onclick="closeModal();doDM('${safeId}','${jsSafe(nodeName)}')" title="Send a direct message to this node">Message direct</button>
         <button class="btn-primary" onclick="closeModal();doNodeInfo('${safeId}','${jsSafe(nodeName)}')" title="Demander les informations du nœud">Informations nœud</button>
         <button class="btn-primary" onclick="closeModal();doReqPos('${safeId}','${jsSafe(nodeName)}')" title="Demander la position GPS à ce nœud">Demander la position</button>
       </div>`);
@@ -2520,7 +2520,7 @@ if (targetEl) {
         console.error('Send failed:', e);
       }
     };
-    if (_silentMode) { showSilentConfirm('Sending is not possible while Silent Running is enabled.'); return; }
+    if (_silentMode) { showSilentConfirm('L’envoi est impossible lorsque le mode silencieux est activé.'); return; }
     await doSend();
   }
 
@@ -2581,13 +2581,13 @@ if (targetEl) {
           if (_showTrMap && (_pendingTraceMapData || (_activeMtRouteKey && _lastTraceData))) {
             _drawTraceRouteOnMap(_pendingTraceMapData || _lastTraceData);
           }
-          if (!_mapStaticLoaded) {
-            _mapStaticLoaded = true;
+          if (!_mapStatiqueLoaded) {
+            _mapStatiqueLoaded = true;
             loadWaypoints();
             loadNotes();
             loadGpsSettings();
           }
-          if (localStorage.getItem('sensePanelOpen') === '1') toggleSensePanel(true);
+          if (localStorage.getItem('sensePanelOuverte') === '1') toggleSensePanel(true);
           settleMapLayout();
         };
         if (!leafletMap) {
@@ -2652,7 +2652,7 @@ if (targetEl) {
   }
 
   function deleteMcContact(id, name, radioId) {
-    document.getElementById('confirm-ok').textContent = 'Delete';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Remove "${name}" from OverMesh? If it is still on the MC radio, OM will remove it there too.`, () => {
       fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/contacts/${encodeURIComponent(id)}`, {method: 'DELETE'})
         .then(r => r.json()).then(d => {
@@ -2869,7 +2869,7 @@ if (targetEl) {
     }
     _updateMapLegend();
     _scheduleSignalHeatmapRefresh(0);
-    if (pipOpen) updatePipMarkers(allNodes);
+    if (pipOuverte) updatePipMarkers(allNodes);
     renderLive();
   }
 
@@ -2886,7 +2886,7 @@ if (targetEl) {
     real.forEach(n => { n._dist = _mtDistanceKm(n); });
     tbody.innerHTML = real.length ? sortedLive(real).map(n => `
       <tr data-id="${n.id}" class="${n.is_favorite ? 'is-favorite' : ''}${n.is_ignored ? ' is-ignored' : ''}">
-        <td><span class="star ${n.is_favorite ? 'starred' : ''}" onclick="toggleFav('${jsSafe(n.id)}', ${n.is_favorite}, '${jsSafe(n.radio_id || '')}')" title="${n.is_favorite ? 'Remove from favourites' : 'Add to favourites'}">&#9733;</span></td>
+        <td><span class="star ${n.is_favorite ? 'starred' : ''}" onclick="toggleFav('${jsSafe(n.id)}', ${n.is_favorite}, '${jsSafe(n.radio_id || '')}')" title="${n.is_favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}">&#9733;</span></td>
         <td>
           <div class="name-cell-main">
             <span class="name-cell-title">${escHtml(n.long_name)}</span>${mqttTag(n.via_mqtt)}
@@ -2907,9 +2907,9 @@ if (targetEl) {
           <button class="act-btn" title="Détails du contact et partage des données" onclick="openMtNodeDetails('${jsSafe(n.id)}')">Infos/Partage</button>
           ${n.latitude != null && n.longitude != null
             ? `<button class="act-btn" title="Afficher sur la carte" onclick="centerNodeOnMap('${jsSafe(n.id)}')">Carte</button>`
-            : `<button class="act-btn" title="Aucune position GPS" style="opacity:0.35;cursor:default" disabled>Carte</button>`}
+            : `<button class="act-btn" title="Aucune position GPS" style="opacity:0.35;cursor:default" désactivé>Carte</button>`}
         </td>
-        <td class="notes-cell" onclick="openNoteEdit('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')" title="Personal notes" style="cursor:pointer">
+        <td class="notes-cell" onclick="openNoteEdit('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')" title="Notes personnelles" style="cursor:pointer">
           ${(() => { const p = _parseNotes(n.notes || ''); const s = _notesSummary(p); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
         </td>
         <td>${escHtml(n.radio_name)}</td>
@@ -2917,7 +2917,7 @@ if (targetEl) {
           ${n.is_ignored
             ? `<span class="unignore-btn" onclick="ignoreNode('${jsSafe(n.id)}', true, '${jsSafe(n.radio_id || '')}')" title="Un-ignore node">&#128683;</span>`
             : `<span class="ignore-btn" onclick="ignoreNode('${jsSafe(n.id)}', false, '${jsSafe(n.radio_id || '')}')" title="Ignore node">&#128683;</span>`}
-          <span class="delete-btn" onclick="deleteNode('${jsSafe(n.id)}', '${jsSafe(n.long_name)}', '${jsSafe(n.radio_id || '')}')" title="Delete from OverMesh">&#10005;</span>
+          <span class="delete-btn" onclick="deleteNode('${jsSafe(n.id)}', '${jsSafe(n.long_name)}', '${jsSafe(n.radio_id || '')}')" title="Supprimer d’OverMesh">&#10005;</span>
         </td>
       </tr>`).join('') : '';
     // Append MC contacts
@@ -2978,21 +2978,21 @@ if (targetEl) {
         const dmButton = c.type !== 2
           ? (radioConnected
             ? `<button class="act-btn" title="Direct message" onclick="doMcDm('${pk}','${rid}','${jsSafe(c.long_name||'')}')">DM</button>`
-            : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>DM</button>`)
+            : `<button class="act-btn" title="Radio MC déconnectée" style="opacity:0.35;cursor:default" désactivé>DM</button>`)
           : '';
         const routeButton = radioConnected
-          ? `<button class="act-btn" title="Edit stored route path" onclick="openMcRouteEditor('${jsSafe(cid)}','${rid}')">Route</button>`
-          : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>Route</button>`;
+          ? `<button class="act-btn" title="Modifier le chemin de route enregistré" onclick="openMcRouteEditor('${jsSafe(cid)}','${rid}')">Route</button>`
+          : `<button class="act-btn" title="Radio MC déconnectée" style="opacity:0.35;cursor:default" désactivé>Route</button>`;
         const pingButton = radioConnected
           ? `<button class="act-btn" title="Ping this node (request status)" onclick="doMcPing('${pk}','${rid}','${jsSafe(c.long_name||'')}')">Ping</button>`
-          : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>Ping</button>`;
+          : `<button class="act-btn" title="Radio MC déconnectée" style="opacity:0.35;cursor:default" désactivé>Ping</button>`;
         const manageButton = mcCanRemoteManage(c)
           ? (radioConnected
-            ? `<button class="act-btn" title="Remote repeater/room management" onclick="openMcRemoteManage('${pk}','${rid}','${jsSafe(c.long_name||c.name||cid||'')}')">Gérer</button>`
-            : `<button class="act-btn" title="MC radio disconnected" style="opacity:0.35;cursor:default" disabled>Gérer</button>`)
+            ? `<button class="act-btn" title="Gestion à distance des répéteurs/serveurs de salle" onclick="openMcRemoteManage('${pk}','${rid}','${jsSafe(c.long_name||c.name||cid||'')}')">Gérer</button>`
+            : `<button class="act-btn" title="Radio MC déconnectée" style="opacity:0.35;cursor:default" désactivé>Gérer</button>`)
           : '';
         return `<tr data-id="${jsSafe(cid)}" class="${isFav ? 'is-favorite' : ''}${isIgnored ? ' is-ignored' : ''}">
-          <td><span class="star ${isFav ? 'starred' : ''}" onclick="toggleMcFav('${jsSafe(cid)}')" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">&#9733;</span></td>
+          <td><span class="star ${isFav ? 'starred' : ''}" onclick="toggleMcFav('${jsSafe(cid)}')" title="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}">&#9733;</span></td>
           <td>
             <div class="name-cell-main">
               <span class="name-cell-title">${name}</span>${mcTypeBadge(c.type ?? 0)}${mcRouteIndicator(c, c._rid)}
@@ -3009,12 +3009,12 @@ if (targetEl) {
             ${routeButton}
             ${hasCoords
               ? `<button class="act-btn" title="Afficher sur la carte" onclick="centerMcOnMap(${lat},${lon})">Carte</button>`
-              : `<button class="act-btn" title="Coordonnées indisponibles" style="opacity:0.35;cursor:default" disabled>Carte</button>`}
+              : `<button class="act-btn" title="Coordonnées indisponibles" style="opacity:0.35;cursor:default" désactivé>Carte</button>`}
             ${pingButton}
             ${manageButton}
             <button class="act-btn" title="Détails du contact et partage des données" onclick="openMcContactShare('${jsSafe(cid)}','${rid}')">Infos/Partage</button>
           </td>
-          <td class="notes-cell" onclick="openMcNoteModal('${pk}','${rid}','${jsSafe(c.long_name||c.name||'')}')" title="Personal notes" style="cursor:pointer">
+          <td class="notes-cell" onclick="openMcNoteModal('${pk}','${rid}','${jsSafe(c.long_name||c.name||'')}')" title="Notes personnelles" style="cursor:pointer">
             ${(() => { const s = _notesSummary(_parseNotes(mcNotesCache[noteKey] || '{}')); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
           </td>
           <td>${escHtml(mcLastStatus[c._rid]?.name || mcLastStatus[c._rid]?.node_name || '')}</td>
@@ -3022,7 +3022,7 @@ if (targetEl) {
             ${isIgnored
               ? `<span class="unignore-btn" onclick="ignoreMcContact('${jsSafe(cid)}',true)" title="Unignore">&#128683;</span>`
               : `<span class="ignore-btn" onclick="ignoreMcContact('${jsSafe(cid)}',false)" title="Ignore">&#128683;</span>`}
-            <span class="delete-btn" onclick="deleteMcContact('${jsSafe(cid)}','${jsSafe(c.long_name||cid)}','${rid}')" title="Remove from OverMesh">&#10005;</span>
+            <span class="delete-btn" onclick="deleteMcContact('${jsSafe(cid)}','${jsSafe(c.long_name||cid)}','${rid}')" title="Supprimer d’OverMesh">&#10005;</span>
           </td>
         </tr>`;
       }).join('');
@@ -3052,11 +3052,11 @@ if (targetEl) {
     const senseWrap = document.getElementById('sense-net-filter');
     const mtSense = document.getElementById('sense-net-mt');
     const mcSense = document.getElementById('sense-net-mc');
-    const senseOpen = document.getElementById('sense-panel')?.style.display !== 'none';
+    const senseOuverte = document.getElementById('sense-panel')?.style.display !== 'none';
     if (mtSense) mtSense.style.display = mtConnected ? '' : 'none';
     if (mcSense) mcSense.style.display = mcConnected ? '' : 'none';
-    if (mapWrap) mapWrap.style.display = (!senseOpen && mtConnected && mcConnected) ? '' : 'none';
-    if (senseWrap) senseWrap.style.display = (senseOpen && mtConnected && mcConnected) ? '' : 'none';
+    if (mapWrap) mapWrap.style.display = (!senseOuverte && mtConnected && mcConnected) ? '' : 'none';
+    if (senseWrap) senseWrap.style.display = (senseOuverte && mtConnected && mcConnected) ? '' : 'none';
     if (_senseNet === 'mt' && !mtConnected && mcConnected) _senseNet = 'mc';
     if (_senseNet === 'mc' && !mcConnected && mtConnected) _senseNet = 'mt';
   }
@@ -3065,8 +3065,8 @@ if (targetEl) {
     const el = document.getElementById('map-node-count');
     if (!el) return;
     _updateNetworkPillVisibility();
-    const senseOpen = document.getElementById('sense-panel')?.style.display !== 'none';
-    if (senseOpen) {
+    const senseOuverte = document.getElementById('sense-panel')?.style.display !== 'none';
+    if (senseOuverte) {
       el.textContent = _senseNet === 'mc' ? `MC: ${_lastMcCount}` : `MT: ${_lastMtCount}`;
     } else {
       const parts = [];
@@ -3116,7 +3116,7 @@ if (targetEl) {
       const meta = [n.hw_model, radioLabel].filter(Boolean).join(' · ');
       return `
       <tr class="${n.is_favorite ? 'is-favorite' : ''} ${n.is_ignored ? 'is-ignored' : ''}">
-        <td><span class="star ${n.is_favorite ? 'starred' : ''}" onclick="toggleFav('${jsSafe(n.id)}', ${!!n.is_favorite}, '${jsSafe(n.radio_id || '')}')" title="${n.is_favorite ? 'Remove from favourites' : 'Add to favourites'}">&#9733;</span></td>
+        <td><span class="star ${n.is_favorite ? 'starred' : ''}" onclick="toggleFav('${jsSafe(n.id)}', ${!!n.is_favorite}, '${jsSafe(n.radio_id || '')}')" title="${n.is_favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}">&#9733;</span></td>
         <td>
           <div class="name-cell-main"><span class="name-cell-title">${escHtml(n.long_name)}</span>${mqttTag(n.via_mqtt)}</div>
           ${meta ? `<div class="name-cell-meta">${escHtml(meta)}</div>` : ''}
@@ -3128,14 +3128,14 @@ if (targetEl) {
         <td class="${battClass(n.last_battery)}">${battDisplay(n.last_battery)}</td>
         <td>${n.hops_away != null ? n.hops_away : '—'}</td>
         <td>${_distanceLabel(n.distance)}</td>
-        <td class="notes-cell" onclick="openNoteEdit('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')" title="Edit note" style="cursor:pointer">
+        <td class="notes-cell" onclick="openNoteEdit('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')" title="Modifier la note" style="cursor:pointer">
           ${(() => { const p = _parseNotes(n.notes || ''); const s = _notesSummary(p); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
         </td>
         <td style="display:flex;gap:8px;align-items:center">
           ${n.is_ignored
             ? `<span class="unignore-btn" onclick="ignoreNode('${jsSafe(n.id)}', true, '${jsSafe(n.radio_id || '')}')" title="Unignore">&#128683;</span>`
             : `<span class="ignore-btn"   onclick="ignoreNode('${jsSafe(n.id)}', false, '${jsSafe(n.radio_id || '')}')" title="Ignore">&#128683;</span>`}
-          <span class="delete-btn" onclick="deleteNode('${jsSafe(n.id)}', '${jsSafe(n.long_name)}', '${jsSafe(n.radio_id || '')}')" title="Delete from device">&#10005;</span>
+          <span class="delete-btn" onclick="deleteNode('${jsSafe(n.id)}', '${jsSafe(n.long_name)}', '${jsSafe(n.radio_id || '')}')" title="Supprimer de l’appareil">&#10005;</span>
         </td>
       </tr>`;
     }).join('');
@@ -3159,7 +3159,7 @@ if (targetEl) {
         const rid       = jsSafe(c._rid);
         const passiveBadge = _mcPassiveBadgeHtml(c._rid, shortKey);
         return `<tr class="${isFav ? 'is-favorite' : ''}${isIgnored ? ' is-ignored' : ''}">
-          <td><span class="star ${isFav ? 'starred' : ''}" onclick="toggleMcFav('${jsSafe(cid)}')" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">&#9733;</span></td>
+          <td><span class="star ${isFav ? 'starred' : ''}" onclick="toggleMcFav('${jsSafe(cid)}')" title="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}">&#9733;</span></td>
           <td>
             <div class="name-cell-main">
               <span class="name-cell-title">${name}</span>${mcTypeBadge(c.type ?? 0)}${mcRouteIndicator(c, c._rid)}
@@ -3168,14 +3168,14 @@ if (targetEl) {
           </td>
           <td><span class="short-name">${sname}</span></td>
           <td>—</td><td>${last}</td><td>—</td><td>—</td><td>${path}</td><td>${escHtml(_mcNodeDistanceLabel(c, c._rid))}</td>
-          <td class="notes-cell" onclick="openMcNoteModal('${pk}','${rid}','${jsSafe(c.long_name||c.name||'')}')" title="Personal notes" style="cursor:pointer">
+          <td class="notes-cell" onclick="openMcNoteModal('${pk}','${rid}','${jsSafe(c.long_name||c.name||'')}')" title="Notes personnelles" style="cursor:pointer">
             ${(() => { const s = _notesSummary(_parseNotes(mcNotesCache[noteKey] || '{}')); return s ? `<span class="note-text" title="${escHtml(s)}">${escHtml(s)}</span>` : `<span class="note-placeholder">+ note</span>`; })()}
           </td>
           <td style="display:flex;gap:8px;align-items:center">
             ${isIgnored
               ? `<span class="unignore-btn" onclick="ignoreMcContact('${jsSafe(cid)}',true)" title="Unignore">&#128683;</span>`
               : `<span class="ignore-btn" onclick="ignoreMcContact('${jsSafe(cid)}',false)" title="Ignore">&#128683;</span>`}
-            <span class="delete-btn" onclick="deleteMcContact('${jsSafe(cid)}','${jsSafe(c.long_name||cid)}','${rid}')" title="Delete from device">&#10005;</span>
+            <span class="delete-btn" onclick="deleteMcContact('${jsSafe(cid)}','${jsSafe(c.long_name||cid)}','${rid}')" title="Supprimer de l’appareil">&#10005;</span>
           </td>
         </tr>`;
       }).join('');
@@ -3184,7 +3184,7 @@ if (targetEl) {
 
   // ── Delete node ────────────────────────────────────────────────────────────
   function deleteNode(nodeId, name, radioId='') {
-    document.getElementById('confirm-ok').textContent = 'Delete';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Delete "${name}" from the device and OverMesh history?`, () => {
       const qs = radioId ? `?radio_id=${encodeURIComponent(radioId)}` : '';
       fetch(BASE_PATH + `/api/db/node/${encodeURIComponent(nodeId)}${qs}`, { method: 'DELETE' })
@@ -3248,7 +3248,7 @@ if (targetEl) {
           <input id="nf-alias" class="settings-input" style="flex:1" placeholder="Real name or alias" value="${escHtml(parsed.alias)}">
         </div>
         <div class="note-field-row">
-          <span class="note-field-label">Location</span>
+          <span class="note-field-label">Position</span>
           <input id="nf-location" class="settings-input" style="flex:1" placeholder="Physical location" value="${escHtml(parsed.location)}">
         </div>
         <div class="note-field-row" style="align-items:flex-start">
@@ -3454,8 +3454,8 @@ if (targetEl) {
             playNotificationSound('node');
             _logAlert('node-new', 'MT node seen', escHtml(label), {nodeType:'mt', nodeId: id, nodeName: label});
           } else if (prevSeen && curSeen > prevSeen && (curSeen - prevSeen) >= _returnedGapThresholdSeconds() && (nowTs - curSeen) <= INAPP_NODE_RECENT_WINDOW_S) {
-            maybeShowInAppNodeReturned('MT node seen again', `<b>${escHtml(n.long_name)}</b> returned after a long gap`, `toast-node-return-mt-${id}`);
-            _logAlert('node-return', 'MT node seen again', escHtml(n.long_name) + ' returned after a long gap', {nodeType:'mt', nodeId: id, nodeName: n.long_name});
+            maybeShowInAppNodeReturned('MT node seen again', `<b>${escHtml(n.long_name)}</b> réapparu après une longue absence`, `toast-node-return-mt-${id}`);
+            _logAlert('node-return', 'MT node seen again', escHtml(n.long_name) + ' réapparu après une longue absence', {nodeType:'mt', nodeId: id, nodeName: n.long_name});
           }
         });
       }
@@ -3576,7 +3576,7 @@ if (targetEl) {
 
   function openMtNodeDetails(nodeId) {
     const n = allNodes.find(x => x.id === nodeId);
-    if (!n) { showAlert('Node not found.'); return; }
+    if (!n) { showAlert('Node introuvable.'); return; }
     const localRows = [
       ['Network', 'Meshtastic'],
       ['Name', n.long_name],
@@ -3762,7 +3762,7 @@ if (targetEl) {
   }
 
   function _clearMcPassiveObs(radioId, pubkeyPre, btn) {
-    if (btn) { btn.disabled = true; btn.textContent = 'Clearing…'; }
+    if (btn) { btn.disabled = true; btn.textContent = 'Effacement…'; }
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/passive_obs`, {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'},
@@ -3917,7 +3917,7 @@ if (targetEl) {
       radioIds.forEach(rid => { if (_mcPassiveSummaryCache[rid]) delete _mcPassiveSummaryCache[rid][pubkeyPre]; });
       loadPassiveIntelManager();
     } catch (e) {
-      if (btn) { btn.disabled = false; btn.textContent = 'Delete'; }
+      if (btn) { btn.disabled = false; btn.textContent = 'Supprimer'; }
     }
   }
 
@@ -3935,7 +3935,7 @@ if (targetEl) {
         }).then(r => r.json()).catch(() => ({deleted: 0}))
       ));
       const total = results.reduce((s, d) => s + (d.deleted || 0), 0);
-      showToast('Passive Intel', `Removed ${total} old observation${total !== 1 ? 's' : ''}.`, 'node');
+      showToast('Passive Intel', `Anciennes observations supprimées : ${total}${total !== 1 ? 's' : ''}.`, 'node');
       loadPassiveIntelManager();
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = 'Run TTL cleanup'; }
@@ -4002,13 +4002,13 @@ if (targetEl) {
             <span style="font-family:monospace;font-size:11px;color:var(--muted);margin-left:6px">${escHtml(c.key)}</span>
             ${obsCount ? `<span style="font-size:11px;color:var(--muted);margin-left:6px">· ${obsCount} obs</span>` : ''}
           </div>
-          <button class="btn" style="font-size:11px;padding:2px 8px;color:var(--red);border-color:var(--red);white-space:nowrap;flex-shrink:0" onclick="removePassiveCollector(${i})" title="Remove this collector">✕ Remove</button>
+          <button class="btn" style="font-size:11px;padding:2px 8px;color:var(--red);border-color:var(--red);white-space:nowrap;flex-shrink:0" onclick="removePassiveCollector(${i})" title="Supprimer ce collecteur">✕ Supprimer</button>
         </div>
 
         <!-- Rename -->
         <div style="display:flex;gap:6px;align-items:center;margin-bottom:10px">
           <input id="collector-label-${ck}" class="settings-input" style="width:160px;font-size:11px" placeholder="Label / rename…" value="${escHtml(c.label || '')}">
-          <button class="btn" style="font-size:11px;padding:2px 8px" onclick="renameCollector(${i},'${ck}')" title="Save new label">Rename</button>
+          <button class="btn" style="font-size:11px;padding:2px 8px" onclick="renameCollector(${i},'${ck}')" title="Save new label">Renommer</button>
         </div>
 
         <!-- Actions -->
@@ -4022,7 +4022,7 @@ if (targetEl) {
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             <input id="collector-cmd-${ck}" class="settings-input" style="width:200px;font-size:11px;font-family:monospace" placeholder="Custom command…">
-            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCustomCmd('${ck}',this)" title="Send custom command to this collector">Send</button>
+            <button class="btn" style="font-size:11px;padding:2px 10px" onclick="sendCollectorCustomCmd('${ck}',this)" title="Send custom command to this collector">Envoyer</button>
           </div>
           <div id="collector-msgs-${ck}" style="margin-top:6px;font-size:11px;display:none"></div>
         </div>
@@ -4156,20 +4156,20 @@ if (targetEl) {
     const inp = document.getElementById(`collector-pwd-${pubkeyPre}`);
     const pwd = inp?.value?.trim() || '';
     _saveCollectorPassword(pubkeyPre, pwd || null);
-    showToast('Remote Collector', pwd ? 'Password saved.' : 'Password cleared.', 'node');
+    showToast('Collecteur distant', pwd ? 'Mot de passe enregistré.' : 'Mot de passe effacé.', 'node');
     renderPassiveCollectors();
   }
 
   async function changeCollectorPwd(pubkeyPre, btn) {
     const inp = document.getElementById(`collector-pwd-${pubkeyPre}`);
     const newPwd = inp?.value?.trim() || '';
-    if (!newPwd) { showToast('Remote Collector', 'Enter the new password first.', 'node'); return; }
+    if (!newPwd) { showToast('Collecteur distant', 'Saisissez d’abord le nouveau mot de passe.', 'node'); return; }
     const oldPwd = _collectorPassword(pubkeyPre) || '';
-    if (!oldPwd) { showToast('Remote Collector', 'No saved password to authenticate with — save current password first.', 'node'); return; }
+    if (!oldPwd) { showToast('Collecteur distant', 'Aucun mot de passe enregistré pour l’authentification — enregistrez d’abord le mot de passe actuel.', 'node'); return; }
     const result = await sendCollectorCommand(pubkeyPre, `password ${oldPwd} ${newPwd}`, btn);
     const reply = (result?.reply?.text || result?.reply || '').toString().toLowerCase();
     if (!reply.includes('password now')) {
-      showToast('Remote Collector', 'Password change was not confirmed by the node.', 'node');
+      showToast('Collecteur distant', 'Le changement de mot de passe n’a pas été confirmé par le nœud.', 'node');
       return;
     }
     _saveCollectorPassword(pubkeyPre, newPwd);
@@ -4268,7 +4268,7 @@ if (targetEl) {
     // Result comes back async via rc_collect_events poll as a count_only summary.
     try {
       await sendCollectorCommand(pubkeyPre, 'OMCOUNT', btn);
-      showToast('Remote Collector', `Querying ${label} buffer…`, 'node');
+      showToast('Collecteur distant', `Querying ${label} buffer…`, 'node');
       // Poll after short delay to catch the OMCOUNT_RESULT DM, then again after T114 relay pacing
       setTimeout(_rcCollectPoll, 4000);
       setTimeout(_rcCollectPoll, 8000);
@@ -4279,16 +4279,16 @@ if (targetEl) {
 
   async function sendCollectorCommand(pubkeyPre, command, btn) {
     const rid = _passiveIntelRadioId();
-    if (!rid) { showToast('Remote Collector', 'Aucune radio MC connectée.', 'node'); throw new Error('No MC radio connected'); }
+    if (!rid) { showToast('Collecteur distant', 'Aucune radio MC connectée.', 'node'); throw new Error('No Radio MC connectée'); }
     const origText = btn ? btn.textContent : command;
-    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
     try {
       // Login first if password is stored
       const pwd = _collectorPassword(pubkeyPre);
       if (pwd) {
         const ok = await _collectorLogin(rid, pubkeyPre, pwd);
         if (!ok) {
-          showToast('Remote Collector', 'Échec de la connexion — vérifiez le mot de passe enregistré.', 'node');
+          showToast('Collecteur distant', 'Échec de la connexion — vérifiez le mot de passe enregistré.', 'node');
           throw new Error('Login failed');
         }
       }
@@ -4300,18 +4300,18 @@ if (targetEl) {
       const d = await r.json();
       if (r.ok && !d.error && d.ok !== false && !d.reply_error) {
         const reply = d.reply?.text || d.reply || null;
-        showToast('Remote Collector', reply ? escHtml(reply) : `"${command}" sent to ${escHtml(pubkeyPre)}.`, 'node');
+        showToast('Collecteur distant', reply ? escHtml(reply) : `"${command}" sent to ${escHtml(pubkeyPre)}.`, 'node');
         return d;
       } else {
         const reply = d.reply?.text || d.reply || '';
         const msg = d.error || reply || 'unknown error';
-        showToast('Remote Collector', `Échec : ${escHtml(msg)}`, 'node');
+        showToast('Collecteur distant', `Échec : ${escHtml(msg)}`, 'node');
         const err = new Error(msg);
         err.toastShown = true;
         throw err;
       }
     } catch (e) {
-      if (!e.toastShown) showToast('Remote Collector', `Error: ${escHtml(e.message)}`, 'node');
+      if (!e.toastShown) showToast('Collecteur distant', `Erreur : ${escHtml(e.message)}`, 'node');
       throw e;
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = origText; }
@@ -4321,14 +4321,14 @@ if (targetEl) {
   async function sendCollectorCustomCmd(pubkeyPre, btn) {
     const input = document.getElementById(`collector-cmd-${pubkeyPre}`);
     const command = (input?.value || '').trim();
-    if (!command) { showToast('Remote Collector', 'Enter a command first.', 'node'); return; }
+    if (!command) { showToast('Collecteur distant', 'Saisissez d’abord une commande.', 'node'); return; }
     await sendCollectorCommand(pubkeyPre, command, btn);
     if (input) input.value = '';
   }
 
   async function fetchCollectorMessages(pubkeyPre, btn) {
     const rid = _passiveIntelRadioId();
-    if (!rid) { showToast('Remote Collector', 'Aucune radio MC connectée.', 'node'); return; }
+    if (!rid) { showToast('Collecteur distant', 'Aucune radio MC connectée.', 'node'); return; }
     const out = document.getElementById(`collector-msgs-${pubkeyPre}`);
     if (out) { out.style.display = 'block'; out.textContent = 'Demande des messages enregistrés…'; }
     if (btn) btn.disabled = true;
@@ -4415,13 +4415,13 @@ if (targetEl) {
     const lat = parseFloat(latEl?.value);
     const lon = parseFloat(lonEl?.value);
     if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-      showToast('Remote Collector', 'Enter valid lat/lon values.', 'node');
+      showToast('Collecteur distant', 'Saisissez des valeurs latitude/longitude valides.', 'node');
       return;
     }
     const latStr = lat.toFixed(6);
     const lonStr = lon.toFixed(6);
     const origText = btn ? btn.textContent : 'Set pos';
-    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
     try {
       await sendCollectorCommand(pubkeyPre, `set lat ${latStr}`, null);
       await sendCollectorCommand(pubkeyPre, `set lon ${lonStr}`, null);
@@ -4429,10 +4429,10 @@ if (targetEl) {
       const collectors = _loadCollectors();
       if (collectors[idx]) { collectors[idx].lat = lat; collectors[idx].lon = lon; }
       _saveCollectors(collectors);
-      showToast('Remote Collector', `Position set: ${latStr}, ${lonStr}`, 'node');
+      showToast('Collecteur distant', `Position définie : ${latStr}, ${lonStr}`, 'node');
       renderPassiveCollectors();
     } catch (e) {
-      showToast('Remote Collector', `Error: ${escHtml(e.message)}`, 'node');
+      showToast('Collecteur distant', `Erreur : ${escHtml(e.message)}`, 'node');
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = origText; }
     }
@@ -4525,7 +4525,7 @@ if (targetEl) {
       document.getElementById('modal-body').innerHTML = `
         <div class="tr-section">Route vers le nœud</div>
         <div class="tr-chain">${buildChain(d.route, d.snrTowards)}</div>
-        <div class="tr-section">Route back</div>
+        <div class="tr-section">Route retour</div>
         <div class="tr-chain">${buildChain(d.routeBack, d.snrBack)}</div>`;
       _lastTraceData = d;
       _activeMtRouteKey = _mtRouteKey(nodeId, trRadioId);
@@ -4595,7 +4595,7 @@ if (targetEl) {
       <div class="dm-row">
         <input class="dm-input" id="dm-input" placeholder="Type a message..." maxlength="200"
                onkeydown="if(event.key==='Enter')sendDM('${jsSafe(nodeId)}')">
-        <button class="dm-send" onclick="sendDM('${jsSafe(nodeId)}')">Send</button>
+        <button class="dm-send" onclick="sendDM('${jsSafe(nodeId)}')">Envoyer</button>
       </div>
       <div id="dm-status"></div>`);
     setTimeout(() => document.getElementById('dm-input')?.focus(), 50);
@@ -4667,7 +4667,7 @@ if (targetEl) {
       const row = (label, val) => val != null && val !== ''
         ? `<tr><td>${label}</td><td>${val}</td></tr>` : '';
       const snrC = v => v == null ? '—' : `<span class="${v >= 5 ? 'snr-good' : v >= -5 ? 'snr-ok' : 'snr-bad'}">${v} dB</span>`;
-      const battC = v => v == null ? '—' : `<span class="${v >= 60 ? 'battery-high' : v >= 30 ? 'battery-mid' : 'battery-low'}">${v === 101 ? '⚡ Charging' : v + '%'}</span>`;
+      const battC = v => v == null ? '—' : `<span class="${v >= 60 ? 'battery-high' : v >= 30 ? 'battery-mid' : 'battery-low'}">${v === 101 ? '⚡ En charge' : v + '%'}</span>`;
       const fmt2 = v => v != null ? v.toFixed(2) : null;
       const coordLink = (lat, lon) => lat != null && lon != null
         ? `<a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=14/${lat}/${lon}" target="_blank" style="color:var(--accent)">${lat.toFixed(5)}, ${lon.toFixed(5)}</a>`
@@ -4676,31 +4676,31 @@ if (targetEl) {
         `<div style="color:var(--yellow);font-size:11px;margin-bottom:8px">&#9888; Aucune réponse du nœud — affichage des données en cache</div>`;
       document.getElementById('modal-body').innerHTML = staleNote + `
         <table class="info-table">
-          <tr><td colspan="2" class="info-section">Identity</td></tr>
-          ${row('Long name', escHtml(d.long_name))}
-          ${row('Short name', escHtml(d.short_name))}
-          ${row('HW model', escHtml(d.hw_model))}
-          ${row('Role', escHtml(d.role))}
+          <tr><td colspan="2" class="info-section">Identité</td></tr>
+          ${row('Nom long', escHtml(d.long_name))}
+          ${row('Nom court', escHtml(d.short_name))}
+          ${row('Modèle matériel', escHtml(d.hw_model))}
+          ${row('Rôle', escHtml(d.role))}
           <tr><td colspan="2" class="info-section">Signal</td></tr>
           ${row('SNR', snrC(d.snr))}
           ${row('RSSI', d.rssi != null ? d.rssi + ' dBm' : null)}
-          ${row('Hops away', d.hops_away)}
-          ${row('Last seen', escHtml(d.last_heard))}
-          <tr><td colspan="2" class="info-section">Power</td></tr>
-          ${row('Battery', battC(d.battery))}
-          ${row('Voltage', d.voltage != null ? d.voltage.toFixed(2) + ' V' : null)}
-          ${row('Uptime', escHtml(d.uptime))}
+          ${row('Sauts', d.hops_away)}
+          ${row('Dernière activité', escHtml(d.last_heard))}
+          <tr><td colspan="2" class="info-section">Alimentation</td></tr>
+          ${row('Batterie', battC(d.battery))}
+          ${row('Tension', d.voltage != null ? d.voltage.toFixed(2) + ' V' : null)}
+          ${row('Temps de fonctionnement', escHtml(d.uptime))}
           <tr><td colspan="2" class="info-section">Radio</td></tr>
-          ${row('Ch utilization', d.channel_util != null ? d.channel_util.toFixed(1) + '%' : null)}
-          ${row('Air util TX', d.air_util_tx != null ? d.air_util_tx.toFixed(1) + '%' : null)}
-          <tr><td colspan="2" class="info-section">Location</td></tr>
-          ${row('Coordinates', coordLink(d.latitude, d.longitude))}
+          ${row('Utilisation du canal', d.channel_util != null ? d.channel_util.toFixed(1) + '%' : null)}
+          ${row('Utilisation radio TX', d.air_util_tx != null ? d.air_util_tx.toFixed(1) + '%' : null)}
+          <tr><td colspan="2" class="info-section">Position</td></tr>
+          ${row('Coordonnées', coordLink(d.latitude, d.longitude))}
           ${row('Altitude', d.altitude != null ? d.altitude + ' m' : null)}
           ${d.temperature != null || d.humidity != null || d.pressure != null
-            ? '<tr><td colspan="2" class="info-section">Environment</td></tr>' : ''}
-          ${row('Temperature', d.temperature != null ? fmt2(d.temperature) + ' °C' : null)}
-          ${row('Humidity', d.humidity != null ? fmt2(d.humidity) + '%' : null)}
-          ${row('Pressure', d.pressure != null ? fmt2(d.pressure) + ' hPa' : null)}
+            ? '<tr><td colspan="2" class="info-section">Environnement</td></tr>' : ''}
+          ${row('Température', d.temperature != null ? fmt2(d.temperature) + ' °C' : null)}
+          ${row('Humidité', d.humidity != null ? fmt2(d.humidity) + '%' : null)}
+          ${row('Pression', d.pressure != null ? fmt2(d.pressure) + ' hPa' : null)}
         </table>`;
     } catch(e) {
       clearInterval(_nodeInfoTimer);
@@ -4756,7 +4756,7 @@ if (targetEl) {
       </div>`;
   }
 
-  async function restartOverMeshNow(btn) {
+  async function restartOverMeshMaintenant(btn) {
       btnFeedback(btn, '✓ Restarting…', 3000);
       showOverMeshServiceSplash('restart');
       try { await fetch(BASE_PATH + '/api/restart', {method: 'POST'}); } catch(_) {}
@@ -4782,7 +4782,7 @@ if (targetEl) {
     document.getElementById('power-menu')?.classList.remove('open');
     document.getElementById('confirm-ok').textContent = 'Restart';
     showConfirm('Restart the OverMesh server?', async () => {
-      await restartOverMeshNow();
+      await restartOverMeshMaintenant();
     });
   }
 
@@ -4797,7 +4797,7 @@ if (targetEl) {
 
   // ── Map ────────────────────────────────────────────────────────────────────
   let leafletMap    = null;
-  let _mapStaticLoaded = false;  // waypoints/notes/GPS only fetched once per session
+  let _mapStatiqueLoaded = false;  // waypoints/notes/GPS only fetched once per session
   let mapMarkers    = {};
   let clusterMarkers = {};  // posKey → cluster badge marker
   let mcClusterMarkers = {};  // posKey → MC cluster badge marker
@@ -5012,30 +5012,30 @@ if (targetEl) {
   }
 
   const TILE_LAYERS = {
-    osm:              { label: 'OpenStreetMap',   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19 },
-    voyager:          { label: 'Voyager',         url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    voyager_nolabels: { label: 'Voyager No Labels', url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    positron:         { label: 'Positron',        url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    dark_matter:      { label: 'Dark Matter',     url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    dark_nolabels:    { label: 'Dark No Labels',  url: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
-    esri_gray_dark:   { label: 'Esri Dark Gray',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, HERE, Garmin, © OpenStreetMap contributors, and the GIS User Community', maxZoom: 16 },
-    stamen_toner_lite:{ label: 'Toner Lite',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
-    stamen_toner_dark:{ label: 'Toner Dark',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
-    stamen_terrain:   { label: 'Stamen Terrain',  url: 'https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    osm:              { label: 'OuverteStreetMap',   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19 },
+    voyager:          { label: 'Voyager',         url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    voyager_nolabels: { label: 'Voyager No Labels', url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    positron:         { label: 'Positron',        url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    dark_matter:      { label: 'Dark Matter',     url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    dark_nolabels:    { label: 'Dark No Labels',  url: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>', maxZoom: 19 },
+    esri_gray_dark:   { label: 'Esri Dark Gray',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, HERE, Garmin, © OuverteStreetMap contributors, and the GIS User Community', maxZoom: 16 },
+    stamen_toner_lite:{ label: 'Toner Lite',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    stamen_toner_dark:{ label: 'Toner Dark',      url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_dark/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    stamen_terrain:   { label: 'Stamen Terrain',  url: 'https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
     esri_sat:         { label: 'Esri Satellite',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri', maxZoom: 18 },
     esri_streets:     { label: 'Esri Streets',    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, DeLorme, NAVTEQ, USGS, Intermap, NRCAN', maxZoom: 19 },
     esri_topo:        { label: 'Esri Topo',       url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri', maxZoom: 18 },
-    topo:             { label: 'OpenTopoMap',     url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://opentopomap.org">OpenTopoMap</a>', maxZoom: 17 },
-    stadia_outdoors:  { label: 'Stadia Outdoors', url: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
+    topo:             { label: 'OuverteTopoMap',     url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://opentopomap.org">OpenTopoMap</a>', maxZoom: 17 },
+    stadia_outdoors:  { label: 'Stadia Outdoors', url: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', attribution: '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://openmaptiles.org/">OuverteMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 20 },
     esri_hillshade:   { label: 'Esri Hillshade',  url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}', attribution: 'Tiles © Esri, Airbus DS, USGS, NGA, NASA, CGIAR', maxZoom: 16 },
-    tf_landscape:     { label: 'TF Landscape ★',  url: 'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
-    tf_outdoors:      { label: 'TF Outdoors ★',   url: 'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
-    tf_pioneer:       { label: 'TF Pioneer ★',    url: 'https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
-    tf_atlas:         { label: 'TF Atlas ★',      url: 'https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 22 },
-    mt_hybrid:        { label: 'MT Satellite Hybrid ★', url: 'https://api.maptiler.com/maps/hybrid-v4-dark/{z}/{x}/{y}.jpg?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
-    mt_topo:          { label: 'MT Topo ★',          url: 'https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
-    mt_streets:       { label: 'MT Streets ★',       url: 'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
-    mt_winter:        { label: 'MT Winter ★',        url: 'https://api.maptiler.com/maps/winter-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 20 },
+    tf_landscape:     { label: 'TF Landscape ★',  url: 'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
+    tf_outdoors:      { label: 'TF Outdoors ★',   url: 'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
+    tf_pioneer:       { label: 'TF Pioneer ★',    url: 'https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
+    tf_atlas:         { label: 'TF Atlas ★',      url: 'https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey={apikey}', attribution: 'Maps © <a href="https://www.thunderforest.com/">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 22 },
+    mt_hybrid:        { label: 'MT Satellite Hybrid ★', url: 'https://api.maptiler.com/maps/hybrid-v4-dark/{z}/{x}/{y}.jpg?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
+    mt_topo:          { label: 'MT Topo ★',          url: 'https://api.maptiler.com/maps/topo-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
+    mt_streets:       { label: 'MT Streets ★',       url: 'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
+    mt_winter:        { label: 'MT Winter ★',        url: 'https://api.maptiler.com/maps/winter-v2/{z}/{x}/{y}.png?key={mtapikey}', attribution: '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OuverteStreetMap</a> contributors', maxZoom: 20 },
   };
 
   function allTileLayers() {
@@ -5071,7 +5071,7 @@ if (targetEl) {
       refreshBaseLayerPanelOptions();
       const saved = (() => { try { return localStorage.getItem('mapTileLayer') || ''; } catch(e) { return ''; } })();
       if (saved.startsWith('shared_')) setTileLayer('osm');
-      _sharedTileStatus('Shared tile DB disabled. OM is using built-in layers and browser cache.', true);
+      _sharedTileStatus('Shared tile DB désactivé. OM is using built-in layers and browser cache.', true);
     }
   }
 
@@ -5080,7 +5080,7 @@ if (targetEl) {
       _mapAppTileLayers = {};
       _mapAppTileLayersLoaded = false;
       refreshBaseLayerPanelOptions();
-      _sharedTileStatus('Shared tile DB disabled.');
+      _sharedTileStatus('Shared tile DB désactivé.');
       return;
     }
     if (_mapAppTileLayersLoading) return;
@@ -5809,23 +5809,23 @@ if (targetEl) {
   const _TILE_DB   = 'om_tiles_v1';
   const _TILE_STORE = 't';
   let _tileDbConn    = null;
-  let _tileDbOpening = null; // deduplicates concurrent first-open calls
+  let _tileDbOuverteing = null; // deduplicates concurrent first-open calls
 
   function _tileDb() {
     if (_tileDbConn)    return Promise.resolve(_tileDbConn);
-    if (_tileDbOpening) return _tileDbOpening;
-    _tileDbOpening = new Promise((res, rej) => {
+    if (_tileDbOuverteing) return _tileDbOpening;
+    _tileDbOuverteing = new Promise((res, rej) => {
       const req = indexedDB.open(_TILE_DB, 1);
       req.onupgradeneeded = e => e.target.result.createObjectStore(_TILE_STORE);
       req.onsuccess = e => {
         _tileDbConn    = e.target.result;
-        _tileDbOpening = null;
+        _tileDbOuverteing = null;
         _tileDbConn.onclose = () => { _tileDbConn = null; };
         res(_tileDbConn);
       };
-      req.onerror = e => { _tileDbOpening = null; rej(e.target.error); };
+      req.onerror = e => { _tileDbOuverteing = null; rej(e.target.error); };
     });
-    return _tileDbOpening;
+    return _tileDbOuverteing;
   }
   function tileGet(key) {
     return _tileDb().then(db => new Promise((res, rej) => {
@@ -5958,7 +5958,7 @@ if (targetEl) {
 
     bar.style.width = '100%';
     txt.textContent = `Done — ${saved} saved, ${skipped} already cached, ${failed} failed`;
-    btnFeedback(btn, '✓ Saved');
+    btnFeedback(btn, '✓ Enregistré');
     } catch (err) {
       txt.textContent = `Save failed — ${err.message}`;
       btn.disabled = false;
@@ -5969,13 +5969,13 @@ if (targetEl) {
   }
 
   function clearTileCache(btn) {
-    document.getElementById('confirm-ok').textContent = 'Clear';
+    document.getElementById('confirm-ok').textContent = 'Effacer';
     showConfirm('Effacer toutes les tuiles en cache ? Saved region configs are kept but tile counts will be reset.', () => {
       tileClear().then(() => {
         saveRegions(loadRegions().map(r => ({ ...r, tiles: 0 })));
         renderRegionList();
         refreshTileCacheInfo();
-        btnFeedback(btn, '✓ Cleared');
+        btnFeedback(btn, '✓ Effacé');
       }).catch(() => {
         document.getElementById('tile-cache-count').textContent = 'Échec de l’effacement — essayez d’actualiser';
       });
@@ -6032,12 +6032,12 @@ if (targetEl) {
         <div style="flex:1;min-width:0">
           <div style="display:flex;align-items:center;gap:6px">
             <span style="font-size:13px;font-weight:500">${escHtml(r.name)}</span>
-            <span style="font-size:10px;padding:1px 5px;border-radius:3px;background:var(--bg);border:1px solid var(--border);color:var(--muted);white-space:nowrap">${escHtml(r.layerLabel || 'OpenStreetMap')}</span>
+            <span style="font-size:10px;padding:1px 5px;border-radius:3px;background:var(--bg);border:1px solid var(--border);color:var(--muted);white-space:nowrap">${escHtml(r.layerLabel || 'OuverteStreetMap')}</span>
           </div>
           <div style="font-size:11px;color:var(--muted)">zoom ${r.minZ}–${r.maxZ} · ${r.tiles.toLocaleString()} tiles · ≈${Math.round(r.tiles * 12 / 1024)} MB · ${_formatAppDate(r.date)}</div>
         </div>
         <button class="btn-sm" title="Re-download this region with current tile layer" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:22px;padding:0;flex-shrink:0" onclick="redownloadRegion('${jsSafe(r.id)}')">↻</button>
-        <button class="btn-sm" title="Remove this saved region" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:22px;padding:0;flex-shrink:0;color:var(--danger,#f87171)" onclick="deleteRegion('${jsSafe(r.id)}')">✕</button>
+        <button class="btn-sm" title="Supprimer cette région enregistrée" style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:22px;padding:0;flex-shrink:0;color:var(--danger,#f87171)" onclick="deleteRegion('${jsSafe(r.id)}')">✕</button>
       </div>`).join('');
   }
 
@@ -6091,7 +6091,7 @@ if (targetEl) {
     document.getElementById('region-config-title').textContent = name;
     document.getElementById('region-config').style.display = 'block';
     document.getElementById('region-dl-progress').style.display = 'none';
-    document.getElementById('region-dl-btn').disabled = false;
+    document.getElementById('region-dl-btn').désactivé = false;
     const sel = document.getElementById('region-dl-layer');
     sel.innerHTML = Object.entries(allTileLayers()).map(([k, def]) =>
       `<option value="${k}">${escHtml(def.label)}</option>`).join('');
@@ -6215,7 +6215,7 @@ if (targetEl) {
     const regions = loadRegions();
     const r = regions.find(r => r.id === id);
     if (!r) return;
-    document.getElementById('confirm-ok').textContent = 'Delete';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Delete "${r.name}" and its cached tiles?`, async () => { try {
       const bounds = L.latLngBounds(L.latLng(r.sw[0], r.sw[1]), L.latLng(r.ne[0], r.ne[1]));
       const tiles  = _tilesForBounds(bounds, r.minZ, r.maxZ);
@@ -6483,7 +6483,7 @@ if (targetEl) {
       empty.textContent = 'Aucun calque local partagé trouvé';
       empty.style.cssText = 'padding:4px 10px 6px 10px;font-size:11px;color:var(--muted)';
     }
-    addTitle('Online Maps', _sharedTileServerEnabled ? '' : 'Built-in layers. Browser cache may work offline only after viewing/downloading.');
+    addTitle('Cartes en ligne', _sharedTileServerEnabled ? '' : 'Calques intégrés. Le cache du navigateur peut fonctionner hors ligne uniquement après affichage ou téléchargement.');
     Object.entries(TILE_LAYERS).forEach(([key, def]) => addLayer(key, def));
   }
 
@@ -6876,7 +6876,7 @@ if (targetEl) {
     _mapLayerDraft.finished = false;
     _renderMapLayerDraft();
     renderOverlayPanel();
-    btnFeedback(btn, '✓ Deleted');
+    btnFeedback(btn, '✓ Supprimé');
   }
 
   function deleteSelectedMapLayerVertex(btn) {
@@ -6886,7 +6886,7 @@ if (targetEl) {
     _mapLayerDraft.finished = false;
     _renderMapLayerDraft();
     renderOverlayPanel();
-    btnFeedback(btn, '✓ Deleted');
+    btnFeedback(btn, '✓ Supprimé');
   }
 
   function finishMapLayerDraft() {
@@ -6962,7 +6962,7 @@ if (targetEl) {
       if (statusEl) statusEl.textContent = _mapLayerDraft.mode === 'point' ? 'Place the point on the map first.' : _mapLayerDraft.mode === 'line' ? 'A line needs at least 2 points.' : _mapLayerDraft.mode === 'circle' ? 'Pick the center, move the mouse to size the circle, then click again.' : 'An area needs at least 3 points.';
       return;
     }
-    if (statusEl) statusEl.textContent = 'Saving…';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     try {
       const isEdit = !!_mapLayerDraft.layerId;
       const r = await fetch(isEdit ? `/api/map_layers/${_mapLayerDraft.layerId}` : '/api/map_layers', {
@@ -6972,7 +6972,7 @@ if (targetEl) {
       });
       const data = await r.json().catch(() => ({}));
       if (!r.ok || data.error) throw new Error(data.error || r.status);
-      btnFeedback(btn, '✓ Saved');
+      btnFeedback(btn, '✓ Enregistré');
       cancelMapLayerDraft();
       await loadMapLayers({silent: true});
     } catch (e) {
@@ -7019,7 +7019,7 @@ if (targetEl) {
       overlayBtn.textContent = _signalHeatmapEnabled ? 'On' : 'Off';
     }
     const refreshBtn = document.getElementById('signal-heatmap-refresh-btn');
-    if (refreshBtn) refreshBtn.disabled = !_signalHeatmapEnabled;
+    if (refreshBtn) refreshBtn.désactivé = !_signalHeatmapEnabled;
   }
 
   function _signalHeatmapIntensity(rssi, snr) {
@@ -7046,13 +7046,13 @@ if (targetEl) {
     return points;
   }
 
-  function _isSensePanelOpen() {
+  function _isSensePanelOuverte() {
     const panel = document.getElementById('sense-panel');
     return !!panel && panel.style.display !== 'none';
   }
 
   function _signalHeatmapSources() {
-    if (_isSensePanelOpen()) {
+    if (_isSensePanelOuverte()) {
       return {mt: _senseNet === 'mt', mc: _senseNet === 'mc', context: 'sense'};
     }
     return {mt: mapShowMt, mc: mapShowMc, context: 'map'};
@@ -7112,7 +7112,7 @@ if (targetEl) {
           ? 'Aucune source MT/MC active ne dispose encore d’un signal et d’une position.'
           : sources.context === 'sense'
             ? 'Select MT or MC in Sense to show a signal heatmap.'
-            : 'Enable the MT or MC map pill to show a signal heatmap.';
+            : 'Activez le bouton de carte MT ou MC pour afficher la carte thermique du signal.';
         showToast('Signal Heatmap', sourceMsg, 'node');
         return;
       }
@@ -7146,7 +7146,7 @@ if (targetEl) {
             <span style="font-size:11px;color:var(--muted);margin-left:6px">Suit le sélecteur MT/MC visible · MT arc-en-ciel, MC violet/orange</span>
           </div>
           <div style="display:flex;gap:5px;align-items:center">
-            <button id="signal-heatmap-refresh-btn" class="btn" style="font-size:11px;padding:2px 8px" onclick="_refreshSignalHeatmap()" title="Reload heatmap from latest observations" ${_signalHeatmapEnabled ? '' : 'disabled'}>↻</button>
+            <button id="signal-heatmap-refresh-btn" class="btn" style="font-size:11px;padding:2px 8px" onclick="_refreshSignalHeatmap()" title="Reload heatmap from latest observations" ${_signalHeatmapEnabled ? '' : 'désactivé'}>↻</button>
             <button id="signal-heatmap-overlay-btn" class="overlay-tool-btn ${_signalHeatmapEnabled ? 'active' : ''}" onclick="toggleSignalHeatmap()" title="Toggle signal strength heatmap on the map">${_signalHeatmapEnabled ? 'On' : 'Off'}</button>
           </div>
         </div>
@@ -7174,7 +7174,7 @@ if (targetEl) {
             <span style="font-size:11px;color:var(--muted)">${draft?.layerId ? 'Modification du calque enregistré' : 'Nouveau calque'}${draft?.finished ? ' · terminé' : ''}</span>
           </div>
           <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text)">
-            <input type="checkbox" ${draft?.is_geofence ? 'checked' : ''} ${draft?.mode === 'polygon' || draft?.mode === 'circle' ? '' : 'disabled'} onchange="_mapLayerDraft && (_mapLayerDraft.is_geofence=this.checked)">
+            <input type="checkbox" ${draft?.is_geofence ? 'checked' : ''} ${draft?.mode === 'polygon' || draft?.mode === 'circle' ? '' : 'désactivé'} onchange="_mapLayerDraft && (_mapLayerDraft.is_geofence=this.checked)">
             <span>Use as geofence ${draft?.mode === 'polygon' || draft?.mode === 'circle' ? '' : '(areas only)'}</span>
           </label>
           <div style="display:${draft?.is_geofence ? 'grid' : 'none'};gap:8px;padding:8px;border:1px solid rgba(245,158,11,0.28);border-radius:6px;background:rgba(245,158,11,0.06)">
@@ -7204,7 +7204,7 @@ if (targetEl) {
             <button class="overlay-tool-btn" onclick="saveMapLayerDraft(this)">Enregistrer</button>
             <button class="overlay-tool-btn" onclick="finishMapLayerDraft()">Finish</button>
             <button class="overlay-tool-btn" onclick="deleteLastMapLayerVertex(this)">Supprimer le dernier</button>
-            <button class="overlay-tool-btn" onclick="deleteSelectedMapLayerVertex(this)" ${_mapLayerSelectedVertex < 0 ? 'disabled' : ''}>Supprimer la sélection</button>
+            <button class="overlay-tool-btn" onclick="deleteSelectedMapLayerVertex(this)" ${_mapLayerSelectedVertex < 0 ? 'désactivé' : ''}>Supprimer la sélection</button>
             <button class="overlay-tool-btn" onclick="cancelMapLayerDraft()">Annuler</button>
           </div>
         </div>
@@ -7214,7 +7214,7 @@ if (targetEl) {
         const state = _mapLayerEditableState(def);
         const features = _mapLayerFeatureList(def.data).length || 0;
         const actionBtn = state.editable
-          ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();editMapLayer(${def.id})" title="Edit this overlay">✎</button>`
+          ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();editMapLayer(${def.id})" title="Modifier cette superposition">✎</button>`
           : state.reason === 'multi'
             ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();splitMapLayerIntoEditable(${def.id})" title="Split into editable single-feature overlays">⇄</button>`
             : '';
@@ -7222,14 +7222,14 @@ if (targetEl) {
         <div class="mp-item" onclick="zoomToMapLayer(${def.id})">
           <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${escHtml(def.color || '#f59e0b')};flex-shrink:0"></span>
           <div style="flex:1;min-width:0">
-            <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(def.name || 'Unnamed')}</div>
+            <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(def.name || 'Sans nom')}</div>
             <div style="font-size:10px;color:var(--muted)">${def.enabled ? 'Visible sur la carte' : 'Masqué'}${def.is_geofence ? ` · geofence (${escHtml((def.geofence?.networks || 'both').toUpperCase())})` : ''} · ${features} feature${features === 1 ? '' : 's'}${state.reason === 'multi' ? ' · séparer pour modifier' : ''}</div>
           </div>
           <button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerEnabled(${def.id}, ${!def.enabled})" title="${def.enabled ? 'Masquer le calque' : 'Afficher le calque'}">${def.enabled ? '◉' : '○'}</button>
-          ${_isPolygonGeofence(def) || (state.editable && (def.data?.features?.[0]?.geometry?.type === 'Polygon' || def.data?.geometry?.type === 'Polygon')) ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerGeofence(${def.id}, ${!def.is_geofence})" title="${def.is_geofence ? 'Disable geofence' : 'Enable geofence'}">${def.is_geofence ? '⌁' : '⊚'}</button>` : ''}
+          ${_isPolygonGeofence(def) || (state.editable && (def.data?.features?.[0]?.geometry?.type === 'Polygon' || def.data?.geometry?.type === 'Polygon')) ? `<button class="overlay-mini-btn" onclick="event.stopPropagation();toggleMapLayerGeofence(${def.id}, ${!def.is_geofence})" title="${def.is_geofence ? 'Désactiver le géorepérage' : 'Activer le géorepérage'}">${def.is_geofence ? '⌁' : '⊚'}</button>` : ''}
           ${actionBtn}
           <button class="overlay-mini-btn" onclick="event.stopPropagation();tocFromMapLayer(${def.id})" title="Log this overlay in TOC">Journal</button>
-          <button class="overlay-mini-btn" onclick="event.stopPropagation();deleteMapLayer(${def.id}, '${jsSafe(def.name)}')" title="Delete this overlay">✕</button>
+          <button class="overlay-mini-btn" onclick="event.stopPropagation();deleteMapLayer(${def.id}, '${jsSafe(def.name)}')" title="Supprimer cette superposition">✕</button>
         </div>
       `;
       }).join('') : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">Aucune superposition pour le moment.</div>'}</div>
@@ -7291,7 +7291,7 @@ if (targetEl) {
       renderOverlayPanel();
       refreshMapLayerPanelOptions();
       renderMapOverlays();
-      if (statusEl) statusEl.textContent = enabled ? 'Geofence enabled.' : 'Geofence disabled.';
+      if (statusEl) statusEl.textContent = enabled ? 'Geofence enabled.' : 'Geofence désactivé.';
     } catch (e) {
       if (statusEl) statusEl.textContent = `Geofence update failed: ${e.message || e}`;
     }
@@ -7342,7 +7342,7 @@ if (targetEl) {
       statusEl.textContent = `Invalid JSON: ${e.message}`;
       return;
     }
-    statusEl.textContent = 'Saving…';
+    statusEl.textContent = 'Enregistrement…';
     try {
       const r = await fetch(BASE_PATH + '/api/map_layers', {
         method: 'POST',
@@ -7356,7 +7356,7 @@ if (targetEl) {
       const fileEl = document.getElementById('map-layer-file');
       if (fileEl) fileEl.value = '';
       statusEl.textContent = `Saved layer "${data.layer?.name || name}".`;
-      btnFeedback(btn, '✓ Saved');
+      btnFeedback(btn, '✓ Enregistré');
       await loadMapLayers({silent: true});
     } catch (e) {
       statusEl.textContent = `Save failed: ${e.message || e}`;
@@ -7407,7 +7407,7 @@ if (targetEl) {
   }
 
   function deleteMapLayer(id, name) {
-    document.getElementById('confirm-ok').textContent = 'Delete';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Delete map layer "${name}"?`, async () => {
       const statusEl = document.getElementById('map-layer-status');
       if (statusEl) statusEl.textContent = 'Deleting…';
@@ -7848,14 +7848,14 @@ if (targetEl) {
         <div id="wptab-mark-content">
           <div style="display:flex;flex-direction:column;gap:10px">
             <div>
-              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Map marker</label>
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Repère cartographique</label>
               <div style="display:flex;align-items:flex-start;gap:8px">
                 <div id="wp-marker-preview" style="font-size:22px;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--accent);border-radius:6px;flex-shrink:0">${_wpMarkerEmoji}</div>
                 <div style="display:flex;flex-direction:column;gap:3px">${markerRows}</div>
               </div>
             </div>
             <div>
-              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Name *</label>
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Nom *</label>
               <input id="wp-name-input" class="settings-input" placeholder="e.g. Camp, Hazard, Relay" maxlength="30"
                      style="width:100%;box-sizing:border-box"
                      onfocus="_wpFocusedInput='name'"
@@ -7863,24 +7863,24 @@ if (targetEl) {
             </div>
             <div>
               <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Description</label>
-              <input id="wp-desc-input" class="settings-input" placeholder="Optional (max 80 chars)" maxlength="80"
+              <input id="wp-desc-input" class="settings-input" placeholder="Facultatif (80 caractères max.)" maxlength="80"
                      style="width:100%;box-sizing:border-box"
                      onfocus="_wpFocusedInput='desc'">
             </div>
             <div>
-              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Add to text</label>
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Ajouter au texte</label>
               <div style="display:flex;flex-direction:column;gap:3px">${textRows}</div>
             </div>
             <div style="font-size:11px;color:var(--muted)">📍 ${lat.toFixed(5)}, ${lon.toFixed(5)}</div>
             <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;flex-direction:column;gap:8px">
               <div style="display:flex;align-items:center;gap:10px">
-                <span style="font-size:12px;color:var(--muted);white-space:nowrap">Channel</span>
+                <span style="font-size:12px;color:var(--muted);white-space:nowrap">Canal</span>
                 <select id="wp-channel-select" style="padding:3px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:12px;flex:1">
                   ${chOptions}
                 </select>
               </div>
               <div style="display:flex;align-items:flex-start;gap:10px">
-                <span style="font-size:12px;color:var(--muted);white-space:nowrap;margin-top:4px">Send to</span>
+                <span style="font-size:12px;color:var(--muted);white-space:nowrap;margin-top:4px">Envoyer à</span>
                 <div style="display:flex;flex-direction:column;gap:4px;flex:1">
                   <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
                     <input type="radio" name="wp-dest" value="all" checked onchange="wpToggleDest(this.value)"> All (broadcast)
@@ -7889,7 +7889,7 @@ if (targetEl) {
                     <input type="radio" name="wp-dest" value="node" onchange="wpToggleDest(this.value)"> Specific node
                   </label>
                   <div id="wp-node-wrap" style="display:none;margin-top:2px">
-                    <input id="wp-node-search" class="settings-input" placeholder="Search node…" maxlength="40"
+                    <input id="wp-node-search" class="settings-input" placeholder="Rechercher un nœud…" maxlength="40"
                            style="width:100%;box-sizing:border-box;font-size:12px"
                            oninput="wpFilterNodes(this.value)"
                            onblur="setTimeout(()=>{const r=document.getElementById('wp-node-results');if(r){r.style.display='none';r.innerHTML='';}},150)">
@@ -7902,7 +7902,7 @@ if (targetEl) {
             <div id="wp-send-status" style="font-size:12px;min-height:14px"></div>
             <div style="display:flex;gap:8px;justify-content:flex-end">
               <button class="btn" onclick="closeModal()">Annuler</button>
-              <button class="btn-primary" onclick="sendWaypoint()">Send</button>
+              <button class="btn-primary" onclick="sendWaypoint()">Envoyer</button>
             </div>
           </div>
         </div>
@@ -7911,14 +7911,14 @@ if (targetEl) {
         <div id="wptab-note-content" style="display:none">
           <div style="display:flex;flex-direction:column;gap:10px">
             <div>
-              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Map marker</label>
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Repère cartographique</label>
               <div style="display:flex;align-items:flex-start;gap:8px">
                 <div id="note-marker-preview" style="font-size:22px;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:6px;flex-shrink:0">${_wpMarkerEmoji}</div>
                 <div style="display:flex;flex-direction:column;gap:3px">${markerRows}</div>
               </div>
             </div>
             <div>
-              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Name *</label>
+              <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Nom *</label>
               <input id="note-name-input" class="settings-input" placeholder="e.g. Parking spot, View point" maxlength="30"
                      style="width:100%;box-sizing:border-box"
                      onkeydown="if(event.key==='Enter')saveMapNote()">
@@ -8043,8 +8043,8 @@ if (targetEl) {
     const name = (document.getElementById('note-name-input')?.value || '').trim();
     const desc = (document.getElementById('note-desc-input')?.value || '').trim();
     const status = document.getElementById('note-save-status');
-    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Name is required.'; } return; }
-    if (status) { status.style.color='var(--muted)'; status.textContent='Saving…'; }
+    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Le nom est obligatoire.'; } return; }
+    if (status) { status.style.color='var(--muted)'; status.textContent='Enregistrement…'; }
     try {
       const res = await fetch(BASE_PATH + '/api/notes', {
         method: 'POST', headers: {'Content-Type':'application/json'},
@@ -8058,7 +8058,7 @@ if (targetEl) {
         if (status) { status.style.color='var(--red)'; status.textContent=data.error||'Save failed'; }
       }
     } catch(e) {
-      if (status) { status.style.color='var(--red)'; status.textContent='Network error'; }
+      if (status) { status.style.color='var(--red)'; status.textContent='Erreur réseau'; }
     }
   }
 
@@ -8099,19 +8099,19 @@ if (targetEl) {
     const ts = note.ts ? _formatAppDateTime(note.ts) : '';
     const popupHtml = `
       <div style="min-width:160px;max-width:220px">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Self Note</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Note personnelle</div>
         <div style="font-weight:600;font-size:13px;color:var(--text);margin-bottom:4px">${escHtml(note.name)}</div>
         ${note.description ? `<div style="font-size:12px;color:var(--text);margin-bottom:6px">${escHtml(note.description)}</div>` : ''}
         <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${ts}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
           <button onclick="openEditNoteModal(${note.id})"
-            title="Edit this note's name or description"
-            style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer">Edit</button>
+            title="Modifier le nom ou la description de cette note"
+            style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer">Modifier</button>
           <button onclick="shareNote(${note.id})"
-            title="Broadcast this note as a Meshtastic waypoint on the mesh"
+            title="Diffuser cette note comme point de repère Meshtastic sur le maillage"
             style="font-size:11px;padding:3px 8px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;color:var(--accent);cursor:pointer">Partager</button>
-          <button onclick="document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete note \u201c${jsSafe(note.name||'this note')}\u201d?',()=>deleteNote(${note.id}))"
-            title="Delete this note — local only, does not affect the mesh"
+          <button onclick="document.getElementById('confirm-ok').textContent='Supprimer';showConfirm('Delete note \u201c${jsSafe(note.name||'cette note')}\u201d?',()=>deleteNote(${note.id}))"
+            title="Supprimer cette note — uniquement en local, sans modifier le maillage"
             style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--red);cursor:pointer">Supprimer</button>
         </div>
       </div>`;
@@ -8159,17 +8159,17 @@ if (targetEl) {
           style="font-size:15px;padding:2px 3px;background:${sel?'var(--accent-dim)':'var(--bg3)'};border:1px solid ${sel?'var(--accent)':'var(--border)'};border-radius:4px;cursor:pointer;line-height:1.4">${e}</button>`;
       }).join('')}</div>`
     ).join('');
-    openModal('Edit Note', `
+    openModal('Modifier la note', `
       <div style="display:flex;flex-direction:column;gap:10px;min-width:280px;max-width:360px">
         <div>
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Map marker</label>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Repère cartographique</label>
           <div style="display:flex;align-items:flex-start;gap:8px">
             <div id="note-marker-preview" style="font-size:22px;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border);border-radius:6px;flex-shrink:0">${_wpMarkerEmoji}</div>
             <div style="display:flex;flex-direction:column;gap:3px">${markerRows}</div>
           </div>
         </div>
         <div>
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Name *</label>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Nom *</label>
           <input id="note-name-input" class="settings-input" value="${escHtml(note.name)}" maxlength="30"
                  style="width:100%;box-sizing:border-box"
                  onkeydown="if(event.key==='Enter')saveNoteEdit()">
@@ -8193,8 +8193,8 @@ if (targetEl) {
     const name = (document.getElementById('note-name-input')?.value || '').trim();
     const desc = (document.getElementById('note-desc-input')?.value || '').trim();
     const status = document.getElementById('note-save-status');
-    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Name is required.'; } return; }
-    if (status) { status.style.color='var(--muted)'; status.textContent='Saving…'; }
+    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Le nom est obligatoire.'; } return; }
+    if (status) { status.style.color='var(--muted)'; status.textContent='Enregistrement…'; }
     try {
       const res = await fetch(BASE_PATH + `/api/notes/${_editNoteId}`, {
         method: 'PUT', headers: {'Content-Type':'application/json'},
@@ -8209,7 +8209,7 @@ if (targetEl) {
         if (status) { status.style.color='var(--red)'; status.textContent=data.error||'Save failed'; }
       }
     } catch(e) {
-      if (status) { status.style.color='var(--red)'; status.textContent='Network error'; }
+      if (status) { status.style.color='var(--red)'; status.textContent='Erreur réseau'; }
     }
   }
 
@@ -8222,10 +8222,10 @@ if (targetEl) {
     const destRadio = document.querySelector('input[name="wp-dest"]:checked');
     const useNode   = destRadio?.value === 'node' && _wpDestNode !== null;
     const status = document.getElementById('wp-send-status');
-    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Name is required.'; } return; }
+    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Le nom est obligatoire.'; } return; }
     if (!activeRadioId) { if (status) { status.style.color='var(--red)'; status.textContent='Aucune radio connectée.'; } return; }
     if (useNode && !_wpDestNode) { if (status) { status.style.color='var(--red)'; status.textContent='Select a node.'; } return; }
-    if (status) { status.style.color='var(--muted)'; status.textContent='Sending…'; }
+    if (status) { status.style.color='var(--muted)'; status.textContent='Envoi…'; }
     try {
       const res = await fetch(BASE_PATH + '/api/waypoints/send', {
         method: 'POST', headers: {'Content-Type': 'application/json'},
@@ -8242,7 +8242,7 @@ if (targetEl) {
       }
       // sent === 0: error already shown, modal stays open so user can retry
     } catch(e) {
-      if (status) { status.style.color='var(--red)'; status.textContent='Network error'; }
+      if (status) { status.style.color='var(--red)'; status.textContent='Erreur réseau'; }
       setTimeout(closeModal, 2000);
     }
   }
@@ -8256,7 +8256,7 @@ if (targetEl) {
     const extUrl = extMap === 'google'
       ? `https://maps.google.com/?q=${encodeURIComponent(wp.lat + ',' + wp.lon)}`
       : `https://www.openstreetmap.org/?mlat=${wp.lat}&mlon=${wp.lon}&zoom=15#map=15/${wp.lat}/${wp.lon}`;
-    const fromName = wp.from_id === 'local' ? 'You' : escHtml(wp.from_id || '?');
+    const fromName = wp.from_id === 'local' ? 'Vous' : escHtml(wp.from_id || '?');
     const ts = wp.ts ? _formatAppDateTime(wp.ts) : '';
     const markerEmoji = wp.marker_emoji || '📍';
     const icon = L.divIcon({
@@ -8267,20 +8267,20 @@ if (targetEl) {
       <div style="min-width:180px;max-width:240px">
         <div style="font-weight:600;font-size:13px;color:var(--accent);margin-bottom:4px">${escHtml(wp.name)}</div>
         ${wp.description ? `<div style="font-size:12px;color:var(--text);margin-bottom:6px">${escHtml(wp.description)}</div>` : ''}
-        <div style="font-size:11px;color:var(--muted);margin-bottom:1px">From: ${fromName}</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:1px">De : ${fromName}</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${ts}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
           <a href="${extUrl}" target="_blank" rel="noopener"
-             style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);text-decoration:none;text-align:center">Open in map ↗</a>
+             style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);text-decoration:none;text-align:center">Ouvrir sur la carte ↗</a>
           <button id="wp-rebcast-${wp.id}" style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer"
-                  title="Re-send this mark to all original recipients on the mesh"
-                  onclick="rebroadcastWaypoint(${wp.id})">Re-broadcast</button>
+                  title="Renvoyer ce repère à tous les destinataires d’origine sur le maillage"
+                  onclick="rebroadcastWaypoint(${wp.id})">Renvoyer</button>
           <button style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer"
-                  title="Edit this mark's name, icon, description, channel or recipients"
-                  onclick="openEditWaypointModal(${wp.id})">Edit</button>
+                  title="Modifier le nom, l’icône, la description, le canal ou les destinataires de ce repère"
+                  onclick="openEditWaypointModal(${wp.id})">Modifier</button>
           <button style="font-size:11px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--red);cursor:pointer"
-                  title="Delete this mark — sends expiry packet to the mesh so all nodes remove it"
-                  onclick="document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete this Mark from the mesh?',()=>deleteWaypoint(${wp.id}))">Supprimer</button>
+                  title="Supprimer ce repère — envoie un paquet d’expiration au maillage afin que tous les nœuds le suppriment"
+                  onclick="document.getElementById('confirm-ok').textContent='Supprimer';showConfirm('Supprimer ce repère du maillage ?',()=>deleteWaypoint(${wp.id}))">Supprimer</button>
         </div>
       </div>`;
     waypointsData[wp.id] = wp;
@@ -8336,16 +8336,16 @@ if (targetEl) {
       mBody.innerHTML = wps.length
         ? wps.sort((a,b) => (b.ts||0)-(a.ts||0)).map(wp => {
             const emoji = wp.marker_emoji || '📍';
-            const from  = wp.from_id === 'local' ? 'You' : escHtml(wp.from_id || '?');
+            const from  = wp.from_id === 'local' ? 'Vous' : escHtml(wp.from_id || '?');
             return `<div class="mp-item" onclick="flyToMark(${wp.id})">
               <span style="font-size:18px;line-height:1;flex-shrink:0">${escHtml(emoji)}</span>
               <div style="flex:1;min-width:0">
-                <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(wp.name||'Unnamed')}</div>
-                <div style="font-size:10px;color:var(--muted)">From: ${from}</div>
+                <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(wp.name||'Sans nom')}</div>
+                <div style="font-size:10px;color:var(--muted)">De : ${from}</div>
               </div>
-              <button onclick="event.stopPropagation();document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete \u201c${jsSafe(wp.name||'this mark')}\u201d from the mesh?',()=>deleteWaypoint(${wp.id}))"
+              <button onclick="event.stopPropagation();document.getElementById('confirm-ok').textContent='Supprimer';showConfirm('Delete \u201c${jsSafe(wp.name||'ce repère')}\u201d from the mesh?',()=>deleteWaypoint(${wp.id}))"
                 style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:3px;flex-shrink:0;line-height:1"
-                title="Delete mark">✕</button>
+                title="Supprimer le repère">✕</button>
             </div>`;
           }).join('')
         : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">Aucun marqueur pour le moment.</div>';
@@ -8361,15 +8361,15 @@ if (targetEl) {
             return `<div class="mp-item" onclick="flyToNote(${note.id})">
               <span style="font-size:18px;line-height:1;flex-shrink:0;opacity:0.75">${escHtml(emoji)}</span>
               <div style="flex:1;min-width:0">
-                <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(note.name||'Unnamed')}</div>
-                <div style="font-size:10px;color:var(--muted)">Private note</div>
+                <div style="font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escHtml(note.name||'Sans nom')}</div>
+                <div style="font-size:10px;color:var(--muted)">Note privée</div>
               </div>
               <button onclick="event.stopPropagation();openEditNoteModal(${note.id})"
                 style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:3px;flex-shrink:0;line-height:1"
-                title="Edit note">✎</button>
-              <button onclick="event.stopPropagation();document.getElementById('confirm-ok').textContent='Delete';showConfirm('Delete note \u201c${jsSafe(note.name||'this note')}\u201d?',()=>deleteNote(${note.id}))"
+                title="Modifier la note">✎</button>
+              <button onclick="event.stopPropagation();document.getElementById('confirm-ok').textContent='Supprimer';showConfirm('Delete note \u201c${jsSafe(note.name||'cette note')}\u201d?',()=>deleteNote(${note.id}))"
                 style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:3px;flex-shrink:0;line-height:1"
-                title="Delete note">✕</button>
+                title="Supprimer la note">✕</button>
             </div>`;
           }).join('')
         : '<div style="padding:8px 10px;font-size:11px;color:var(--muted)">Aucune note pour le moment.</div>';
@@ -8426,19 +8426,19 @@ if (targetEl) {
   const _rebcastTimers = {};
   async function rebroadcastWaypoint(wp_id) {
     const btn = document.getElementById(`wp-rebcast-${wp_id}`);
-    if (btn) { btn.textContent = 'Sending…'; btn.disabled = true; }
-    const resetBtn = () => { if (btn) { btn.textContent = 'Re-broadcast'; btn.style.color = ''; btn.disabled = false; } delete _rebcastTimers[wp_id]; };
+    if (btn) { btn.textContent = 'Envoi…'; btn.disabled = true; }
+    const resetBtn = () => { if (btn) { btn.textContent = 'Renvoyer'; btn.style.color = ''; btn.disabled = false; } delete _rebcastTimers[wp_id]; };
     try {
       const res = await fetch(BASE_PATH + `/api/waypoints/${wp_id}/rebroadcast`, {method: 'POST'});
       const data = await res.json().catch(() => ({}));
       if (btn) {
-        btn.textContent = data.ok ? 'Sent ✓' : (data.error || 'Failed');
+        btn.textContent = data.ok ? 'Envoyé ✓' : (data.error || 'Échec');
         btn.style.color = data.ok ? 'var(--green)' : 'var(--red)';
         clearTimeout(_rebcastTimers[wp_id]);
         _rebcastTimers[wp_id] = setTimeout(resetBtn, 2000);
       }
     } catch(e) {
-      if (btn) { btn.textContent = 'Error'; btn.style.color = 'var(--red)'; clearTimeout(_rebcastTimers[wp_id]); _rebcastTimers[wp_id] = setTimeout(resetBtn, 2000); }
+      if (btn) { btn.textContent = 'Erreur'; btn.style.color = 'var(--red)'; clearTimeout(_rebcastTimers[wp_id]); _rebcastTimers[wp_id] = setTimeout(resetBtn, 2000); }
     }
   }
 
@@ -8495,41 +8495,41 @@ if (targetEl) {
       ).join('')}</div>`
     ).join('');
 
-    openModal('Edit Mark', `
+    openModal('Modifier le repère', `
       <div style="display:flex;flex-direction:column;gap:10px;min-width:280px;max-width:360px">
         <div>
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Map marker</label>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Repère cartographique</label>
           <div style="display:flex;align-items:flex-start;gap:8px">
             <div id="wp-marker-preview" style="font-size:22px;min-width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--accent);border-radius:6px;flex-shrink:0">${initMarker}</div>
             <div style="display:flex;flex-direction:column;gap:3px">${markerRows}</div>
           </div>
         </div>
         <div>
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Name *</label>
-          <input id="wp-name-input" class="settings-input" placeholder="Name" maxlength="30"
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Nom *</label>
+          <input id="wp-name-input" class="settings-input" placeholder="Nom" maxlength="30"
                  style="width:100%;box-sizing:border-box" value="${escHtml(wp.name || '')}"
                  onfocus="_wpFocusedInput='name'"
                  onkeydown="if(event.key==='Enter')saveWaypoint()">
         </div>
         <div>
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Description</label>
-          <input id="wp-desc-input" class="settings-input" placeholder="Optional (max 80 chars)" maxlength="80"
+          <input id="wp-desc-input" class="settings-input" placeholder="Facultatif (80 caractères max.)" maxlength="80"
                  style="width:100%;box-sizing:border-box" value="${escHtml(rawDesc)}"
                  onfocus="_wpFocusedInput='desc'">
         </div>
         <div>
-          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Add to text</label>
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Ajouter au texte</label>
           <div style="display:flex;flex-direction:column;gap:3px">${textRows}</div>
         </div>
         <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;flex-direction:column;gap:8px">
           <div style="display:flex;align-items:center;gap:10px">
-            <span style="font-size:12px;color:var(--muted);white-space:nowrap">Channel</span>
+            <span style="font-size:12px;color:var(--muted);white-space:nowrap">Canal</span>
             <select id="wp-channel-select" style="padding:3px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:12px;flex:1">
               ${chOptions}
             </select>
           </div>
           <div style="display:flex;align-items:flex-start;gap:10px">
-            <span style="font-size:12px;color:var(--muted);white-space:nowrap;margin-top:4px">Send to</span>
+            <span style="font-size:12px;color:var(--muted);white-space:nowrap;margin-top:4px">Envoyer à</span>
             <div style="display:flex;flex-direction:column;gap:4px;flex:1">
               <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
                 <input type="radio" name="wp-dest" value="all" ${!isNode ? 'checked' : ''} onchange="wpToggleDest(this.value)"> All (broadcast)
@@ -8538,7 +8538,7 @@ if (targetEl) {
                 <input type="radio" name="wp-dest" value="node" ${isNode ? 'checked' : ''} onchange="wpToggleDest(this.value)"> Specific node
               </label>
               <div id="wp-node-wrap" style="display:${isNode ? 'block' : 'none'};margin-top:2px">
-                <input id="wp-node-search" class="settings-input" placeholder="Search node…" maxlength="40"
+                <input id="wp-node-search" class="settings-input" placeholder="Rechercher un nœud…" maxlength="40"
                        style="width:100%;box-sizing:border-box;font-size:12px"
                        oninput="wpFilterNodes(this.value)"
                        onblur="setTimeout(()=>{const r=document.getElementById('wp-node-results');if(r){r.style.display='none';r.innerHTML='';}},150)">
@@ -8569,8 +8569,8 @@ if (targetEl) {
     const useNode  = destRadio?.value === 'node' && _wpDestNode !== null;
     const dest_ids = useNode ? [_wpDestNode.id] : null;
     const status = document.getElementById('wp-send-status');
-    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Name is required.'; } return; }
-    if (status) { status.style.color='var(--muted)'; status.textContent='Saving…'; }
+    if (!name) { if (status) { status.style.color='var(--red)'; status.textContent='Le nom est obligatoire.'; } return; }
+    if (status) { status.style.color='var(--muted)'; status.textContent='Enregistrement…'; }
     try {
       const res = await fetch(BASE_PATH + `/api/waypoints/${_editWpId}`, {
         method: 'PUT', headers: {'Content-Type': 'application/json'},
@@ -8579,14 +8579,14 @@ if (targetEl) {
       });
       const data = await res.json().catch(() => ({}));
       if (data.ok) {
-        if (status) { status.style.color='var(--green)'; status.textContent = 'Saved!'; }
+        if (status) { status.style.color='var(--green)'; status.textContent = 'Enregistré !'; }
         _editWpId = null;
         setTimeout(closeModal, 800);
       } else {
-        if (status) { status.style.color='var(--red)'; status.textContent = data.error || 'Save failed'; }
+        if (status) { status.style.color='var(--red)'; status.textContent = data.error || 'Échec de l’enregistrement'; }
       }
     } catch(e) {
-      if (status) { status.style.color='var(--red)'; status.textContent='Network error'; }
+      if (status) { status.style.color='var(--red)'; status.textContent='Erreur réseau'; }
     }
   }
 
@@ -8623,9 +8623,9 @@ if (targetEl) {
       const statusHtml = m.sent
         ? `<span class="msg-status ${m.status || 'pending'}" data-msgid="${m.id}" style="font-size:10px">${m.status === 'delivered' ? '✓' : m.status === 'failed' ? '✗' : '·'}</span>`
         : '';
-      const logHtml = `<button onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Prefill TOC Log from this message" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:10px;padding:0 2px">Journal</button>`;
+      const logHtml = `<button onclick="event.stopPropagation();tocFromMtMessage('${jsSafe(m.id || m.pkt_id || '')}')" title="Préremplir le Journal TOC à partir de ce message" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:10px;padding:0 2px">Journal</button>`;
       return `<div style="display:flex;flex-direction:column;align-items:${m.sent ? 'flex-end' : 'flex-start'}">
-        <div style="font-size:10px;color:var(--muted);margin-bottom:2px">${m.sent ? 'You' : escHtml(m.from_name)} · ${t} ${statusHtml} ${logHtml}</div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:2px">${m.sent ? 'Vous' : escHtml(m.from_name)} · ${t} ${statusHtml} ${logHtml}</div>
         <div style="background:${m.sent ? 'var(--accent-dim)' : 'var(--bg3)'};border:1px solid ${m.sent ? 'var(--accent)' : 'var(--border)'};border-radius:6px;padding:5px 9px;font-size:12px;max-width:90%">${escHtml(m.text)}</div>
       </div>`;
     }).join('');
@@ -8647,7 +8647,7 @@ if (targetEl) {
         if (!r.ok) throw new Error(await r.text());
       } catch(e) { console.error('Map DM send failed:', e); }
     };
-    if (_silentMode) { showSilentConfirm('Sending is not possible while Silent Running is enabled.'); return; }
+    if (_silentMode) { showSilentConfirm('L’envoi est impossible lorsque le mode silencieux est activé.'); return; }
     await doSend();
   }
 
@@ -8731,7 +8731,7 @@ if (targetEl) {
       body.innerHTML = `
         <div class="tr-section">Route vers le nœud</div>
         <div class="tr-chain">${buildChain(d.route, d.snrTowards)}</div>
-        <div class="tr-section">Route back</div>
+        <div class="tr-section">Route retour</div>
         <div class="tr-chain">${buildChain(d.routeBack, d.snrBack)}</div>`;
       _lastTraceData = d;
       _activeMtRouteKey = _mtRouteKey(nodeId, trRadioId);
@@ -8775,7 +8775,7 @@ if (targetEl) {
       if (!r.ok) { body.innerHTML = `<div class="modal-error">${escHtml(d.error)}</div>`; return; }
       const row = (label, val) => val != null && val !== '' ? `<tr><td>${label}</td><td>${val}</td></tr>` : '';
       const snrC = v => v == null ? '—' : `<span class="${v >= 5 ? 'snr-good' : v >= -5 ? 'snr-ok' : 'snr-bad'}">${v} dB</span>`;
-      const battC = v => v == null ? '—' : `<span class="${v >= 60 ? 'battery-high' : v >= 30 ? 'battery-mid' : 'battery-low'}">${v === 101 ? '⚡ Charging' : v + '%'}</span>`;
+      const battC = v => v == null ? '—' : `<span class="${v >= 60 ? 'battery-high' : v >= 30 ? 'battery-mid' : 'battery-low'}">${v === 101 ? '⚡ En charge' : v + '%'}</span>`;
       const fmt2 = v => v != null ? v.toFixed(2) : null;
       const coordLink = (lat, lon) => lat != null && lon != null
         ? `<a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=14/${lat}/${lon}" target="_blank" style="color:var(--accent)">${lat.toFixed(5)}, ${lon.toFixed(5)}</a>`
@@ -8784,31 +8784,31 @@ if (targetEl) {
         `<div style="color:var(--yellow);font-size:11px;margin-bottom:8px">&#9888; Aucune réponse du nœud — affichage des données en cache</div>`;
       body.innerHTML = staleNote + `
         <table class="info-table">
-          <tr><td colspan="2" class="info-section">Identity</td></tr>
-          ${row('Long name', escHtml(d.long_name))}
-          ${row('Short name', escHtml(d.short_name))}
-          ${row('HW model', escHtml(d.hw_model))}
-          ${row('Role', escHtml(d.role))}
+          <tr><td colspan="2" class="info-section">Identité</td></tr>
+          ${row('Nom long', escHtml(d.long_name))}
+          ${row('Nom court', escHtml(d.short_name))}
+          ${row('Modèle matériel', escHtml(d.hw_model))}
+          ${row('Rôle', escHtml(d.role))}
           <tr><td colspan="2" class="info-section">Signal</td></tr>
           ${row('SNR', snrC(d.snr))}
           ${row('RSSI', d.rssi != null ? d.rssi + ' dBm' : null)}
-          ${row('Hops away', d.hops_away)}
-          ${row('Last seen', escHtml(d.last_heard))}
-          <tr><td colspan="2" class="info-section">Power</td></tr>
-          ${row('Battery', battC(d.battery))}
-          ${row('Voltage', d.voltage != null ? d.voltage.toFixed(2) + ' V' : null)}
-          ${row('Uptime', escHtml(d.uptime))}
+          ${row('Sauts', d.hops_away)}
+          ${row('Dernière activité', escHtml(d.last_heard))}
+          <tr><td colspan="2" class="info-section">Alimentation</td></tr>
+          ${row('Batterie', battC(d.battery))}
+          ${row('Tension', d.voltage != null ? d.voltage.toFixed(2) + ' V' : null)}
+          ${row('Temps de fonctionnement', escHtml(d.uptime))}
           <tr><td colspan="2" class="info-section">Radio</td></tr>
-          ${row('Ch utilization', d.channel_util != null ? d.channel_util.toFixed(1) + '%' : null)}
-          ${row('Air util TX', d.air_util_tx != null ? d.air_util_tx.toFixed(1) + '%' : null)}
-          <tr><td colspan="2" class="info-section">Location</td></tr>
-          ${row('Coordinates', coordLink(d.latitude, d.longitude))}
+          ${row('Utilisation du canal', d.channel_util != null ? d.channel_util.toFixed(1) + '%' : null)}
+          ${row('Utilisation radio TX', d.air_util_tx != null ? d.air_util_tx.toFixed(1) + '%' : null)}
+          <tr><td colspan="2" class="info-section">Position</td></tr>
+          ${row('Coordonnées', coordLink(d.latitude, d.longitude))}
           ${row('Altitude', d.altitude != null ? d.altitude + ' m' : null)}
           ${d.temperature != null || d.humidity != null || d.pressure != null
-            ? '<tr><td colspan="2" class="info-section">Environment</td></tr>' : ''}
-          ${row('Temperature', d.temperature != null ? fmt2(d.temperature) + ' °C' : null)}
-          ${row('Humidity', d.humidity != null ? fmt2(d.humidity) + '%' : null)}
-          ${row('Pressure', d.pressure != null ? fmt2(d.pressure) + ' hPa' : null)}
+            ? '<tr><td colspan="2" class="info-section">Environnement</td></tr>' : ''}
+          ${row('Température', d.temperature != null ? fmt2(d.temperature) + ' °C' : null)}
+          ${row('Humidité', d.humidity != null ? fmt2(d.humidity) + '%' : null)}
+          ${row('Pression', d.pressure != null ? fmt2(d.pressure) + ' hPa' : null)}
         </table>`;
     } catch(e) {
       clearInterval(panel._timer); panel._timer = null;
@@ -8839,7 +8839,7 @@ if (targetEl) {
     }
 
     async function loadTrail(hours) {
-      body.innerHTML = `<div style="color:var(--muted);font-size:12px">Loading trail…</div>`;
+      body.innerHTML = `<div style="color:var(--muted);font-size:12px">Chargement de la trace…</div>`;
       _clearTrail(nodeId);
       try {
         const r = await fetch(BASE_PATH + `/api/node/${encodeURIComponent(nodeId)}/gps_history?hours=${hours}`);
@@ -8873,9 +8873,9 @@ if (targetEl) {
         const span = newest - oldest;
         const spanStr = span < 3600 ? `${Math.round(span/60)}m` : span < 86400 ? `${(span/3600).toFixed(1)}h` : `${(span/86400).toFixed(1)}d`;
         body.innerHTML = `
-          <div style="font-size:11px;color:var(--muted);margin-bottom:6px">${pts.length} points · ${spanStr} span</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:6px">${pts.length} points · durée ${spanStr}</div>
           <div style="font-size:10px;color:var(--muted);margin-bottom:8px">
-            Blue = oldest &nbsp;→&nbsp; Green = most recent
+            Bleu = plus ancien Blue = oldest &nbsp;→&nbsp; Green = most recentnbsp;→Blue = oldest &nbsp;→&nbsp; Green = most recentnbsp; Vert = plus récent
           </div>
           ${renderPicker(hours)}`;
       } catch(e) {
@@ -9038,21 +9038,21 @@ if (targetEl) {
   function nodePopupHtml(n) {
     const distanceText = _mtNodeDistanceLabel(n);
     return `
-      <div class="map-popup-name">${escHtml(n.long_name)}${n.is_local ? '<span class="map-popup-local">YOU</span>' : ''}${mqttTag(n.via_mqtt)}</div>
-      <div><b>Short:</b> ${escHtml(n.short_name)}${n.hw_model ? ` &nbsp;<span style="color:var(--muted);font-size:10px">${escHtml(n.hw_model)}</span>` : ''}</div>
-      <div><b>SNR:</b> ${snrStr(n.snr)} &nbsp; <b>Battery:</b> ${battStr(n.battery)}</div>
-      <div><b>Hops:</b> ${n.hops_away ?? '—'} &nbsp; <b>Distance:</b> ${escHtml(distanceText)}</div>
-      <div><b>Last seen:</b> <span class="map-popup-lh" data-ts="${n.last_heard_ts || 0}">${n.last_heard_ts ? senseTimeAgo(n.last_heard_ts) : '—'}</span></div>
+      <div class="map-popup-name">${escHtml(n.long_name)}${n.is_local ? '<span class="map-popup-local">VOUS</span>' : ''}${mqttTag(n.via_mqtt)}</div>
+      <div><b>Court :</b> ${escHtml(n.short_name)}${n.hw_model ? ` &nbsp;<span style="color:var(--muted);font-size:10px">${escHtml(n.hw_model)}</span>` : ''}</div>
+      <div><b>SNR :</b> ${snrStr(n.snr)} &nbsp; <b>Batterie :</b> ${battStr(n.battery)}</div>
+      <div><b>Sauts :</b> ${n.hops_away ?? '—'} &nbsp; <b>Distance :</b> ${escHtml(distanceText)}</div>
+      <div><b>Dernière activité :</b> <span class="map-popup-lh" data-ts="${n.last_heard_ts || 0}">${n.last_heard_ts ? senseTimeAgo(n.last_heard_ts) : '—'}</span></div>
       <div style="color:var(--muted);font-size:11px;margin-top:2px">${n.latitude.toFixed(5)}, ${n.longitude.toFixed(5)}</div>
       <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
         <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(n.id)}')">Liste</button>
-        ${!n.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">DM</button>` : ''}
-        ${!n.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">TR</button>` : ''}
-        ${!n.is_local ? `<button class="map-popup-btn" title="Set position" onclick="openMapPos('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Pos</button>` : ''}
-        ${!n.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Info</button>` : ''}
-        <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(n.id)}')">Journal</button>
-        <button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Trail</button>
-        ${!n.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">Supprimer</button>` : ''}
+        ${!n.is_local ? `<button class="map-popup-btn" title="Envoyer un message direct" onclick="openMapDM('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">DM</button>` : ''}
+        ${!n.is_local ? `<button class="map-popup-btn" title="Traceroute vers ce nœud" onclick="openMapTR('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">TR</button>` : ''}
+        ${!n.is_local ? `<button class="map-popup-btn" title="Définir la position" onclick="openMapPos('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Pos</button>` : ''}
+        ${!n.is_local ? `<button class="map-popup-btn" title="Informations et paramètres du nœud" onclick="openMapInfo('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Info</button>` : ''}
+        <button class="map-popup-btn" title="Préremplir le Journal TOC à partir de ce nœud" onclick="tocFromMtNode('${jsSafe(n.id)}')">Journal</button>
+        <button class="map-popup-btn" title="Trace des déplacements GPS" onclick="openGpsTrail('${jsSafe(n.id)}','${jsSafe(n.long_name)}')">Trace</button>
+        ${!n.is_local ? `<button class="map-popup-btn danger" title="Supprimer de l’appareil" onclick="deleteNode('${jsSafe(n.id)}','${jsSafe(n.long_name)}','${jsSafe(n.radio_id || '')}')">Supprimer</button>` : ''}
       </div>`;
   }
 
@@ -9128,26 +9128,26 @@ if (targetEl) {
             iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -14]
           });
           const updatedPopup = `
-            <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">${group.length} nodes at this location</div>
+            <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">${group.length} nœuds à cet emplacement</div>
             <div style="color:var(--muted);font-size:11px;margin-bottom:10px">${group[0].latitude.toFixed(5)}, ${group[0].longitude.toFixed(5)} · ${escHtml(_mtNodeDistanceLabel(group[0]))}</div>
             ${group.map(x => `
               <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:6px">
-                <div class="map-popup-name" style="margin-bottom:2px">${escHtml(x.long_name)}${x.is_local ? '<span class="map-popup-local">YOU</span>' : ''}${x.hw_model ? `<span style="color:var(--muted);font-size:10px;font-weight:400;margin-left:5px">${escHtml(x.hw_model)}</span>` : ''}</div>
+                <div class="map-popup-name" style="margin-bottom:2px">${escHtml(x.long_name)}${x.is_local ? '<span class="map-popup-local">VOUS</span>' : ''}${x.hw_model ? `<span style="color:var(--muted);font-size:10px;font-weight:400;margin-left:5px">${escHtml(x.hw_model)}</span>` : ''}</div>
                 <div style="font-size:11px;color:var(--muted);margin-bottom:4px">
-                  <b>SNR:</b> ${snrStr(x.snr)} &nbsp; <b>Batt:</b> ${battStr(x.battery)} &nbsp; <b>Dist:</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Seen:</b> ${escHtml(x.last_heard || '—')}
+                  <b>SNR :</b> ${snrStr(x.snr)} &nbsp; <b>Batterie :</b> ${battStr(x.battery)} &nbsp; <b>Distance :</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Vu :</b> ${escHtml(x.last_heard || '—')}
                 </div>
                 <div style="display:flex;gap:4px;flex-wrap:wrap">
                   <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
-                  ${!x.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
-                  ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
-                  ${!x.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
-                  <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
-                  <button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Trail</button>
-                  ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Supprimer</button>` : ''}
+                  ${!x.is_local ? `<button class="map-popup-btn" title="Envoyer un message direct" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
+                  ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute vers ce nœud" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
+                  ${!x.is_local ? `<button class="map-popup-btn" title="Informations et paramètres du nœud" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
+                  <button class="map-popup-btn" title="Préremplir le Journal TOC à partir de ce nœud" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
+                  <button class="map-popup-btn" title="Trace des déplacements GPS" onclick="openGpsTrail('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Trace</button>
+                  ${!x.is_local ? `<button class="map-popup-btn danger" title="Supprimer de l’appareil" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Supprimer</button>` : ''}
                 </div>
               </div>`).join('')}`;
           clusterMarkers[k].setIcon(updatedIcon).setPopupContent(updatedPopup);
-          clusterMarkers[k].setTooltipContent(`${group.length} nodes`);
+          clusterMarkers[k].setTooltipContent(`${group.length} nœuds`);
           if (!mapLabels) clusterMarkers[k].closeTooltip();
           return;
         }
@@ -9163,26 +9163,26 @@ if (targetEl) {
           iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -14]
         });
         const clusterPopup = `
-          <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">${group.length} nodes at this location</div>
+          <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">${group.length} nœuds à cet emplacement</div>
           <div style="color:var(--muted);font-size:11px;margin-bottom:10px">${group[0].latitude.toFixed(5)}, ${group[0].longitude.toFixed(5)} · ${escHtml(_mtNodeDistanceLabel(group[0]))}</div>
           ${group.map(x => `
             <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:6px">
-              <div class="map-popup-name" style="margin-bottom:2px">${escHtml(x.long_name)}${x.is_local ? '<span class="map-popup-local">YOU</span>' : ''}${x.hw_model ? `<span style="color:var(--muted);font-size:10px;font-weight:400;margin-left:5px">${escHtml(x.hw_model)}</span>` : ''}</div>
+              <div class="map-popup-name" style="margin-bottom:2px">${escHtml(x.long_name)}${x.is_local ? '<span class="map-popup-local">VOUS</span>' : ''}${x.hw_model ? `<span style="color:var(--muted);font-size:10px;font-weight:400;margin-left:5px">${escHtml(x.hw_model)}</span>` : ''}</div>
               <div style="font-size:11px;color:var(--muted);margin-bottom:4px">
-                <b>SNR:</b> ${snrStr(x.snr)} &nbsp; <b>Batt:</b> ${battStr(x.battery)} &nbsp; <b>Dist:</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Seen:</b> ${escHtml(x.last_heard || '—')}
+                <b>SNR :</b> ${snrStr(x.snr)} &nbsp; <b>Batterie :</b> ${battStr(x.battery)} &nbsp; <b>Distance :</b> ${escHtml(_mtNodeDistanceLabel(x))} &nbsp; <b>Vu :</b> ${escHtml(x.last_heard || '—')}
               </div>
               <div style="display:flex;gap:4px;flex-wrap:wrap">
                 <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(x.id)}')">Liste</button>
-                ${!x.is_local ? `<button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
-                ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
-                ${!x.is_local ? `<button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
-                <button class="map-popup-btn" title="Prefill TOC Log from this node" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
-                ${!x.is_local ? `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Supprimer</button>` : ''}
+                ${!x.is_local ? `<button class="map-popup-btn" title="Envoyer un message direct" onclick="openMapDM('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">DM</button>` : ''}
+                ${!x.is_local ? `<button class="map-popup-btn" title="Traceroute vers ce nœud" onclick="openMapTR('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">TR</button>` : ''}
+                ${!x.is_local ? `<button class="map-popup-btn" title="Informations et paramètres du nœud" onclick="openMapInfo('${jsSafe(x.id)}','${jsSafe(x.long_name)}')">Info</button>` : ''}
+                <button class="map-popup-btn" title="Préremplir le Journal TOC à partir de ce nœud" onclick="tocFromMtNode('${jsSafe(x.id)}')">Journal</button>
+                ${!x.is_local ? `<button class="map-popup-btn danger" title="Supprimer de l’appareil" onclick="deleteNode('${jsSafe(x.id)}','${jsSafe(x.long_name)}','${jsSafe(x.radio_id || '')}')">Supprimer</button>` : ''}
               </div>
             </div>`).join('')}`;
         const marker = L.marker([group[0].latitude, group[0].longitude], {icon: clusterIcon})
           .bindPopup(clusterPopup, {maxWidth: 280, maxHeight: 400})
-          .bindTooltip(`${group.length} nodes`, { permanent: true, direction: 'right', className: 'map-label', offset: [8, 0] });
+          .bindTooltip(`${group.length} nœuds`, { permanent: true, direction: 'right', className: 'map-label', offset: [8, 0] });
         clusterMarkers[k] = marker.addTo(leafletMap);
         if (!mapLabels) marker.closeTooltip();
       }
@@ -9331,8 +9331,8 @@ if (targetEl) {
         <td>
           <select data-cmd="${name}" data-field="respond_via" onchange="saveBotConfig()"
             style="font-size:12px;padding:3px 8px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px">
-            <option value="same" ${c.respond_via === 'same' ? 'selected' : ''}>Same channel</option>
-            <option value="dm"   ${c.respond_via === 'dm'   ? 'selected' : ''}>DM to sender</option>
+            <option value="same" ${c.respond_via === 'same' ? 'selected' : ''}>Même canal</option>
+            <option value="dm"   ${c.respond_via === 'dm'   ? 'selected' : ''}>DM à l’expéditeur</option>
           </select>
         </td>
       </tr>
@@ -9367,7 +9367,7 @@ if (targetEl) {
 
   function testMotd() {
     const status = document.getElementById('motd-test-status');
-    status.textContent = 'Sending…';
+    status.textContent = 'Envoi…';
     const rid = _botRadioId();
     fetch(BASE_PATH + '/api/bot/motd/test', {
       method: 'POST',
@@ -9376,14 +9376,14 @@ if (targetEl) {
     })
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(d => { status.textContent = d.ok ? 'Sent!' : (d.error || 'Failed'); })
-      .catch(() => { status.textContent = 'Error'; });
+      .catch(() => { status.textContent = 'Erreur'; });
     setTimeout(() => { document.getElementById('motd-test-status').textContent = ''; }, 4000);
   }
 
   function saveBotConfig() {
     if (!botConfig) {
       const st = document.getElementById('bot-save-status');
-      if (st) { st.textContent = 'Still loading…'; setTimeout(() => { st.textContent = ''; }, 2000); }
+      if (st) { st.textContent = 'Chargement en cours…'; setTimeout(() => { st.textContent = ''; }, 2000); }
       return;
     }
     botConfig.enabled   = document.getElementById('bot-enable').checked;
@@ -9428,7 +9428,7 @@ if (targetEl) {
   function renderBotStatus() {
     const label = document.getElementById('bot-status-label');
     if (!label || !botConfig) return;
-    label.textContent = botConfig.enabled ? 'Bot active' : 'Bot disabled';
+    label.textContent = botConfig.enabled ? 'Bot actif' : 'Bot désactivé';
     label.style.color = botConfig.enabled ? 'var(--accent)' : 'var(--muted)';
   }
 
@@ -9459,23 +9459,23 @@ if (targetEl) {
   }
 
   // ── Pip map ────────────────────────────────────────────────────────────────
-  let pipOpen    = false;
+  let pipOuverte    = false;
   let pipInited  = false;
   let pipMap     = null;
   let pipMarkers = {};
 
   function updatePipVisibility() {
     const show = ['nodes', 'chat'].includes(currentTab);
-    document.getElementById('pip-btn').style.display  = (show && !pipOpen) ? 'flex'  : 'none';
-    document.getElementById('pip-wrap').style.display = (show &&  pipOpen) ? 'flex'  : 'none';
-    if (show && pipOpen) {
+    document.getElementById('pip-btn').style.display  = (show && !pipOuverte) ? 'flex'  : 'none';
+    document.getElementById('pip-wrap').style.display = (show &&  pipOuverte) ? 'flex'  : 'none';
+    if (show && pipOuverte) {
       if (!pipInited) initPipMap();
       else { setTimeout(() => pipMap && pipMap.invalidateSize(), 10); updatePipMarkers(allNodes); }
     }
   }
 
   function togglePip() {
-    pipOpen = !pipOpen;
+    pipOuverte = !pipOpen;
     updatePipVisibility();
   }
 
@@ -9674,15 +9674,15 @@ if (targetEl) {
         <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
           <div style="font-size:13px;font-weight:600">${escHtml(_crossRuleSummary(rule))}</div>
           <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:11px;color:${rule.enabled ? 'var(--accent)' : 'var(--muted)'}">${rule.enabled ? 'enabled' : 'disabled'}</span>
-            <button class="btn-secondary" style="font-size:11px;padding:3px 8px" onclick="crossToggleRule('${jsSafe(rule.id)}')">${rule.enabled ? 'Disable' : 'Enable'}</button>
-            <button class="btn-secondary" style="font-size:11px;padding:3px 8px" onclick="crossEditRule('${jsSafe(rule.id)}')">Edit</button>
+            <span style="font-size:11px;color:${rule.enabled ? 'var(--accent)' : 'var(--muted)'}">${rule.enabled ? 'enabled' : 'désactivé'}</span>
+            <button class="btn-secondary" style="font-size:11px;padding:3px 8px" onclick="crossToggleRule('${jsSafe(rule.id)}')">${rule.enabled ? 'Désactiver' : 'Activer'}</button>
+            <button class="btn-secondary" style="font-size:11px;padding:3px 8px" onclick="crossEditRule('${jsSafe(rule.id)}')">Modifier</button>
             <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red)" onclick="crossDeleteRule('${jsSafe(rule.id)}')">Supprimer</button>
           </div>
         </div>
         <div style="font-size:11px;color:var(--muted)">
-          ${escHtml(rule.mode === 'bridge' ? 'Bridge · both ways' : 'Mirror · one way')}
-          ${rule.sender_filter_mode !== 'any' ? ' · filtered senders' : ''}
+          ${escHtml(rule.mode === 'bridge' ? 'Pont · dans les deux sens' : 'Miroir · dans un seul sens')}
+          ${rule.sender_filter_mode !== 'any' ? ' · expéditeurs filtrés' : ''}
         </div>
       </div>
     `).join('');
@@ -9695,17 +9695,17 @@ if (targetEl) {
     const targetLbl = document.getElementById('cross-target-radio-label');
     const sourceChSel = document.getElementById('cross-source-channel');
     const targetChSel = document.getElementById('cross-target-channel');
-    if (targetLbl) targetLbl.textContent = `Target radio (${targetNet.toUpperCase()})`;
+    if (targetLbl) targetLbl.textContent = `Radio cible (${targetNet.toUpperCase()})`;
     const srcEntries = _crossRadioEntries(sourceNet);
     const dstEntries = _crossRadioEntries(targetNet);
     if (sourceSel) {
       sourceSel.innerHTML = srcEntries.length
-        ? srcEntries.map(r => `<option value="${escHtml(r.id)}" ${r.id === sourceRadioId ? 'selected' : ''}>${escHtml(r.name)}${r.status !== 'connected' ? ' (' + escHtml(r.status) + ')' : ''}</option>`).join('')
+        ? srcEntries.map(r => `<option value="${escHtml(r.id)}" ${r.id === sourceRadioId ? 'selected' : ''}>${escHtml(r.name)}${r.status !== 'connected' ? ' (' + escHtml(r.status === 'disconnected' ? 'déconnectée' : r.status) + ')' : ''}</option>`).join('')
         : '<option value="">Aucune radio</option>';
     }
     if (targetSel) {
       targetSel.innerHTML = dstEntries.length
-        ? dstEntries.map(r => `<option value="${escHtml(r.id)}" ${r.id === targetRadioId ? 'selected' : ''}>${escHtml(r.name)}${r.status !== 'connected' ? ' (' + escHtml(r.status) + ')' : ''}</option>`).join('')
+        ? dstEntries.map(r => `<option value="${escHtml(r.id)}" ${r.id === targetRadioId ? 'selected' : ''}>${escHtml(r.name)}${r.status !== 'connected' ? ' (' + escHtml(r.status === 'disconnected' ? 'déconnectée' : r.status) + ')' : ''}</option>`).join('')
         : '<option value="">Aucune radio</option>';
     }
     const srcRadio = sourceSel?.value || sourceRadioId || srcEntries[0]?.id || '';
@@ -9811,7 +9811,7 @@ if (targetEl) {
     if (_crossEditId === ruleId) crossNewRule();
     renderCrossRulesList();
     const statusEl = document.getElementById('cross-settings-status');
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     saveCrossSettings();
   }
 
@@ -9823,7 +9823,7 @@ if (targetEl) {
     _crossSettings.rules = rules;
     renderCrossRulesList();
     const statusEl = document.getElementById('cross-settings-status');
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     saveCrossSettings();
   }
 
@@ -9831,7 +9831,7 @@ if (targetEl) {
     const statusEl = document.getElementById('cross-settings-status');
     const rule = _crossRuleFromEditor();
     if (!rule.source_radio_id || !rule.target_radio_id) {
-      if (statusEl) statusEl.textContent = 'Select both source and target radios.';
+      if (statusEl) statusEl.textContent = 'Sélectionnez les radios source et cible.';
       return;
     }
     const rules = ((_crossSettings && _crossSettings.rules) || []).slice();
@@ -9841,7 +9841,7 @@ if (targetEl) {
     _crossSettings.rules = rules;
     renderCrossRulesList();
     _crossFillEditor(rule);
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     await saveCrossSettings();
   }
 
@@ -9870,7 +9870,7 @@ if (targetEl) {
       _crossLoadedOnce = true;
       if (statusEl) statusEl.textContent = '';
     } catch (e) {
-      if (statusEl) statusEl.textContent = 'Cross-system settings load failed.';
+      if (statusEl) statusEl.textContent = 'Échec du chargement des paramètres du pont inter-systèmes.';
       console.error('loadCrossSettings failed:', e);
     } finally {
       _crossLoading = false;
@@ -9880,7 +9880,7 @@ if (targetEl) {
   async function saveCrossSettings() {
     const statusEl = document.getElementById('cross-settings-status');
     const payload = { rules: (_crossSettings && _crossSettings.rules) || [] };
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     try {
       const r = await fetch(BASE_PATH + '/api/settings/cross', {
         method: 'POST',
@@ -9929,18 +9929,18 @@ if (targetEl) {
     const restartBtn = document.getElementById('settings-update-restart-btn');
     const running = !!state?.running;
     if (checkBtn) {
-      checkBtn.disabled = running;
-      if (!running) checkBtn.textContent = 'Check';
+      checkBtn.désactivé = running;
+      if (!running) checkBtn.textContent = 'Vérifier';
     }
     if (runBtn) {
-      let disabledReason = '';
-      if (!info?.managed) disabledReason = 'This install is not managed by Git.';
-      else if (info?.dirty) disabledReason = 'Local file changes are present. Update is blocked until they are committed or cleaned.';
-      else if ((info?.ahead || 0) > 0) disabledReason = `Local commits are ahead of GitHub by ${info.ahead}. Push or reconcile first.`;
-      else if (!info?.update_available) disabledReason = 'No GitHub update is available.';
-      runBtn.disabled = running || !!disabledReason;
-      runBtn.textContent = running ? 'Updating…' : 'Update';
-      runBtn.title = running ? 'Update is running.' : (disabledReason || 'Pull the latest OverMesh code from GitHub.');
+      let désactivéReason = '';
+      if (!info?.managed) désactivéReason = 'Cette installation n’est pas gérée par Git.';
+      else if (info?.dirty) désactivéReason = 'Des modifications locales sont présentes. La mise à jour est bloquée tant qu’elles ne sont pas validées ou nettoyées.';
+      else if ((info?.ahead || 0) > 0) désactivéReason = `Des commits locaux sont en avance sur GitHub de ${info.ahead}. Envoyez-les ou réconciliez d’abord l’historique.`;
+      else if (!info?.update_available) désactivéReason = 'Aucune mise à jour GitHub n’est disponible.';
+      runBtn.désactivé = running || !!désactivéReason;
+      runBtn.textContent = running ? 'Mise à jour…' : 'Mettre à jour';
+      runBtn.title = running ? 'Mise à jour en cours.' : (désactivéReason || 'Récupérer la dernière version du code OverMesh depuis GitHub.');
     }
     if (restartBtn) restartBtn.style.display = state?.ok && /Restart required/i.test(state?.message || '') ? '' : 'none';
   }
@@ -9957,19 +9957,19 @@ if (targetEl) {
       return;
     }
     if (!info.managed) {
-      summary.innerHTML = `<span style="color:var(--muted)">${escHtml(info.error || 'This install is not managed by Git.')}</span>`;
+      summary.innerHTML = `<span style="color:var(--muted)">${escHtml(info.error || 'Cette installation n’est pas gérée par Git.')}</span>`;
       _updateSetButtons(info, state);
       return;
     }
     const parts = [
       `Version <code>${escHtml(info.version || '0.0.0')}</code>`,
       `Build <code>${escHtml(info.commit || '?')}</code>`,
-      info.remote_commit ? `GitHub <code>${escHtml(info.remote_commit)}</code>` : 'GitHub unknown',
+      info.remote_commit ? `GitHub <code>${escHtml(info.remote_commit)}</code>` : 'GitHub inconnu',
     ];
     if (info.dirty) {
-      parts.push('<span style="color:var(--red)">local changes present</span>');
+      parts.push('<span style="color:var(--red)">modifications locales présentes</span>');
       const dirtyLines = (info.dirty_summary || []).slice(0, 5).map(x => escHtml(x)).join('<br>');
-      if (dirtyLines) parts.push(`<span style="color:var(--muted)">Changed:<br>${dirtyLines}</span>`);
+      if (dirtyLines) parts.push(`<span style="color:var(--muted)">Modifications :<br>${dirtyLines}</span>`);
     } else if ((info.ahead || 0) > 0) {
       parts.push(`<span style="color:var(--yellow)">ahead by ${info.ahead}</span>`);
     } else if (info.update_available) {
@@ -9995,10 +9995,10 @@ if (targetEl) {
     const checkBtn = btn || document.getElementById('settings-update-check-btn');
     const summary = document.getElementById('settings-update-summary');
     if (checkBtn && fetchRemote) {
-      checkBtn.disabled = true;
-      checkBtn.textContent = 'Checking…';
+      checkBtn.désactivé = true;
+      checkBtn.textContent = 'Vérification…';
     }
-    if (summary && fetchRemote) summary.innerHTML = '<span style="color:var(--muted)">Checking GitHub…</span>';
+    if (summary && fetchRemote) summary.innerHTML = '<span style="color:var(--muted)">Vérification de GitHub…</span>';
     try {
       const r = await fetch(BASE_PATH + `/api/settings/update/status${fetchRemote ? '?fetch=1' : ''}`);
       const data = await r.json().catch(() => ({}));
@@ -10011,24 +10011,24 @@ if (targetEl) {
         clearInterval(_settingsUpdatePoll);
         _settingsUpdatePoll = null;
       }
-      if (fetchRemote && checkBtn) btnFeedback(checkBtn, '✓ Checked', 2000);
+      if (fetchRemote && checkBtn) btnFeedback(checkBtn, '✓ Vérifié', 2000);
     } catch(e) {
       _renderUpdateStatus({error: String(e.message || e)});
-      if (checkBtn) { checkBtn.textContent = 'Check'; checkBtn.disabled = false; }
+      if (checkBtn) { checkBtn.textContent = 'Vérifier'; checkBtn.désactivé = false; }
     } finally {
-      if (!fetchRemote && checkBtn) { checkBtn.textContent = 'Check'; checkBtn.disabled = false; }
+      if (!fetchRemote && checkBtn) { checkBtn.textContent = 'Vérifier'; checkBtn.désactivé = false; }
     }
   }
 
   async function runOverMeshUpdate() {
     await settingsLoadUpdateStatus(false);
     const runBtn = document.getElementById('settings-update-run-btn');
-    if (runBtn?.disabled) {
-      showAlert(runBtn.title || 'Update is currently unavailable.');
+    if (runBtn?.désactivé) {
+      showAlert(runBtn.title || 'La mise à jour est actuellement indisponible.');
       return;
     }
-    document.getElementById('confirm-ok').textContent = 'Update';
-    showConfirm('Update OverMesh now? Local changes will block the update, and a restart will be required after a successful pull.', async () => {
+    document.getElementById('confirm-ok').textContent = 'Mettre à jour';
+    showConfirm('Mettre à jour OverMesh maintenant ? Les modifications locales bloqueront la mise à jour et un redémarrage sera nécessaire après une récupération réussie.', async () => {
       try {
         const r = await fetch(BASE_PATH + '/api/settings/update/run', {method: 'POST'});
         const data = await r.json().catch(() => ({}));
@@ -10046,7 +10046,7 @@ if (targetEl) {
     const input = document.getElementById('settings-node-cleanup-days');
     const days = parseInt(input?.value, 10);
     if (!Number.isFinite(days) || days < 1) {
-      showAlert('Enter a number of days (1 or more).');
+      showAlert('Entrez un nombre de jours (1 ou plus).');
       return;
     }
     if (btn) btn.disabled = true;
@@ -10077,10 +10077,10 @@ if (targetEl) {
     const list = document.getElementById('node-cleanup-list');
     const empty = !nodes.length;
     summary.textContent = empty
-      ? `Nothing has been silent for more than ${days} day${days === 1 ? '' : 's'}.`
-      : `${nodes.length} node${nodes.length === 1 ? '' : 's'} not heard from in over ${days} day${days === 1 ? '' : 's'}. All are selected — deselect any you want to keep. Your own node and favourites are never listed.`;
+      ? `Aucun nœud n’est resté silencieux pendant plus de ${days} jour${days === 1 ? '' : 's'}.`
+      : `${nodes.length} nœud${nodes.length === 1 ? '' : 's'} non entendu${nodes.length === 1 ? '' : 's'} depuis plus de ${days} jour${days === 1 ? '' : 's'}. Tous sont sélectionnés — désélectionnez ceux que vous souhaitez conserver. Votre propre nœud et vos favoris ne sont jamais listés.`;
     list.innerHTML = empty
-      ? `<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Nothing to remove.</div>`
+      ? `<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aucun nœud à supprimer.</div>`
       : nodes.map(n => `
         <label style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-bottom:1px solid var(--border);cursor:pointer">
           <input type="checkbox" class="node-cleanup-cb" checked style="margin-top:3px"
@@ -10091,11 +10091,11 @@ if (targetEl) {
               ${_nodeCleanupBadge(n.network)}
               <span style="font-size:13px;color:var(--text)">${escHtml(n.long_name)} <span style="color:var(--muted)">(${escHtml(n.short_name)})</span></span>
             </span>
-            <span style="font-size:11px;color:var(--muted)">${escHtml(n.id)} · ${escHtml(n.radio_name)} · last heard ${escHtml(n.last_heard)}</span>
+            <span style="font-size:11px;color:var(--muted)">${escHtml(n.id)} · ${escHtml(n.radio_name)} · dernière activité ${escHtml(n.last_heard)}</span>
           </span>
         </label>`).join('');
     // Disable the delete buttons when there is nothing to act on.
-    document.querySelectorAll('#node-cleanup-modal .node-cleanup-del').forEach(b => b.disabled = empty);
+    document.querySelectorAll('#node-cleanup-modal .node-cleanup-del').forEach(b => b.désactivé = empty);
     document.getElementById('node-cleanup-modal').classList.add('open');
     _updateNodeCleanupCount();
   }
@@ -10104,9 +10104,9 @@ if (targetEl) {
     const total = document.querySelectorAll('.node-cleanup-cb').length;
     const sel = document.querySelectorAll('.node-cleanup-cb:checked').length;
     const el = document.getElementById('node-cleanup-count');
-    if (el) el.textContent = total ? `${sel} of ${total} selected` : '';
+    if (el) el.textContent = total ? `${sel} sur ${total} sélectionnés` : '';
     const selBtn = document.getElementById('node-cleanup-del-selected');
-    if (selBtn) selBtn.disabled = sel === 0;
+    if (selBtn) selBtn.désactivé = sel === 0;
   }
 
   let _nodeCleanupBusy = false;
@@ -10131,7 +10131,7 @@ if (targetEl) {
     const chosen = (mode === 'all' ? cbs : cbs.filter(cb => cb.checked))
       .map(cb => ({id: cb.dataset.id, radio_id: cb.dataset.radio, network: cb.dataset.network}));
     if (!chosen.length) {
-      showAlert(mode === 'all' ? 'There is nothing to delete.' : 'Nothing is selected.');
+      showAlert(mode === 'all' ? 'Il n’y a rien à supprimer.' : 'Aucun élément n’est sélectionné.');
       return;
     }
     const mt = chosen.filter(c => c.network === 'mt').map(c => ({id: c.id, radio_id: c.radio_id}));
@@ -10153,11 +10153,11 @@ if (targetEl) {
 
     let done = 0;
     const setProgress = () => {
-      if (countEl) countEl.textContent = `Deleting ${done} / ${total}…`;
+      if (countEl) countEl.textContent = `Suppression de ${done} / ${total}…`;
       if (progBar) progBar.style.width = `${total ? Math.round((done / total) * 100) : 0}%`;
     };
     const restoreButtons = () => {
-      [cancelBtn, delAll, delSel].forEach(b => { if (b) b.disabled = false; });
+      [cancelBtn, delAll, delSel].forEach(b => { if (b) b.désactivé = false; });
       if (activeBtn) activeBtn.innerHTML = prevLabel;
       if (progWrap) progWrap.style.display = 'none';
       if (progBar) progBar.style.width = '0%';
@@ -10165,7 +10165,7 @@ if (targetEl) {
     };
 
     _nodeCleanupBusy = true;
-    [cancelBtn, delAll, delSel].forEach(b => { if (b) b.disabled = true; });
+    [cancelBtn, delAll, delSel].forEach(b => { if (b) b.désactivé = true; });
     if (activeBtn) activeBtn.innerHTML = '<span class="node-cleanup-spinner"></span>Deleting…';
     if (progWrap) progWrap.style.display = 'block';
     if (countEl) countEl.classList.add('busy');
@@ -10198,7 +10198,7 @@ if (targetEl) {
       });
       _nodeCleanupBusy = false;
       restoreButtons();
-      showToast('Node cleanup', removed ? `Removed ${removed} node${removed === 1 ? '' : 's'}.` : 'Nothing was removed.', 'node');
+      showToast('Nettoyage des nœuds', removed ? `${removed} nœud${removed === 1 ? '' : 's'} supprimé${removed === 1 ? '' : 's'}.` : 'Aucun élément n’a été supprimé.', 'node');
       closeNodeCleanupModal();
       loadLive();
       renderLive();
@@ -10287,10 +10287,10 @@ if (targetEl) {
     }
     const coords = _normalizeCoordPair(latRaw, lonRaw);
     if (!coords) {
-      omManualPosStatus('Invalid coordinates. Use the map picker or valid lat/lon values.', false);
+      omManualPosStatus('Coordonnées invalides. Utilisez le sélecteur de carte ou des valeurs latitude/longitude valides.', false);
       return;
     }
-    omManualPosStatus('Saving…');
+    omManualPosStatus('Enregistrement…');
     fetch(BASE_PATH + '/api/settings/app', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -10299,14 +10299,14 @@ if (targetEl) {
       .then(() => {
         _setOmManualPos(coords.lat, coords.lon);
         _applyOmManualInputs();
-        omManualPosStatus('Saved. OM will use this position when GPS has no live fix.', true);
-        btnFeedback(btn, '✓ Saved');
+        omManualPosStatus('Enregistré. OM utilisera cette position lorsqu’aucune position GPS en temps réel n’est disponible.', true);
+        btnFeedback(btn, '✓ Enregistré');
       })
       .catch(e => omManualPosStatus(String(e.message || e), false));
   }
 
   function clearOmManualPosition(btn) {
-    omManualPosStatus('Clearing…');
+    omManualPosStatus('Effacement…');
     fetch(BASE_PATH + '/api/settings/app', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -10315,8 +10315,8 @@ if (targetEl) {
       .then(() => {
         _setOmManualPos(null, null);
         _applyOmManualInputs();
-        omManualPosStatus('Cleared. OM will fall back to GPS or radio positions.', true);
-        btnFeedback(btn, '✓ Cleared');
+        omManualPosStatus('Effacé. OM utilisera les positions GPS ou radio comme solution de secours.', true);
+        btnFeedback(btn, '✓ Effacé');
       })
       .catch(e => omManualPosStatus(String(e.message || e), false));
   }
@@ -10407,7 +10407,7 @@ if (targetEl) {
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(data => {
         const sel = document.getElementById('gps-port-select');
-        sel.innerHTML = '<option value="">— select port —</option>';
+        sel.innerHTML = '<option value="">— sélectionner un port —</option>';
         (data.ports || []).forEach(p => {
           const opt = document.createElement('option');
           opt.value = p.device;
@@ -10433,13 +10433,13 @@ if (targetEl) {
       _localGpsPos = null;
       if (_showPolarGrid) _drawPolarGrid();
       fixEl.style.color = 'var(--muted)';
-      fixEl.textContent = '● Disabled';
+      fixEl.textContent = '● Désactivé';
       if (satsEl) satsEl.textContent = '—';
       if (latEl)  latEl.textContent  = '—';
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.disabled = true;
+      if (gpsBtn) gpsBtn.désactivé = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10447,13 +10447,13 @@ if (targetEl) {
       _localGpsPos = null;
       if (_showPolarGrid) _drawPolarGrid();
       fixEl.style.color = 'var(--yellow, #facc15)';
-      fixEl.textContent = '● Dongle missing';
+      fixEl.textContent = '● Dongle GPS absent';
       if (satsEl) satsEl.textContent = '0';
       if (latEl)  latEl.textContent  = '—';
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.disabled = true;
+      if (gpsBtn) gpsBtn.désactivé = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10461,13 +10461,13 @@ if (targetEl) {
       _localGpsPos = null;
       if (_showPolarGrid) _drawPolarGrid();
       fixEl.style.color = 'var(--yellow, #facc15)';
-      fixEl.textContent = '● Error';
+      fixEl.textContent = '● Erreur';
       if (satsEl) satsEl.textContent = '0';
       if (latEl)  latEl.textContent  = '—';
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.disabled = true;
+      if (gpsBtn) gpsBtn.désactivé = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10481,7 +10481,7 @@ if (targetEl) {
       if (lonEl)  lonEl.textContent  = '—';
       if (altEl)  altEl.textContent  = '—';
       if (speedEl) speedEl.textContent = '—';
-      if (gpsBtn) gpsBtn.disabled = true;
+      if (gpsBtn) gpsBtn.désactivé = true;
       _gpsRemoveMarker();
       return;
     }
@@ -10490,13 +10490,13 @@ if (targetEl) {
     _localGpsPos = hasFix ? {lat: pos.lat, lon: pos.lon} : null;
     if (_showPolarGrid) _drawPolarGrid();
     fixEl.style.color = hasFix ? 'var(--accent)' : 'var(--yellow, #facc15)';
-    fixEl.textContent  = hasFix ? '● Fix' : '● No fix';
+    fixEl.textContent  = hasFix ? '● Position GPS valide' : '● Pas de position GPS';
     if (satsEl) satsEl.textContent = pos.sats != null ? pos.sats : '—';
     if (latEl)  latEl.textContent  = pos.lat  != null ? pos.lat.toFixed(6)  : '—';
     if (lonEl)  lonEl.textContent  = pos.lon  != null ? pos.lon.toFixed(6)  : '—';
     if (altEl)  altEl.textContent  = pos.alt  != null ? pos.alt + ' m'      : '—';
     if (speedEl) speedEl.textContent = pos.speed != null ? pos.speed.toFixed(1) + ' m/s' : '—';
-    if (gpsBtn) gpsBtn.disabled = !hasFix;
+    if (gpsBtn) gpsBtn.désactivé = !hasFix;
     if (hasFix) {
       _gpsPlaceMarker(pos.lat, pos.lon, pos.alt, pos.sats);
       if (mapLocked && leafletMap) leafletMap.panTo([pos.lat, pos.lon], { animate: true, duration: 0.6 });
@@ -10506,7 +10506,7 @@ if (targetEl) {
   function _gpsPlaceMarker(lat, lon, alt, sats) {
     if (!leafletMap) return;
     const icon    = makeGpsIcon();
-    const popup   = `<div style="font-size:13px"><b>📡 GPS Receiver</b><br>
+    const popup   = `<div style="font-size:13px"><b>📡 Récepteur GPS</b><br>
       <span style="color:var(--muted);font-size:11px">${lat.toFixed(6)}, ${lon.toFixed(6)}${alt != null ? ' · ' + alt + 'm' : ''}${sats ? ' · ' + sats + ' sats' : ''}</span></div>`;
     if (_gpsMarker) {
       _gpsMarker.setLatLng([lat, lon]).setIcon(icon).setPopupContent(popup);
@@ -10535,7 +10535,7 @@ if (targetEl) {
     const push_interval = Math.max(10, parseInt(document.getElementById('gps-push-interval-val').value || 30)
                           * parseInt(document.getElementById('gps-push-interval-unit').value || 1));
     const statusEl   = document.getElementById('gps-status');
-    statusEl.textContent = 'Saving…';
+    statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + '/api/settings/gps', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -10543,7 +10543,7 @@ if (targetEl) {
                             auto_push, precision, precision_meters: precMeters, push_interval}),
     }).then(r => r.ok ? r.json() : r.json().then(d => { throw new Error(d.error || `HTTP ${r.status}`); }))
       .then((d) => {
-        statusEl.textContent = d.warning || (enabled ? '✓ GPS enabled' : '✓ Saved');
+        statusEl.textContent = d.warning || (enabled ? '✓ GPS activé' : '✓ Enregistré');
         setTimeout(() => { statusEl.textContent = ''; }, 2000);
         loadGpsSettings();
       })
@@ -10556,7 +10556,7 @@ if (targetEl) {
       .then(r => r.json())
       .then(d => {
         if (!d.fix || d.lat == null || d.lon == null) {
-          if (statusEl) statusEl.textContent = '✗ No GPS fix available';
+          if (statusEl) statusEl.textContent = '✗ Aucune position GPS disponible';
           return;
         }
         const cb = document.getElementById('node-cfg-fixed-pos');
@@ -10564,21 +10564,21 @@ if (targetEl) {
         document.getElementById('node-cfg-fixed-lat').value = d.lat.toFixed(6);
         document.getElementById('node-cfg-fixed-lon').value = d.lon.toFixed(6);
         if (d.alt != null) document.getElementById('node-cfg-fixed-alt').value = d.alt;
-        if (statusEl) statusEl.textContent = `✓ Filled from GPS (${d.sats ?? 0} sats) — review and Save`;
+        if (statusEl) statusEl.textContent = `✓ Rempli depuis le GPS (${d.sats ?? 0} sats) — review and Save`;
         btnFeedback(btn, '✓ Filled');
       })
-      .catch(() => { if (statusEl) statusEl.textContent = '✗ Failed to read GPS data'; });
+      .catch(() => { if (statusEl) statusEl.textContent = '✗ Échec de lecture des données GPS'; });
   }
 
   function gpsPushToNode() {
     const statusEl = document.getElementById('gps-push-status');
-    statusEl.textContent = 'Sending…';
+    statusEl.textContent = 'Envoi…';
     fetch(BASE_PATH + '/api/gps/push', {method: 'POST'})
       .then(r => r.json().then(d => ({ok: r.ok, d})))
       .then(({ok, d}) => {
         if (!ok) { statusEl.textContent = `✗ ${escHtml(d.error || 'Échec de la requête')}`; return; }
         const n = d.pushed ? d.pushed.length : 0;
-        statusEl.textContent = n ? `✓ Sent to ${n} node(s)` : '✓ Sent (no nodes connected)';
+        statusEl.textContent = n ? `✓ Envoyé à ${n} nœud(s)` : '✓ Envoyé (aucun nœud connecté)';
         setTimeout(() => { statusEl.textContent = ''; }, 3000);
       })
       .catch(e => { statusEl.textContent = `✗ ${escHtml(String(e))}`; });
@@ -10596,18 +10596,18 @@ if (targetEl) {
           <span class="status-dot ${dot}"></span>
           <span class="radio-row-name">${escHtml(n.name)}</span>
           <span class="radio-row-port" title="${escHtml(n.usb_serial || n.port)}">${escHtml(n.usb_serial ? n.port + ' ⬡' : n.port)}</span>
-          <span class="radio-row-status" style="${!n.enabled ? 'color:var(--muted)' : ''}">${n.enabled ? n.status : 'disabled'}</span>
+          <span class="radio-row-status" style="${!n.enabled ? 'color:var(--muted)' : ''}">${n.enabled ? n.status : 'désactivé'}</span>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;${n.enabled ? '' : 'color:var(--accent);border-color:var(--accent)'}"
-            title="${n.enabled ? 'Pause scanning for this device — keeps config and message history intact' : 'Resume scanning and connecting to this device'}"
-            onclick="settingsToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Disable' : 'Enable'}</button>
+            title="${n.enabled ? 'Mettre en pause l’analyse de ce périphérique — conserve la configuration et l’historique des messages' : 'Reprendre l’analyse et la connexion à ce périphérique'}"
+            onclick="settingsToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Désactiver' : 'Activer'}</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Effacer l’historique des messages de cette radio"
             onclick="settingsMtClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer l’historique</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
-            title="Remove this radio from OverMesh — config deleted, message history kept on disk"
-            onclick="settingsRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Remove</button>
+            title="Supprimer cette radio d’OverMesh — configuration supprimée, historique des messages conservé sur le disque"
+            onclick="settingsRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Supprimer</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red);margin-left:4px"
-            title="Permanently delete this radio and wipe all its message history — cannot be undone"
+            title="Supprimer définitivement cette radio et effacer tout son historique de messages — cette action est irréversible"
             onclick="settingsDeleteNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Supprimer</button>
         </div>`;
       }).join('');
@@ -10647,19 +10647,19 @@ if (targetEl) {
     const name = document.getElementById('settings-node-name').value.trim();
     const err  = document.getElementById('settings-add-error');
     err.textContent = '';
-    if (!name) { err.textContent = 'Enter a name.'; return; }
+    if (!name) { err.textContent = 'Entrez un nom.'; return; }
     let body = { name, type: _addNodeType };
     if (_addNodeType === 'tcp') {
       const host     = document.getElementById('settings-tcp-host').value.trim();
       const tcp_port = parseInt(document.getElementById('settings-tcp-port').value.trim()) || 4403;
-      if (!host) { err.textContent = 'Enter an IP address or hostname.'; return; }
+      if (!host) { err.textContent = 'Entrez une adresse IP ou un nom d’hôte.'; return; }
       body.host     = host;
       body.tcp_port = tcp_port;
     } else {
       const sel  = document.getElementById('settings-port-select');
       const val  = sel.value;
       const port = sel.options[sel.selectedIndex]?.dataset?.port || val;
-      if (!val) { err.textContent = 'Select a device.'; return; }
+      if (!val) { err.textContent = 'Sélectionnez un périphérique.'; return; }
       const isSerial = val && !val.startsWith('/');
       body.usb_serial = isSerial ? val : '';
       body.port       = port;
@@ -10692,8 +10692,8 @@ if (targetEl) {
   }
 
   function settingsRemoveNode(id, name) {
-    document.getElementById('confirm-ok').textContent = 'Remove';
-    showConfirm(`Remove radio "${escHtml(name)}"?`, () => {
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
+    showConfirm(`Supprimer la radio "${escHtml(name)}"?`, () => {
       fetch(BASE_PATH + `/api/settings/nodes/${id}/remove`, {method: 'POST'})
         .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
           if (data.error) { showAlert(data.error); return; }
@@ -10703,8 +10703,8 @@ if (targetEl) {
   }
 
   function settingsDeleteNode(id, name) {
-    document.getElementById('confirm-ok').textContent = 'Delete';
-    showConfirm(`DELETE "${escHtml(name)}" and wipe all message history? This cannot be undone.`, () => {
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
+    showConfirm(`SUPPRIMER « ${escHtml(name)} » et effacer tout l’historique des messages ? Cette action est irréversible.`, () => {
       fetch(BASE_PATH + `/api/settings/nodes/${id}/delete`, {method: 'POST'})
         .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
           if (data.error) { showAlert(data.error); return; }
@@ -10717,17 +10717,17 @@ if (targetEl) {
     // Build channel options from known channels for this radio
     const nodeList = Object.values(lastStatus || {}).filter(n => n.radio_id === id || n.node_id === id);
     const channels = [...new Set((nodeList || []).map(n => n.channel).filter(c => c != null))].sort();
-    let opts = `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="mtclrch" value="all" checked> All messages</label>`;
+    let opts = `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="mtclrch" value="all" checked>Tous les messages</label>`;
     for (const ch of channels) {
-      opts += `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="mtclrch" value="${ch}"> Channel ${ch}</label>`;
+      opts += `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="mtclrch" value="${ch}">Canal ${ch}</label>`;
     }
     // Always show at least channels 0–7 as options
     if (!channels.length) {
       for (let i = 0; i <= 7; i++) {
-        opts += `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="mtclrch" value="${i}"> Channel ${i}</label>`;
+        opts += `<label style="display:block;margin:4px 0;cursor:pointer"><input type="radio" name="mtclrch" value="${i}">Canal ${i}</label>`;
       }
     }
-    document.getElementById('confirm-ok').textContent = 'Clear';
+    document.getElementById('confirm-ok').textContent = 'Effacer';
     showConfirm(`<b>Effacer l’historique de ${escHtml(name)}</b><br><br>${opts}`, () => {
       const picked = document.querySelector('input[name="mtclrch"]:checked');
       const val = picked ? picked.value : 'all';
@@ -10838,7 +10838,7 @@ if (targetEl) {
         _mcMergeMessages(d.messages || [], { silent: true });
         if (currentTab === 'chat' && chatNetwork === 'mc') renderMcMessages();
       })
-      .catch(e => console.warn('MC message archive load failed:', e));
+      .catch(e => console.warn('Échec du chargement de l’archive des messages MC :', e));
   }
   function _mcLocalMsgId() {
     return `mc-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -10888,25 +10888,25 @@ if (targetEl) {
       });
       if (best > 0) scored.push({score: best, entry});
     });
-    if (!scored.length) return { error: `${label} "${raw}" not found.` };
+    if (!scored.length) return { error: `${label} "${raw}" introuvable.` };
     scored.sort((a, b) => b.score - a.score || String(a.entry.display || '').localeCompare(String(b.entry.display || '')));
     if (scored.length > 1 && scored[0].score === scored[1].score) {
       const names = scored.slice(0, 3).map(x => x.entry.display).join(', ');
-      return { error: `${label} "${raw}" is ambiguous: ${names}` };
+      return { error: `${label} "${raw}" est ambigu : ${names}` };
     }
     return scored[0].entry;
   }
 
   function _resolveMtCommandTarget(token, radioId = null) {
-    if (!token) return { error: 'Missing MT target.' };
+    if (!token) return { error: 'Cible MT manquante.' };
     if (token.startsWith('#')) {
       const ch = parseInt(token.slice(1), 10);
-      if (!Number.isInteger(ch) || ch < 0 || ch > 7) return { error: 'MT channel must be 0-7.' };
+      if (!Number.isInteger(ch) || ch < 0 || ch > 7) return { error: 'Le canal MT doit être compris entre 0 et 7.' };
       return { kind: 'channel', channel: ch };
     }
-    if (!token.startsWith('@')) return { error: 'MT target must start with @ or #.' };
+    if (!token.startsWith('@')) return { error: 'La cible MT doit commencer par @ ou #.' };
     const raw = token.slice(1).trim();
-    if (!raw) return { error: 'Missing MT target name.' };
+    if (!raw) return { error: 'Nom de cible MT manquant.' };
     const entries = (allNodes || [])
       .filter(n => !radioId || n.radio_id === radioId)
       .map(n => ({
@@ -10921,15 +10921,15 @@ if (targetEl) {
   }
 
   function _resolveMcCommandTarget(token) {
-    if (!token) return { error: 'Missing MC target.' };
+    if (!token) return { error: 'Cible MC manquante.' };
     if (token.startsWith('#')) {
       const ch = parseInt(token.slice(1), 10);
-      if (!Number.isInteger(ch) || ch < 0 || ch > 7) return { error: 'MC channel must be 0-7.' };
+      if (!Number.isInteger(ch) || ch < 0 || ch > 7) return { error: 'Le canal MC doit être compris entre 0 et 7.' };
       return { kind: 'channel', channel: ch };
     }
-    if (!token.startsWith('@')) return { error: 'MC target must start with @ or #.' };
+    if (!token.startsWith('@')) return { error: 'La cible MC doit commencer par @ ou #.' };
     const raw = token.slice(1).trim();
-    if (!raw) return { error: 'Missing MC target name.' };
+    if (!raw) return { error: 'Nom de cible MC manquant.' };
     const entries = [];
     const radios = activeMcRadioId ? [activeMcRadioId, ...Object.keys(mcContacts).filter(id => id !== activeMcRadioId)] : Object.keys(mcContacts);
     for (const rid of radios) {
@@ -11023,7 +11023,7 @@ if (targetEl) {
     if (!CROSS_SYSTEM_ENABLED) return false;
     const cmd = _parseCrossCommand(rawText);
     if (!cmd) return false;
-    if (!cmd.text) throw new Error('Message text required.');
+    if (!cmd.text) throw new Error('Le texte du message est obligatoire.');
     if (cmd.network === 'mt') {
       const target = _resolveMtCommandTarget(cmd.target, activeRadioId);
       if (target.error) throw new Error(target.error);
@@ -11148,7 +11148,7 @@ if (targetEl) {
     sel.innerHTML = visibleEntries.map(([id, s]) => {
       const cls    = _radioStatusDotClass(s);
       const active = selectedRadioIds.has(id) ? ' active' : '';
-      const title  = _radioStatusTitle(s, 'MC radio disconnected');
+      const title  = _radioStatusTitle(s, 'Radio MC déconnectée');
       return `<button class="radio-btn mc-btn${active}"${title} onclick="toggleRadioSelection('${jsSafe(id)}')">`
            + `<span class="mc-badge">MC</span><span class="status-dot ${cls}"></span>${escHtml(s.name)}</button>`;
     }).join('');
@@ -11286,11 +11286,11 @@ if (targetEl) {
       if (data.status === 'disconnected') delete mcLastStatus[data.radio_id].node_id;
       if (_mcStatusSoundPrimed && data.status === 'connected' && prevStatus !== 'connected') {
         playNotificationSound('radio');
-        _logAlert('radio', 'MC radio connected', escHtml(data.name || data.radio_id || '?'));
+        _logAlert('radio', 'Radio MC connectée', escHtml(data.name || data.radio_id || '?'));
       }
       if (_mcStatusSoundPrimed && data.status === 'disconnected' && prevStatus === 'connected') {
         playNotificationSound('radio_disconnect');
-        _logAlert('radio', 'MC radio disconnected', escHtml(data.name || data.radio_id || '?'));
+        _logAlert('radio', 'Radio MC déconnectée', escHtml(data.name || data.radio_id || '?'));
       }
       if (data.status === 'connected') selectedRadioIds.add(data.radio_id);
       else selectedRadioIds.delete(data.radio_id);
@@ -11396,8 +11396,8 @@ if (targetEl) {
           _scheduleMcNodeSeenNotification(data.radio_id, data.id, contactLabel);
         } else if (prevSeenTs && curSeenTs > prevSeenTs && (curSeenTs - prevSeenTs) >= _returnedGapThresholdSeconds() && (nowTs - curSeenTs) <= INAPP_NODE_RECENT_WINDOW_S) {
           const label = _mcNotificationContactLabel(data.radio_id, data.id, contactLabel);
-          maybeShowInAppNodeReturned('MC contact seen again', `<b>${escHtml(label)}</b> returned after a long gap`, `toast-node-return-mc-${data.radio_id}-${data.id}`);
-          _logAlert('node-return', 'MC contact seen again', escHtml(label) + ' returned after a long gap', {nodeType:'mc', contactId: data.id, radioId: data.radio_id, nodeName: label});
+          maybeShowInAppNodeReturned('Contact MC réapparu', `<b>${escHtml(label)}</b> réapparu après une longue absence`, `toast-node-return-mc-${data.radio_id}-${data.id}`);
+          _logAlert('node-return', 'Contact MC réapparu', escHtml(label) + ' réapparu après une longue absence', {nodeType:'mc', contactId: data.id, radioId: data.radio_id, nodeName: label});
         }
       }
       _mcRefreshDmContactNames(data.radio_id);
@@ -11426,7 +11426,7 @@ if (targetEl) {
         if (btn) {
           const pol = parseInt(data.adv_loc_policy);
           btn.dataset.policy = String(pol);
-          btn.textContent = pol === 1 ? 'Enabled' : 'Disabled';
+          btn.textContent = pol === 1 ? 'Activé' : 'Désactivé';
           btn.style.color = pol === 1 ? 'var(--accent)' : '';
         }
       }
@@ -11464,7 +11464,7 @@ if (targetEl) {
         if (_mcScanTimer) { clearInterval(_mcScanTimer); _mcScanTimer = null; }
         const b = document.getElementById('mc-scan-btn');
         const s = document.getElementById('mc-scan-status');
-        if (b) { b.textContent = 'Scan'; b.disabled = false; }
+        if (b) { b.textContent = 'Scanner'; b.désactivé = false; }
         if (s) s.textContent = '';
       }, (_mcScanWindow + 10) * 1000);
       return;
@@ -11474,9 +11474,9 @@ if (targetEl) {
       if (_mcScanTimer) { clearInterval(_mcScanTimer); _mcScanTimer = null; }
       const btn = document.getElementById('mc-scan-btn');
       const st  = document.getElementById('mc-scan-status');
-      if (btn) { btn.textContent = 'Scan'; btn.disabled = false; }
+      if (btn) { btn.textContent = 'Scanner'; btn.disabled = false; }
       if (st)  {
-        st.textContent = `Done — ${_mcScanNewCount} new`;
+        st.textContent = `Terminé — ${_mcScanNewCount} nouveau(x)`;
         setTimeout(() => { if (st) st.textContent = ''; }, 8000);
       }
       // Refresh contacts from device to pick up any updated coords (e.g. GPS set via phone)
@@ -11507,7 +11507,7 @@ if (targetEl) {
             const now = Math.floor(Date.now() / 1000);
             fc.last_heard_ts = now;
             fc.last_seen_ts  = now;
-            fc.last_seen = 'just now';
+            fc.last_seen = 'à l’instant';
             if (data.path_len != null) fc.out_path_len = data.path_len;
             if (data.path      != null) fc.out_path     = data.path;
             if (data.path_hash_mode != null) fc.out_path_hash_mode = data.path_hash_mode;
@@ -11573,7 +11573,7 @@ if (targetEl) {
         const currentMcTab = (currentTab === 'chat' && chatNetwork === 'mc') ? mcChatTab : null;
         if (document.hidden || currentMcTab !== msgTab) {
           const title = data.subtype === 'dm'
-            ? `MC DM from ${mcDmContacts[data.from_id] || data.from_id || '?'}`
+            ? `DM MC de ${mcDmContacts[data.from_id] || data.from_id || '?'}`
             : `MC ${mcKnownChannels[data.channel ?? 0] || ('CH' + (data.channel ?? 0))}`;
           maybeShowInAppMessage(title, escHtml(_mcMsgText(data, mcDmContacts[data.from_id] || '')), `toast-mc-msg-${data.radio_id}-${data.id || data.ts || Date.now()}`);
           sendNotif(title, _mcMsgText(data, mcDmContacts[data.from_id] || ''), `mc-msg-${data.radio_id}-${data.id || data.ts || Date.now()}`, 'message');
@@ -11587,7 +11587,7 @@ if (targetEl) {
           try {
             addMcSenseMessageEntry(data);
           } catch (e) {
-            console.warn('MC activity message log failed:', e);
+            console.warn('Échec du journal des messages d’activité MC :', e);
           }
         }
       } else if (!data.sent && !isArchiveReplay) {
@@ -11595,7 +11595,7 @@ if (targetEl) {
         // Still need to render so it becomes visible and the tab/unread state updates.
         renderMcMessages();
         if (data.subtype !== 'system') {
-          try { addMcSenseMessageEntry(data); } catch(e) { console.warn('MC activity message log failed:', e); }
+          try { addMcSenseMessageEntry(data); } catch(e) { console.warn('Échec du journal des messages d’activité MC :', e); }
         }
       }
       return;
@@ -11636,18 +11636,18 @@ if (targetEl) {
     // MeshCore contact types: 0=NONE, 1=CLI/Companion, 2=REP/Repeater, 3=ROOM, 4=SENS
     const b = (label, bg, color, border) =>
       `<span style="font-size:10px;font-weight:600;background:${bg};color:${color};border:1px solid ${border};border-radius:3px;padding:1px 4px;margin-left:4px">${label}</span>`;
-    if (type === 1) return b('Node', 'rgba(100,116,139,0.15)', '#94a3b8', 'rgba(100,116,139,0.35)');
+    if (type === 1) return b('Nœud', 'rgba(100,116,139,0.15)', '#94a3b8', 'rgba(100,116,139,0.35)');
     if (type === 2) return b('RPT',  'rgba(34,197,94,0.15)',   '#22c55e', 'rgba(34,197,94,0.35)');
-    if (type === 3) return b('Room', 'rgba(245,158,11,0.15)',  '#f59e0b', 'rgba(245,158,11,0.35)');
-    if (type === 4) return b('Sens', 'rgba(139,92,246,0.15)',  '#8b5cf6', 'rgba(139,92,246,0.35)');
+    if (type === 3) return b('Salle', 'rgba(245,158,11,0.15)',  '#f59e0b', 'rgba(245,158,11,0.35)');
+    if (type === 4) return b('Capteur', 'rgba(139,92,246,0.15)',  '#8b5cf6', 'rgba(139,92,246,0.35)');
     return ''; // type 0 = unknown/not yet reported
   }
 
   function mcTypeLabel(type) {
-    if (type === 2) return 'Repeater';
+    if (type === 2) return 'Répéteur';
     if (type === 3) return 'Room';
-    if (type === 4) return 'Sensor';
-    return 'Companion';
+    if (type === 4) return 'Capteur';
+    return 'Compagnon';
   }
 
   function mcContactMetaLabel(contact, radioId = null) {
@@ -11682,9 +11682,9 @@ if (targetEl) {
 
   function mcPathHopLabel(hopLen, compact = false) {
     if (hopLen === 255) return compact ? 'route' : 'Route';
-    if (hopLen === 0) return compact ? 'direct' : 'Direct (0 hops)';
+    if (hopLen === 0) return compact ? 'direct' : 'Direct (0 sauts)';
     if (hopLen > 0) return `${hopLen} hop${hopLen !== 1 ? 's' : ''}`;
-    return compact ? 'flood' : 'Flood';
+    return compact ? 'inondation' : 'Inondation';
   }
 
   function mcPathHopColor(hopLen) {
@@ -11724,9 +11724,9 @@ if (targetEl) {
 
   function _mcPathHashModeLabel(mode) {
     const m = Number(mode);
-    if (m === 0) return '1B/hop';
-    if (m === 1) return '2B/hop';
-    return '3B/hop';
+    if (m === 0) return '1saut';
+    if (m === 1) return '2saut';
+    return '3saut';
   }
 
   function _mcExplicitPathHashSize(evt) {
@@ -11750,15 +11750,15 @@ if (targetEl) {
   }
 
   function _mcStoredRouteSummary(contact, radioId = null) {
-    if (!contact) return 'Automatic routing';
+    if (!contact) return 'Routage automatique';
     const hopCount = contact.out_path_len ?? -1;
-    if (hopCount < 0) return 'Automatic / flood routing';
-    if (hopCount === 0) return 'Direct only';
+    if (hopCount < 0) return 'Routage automatique / inondation';
+    if (hopCount === 0) return 'Direct uniquement';
     const labels = _mcStoredRouteHopPrefixes(contact).map(prefix => {
       const hop = findMcContactByKeyPrefix(prefix, radioId);
       return hop?.long_name || hop?.id || prefix;
     });
-    return labels.length ? `Via ${labels.join(' → ')}` : `${hopCount} hop${hopCount !== 1 ? 's' : ''}`;
+    return labels.length ? `Via ${labels.join(' → ')}` : `${hopCount} saut${hopCount !== 1 ? 's' : ''}`;
   }
 
   function mcRouteIndicator(contact, radioId = null) {
@@ -11794,7 +11794,7 @@ if (targetEl) {
 
   function _mcRouteHopMeta(prefix, radioId) {
     const hop = _mcRouteHopResolved(prefix, radioId);
-    if (!hop) return { label: prefix, meta: 'Unknown stored hash' };
+    if (!hop) return { label: prefix, meta: 'Hachage enregistré inconnu' };
     const seen = _mcContactSeenLabel(hop);
     return {
       label: hop.long_name || hop.id || prefix,
@@ -11806,7 +11806,7 @@ if (targetEl) {
   function openMcRouteEditor(contactId, radioId) {
     const contact = mcContacts[radioId]?.[contactId];
     if (!contact) {
-      showAlert('Contact not found.');
+      showAlert('Contact introuvable.');
       return;
     }
     _mcRouteEditor = {
@@ -11820,7 +11820,7 @@ if (targetEl) {
       statusMessage: '',
       statusKind: '',
     };
-    openModal(`MC Route — ${_mcRouteEditor.contactName}`, '<div class="modal-loading">Loading route editor…</div>');
+    openModal(`MC Route — ${_mcRouteEditor.contactName}`, '<div class="modal-loading">Chargement de l’éditeur de routes…</div>');
     renderMcRouteEditor();
     setTimeout(() => document.getElementById('mc-route-search')?.focus(), 40);
   }
@@ -11841,12 +11841,12 @@ if (targetEl) {
               <div>${escHtml(hop.label)}</div>
               <div class="mc-route-hop-meta">${escHtml(hop.meta)}</div>
             </div>
-            <button class="mc-route-hop-btn" title="Move up" ${idx === 0 || saving ? 'disabled' : ''} onclick="mcRouteMoveHop(${idx}, -1)">&#8593;</button>
-            <button class="mc-route-hop-btn" title="Move down" ${idx === selected.length - 1 || saving ? 'disabled' : ''} onclick="mcRouteMoveHop(${idx}, 1)">&#8595;</button>
-            <button class="mc-route-hop-btn" title="Remove hop" ${saving ? 'disabled' : ''} onclick="mcRouteRemoveHop(${idx})">&#10005;</button>
+            <button class="mc-route-hop-btn" title="Monter" ${idx === 0 || saving ? 'désactivé' : ''} onclick="mcRouteMoveHop(${idx}, -1)">&#8593;</button>
+            <button class="mc-route-hop-btn" title="Descendre" ${idx === selected.length - 1 || saving ? 'désactivé' : ''} onclick="mcRouteMoveHop(${idx}, 1)">&#8595;</button>
+            <button class="mc-route-hop-btn" title="Supprimer le saut" ${saving ? 'désactivé' : ''} onclick="mcRouteRemoveHop(${idx})">&#10005;</button>
           </div>`;
         }).join('')}</div>`
-      : `<div class="mc-route-summary" style="margin-top:10px">Aucun répéteur sélectionné. Click <b>Set Direct Only</b> to force direct delivery, or <b>Effacer le chemin</b> to use automatic/flood routing.</div>`;
+      : `<div class="mc-route-summary" style="margin-top:10px">Aucun répéteur sélectionné. Cliquez sur <b>Direct uniquement</b> pour forcer la livraison directe, ou sur <b>Effacer le chemin</b> pour utiliser le routage automatique/inondation.</div>`;
 
     const candidates = _mcRouteCandidateList(radioId, contactId, query)
       .filter(c => !selected.some(prefix => (c.full_key || c.id || '').toLowerCase().startsWith(String(prefix).toLowerCase())))
@@ -11861,7 +11861,7 @@ if (targetEl) {
               <div>${escHtml(label)}</div>
               <div class="mc-route-hop-meta">${escHtml(meta)}</div>
             </div>
-            <button ${saving ? 'disabled' : ''} onclick="mcRouteAddHop('${jsSafe(c.full_key || c.id || '')}')">Add</button>
+            <button ${saving ? 'désactivé' : ''} onclick="mcRouteAddHop('${jsSafe(c.full_key || c.id || '')}')">Ajouter</button>
           </div>`;
         }).join('')
       : `<div style="padding:12px;color:var(--muted);font-size:12px">Aucun répéteur connu ne correspond à cette recherche sur ${escHtml(radioLabel)}.</div>`;
@@ -11872,31 +11872,31 @@ if (targetEl) {
     body.innerHTML = `
       <div class="modal-node">${escHtml(contactName)} · ${escHtml(contactId)} · via ${escHtml(radioLabel)}</div>
       <div class="mc-route-summary">
-        <div style="color:var(--muted);font-size:11px;margin-bottom:4px">Current stored route</div>
+        <div style="color:var(--muted);font-size:11px;margin-bottom:4px">Route actuellement enregistrée</div>
         <div>${escHtml(currentSummary)}</div>
       </div>
       <div style="font-size:12px;color:var(--muted)">Répéteurs sélectionnés</div>
       ${hopHtml}
       <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin:10px 0">
         <div>
-          <label class="settings-label">Path hash for this route</label>
-          <select class="settings-select" onchange="mcRouteSetPathHashMode(this.value)" ${saving ? 'disabled' : ''}>
-            <option value="0"${Number(pathHashMode) === 0 ? ' selected' : ''}>1B/hop - legacy compatible</option>
-            <option value="1"${Number(pathHashMode) === 1 ? ' selected' : ''}>2B/hop - balanced</option>
-            <option value="2"${Number(pathHashMode) === 2 ? ' selected' : ''}>3B/hop - most specific</option>
+          <label class="settings-label">Hachage de chemin pour cette route</label>
+          <select class="settings-select" onchange="mcRouteSetPathHashMode(this.value)" ${saving ? 'désactivé' : ''}>
+            <option value="0"${Number(pathHashMode) === 0 ? ' selected' : ''}>1B/saut - compatible ancien format</option>
+            <option value="1"${Number(pathHashMode) === 1 ? ' selected' : ''}>2B/saut - équilibré</option>
+            <option value="2"${Number(pathHashMode) === 2 ? ' selected' : ''}>3B/saut - plus précis</option>
           </select>
         </div>
-        <div style="font-size:11px;color:var(--muted);max-width:300px">Uses ${escHtml(_mcPathHashModeLabel(pathHashMode))} when saving this stored route. Older radios may fall back.</div>
+        <div style="font-size:11px;color:var(--muted);max-width:300px">Utilise ${escHtml(_mcPathHashModeLabel(pathHashMode))} lors de l’enregistrement de cette route. Les anciennes radios peuvent utiliser une autre méthode.</div>
       </div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Search known repeaters</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Rechercher des répéteurs connus</div>
       <div class="mc-route-search-row">
-        <input id="mc-route-search" class="mc-route-search" value="${escHtml(query)}" placeholder="Search repeaters..." oninput="mcRouteSetQuery(this.value)" ${saving ? 'disabled' : ''}>
+        <input id="mc-route-search" class="mc-route-search" value="${escHtml(query)}" placeholder="Rechercher des répéteurs…" oninput="mcRouteSetQuery(this.value)" ${saving ? 'désactivé' : ''}>
       </div>
       <div class="mc-route-candidates">${candidatesHtml}</div>
       ${statusHtml}
       <div class="mc-route-actions">
-        <button class="btn" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(true)">Effacer le chemin</button>
-        <button class="btn btn-net-mc active" ${saving ? 'disabled' : ''} onclick="saveMcRouteEditor(false)">${saving ? 'Saving…' : selected.length === 0 ? 'Set Direct Only' : 'Save route'}</button>
+        <button class="btn" ${saving ? 'désactivé' : ''} onclick="saveMcRouteEditor(true)">Effacer le chemin</button>
+        <button class="btn btn-net-mc active" ${saving ? 'désactivé' : ''} onclick="saveMcRouteEditor(false)">${saving ? 'Enregistrement…' : selected.length === 0 ? 'Direct uniquement' : 'Enregistrer la route'}</button>
       </div>`;
   }
 
@@ -11944,7 +11944,7 @@ if (targetEl) {
   async function saveMcRouteEditor(clear = false) {
     if (!_mcRouteEditor) return;
     const state = _mcRouteEditor;
-    state.statusMessage = 'Saving route…';
+    state.statusMessage = 'Enregistrement de la route…';
     state.statusKind = 'loading';
     state.saving = true;
     renderMcRouteEditor();
@@ -11963,7 +11963,7 @@ if (targetEl) {
       state.contactId = contact.id;
       state.selected = clear ? [] : _mcStoredRouteHopPrefixes(contact);
       state.pathHashMode = _mcPreferredPathHashMode(state.radioId, contact);
-      state.statusMessage = clear ? 'Stored path cleared.' : 'Stored route updated.';
+      state.statusMessage = clear ? 'Chemin enregistré effacé.' : 'Route enregistrée mise à jour.';
       state.statusKind = 'success';
       renderMcMapMarkers();
       if (currentTab === 'nodes') renderLive();
@@ -11999,7 +11999,7 @@ if (targetEl) {
       return `
         <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:6px">
           <div class="map-popup-name" style="margin-bottom:2px">${escHtml(item.name || item.id || '?')}<span class="map-popup-local" style="background:rgba(16,185,129,0.15);color:#10b981">MC Radio</span></div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">This radio node · ${escHtml(radioDistance)}</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Radio sur ce nœud · ${escHtml(radioDistance)}</div>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
           </div>
@@ -12014,8 +12014,8 @@ if (targetEl) {
     const hops = item.out_path_len ?? null;
     const radioConnected = mcLastStatus[item._rid]?.status === 'connected';
     const pathButton = radioConnected
-      ? `<button class="map-popup-btn" title="Set stored MC route/path" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Chemin</button>`
-      : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Chemin</button>`;
+      ? `<button class="map-popup-btn" title="Définir le chemin MC enregistré" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Chemin</button>`
+      : `<button class="map-popup-btn" title="Radio MC déconnectée" disabled style="opacity:0.35;cursor:default">Chemin</button>`;
     const bat = item.battery ?? item.bat_pct ?? item.bat;
     const batStr = bat != null ? `${bat}%` : '—';
     const snrText = item.snr != null ? `${item.snr} dB` : '—';
@@ -12028,18 +12028,18 @@ if (targetEl) {
         ${keyStr ? `<div style="font-size:10px;color:var(--muted)">${escHtml(keyStr)}</div>` : ''}
         <div style="font-size:10px;color:var(--muted);margin-top:2px">${escHtml(mcContactMetaLabel(item, item._rid))}</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:4px">
-          <b>SNR:</b> ${snrText} &nbsp; <b>Hops:</b> ${hops !== null ? escHtml(mcPathHopLabel(hops, true)) : '—'} &nbsp; <b>Dist:</b> ${escHtml(distanceText)} &nbsp; <b>Seen:</b> ${tsText}
+          <b>SNR :</b> ${snrText} &nbsp; <b>Sauts :</b> ${hops !== null ? escHtml(mcPathHopLabel(hops, true)) : '—'} &nbsp; <b>Distance :</b> ${escHtml(distanceText)} &nbsp; <b>Vu :</b> ${tsText}
         </div>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(item.id || '')}')">Liste</button>
-          ${item.type !== 2 ? `<button class="map-popup-btn" title="Send direct message" onclick="leafletMap.closePopup();doMcDm('${safePk}','${safeRid}','${safeName}')">DM</button>` : ''}
-          <button class="map-popup-btn" title="Ping (request status)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>
+          ${item.type !== 2 ? `<button class="map-popup-btn" title="Envoyer un message direct" onclick="leafletMap.closePopup();doMcDm('${safePk}','${safeRid}','${safeName}')">DM</button>` : ''}
+          <button class="map-popup-btn" title="Ping (demander l’état)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>
           ${pathButton}
-          ${mcCanRemoteManage(item) ? `<button class="map-popup-btn" title="Remote repeater/room management" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Gérer</button>` : ''}
-          <button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(item.id || '')}','${safeRid}')">Détection</button>
-          <button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>
-          ${item.latitude != null ? `<button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(item.id || '')}','${safeName}')">Trail</button>` : ''}
-          <button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Supprimer</button>
+          ${mcCanRemoteManage(item) ? `<button class="map-popup-btn" title="Gestion à distance des répéteurs/serveurs de salle" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Gérer</button>` : ''}
+          <button class="map-popup-btn" title="Sélectionner dans le panneau Détection" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(item.id || '')}','${safeRid}')">Détection</button>
+          <button class="map-popup-btn" title="Préremplir le Journal TOC à partir de ce contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>
+          ${item.latitude != null ? `<button class="map-popup-btn" title="Trace des déplacements GPS" onclick="openGpsTrail('${jsSafe(item.id || '')}','${safeName}')">Trace</button>` : ''}
+          <button class="map-popup-btn danger" title="Supprimer de l’appareil" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Supprimer</button>
         </div>
       </div>`;
   }
@@ -12052,7 +12052,7 @@ if (targetEl) {
     if (radioCount) titleParts.push(`${radioCount} radio${radioCount !== 1 ? 's' : ''}`);
     const distanceText = _distanceLabel(_mcDistanceFromLocal({latitude: lat, longitude: lon}, items[0]?._rid || ''));
     return `
-      <div style="font-weight:700;margin-bottom:8px;color:#3b82f6">${escHtml(titleParts.join(' + ') || `${items.length} nodes`)} at this location</div>
+      <div style="font-weight:700;margin-bottom:8px;color:#3b82f6">${escHtml(titleParts.join(' + ') || `${items.length} nœuds`)} à cet emplacement</div>
       <div style="color:var(--muted);font-size:11px;margin-bottom:10px">${Number(lat).toFixed(5)}, ${Number(lon).toFixed(5)} · ${escHtml(distanceText)}</div>
       ${items.map(item => _mcClusterItemHtml(item)).join('')}`;
   }
@@ -12127,7 +12127,7 @@ if (targetEl) {
         });
         marker._omClusterItems = group;
         marker.bindPopup(_mcClusterPopupHtml(group, clat, clon), { className: 'om-popup', maxWidth: 280, maxHeight: 400 });
-        marker.bindTooltip(`${group.length} nodes`, { permanent: true, direction: 'right', className: 'map-label', offset: [8, 0] });
+        marker.bindTooltip(`${group.length} nœuds`, { permanent: true, direction: 'right', className: 'map-label', offset: [8, 0] });
         marker.addTo(leafletMap);
         if (!mapLabels) marker.closeTooltip();
         mcClusterMarkers[key] = marker;
@@ -12144,7 +12144,7 @@ if (targetEl) {
         marker._omMcMapData = item;
         marker.bindPopup(
           `<div class="map-popup-name">${name}<span class="map-popup-local" style="background:rgba(16,185,129,0.15);color:#10b981">MC Radio</span></div>`
-          + `<div style="font-size:11px;color:var(--muted)">This radio node · ${escHtml(radioDistance)}</div>`
+          + `<div style="font-size:11px;color:var(--muted)">Radio sur ce nœud · ${escHtml(radioDistance)}</div>`
           + `<div style="font-size:11px;color:var(--muted)">${item.latitude.toFixed(5)}, ${item.longitude.toFixed(5)}</div>`,
           { className: 'om-popup', maxWidth: 200 }
         );
@@ -12166,19 +12166,19 @@ if (targetEl) {
       const radioConnected = mcLastStatus[c._rid]?.status === 'connected';
       const popupDmButton = c.type !== 2
         ? (radioConnected
-          ? `<button class="map-popup-btn" title="Send direct message" onclick="leafletMap.closePopup();doMcDm('${safePk}','${safeRid}','${safeName}')">DM</button>`
-          : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">DM</button>`)
+          ? `<button class="map-popup-btn" title="Envoyer un message direct" onclick="leafletMap.closePopup();doMcDm('${safePk}','${safeRid}','${safeName}')">DM</button>`
+          : `<button class="map-popup-btn" title="Radio MC déconnectée" disabled style="opacity:0.35;cursor:default">DM</button>`)
         : '';
       const popupPingButton = radioConnected
-        ? `<button class="map-popup-btn" title="Ping (request status)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>`
-        : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Ping</button>`;
+        ? `<button class="map-popup-btn" title="Ping (demander l’état)" onclick="leafletMap.closePopup();doMcPing('${safePk}','${safeRid}','${safeName}')">Ping</button>`
+        : `<button class="map-popup-btn" title="Radio MC déconnectée" disabled style="opacity:0.35;cursor:default">Ping</button>`;
       const popupPathButton = radioConnected
-        ? `<button class="map-popup-btn" title="Set stored MC route/path" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Chemin</button>`
-        : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Chemin</button>`;
+        ? `<button class="map-popup-btn" title="Définir le chemin MC enregistré" onclick="leafletMap.closePopup();openMcRouteEditor('${safeContactId}','${safeRid}')">Chemin</button>`
+        : `<button class="map-popup-btn" title="Radio MC déconnectée" disabled style="opacity:0.35;cursor:default">Chemin</button>`;
       const popupManageButton = mcCanRemoteManage(c)
         ? (radioConnected
-          ? `<button class="map-popup-btn" title="Remote repeater/room management" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Gérer</button>`
-          : `<button class="map-popup-btn" title="MC radio disconnected" disabled style="opacity:0.35;cursor:default">Gérer</button>`)
+          ? `<button class="map-popup-btn" title="Gestion à distance des répéteurs/serveurs de salle" onclick="leafletMap.closePopup();openMcRemoteManage('${safePk}','${safeRid}','${safeName}')">Gérer</button>`
+          : `<button class="map-popup-btn" title="Radio MC déconnectée" disabled style="opacity:0.35;cursor:default">Gérer</button>`)
         : '';
       const marker = L.marker([c.latitude, c.longitude], { icon: makeMcIcon(false, c.type ?? 0) });
       const bat = c.battery ?? c.bat_pct ?? c.bat;
@@ -12192,9 +12192,9 @@ if (targetEl) {
         `<div class="map-popup-name">${label}<span class="map-popup-local" style="background:rgba(59,130,246,0.15);color:#3b82f6">MC</span>${mcTypeBadge(c.type ?? 0)}</div>`
         + (keyStr ? `<div style="font-size:10px;color:var(--muted)">${escHtml(keyStr)}</div>` : '')
         + `<div style="font-size:10px;color:var(--muted);margin-top:2px">${escHtml(mcContactMetaLabel(c, c._rid))}</div>`
-        + `<div><b>SNR:</b> ${snrText} &nbsp; <b>Battery:</b> ${batStr}</div>`
-        + `<div><b>Hops:</b> ${hops !== null ? escHtml(mcPathHopLabel(hops, true)) : '—'} &nbsp; <b>Distance:</b> ${escHtml(distanceText)}</div>`
-        + `<div><b>Last seen:</b> ${tsText}</div>`
+        + `<div><b>SNR :</b> ${snrText} &nbsp; <b>Batterie :</b> ${batStr}</div>`
+        + `<div><b>Sauts :</b> ${hops !== null ? escHtml(mcPathHopLabel(hops, true)) : '—'} &nbsp; <b>Distance :</b> ${escHtml(distanceText)}</div>`
+        + `<div><b>Dernière activité :</b> ${tsText}</div>`
         + `<div style="font-size:11px;color:var(--muted)">${c.latitude.toFixed(5)}, ${c.longitude.toFixed(5)}</div>`
         + `<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">`
         + `<button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="leafletMap.closePopup();showMcNodeInList('${jsSafe(c.id || '')}')">Liste</button>`
@@ -12202,10 +12202,10 @@ if (targetEl) {
         + popupPingButton
         + popupPathButton
         + popupManageButton
-        + `<button class="map-popup-btn" title="Select in Sense panel" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(c.id || '')}','${safeRid}')">Détection</button>`
-        + `<button class="map-popup-btn" title="Prefill TOC Log from this contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>`
-        + `<button class="map-popup-btn" title="GPS movement trail" onclick="openGpsTrail('${jsSafe(c.id || '')}','${safeName}')">Trail</button>`
-        + `<button class="map-popup-btn danger" title="Delete from device" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Supprimer</button>`
+        + `<button class="map-popup-btn" title="Sélectionner dans le panneau Détection" onclick="leafletMap.closePopup();switchTab('map');toggleSensePanel(true);switchSenseNet('mc');selectMcSenseContact('${jsSafe(c.id || '')}','${safeRid}')">Détection</button>`
+        + `<button class="map-popup-btn" title="Préremplir le Journal TOC à partir de ce contact" onclick="leafletMap.closePopup();tocFromMcNode('${safePk}','${safeRid}')">Journal</button>`
+        + `<button class="map-popup-btn" title="Trace des déplacements GPS" onclick="openGpsTrail('${jsSafe(c.id || '')}','${safeName}')">Trace</button>`
+        + `<button class="map-popup-btn danger" title="Supprimer de l’appareil" onclick="deleteMcContact('${safePk}','${safeName}','${safeRid}')">Supprimer</button>`
         + `</div>`,
         { className: 'om-popup', maxWidth: 240 }
       );
@@ -12244,7 +12244,7 @@ if (targetEl) {
     const dmTabs = Object.entries(mcDmContacts).map(([pre, name]) => {
       const tab = `dm:${pre}`;
       return `<button class="channel-tab net-mc ${mcChatTab === tab ? 'active' : ''} ${mcUnreadTabs.has(tab) ? 'has-unread' : ''}"
-        onclick="switchMcTab('${tab}')">${escHtml(name)}<span class="dm-tab-close" onclick="closeMcDmTab('${jsSafe(pre)}',event)" title="Close DM tab">✕</span></button>`;
+        onclick="switchMcTab('${tab}')">${escHtml(name)}<span class="dm-tab-close" onclick="closeMcDmTab('${jsSafe(pre)}',event)" title="Fermer l’onglet DM">✕</span></button>`;
     });
     el.innerHTML = [...chanTabs, ...dmTabs].join('');
   }
@@ -12252,8 +12252,8 @@ if (targetEl) {
   function closeMcDmTab(pre, event) {
     event.stopPropagation();
     const name = mcDmContacts[pre] || pre;
-    document.getElementById('confirm-ok').textContent = 'Delete';
-    showConfirm(`Close DM tab with ${name}?`, () => {
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
+    showConfirm(`Fermer l’onglet DM avec ${name} ?`, () => {
       closedMcDmTabs.add(pre);
       saveMcClosedDmTabs();
       delete mcDmContacts[pre];
@@ -12273,12 +12273,12 @@ if (targetEl) {
     if (!input) return;
     if (mcChatTab.startsWith('chan:')) {
       const idx = parseInt(mcChatTab.slice(5));
-      input.placeholder = `${mcKnownChannels[idx] || ('CH' + idx)} channel…`;
+      input.placeholder = `${mcKnownChannels[idx] || ('CH' + idx)} canal…`;
       if (pathBar) pathBar.style.display = 'none';
     } else if (mcChatTab.startsWith('dm:')) {
       const pre  = mcChatTab.slice(3);
       const name = mcDmContacts[pre] || pre;
-      input.placeholder = `DM to ${name}…`;
+      input.placeholder = `DM à ${name}…`;
       if (pathBar) {
         const c    = activeMcRadioId ? (mcContacts[activeMcRadioId] || {})[pre] : null;
         const hops = c?.out_path_len ?? -1;
@@ -12482,7 +12482,7 @@ if (targetEl) {
     const hops   = c?.out_path_len ?? -1;
     const path   = c?.out_path || '';
     const seen   = _mcContactSeenLabel(c);
-    const hopStr = c ? (hops >= 0 ? mcPathHopLabel(hops) : 'Path unknown') : 'Not in contacts';
+    const hopStr = c ? (hops >= 0 ? mcPathHopLabel(hops) : 'Chemin inconnu') : 'Absent des contacts';
     const meta   = c ? mcContactMetaLabel(c, radioId) : '';
     const markerId  = c?.id || (fromId !== '?' ? fromId.slice(0, 12) : '');
     const hasMarker = !!mcMapMarkerById[markerId];
@@ -12524,9 +12524,9 @@ if (targetEl) {
       if (c.type !== 2) btns.push(`<button class="map-popup-btn" onclick="doMcPing('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}">Ping</button>`);
       if (mcCanRemoteManage(c)) btns.push(`<button class="map-popup-btn" onclick="openMcRemoteManage('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}">Gérer</button>`);
     } else if (!c && actionId) {
-      btns.push(`<button class="map-popup-btn" onclick="doMcPing('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}" title="Request status from this node — may trigger it to send an advert">Ping</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="doMcPing('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}" title="Demander l’état de ce nœud — peut provoquer l’envoi d’une annonce">Ping</button>`);
     } else if (!c && !actionId) {
-      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="No pubkey in message — cannot send targeted ping. Sender's firmware may not include pubkey in channel messages.">Ping</button>`);
+      btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune clé publique dans le message — impossible d’envoyer un ping ciblé. Le firmware de l’expéditeur peut ne pas inclure la clé publique dans les messages de canal.">Ping</button>`);
     }
     // Map, Log, Note — always after action buttons, matching MT popup order
     const cLat = c?.latitude, cLon = c?.longitude;
@@ -12538,8 +12538,8 @@ if (targetEl) {
       btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Carte</button>`);
     }
     if (actionId) {
-      btns.push(`<button class="map-popup-btn" onclick="tocFromMcNode('${jsSafe(actionId)}','${jsSafe(actionRid)}');${hide}" title="Prefill TOC Log from this contact">Journal</button>`);
-      btns.push(`<button class="map-popup-btn" onclick="openMcNoteModal('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}" title="Personal notes for this contact">Note</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="tocFromMcNode('${jsSafe(actionId)}','${jsSafe(actionRid)}');${hide}" title="Préremplir le Journal TOC à partir de ce contact">Journal</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="openMcNoteModal('${jsSafe(actionId)}','${jsSafe(actionRid)}','${jsSafe(name)}');${hide}" title="Notes personnelles pour ce contact">Note</button>`);
     }
     const btnsHtml = btns.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${btns.join('')}</div>` : '';
     panel.innerHTML = `
@@ -12548,7 +12548,7 @@ if (targetEl) {
       ${meta ? `<div style="color:var(--muted);font-size:10px;margin-bottom:6px">${escHtml(meta)}</div>` : ''}
       <div style="color:var(--muted)">${escHtml(hopStr)}</div>
       ${path ? `<div style="color:var(--muted);font-size:10px;margin-top:2px;word-break:break-all">${escHtml(path)}</div>` : ''}
-      ${seen ? `<div style="color:var(--muted);font-size:10px;margin-top:4px">Last seen: ${escHtml(seen)}</div>` : ''}
+      ${seen ? `<div style="color:var(--muted);font-size:10px;margin-top:4px">Dernière activité : ${escHtml(seen)}</div>` : ''}
       ${btnsHtml}
     `;
 
@@ -12615,7 +12615,7 @@ if (targetEl) {
       const routeKey = _mcChatRouteKey(m);
       if (routeKey) _mcChatRouteByKey[routeKey] = m;
       const logBtn = routeKey
-        ? `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMcMessage('${jsSafe(routeKey)}')" title="Prefill TOC Log from this message">Journal</button>`
+        ? `<button class="msg-reply-btn" onclick="event.stopPropagation();tocFromMcMessage('${jsSafe(routeKey)}')" title="Préremplir le Journal TOC à partir de ce message">Journal</button>`
         : '';
       let ts = '';
       if (m.ts) {
@@ -12649,8 +12649,8 @@ if (targetEl) {
       const { name, contact } = _mcSenderInfo(m);
       const bodyText = _mcMsgText(m, name);
       const obsSnr = m.rx_snr != null ? ` · SNR ${m.rx_snr} dB` : '';
-      const senderHtml = `<span class="msg-sender-link" onclick="showMcContactPopup(event,'${jsSafe(m.from_id || '')}','${jsSafe(m.radio_id || '')}','${jsSafe(name)}')" title="Contact info">${mcContactNameHtml(contact, name, m.radio_id || null)}</span>`;
-      const mcReplyBtn = `<button class="msg-reply-btn" onclick="replyToMc('${jsSafe(m.from_id || '')}','${jsSafe(name)}','${m.subtype || 'channel'}')">↩ Reply</button>`;
+      const senderHtml = `<span class="msg-sender-link" onclick="showMcContactPopup(event,'${jsSafe(m.from_id || '')}','${jsSafe(m.radio_id || '')}','${jsSafe(name)}')" title="Informations du contact">${mcContactNameHtml(contact, name, m.radio_id || null)}</span>`;
+      const mcReplyBtn = `<button class="msg-reply-btn" onclick="replyToMc('${jsSafe(m.from_id || '')}','${jsSafe(name)}','${m.subtype || 'channel'}')">↩ Répondre</button>`;
       const routeMeta = _mcChatRouteMeta(m);
       if (routeMeta) _mcChatRouteByKey[routeKey] = m;
       const routeBtn = routeMeta
@@ -12662,7 +12662,7 @@ if (targetEl) {
         : '';
       const altMeta = _mcAltPathMeta(m);
       const altBadge = altMeta
-        ? `<span class="mc-route-badge mc-route-badge-alt" title="${escHtml(altMeta.detail)}">+${altMeta.count} path${altMeta.count !== 1 ? 's' : ''}</span>`
+        ? `<span class="mc-route-badge mc-route-badge-alt" title="${escHtml(altMeta.detail)}">+${altMeta.count} chemin${altMeta.count !== 1 ? 's' : ''}</span>`
         : '';
       const confMeta = _mcRxConfidenceMeta(m);
       const confBadge = confMeta
@@ -12812,7 +12812,7 @@ if (targetEl) {
         <div class="sense-node-meta">
           <span style="color:${hopColor}">${hopLabel}</span>
           <span>${ts}</span>
-          ${hasGps ? '<span title="Has GPS position">📍</span>' : ''}
+          ${hasGps ? '<span title="Position GPS disponible">📍</span>' : ''}
         </div>
       </div>`;
     }).join('');
@@ -12859,7 +12859,7 @@ if (targetEl) {
     const hopLabel  = mcPathHopLabel(hopLen);
     const hopColor  = mcPathHopColor(hopLen);
     const hashBytes = c.out_path_hash_size ?? (c.out_path_hash_mode != null ? c.out_path_hash_mode + 1 : null);
-    const hashBadge = hashBytes != null ? `<span style="font-size:9px;padding:1px 4px;border-radius:3px;background:rgba(148,163,184,0.1);color:var(--muted);margin-left:6px;vertical-align:1px">${hashBytes}B/hop</span>` : '';
+    const hashBadge = hashBytes != null ? `<span style="font-size:9px;padding:1px 4px;border-radius:3px;background:rgba(148,163,184,0.1);color:var(--muted);margin-left:6px;vertical-align:1px">${hashBytes}saut</span>` : '';
     const lat       = c.latitude ?? c.lat;
     const lon       = c.longitude ?? c.lon;
     const hasGps    = lat != null && lon != null;
@@ -12878,8 +12878,8 @@ if (targetEl) {
          </div>`
       : '';
     const bat = c.battery ?? c.bat_pct ?? c.bat;
-    const batLine = bat != null ? `<div style="font-size:10px;color:var(--muted);margin-top:2px">Battery: ${bat}%</div>` : '';
-    const snrLine = c.snr != null ? `<div style="font-size:10px;color:var(--muted);margin-top:2px">SNR: ${c.snr} dB</div>` : '';
+    const batLine = bat != null ? `<div style="font-size:10px;color:var(--muted);margin-top:2px" >Batterie : ${bat}%</div>` : '';
+    const snrLine = c.snr != null ? `<div style="font-size:10px;color:var(--muted);margin-top:2px" >SNR : ${c.snr} dB</div>` : '';
     const keyLine = id ? `<div style="font-size:10px;color:var(--muted);opacity:0.7;margin-top:1px;word-break:break-all">${escHtml(c.full_key || id)}</div>` : '';
 
     content.innerHTML = `
@@ -12893,7 +12893,7 @@ if (targetEl) {
       ${gpsLine}
       ${batLine}
       ${snrLine}
-      <div style="font-size:10px;color:var(--muted);margin-top:2px">Last seen: ${escHtml(ts)}</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px">Dernière activité : ${escHtml(ts)}</div>
       <div style="display:flex;gap:6px;margin-top:8px">
         <button class="btn-sm" style="color:var(--mc-color);border-color:rgba(56,189,248,0.4)"
           onclick="doMcDm('${safeId}','${safeRid}','${safeName}')">DM</button>
@@ -13464,7 +13464,7 @@ if (targetEl) {
 
   function renderMcPathLines() {
     clearMcPathLines();
-    // Static path lines removed — lines only shown on hover/trace events
+    // Statique path lines removed — lines only shown on hover/trace events
     return;
     if (!leafletMap) return;
     Object.entries(mcContacts).forEach(([rid, radioContacts]) => {
@@ -13587,21 +13587,21 @@ if (targetEl) {
 
   function _mcPathWarningText(pathResult, kind = null) {
     if (!pathResult) return '';
-    if (pathResult.endpointUnknown) return 'Known relay only - final sender/contact position unknown';
+    if (pathResult.endpointUnknown) return 'Relais connu uniquement - position finale de l’expéditeur/contact inconnue';
     if (pathResult.partial) {
-      if (kind === 'trace') return 'Partial trace - only known hops are shown';
-      if (kind === 'message') return 'Partial message path - only known hops are shown';
-      if (kind === 'ping') return 'Partial path - only known hops are shown';
-      return 'Partial path - only known hops are shown';
+      if (kind === 'trace') return 'Trace partielle - seuls les sauts connus sont affichés';
+      if (kind === 'message') return 'Chemin du message partiel - seuls les sauts connus sont affichés';
+      if (kind === 'ping') return 'Chemin partiel - seuls les sauts connus sont affichés';
+      return 'Chemin partiel - seuls les sauts connus sont affichés';
     }
     return '';
   }
 
   function _mcPathHashSizeLabel(size, mode = null) {
     const n = Number(size);
-    if (Number.isFinite(n) && n >= 1 && n <= 3) return `${n}B/hop`;
+    if (Number.isFinite(n) && n >= 1 && n <= 3) return `${n}saut`;
     const m = Number(mode);
-    if (Number.isFinite(m) && m >= 0 && m <= 2) return `${m + 1}B/hop`;
+    if (Number.isFinite(m) && m >= 0 && m <= 2) return `${m + 1}saut`;
     return '—';
   }
 
@@ -13870,11 +13870,11 @@ if (targetEl) {
       if (e.kind === 'discover') {
         // Active DISCOVER_REQ reply from a repeater — it heard us (SNR_in) and
         // answered, the real MC "ping got through" proof.
-        const heard = e.snrIn != null ? ` · heard you ${Number(e.snrIn).toFixed(1)}dB` : '';
+        const heard = e.snrIn != null ? ` · vous a entendu ${Number(e.snrIn).toFixed(1)}dB` : '';
         const rssiL = e.rssi != null ? ` · ${e.rssi}dBm` : '';
         return `<div style="padding:2px 0;border-bottom:1px solid var(--border)">
           <span style="color:var(--muted)">${_mcLogTs(e)}</span>
-          <span style="color:#22c55e;font-size:9px;font-weight:600;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:3px;padding:0 3px;margin-left:4px" title="repeater answered our DISCOVER probe">RPTR ✓</span>
+          <span style="color:#22c55e;font-size:9px;font-weight:600;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:3px;padding:0 3px;margin-left:4px" title="le répéteur a répondu à notre sonde DISCOVER">RPTR ✓</span>
           <span style="margin-left:4px;font-weight:600">${escHtml(e.name)}</span>
           <span style="color:var(--muted);margin-left:4px;font-size:10px">${e.hopStr}${rssiL}${heard}</span>
         </div>`;
@@ -13909,7 +13909,7 @@ if (targetEl) {
           <span style="color:var(--muted)">${_mcLogTs(e)}</span>
           <span style="color:#38bdf8;font-size:9px;font-weight:600;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.28);border-radius:3px;padding:0 3px;margin-left:4px">cmd</span>
           <span style="margin-left:4px;font-weight:600">${escHtml(e.name)}</span>
-          <span style="color:#94a3b8;font-size:10px;margin-left:4px">requested ${modeLabel} advert${escHtml(via)}</span>
+          <span style="color:#94a3b8;font-size:10px;margin-left:4px">annonce ${modeLabel} demandée${escHtml(via)}</span>
         </div>`;
       }
       if (e.kind === 'bot_reply') {
@@ -13940,7 +13940,7 @@ if (targetEl) {
           ? `<span class="mc-rx-confidence ${escHtml(confMeta.cls)}" title="${escHtml(confMeta.detail)}">${escHtml(confMeta.label)}</span>`
           : '';
         const altHtml = altMeta
-          ? `<span class="mc-route-badge mc-route-badge-alt" title="${escHtml(altMeta.detail)}">+${altMeta.count} path${altMeta.count !== 1 ? 's' : ''}</span>`
+          ? `<span class="mc-route-badge mc-route-badge-alt" title="${escHtml(altMeta.detail)}">+${altMeta.count} chemin${altMeta.count !== 1 ? 's' : ''}</span>`
           : '';
         const byteHtml = byteMeta
           ? `<span class="mc-route-badge mc-route-badge-byte" title="${escHtml(byteMeta.detail)}">${escHtml(byteMeta.label)}</span>`
@@ -13953,10 +13953,10 @@ if (targetEl) {
           <span style="margin-left:4px;font-weight:600">${escHtml(e.name)}</span>
           ${hopMeta ? `<span class="mc-route-badge${Number(e.hopLen) === 0 ? ' direct' : ''}" title="${escHtml(hopMeta.detail)}">${escHtml(_mcMessageRouteLabel(hopMeta.label, e))}</span>` : ''}
           ${byteHtml}${altHtml}${confHtml}
-          ${showQ ? `<span title="Route source" style="margin-left:4px;font-size:9px;color:${qColor};background:${qBg};border:1px solid ${qBorder};border-radius:3px;padding:0 3px">${q}</span>` : ''}
+          ${showQ ? `<span title="Source du chemin" style="margin-left:4px;font-size:9px;color:${qColor};background:${qBg};border:1px solid ${qBorder};border-radius:3px;padding:0 3px">${q}</span>` : ''}
           ${warnText ? `<span title="${escHtml(warnText)}" style="color:#f59e0b;margin-left:4px;font-size:10px">!</span>` : ''}
           <span style="color:var(--muted);margin-left:4px;font-size:10px">${escHtml(e.text)}</span>
-          <a onclick="event.stopPropagation();jumpToMcChat(${e.msgTs},'${jsSafe(e.radioId)}',${e.channel},'${jsSafe(e.fromId || '')}')" style="margin-left:6px;font-size:10px;color:#3b82f6;cursor:pointer">→ Chat</a>
+          <a onclick="event.stopPropagation();jumpToMcChat(${e.msgTs},'${jsSafe(e.radioId)}',${e.channel},'${jsSafe(e.fromId || '')}')" style="margin-left:6px;font-size:10px;color:#3b82f6;cursor:pointer">→ Discussion</a>
         </div>`;
       }
       if (e.kind === 'sent_message') {
@@ -13984,7 +13984,7 @@ if (targetEl) {
         <span style="color:#94a3b8;margin-left:4px;font-size:9px;vertical-align:middle">adv</span>
         <span style="color:${nameColor};margin-left:3px;font-weight:600">${escHtml(e.name)}</span>
         <span style="color:${hopColor};margin-left:4px;font-size:10px">${hopLabel}</span>
-        ${warnText ? `<span title="${escHtml(warnText)}" style="color:#f59e0b;margin-left:4px;font-size:10px">!</span>` : (isPartial ? '<span style="color:var(--muted);margin-left:4px;font-size:9px" title="Partial path">~</span>' : '')}
+        ${warnText ? `<span title="${escHtml(warnText)}" style="color:#f59e0b;margin-left:4px;font-size:10px">!</span>` : (isPartial ? '<span style="color:var(--muted);margin-left:4px;font-size:9px" title="Chemin partiel">~</span>' : '')}
       </div>`;
     }).join('');
     if (wasAtBottom) el.scrollTop = el.scrollHeight;
@@ -14159,7 +14159,7 @@ if (targetEl) {
     const value = String(msg?.rx_confidence || '').toLowerCase();
     if (!value) return null;
     if (value === 'high') return { label: 'High confidence', cls: 'high', detail: 'RX copy matched by sender, text, or timestamp where available.' };
-    if (value === 'medium') return { label: 'Medium confidence', cls: 'medium', detail: 'RX copy matched by a tight timing window; channel RX logs may not include full message identity.' };
+    if (value === 'medium') return { label: 'Moyenne confidence', cls: 'medium', detail: 'RX copy matched by a tight timing window; channel RX logs may not include full message identity.' };
     return { label: 'Low confidence', cls: 'low', detail: 'Best-effort path; RX metadata did not strongly identify this exact message.' };
   }
 
@@ -14235,7 +14235,7 @@ if (targetEl) {
       if (leafletMap) leafletMap.panTo([entry.lat, entry.lon]);
       else centerMcOnMap(entry.lat, entry.lon);
     }
-    // Open detail panel
+    // Ouverte detail panel
     _showLogEntryDetail(entry);
     renderMcSenseLog();
   }
@@ -14353,7 +14353,7 @@ if (targetEl) {
         conf,
         point ? `${Number(point[0]).toFixed(5)}, ${Number(point[1]).toFixed(5)}` : 'sans GPS'
       ].filter(Boolean).join(' · ');
-      rows.push(`<button class="mc-hop-focus" ${point ? '' : 'disabled'} title="${point ? 'Centrer la carte sur ce saut/RPTR' : 'Ce saut n’a pas de position GPS résolue'}"
+      rows.push(`<button class="mc-hop-focus" ${point ? '' : 'désactivé'} title="${point ? 'Centrer la carte sur ce saut/RPTR' : 'Ce saut n’a pas de position GPS résolue'}"
         onclick="event.stopPropagation();_mcFocusLogHop(${entryIdx},${idx})">
         <span class="mc-hop-prefix">${escHtml(hop.hash || '?')}</span>
         <span class="mc-hop-focus-main">
@@ -14487,7 +14487,7 @@ if (targetEl) {
         });
       }
       if (!hops) rows += td('Result', 'Direct — no repeaters');
-      if (entry.pathHashSize != null) rows += td('Hash size', `${entry.pathHashSize}B/hop`);
+      if (entry.pathHashSize != null) rows += td('Hash size', `${entry.pathHashSize}saut`);
       body.innerHTML = `<table style="border-collapse:collapse;width:100%">${rows}</table>${_mcLogHopListHtml(entry, entry.pathResult, entryIdx)}`;
 
     } else if (entry.kind === 'advert') {
@@ -14497,7 +14497,7 @@ if (targetEl) {
       const typeLabel = (_MC_TYPE_LABELS || [])[contact?.type ?? entry.typeIdx] || '?';
       const hopLabel = mcPathHopLabel(entry.hopLen);
       const advHashBytes = contact?.out_path_hash_size ?? (contact?.out_path_hash_mode != null ? contact.out_path_hash_mode + 1 : null);
-      const advHashSuffix = advHashBytes != null ? ` · ${advHashBytes}B/hop` : '';
+      const advHashSuffix = advHashBytes != null ? ` · ${advHashBytes}saut` : '';
       let rows = td('Type', escHtml(typeLabel));
       rows += td('Path', hopLabel + escHtml(advHashSuffix));
       rows += td('Last seen', escHtml(_mcContactSeenLabel(contact)));
@@ -14533,7 +14533,7 @@ if (targetEl) {
       const chanLabel = mcKnownChannels[entry.channel] || (entry.channel === 0 ? 'Public channel' : `Channel ${entry.channel}`);
       const hopLabel = _mcMessageHopMeta(entry, msgMeta.path)?.detail || 'Unknown';
       const msgHashBytes = entry.pathHashSize ?? (entry.pathHashMode != null ? Number(entry.pathHashMode) + 1 : null) ?? (() => { const c = (mcContacts[entry.radioId] || {})[entry.fromId]; return c?.out_path_hash_size ?? (c?.out_path_hash_mode != null ? c.out_path_hash_mode + 1 : null); })();
-      const msgHashSuffix = msgHashBytes != null ? ` · ${msgHashBytes}B/hop` : '';
+      const msgHashSuffix = msgHashBytes != null ? ` · ${msgHashBytes}saut` : '';
       const altMeta = _mcAltPathMeta(entry);
       const confMeta = _mcRxConfidenceMeta(entry);
       let rows = td('Via', escHtml(chanLabel));
@@ -14742,11 +14742,11 @@ if (targetEl) {
           <span class="radio-row-status">${escHtml(transport)}</span>
           <span class="radio-row-status" title="Preferred MC path hash size">${escHtml(_mcPathHashModeLabel(n.path_hash_mode ?? 2))}</span>
           ${n.force_flood ? '<span class="radio-row-status" title="MC DMs and pings force flood routing" style="color:var(--yellow)">Flood</span>' : ''}
-          ${n.passive_collection === false ? '<span class="radio-row-status" title="Passive collection disabled" style="color:var(--yellow)">Passif désactivé</span>' : ''}
-          <span class="radio-row-status" style="${!n.enabled ? 'color:var(--muted)' : ''}">${n.enabled ? n.status : 'disabled'}</span>
+          ${n.passive_collection === false ? '<span class="radio-row-status" title="Passive collection désactivé" style="color:var(--yellow)">Passif désactivé</span>' : ''}
+          <span class="radio-row-status" style="${!n.enabled ? 'color:var(--muted)' : ''}">${n.enabled ? n.status : 'désactivé'}</span>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;${n.enabled ? '' : 'color:var(--accent);border-color:var(--accent)'}"
             title="${n.enabled ? 'Pause scanning for this radio — keeps config and message history intact' : 'Resume scanning and connecting to this radio'}"
-            onclick="settingsMcToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Disable' : 'Enable'}</button>
+            onclick="settingsMcToggleNode('${jsSafe(n.id)}',${!n.enabled})">${n.enabled ? 'Désactiver' : 'Activer'}</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;margin-left:4px"
             title="Effacer l’historique des messages de cette radio"
             onclick="settingsMcClearHistory('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer l’historique</button>
@@ -14754,8 +14754,8 @@ if (targetEl) {
             title="Effacer tous les contacts de cette radio (supprime du flash du nœud et d’OM)"
             onclick="settingsMcClearContacts('${jsSafe(n.id)}','${jsSafe(n.name)}')">Effacer les contacts</button>
           <button class="btn-secondary" style="font-size:11px;padding:3px 8px;color:var(--red);border-color:var(--red);margin-left:4px"
-            title="Remove this MeshCore radio from OverMesh"
-            onclick="settingsMcRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Remove</button>
+            title="Supprimer cette radio MeshCore d’OverMesh"
+            onclick="settingsMcRemoveNode('${jsSafe(n.id)}','${jsSafe(n.name)}')">Supprimer</button>
         </div>`;
       }).join('');
     }).catch(e => console.error('loadMcSettingsNodes failed:', e));
@@ -14800,7 +14800,7 @@ if (targetEl) {
     if (_addMcNodeType === 'tcp') {
       const host = document.getElementById('settings-mc-tcp-host').value.trim();
       const tcp_port = parseInt(document.getElementById('settings-mc-tcp-port').value.trim()) || 4403;
-      if (!host) { err.textContent = 'Enter an IP address or hostname.'; return; }
+      if (!host) { err.textContent = 'Entrez une adresse IP ou un nom d’hôte.'; return; }
       body.host = host;
       body.tcp_port = tcp_port;
     } else if (_addMcNodeType === 'ble') {
@@ -14814,7 +14814,7 @@ if (targetEl) {
       const selectedOpt = sel.options[sel.selectedIndex];
       const val = sel.value;
       const port        = selectedOpt?.dataset?.port || sel.value;
-      if (!val && !port) { err.textContent = 'Select a device.'; return; }
+      if (!val && !port) { err.textContent = 'Sélectionnez un périphérique.'; return; }
       body.usb_serial = val && val !== port ? val : '';
       body.port = port;
     }
@@ -15202,7 +15202,7 @@ if (targetEl) {
         console.warn('MC send failed:', e);
       }
     };
-    if (_silentMode) { showSilentConfirm('Sending is not possible while Silent Running is enabled.'); return; }
+    if (_silentMode) { showSilentConfirm('L’envoi est impossible lorsque le mode silencieux est activé.'); return; }
     doSend();
   }
 
@@ -15210,9 +15210,9 @@ if (targetEl) {
     e.stopPropagation();
     const menu = document.getElementById('mc-advert-menu');
     if (!menu) return;
-    const isOpen = menu.style.display !== 'none';
-    menu.style.display = isOpen ? 'none' : 'block';
-    if (!isOpen) {
+    const isOuverte = menu.style.display !== 'none';
+    menu.style.display = isOuverte ? 'none' : 'block';
+    if (!isOuverte) {
       const close = () => { menu.style.display = 'none'; document.removeEventListener('click', close); };
       setTimeout(() => document.addEventListener('click', close), 0);
     }
@@ -15293,7 +15293,7 @@ if (targetEl) {
   }
 
   function doMcDm(pubkeyPrefix, radioId, name) {
-    // Open a DM tab in MC chat instead of a modal
+    // Ouverte a DM tab in MC chat instead of a modal
     if (radioId && radioId !== activeMcRadioId) toggleRadioSelection(radioId);
     const tabKey = (pubkeyPrefix || '').slice(0, 12);  // firmware always reports 12-char from_id; normalize so reply lands on same tab
     mcDmContacts[tabKey] = name || pubkeyPrefix;
@@ -15408,21 +15408,21 @@ if (targetEl) {
     return `
       <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:10px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">
-          <h3 class="settings-subtitle" style="margin:0">Settings</h3>
-          <span id="mc-remote-sync-label" style="font-size:11px;color:var(--muted)">Not synced yet — hit Read all</span>
-          <button class="btn" onclick="mcRemoteReadAll()" title="Read all current settings from RPTR and cache them">Read all</button>
+          <h3 class="settings-subtitle" style="margin:0">Paramètres</h3>
+          <span id="mc-remote-sync-label" style="font-size:11px;color:var(--muted)">Pas encore synchronisé — cliquez sur Lire tout</span>
+          <button class="btn" onclick="mcRemoteReadAll()" title="Lire tous les paramètres actuels du RPTR et les mettre en cache">Lire tout</button>
         </div>
-        ${row('Name', input('mc-remote-set-name', 180, 'RPTR name', 'maxlength="32"'), "mcRemoteApplySetting('name')", 'get name')}
-        ${row('Repeat', `<select id="mc-remote-set-repeat" class="settings-select"><option value="on">On</option><option value="off">Off</option></select>`, "mcRemoteApplySetting('repeat')", 'get repeat')}
-        ${row('Power save', `<select id="mc-remote-set-powersaving" class="settings-select"><option value="off">Off</option><option value="on">On</option></select>`, "mcRemoteApplySetting('powersaving')", 'get powersaving')}
-        ${row('TX power', input('mc-remote-set-tx', 82, '1-22', 'type="number" min="1" max="22" step="1"'), "mcRemoteApplySetting('tx')", 'get tx')}
+        ${row('Nom', input('mc-remote-set-name', 180, 'Nom du RPTR', 'maxlength="32"'), "mcRemoteApplySetting('name')", 'get name')}
+        ${row('Répétition', `<select id="mc-remote-set-repeat" class="settings-select"><option value="on">Activé</option><option value="off">Désactivé</option></select>`, "mcRemoteApplySetting('repeat')", 'get repeat')}
+        ${row('Économie d’énergie', `<select id="mc-remote-set-powersaving" class="settings-select"><option value="off">Désactivé</option><option value="on">Activé</option></select>`, "mcRemoteApplySetting('powersaving')", 'get powersaving')}
+        ${row('Puissance TX', input('mc-remote-set-tx', 82, '1-22', 'type="number" min="1" max="22" step="1"'), "mcRemoteApplySetting('tx')", 'get tx')}
         ${row('Radio', `${input('mc-remote-set-freq', 88, 'MHz', 'type="number" step="0.001"')} ${input('mc-remote-set-bw', 72, 'BW', 'type="number" step="0.1"')} ${input('mc-remote-set-sf', 54, 'SF', 'type="number" min="5" max="12" step="1"')} ${input('mc-remote-set-cr', 54, 'CR', 'type="number" min="5" max="8" step="1"')}`, "mcRemoteApplySetting('radio')", 'get radio')}
-        ${row('Position', `${input('mc-remote-set-lat', 106, 'lat', 'type="number" step="0.000001"')} ${input('mc-remote-set-lon', 106, 'lon', 'type="number" step="0.000001"')} <button class="btn" onclick="startMcRemoteMapPick()" title="Pick RPTR position from map">Carte</button>`, "mcRemoteApplySetting('position')", 'get lat')}
-        ${row('Share location', `<select id="mc-remote-set-advert-loc" class="settings-select"><option value="none">Off (hidden)</option><option value="prefs">On (share coords)</option></select>`, "mcRemoteApplySetting('advert_loc')", 'gps advert')}
-        ${row('Owner info', `<input id="mc-remote-set-owner" class="settings-input" style="width:260px" placeholder="owner text">`, "mcRemoteApplySetting('owner')", 'get owner.info')}
-        ${row('Path hash', `<select id="mc-remote-set-path-hash" class="settings-select"><option value="0">1 byte</option><option value="1">2 bytes</option><option value="2">3 bytes</option></select>`, "mcRemoteApplySetting('path_hash')", 'get path.hash.mode')}
-        ${row('Loop detect', `<select id="mc-remote-set-loop" class="settings-select"><option value="off">Off</option><option value="minimal">Minimal</option><option value="moderate">Moderate</option><option value="strict">Strict</option></select>`, "mcRemoteApplySetting('loop')", 'get loop.detect')}
-        ${row('Advert timers', `${input('mc-remote-set-advert-int', 96, 'zero-hop min', 'type="number" min="0" step="2"')} ${input('mc-remote-set-flood-advert-int', 96, 'flood hrs', 'type="number" min="0" step="1"')}`, "mcRemoteApplySetting('adverts')", 'get advert.interval')}
+        ${row('Position', `${input('mc-remote-set-lat', 106, 'lat', 'type="number" step="0.000001"')} ${input('mc-remote-set-lon', 106, 'lon', 'type="number" step="0.000001"')} <button class="btn" onclick="startMcRemoteMapPick()" title="Choisir la position du RPTR sur la carte">Carte</button>`, "mcRemoteApplySetting('position')", 'get lat')}
+        ${row('Partager la position', `<select id="mc-remote-set-advert-loc" class="settings-select"><option value="none">Désactivé (position masquée)</option><option value="prefs">Activé (partage des coordonnées)</option></select>`, "mcRemoteApplySetting('advert_loc')", 'gps advert')}
+        ${row('Informations du propriétaire', `<input id="mc-remote-set-owner" class="settings-input" style="width:260px" placeholder="owner text">`, "mcRemoteApplySetting('owner')", 'get owner.info')}
+        ${row('Hachage du chemin', `<select id="mc-remote-set-path-hash" class="settings-select"><option value="0">1 octet</option><option value="1">2 octets</option><option value="2">3 octets</option></select>`, "mcRemoteApplySetting('path_hash')", 'get path.hash.mode')}
+        ${row('Détection de boucle', `<select id="mc-remote-set-loop" class="settings-select"><option value="off">Désactivé</option><option value="minimal">Minimal</option><option value="moderate">Modéré</option><option value="strict">Strict</option></select>`, "mcRemoteApplySetting('loop')", 'get loop.detect')}
+        ${row('Temporisations d’annonce', `${input('mc-remote-set-advert-int', 96, 'minutes sans saut', 'type="number" min="0" step="2"')} ${input('mc-remote-set-flood-advert-int', 96, 'heures en diffusion', 'type="number" min="0" step="1"')}`, "mcRemoteApplySetting('adverts')", 'get advert.interval')}
         ${row('Flood max', input('mc-remote-set-flood-max', 82, '0-64', 'type="number" min="0" max="64" step="1"'), "mcRemoteApplySetting('flood_max')", 'get flood.max')}
         <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
@@ -15470,7 +15470,7 @@ if (targetEl) {
             <select id="mc-remote-ch-idx" class="settings-select" style="width:70px">
               ${[0,1,2,3,4,5,6,7].map(i => `<option value="${i}">Slot ${i}</option>`).join('')}
             </select>
-            <input id="mc-remote-ch-name" class="settings-input" style="width:110px" placeholder="Name" maxlength="31">
+            <input id="mc-remote-ch-name" class="settings-input" style="width:110px" placeholder="Nom" maxlength="31">
             <input id="mc-remote-ch-key" class="settings-input" style="width:196px" placeholder="Key (base64, 16 or 32 bytes)">
             <button class="btn" onclick="mcRemoteSetChannel()">Set channel</button>
           </div>
@@ -15491,7 +15491,7 @@ if (targetEl) {
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="mcRemoteSilentMode(this)" title="Stop forwarding, silence all adverts, hide position">Silent mode</button>
             <button class="btn" onclick="mcRemoteResumeMode(this)" title="Resume forwarding and adverts">Resume</button>
-            <button class="btn" style="color:var(--orange,#f97316);border-color:var(--orange,#f97316)" onclick="mcRemoteReboot(this)" title="Send reboot command to the RPTR firmware">Restart</button>
+            <button class="btn" style="color:var(--orange,#f97316);border-color:var(--orange,#f97316)" onclick="mcRemoteReboot(this)" title="Send reboot command to the RPTR firmware">Redémarrer</button>
           </div>
         </div>
       </div>`;
@@ -15555,9 +15555,9 @@ if (targetEl) {
     const v = String(value || '').trim().toLowerCase();
     if (!v) return '';
     if (['1', 'true', 'yes', 'enabled', 'enable', 'on'].includes(v)) return 'on';
-    if (['0', 'false', 'no', 'disabled', 'disable', 'off'].includes(v)) return 'off';
+    if (['0', 'false', 'no', 'désactivé', 'disable', 'off'].includes(v)) return 'off';
     if (v.includes('on') || v.includes('enabled')) return 'on';
-    if (v.includes('off') || v.includes('disabled')) return 'off';
+    if (v.includes('off') || v.includes('désactivé')) return 'off';
     return '';
   }
 
@@ -15987,7 +15987,7 @@ if (targetEl) {
   async function mcRemoteRunCommand(command, outId = 'mc-remote-quick-result', opts = {}) {
     if (!_mcRemoteManage) return;
     const out = document.getElementById(outId);
-    if (out) out.textContent = 'Sending…';
+    if (out) out.textContent = 'Envoi…';
     try {
       const r = await fetch(BASE_PATH + `/api/mc/${encodeURIComponent(_mcRemoteManage.radioId)}/remote/${encodeURIComponent(_mcRemoteManage.pubkeyPrefix)}/command`, {
         method: 'POST',
@@ -16568,7 +16568,7 @@ if (targetEl) {
     contact.last_seen_ts = now;
     contact.last_heard_ts = now;
     if (!contact.last_advert && extra.markAdvert) contact.last_advert = now;
-    contact.last_seen = 'just now';
+    contact.last_seen = 'à l’instant';
     if (extra.out_path_len != null) contact.out_path_len = extra.out_path_len;
     if (extra.out_path != null) contact.out_path = extra.out_path;
     if (extra.out_path_hash_mode != null) contact.out_path_hash_mode = extra.out_path_hash_mode;
@@ -16590,7 +16590,7 @@ if (targetEl) {
   // MC Trace — broadcast trace packet, show hop/SNR results, draw on map
   // ---------------------------------------------------------------------------
 
-  let _mcPendingTraceTag = null;   // tag of last sent trace, for correlation
+  let _mcEnTraceTag = null;   // tag of last sent trace, for correlation
   let _mcTraceCooldownUntil = 0;
   let _mcTraceCooldownTimer = null;
   const MC_TRACE_COOLDOWN_MS = 30000;
@@ -16654,7 +16654,7 @@ if (targetEl) {
     title.textContent = 'Tracer la diffusion';
     body.innerHTML = '<span style="color:var(--muted)">Sending trace…</span>';
     panel.style.display = '';
-    _mcPendingTraceTag = null;
+    _mcEnTraceTag = null;
     try {
       const r = await fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/trace`, {method: 'POST'});
       const d = await r.json();
@@ -16664,13 +16664,13 @@ if (targetEl) {
         return;
       }
       _mcTraceStartCooldown();
-      _mcPendingTraceTag = d.tag;
+      _mcEnTraceTag = d.tag;
       body.innerHTML = '<span style="color:var(--muted)">Waiting for trace response…</span>';
       // Timeout if no TRACE_DATA arrives within 20s
       setTimeout(() => {
-        if (_mcPendingTraceTag === d.tag) {
+        if (_mcEnTraceTag === d.tag) {
           body.innerHTML = '<span style="color:var(--red)">Aucune réponse de traceroute. Firmware may not support send_trace.</span>';
-          _mcPendingTraceTag = null;
+          _mcEnTraceTag = null;
         }
       }, 20000);
     } catch(e) {
@@ -16680,9 +16680,9 @@ if (targetEl) {
   }
 
   function _mcHandleTraceData(data) {
-    const isOurs = _mcPendingTraceTag !== null && data.tag === _mcPendingTraceTag;
+    const isOurs = _mcEnTraceTag !== null && data.tag === _mcPendingTraceTag;
     if (isOurs) {
-      _mcPendingTraceTag = null;
+      _mcEnTraceTag = null;
       const status = document.getElementById('sense-mc-status');
       if (status && _senseNet === 'mc') status.textContent = 'Trace response received.';
       _mcTraceSetButtonState();
@@ -16913,7 +16913,7 @@ if (targetEl) {
     } catch(e) {
       if (status) status.textContent = 'Last Heard error.';
     } finally {
-      if (btn) { btn.textContent = 'Last Heard'; btn.disabled = false; }
+      if (btn) { btn.textContent = 'Dernière activité'; btn.disabled = false; }
     }
   }
 
@@ -16928,12 +16928,12 @@ if (targetEl) {
       const r = await fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/scan`, {method: 'POST'});
       const d = await r.json();
       if (!r.ok) {
-        if (btn) { btn.textContent = 'Scan'; btn.disabled = false; }
+        if (btn) { btn.textContent = 'Scanner'; btn.disabled = false; }
         showAlert(d.error || 'Échec de l’analyse.');
         return;
       }
     } catch(e) {
-      if (btn) { btn.textContent = 'Scan'; btn.disabled = false; }
+      if (btn) { btn.textContent = 'Scanner'; btn.disabled = false; }
       showAlert('Échec de l’analyse: ' + e.message);
     }
   }
@@ -16953,7 +16953,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   }
 
   function settingsMcRemoveNode(id, name) {
-    document.getElementById('confirm-ok').textContent = 'Remove';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Remove MC radio "${escHtml(name)}"?`, () => {
       fetch(BASE_PATH + `/api/settings/mc_nodes/${encodeURIComponent(id)}/remove`, {method: 'POST'})
         .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
@@ -16990,11 +16990,11 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
               .catch(e => console.error('clearMcHistory failed:', e));
           }
         );
-        document.getElementById('confirm-ok').textContent = 'Clear';
+        document.getElementById('confirm-ok').textContent = 'Effacer';
       })
       .catch(() => {
         // Fallback: just clear all
-        document.getElementById('confirm-ok').textContent = 'Clear';
+        document.getElementById('confirm-ok').textContent = 'Effacer';
         showConfirm(`Effacer tout l’historique des messages de "${escHtml(name)}"?`, () => {
           fetch(BASE_PATH + `/api/mc/${encodeURIComponent(id)}/messages`, {method: 'DELETE'})
             .catch(e => console.error('clearMcHistory failed:', e));
@@ -17003,7 +17003,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   }
 
   function settingsMcClearContacts(id, name) {
-    document.getElementById('confirm-ok').textContent = 'Clear';
+    document.getElementById('confirm-ok').textContent = 'Effacer';
     showConfirm(`Effacer tous les contacts de "${escHtml(name)}"?<br><small style="color:var(--muted)">Supprime du flash du nœud et d’OM. Cette action est irréversible.</small>`, () => {
       fetch(BASE_PATH + `/api/mc/${encodeURIComponent(id)}/contacts/all`, {method: 'DELETE'})
         .then(r => r.json())
@@ -17059,7 +17059,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (locPolicyBtn) {
       const pol = s.adv_loc_policy != null ? parseInt(s.adv_loc_policy) : null;
       locPolicyBtn.dataset.policy = String(pol ?? 0);
-      locPolicyBtn.textContent = pol == null ? '—' : (pol === 1 ? 'Enabled' : 'Disabled');
+      locPolicyBtn.textContent = pol == null ? '—' : (pol === 1 ? 'Activé' : 'Désactivé');
       locPolicyBtn.style.color = pol === 1 ? 'var(--accent)' : '';
     }
     // Only query device if connected
@@ -17183,8 +17183,8 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
             <td style="padding:4px 0;text-align:right;white-space:nowrap">
               ${ch.name
                 ? `<button class="btn" style="padding:2px 8px;font-size:11px" onclick="shareMcChannel('${jsSafe(radioId)}',${parseInt(ch.idx) || 0},'${jsSafe(ch.name || '')}','${jsSafe(ch.hash || '')}')">Infos/Partage</button>`
-                : `<button class="btn" style="padding:2px 8px;font-size:11px;opacity:.45;cursor:default" disabled>Infos/Partage</button>`}
-              <button class="btn" style="padding:2px 8px;font-size:11px;margin-left:4px" onclick="openMcChEdit('${jsSafe(radioId)}',${parseInt(ch.idx) || 0},'${jsSafe(ch.name || '')}','${jsSafe(ch.hash || '')}')">Edit</button>
+                : `<button class="btn" style="padding:2px 8px;font-size:11px;opacity:.45;cursor:default" désactivé>Infos/Partage</button>`}
+              <button class="btn" style="padding:2px 8px;font-size:11px;margin-left:4px" onclick="openMcChEdit('${jsSafe(radioId)}',${parseInt(ch.idx) || 0},'${jsSafe(ch.name || '')}','${jsSafe(ch.hash || '')}')">Modifier</button>
             </td>
           </tr>`).join('')}
         </table>`;
@@ -17213,7 +17213,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!freq || isNaN(freq) || isNaN(bw) || isNaN(sf) || isNaN(cr)) {
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Invalid values.</span>'; return;
     }
-    if (statusEl) statusEl.textContent = 'Saving…';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/radio`, {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({freq, bw, sf, cr}),
@@ -17223,7 +17223,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
           Object.assign(mcLastStatus[radioId], {freq, bw, sf, cr});
           if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Saved — reboot may be needed.</span>';
-          btnFeedback(btn, '✓ Saved');
+          btnFeedback(btn, '✓ Enregistré');
         } else {
           if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
         }
@@ -17239,7 +17239,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (isNaN(val) || val < 1) {
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Invalid TX power.</span>'; return;
     }
-    if (statusEl) statusEl.textContent = 'Saving…';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/tx_power`, {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({tx_power: val}),
@@ -17249,7 +17249,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
           mcLastStatus[radioId].tx_power = val;
           if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Saved.</span>';
-          btnFeedback(btn, '✓ Saved');
+          btnFeedback(btn, '✓ Enregistré');
         } else {
           if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
         }
@@ -17267,7 +17267,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Invalid path mode.</span>';
       return;
     }
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/settings/mc_nodes/${encodeURIComponent(radioId)}/path_hash_mode`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -17285,7 +17285,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           ? ` ${d.warning || `Selected mode unavailable; using ${label}.`}`
           : ` Saved ${label}.`;
         if (statusEl) statusEl.innerHTML = `<span style="color:var(--accent)">${escHtml(suffix)}</span>`;
-        btnFeedback(btn, '✓ Saved');
+        btnFeedback(btn, '✓ Enregistré');
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 5000);
       }).catch(e => {
         if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`;
@@ -17296,7 +17296,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = mcSettingsRadioId || activeMcRadioId;
     const statusEl = document.getElementById('mc-force-flood-status');
     if (!radioId) return;
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/settings/mc_nodes/${encodeURIComponent(radioId)}/force_flood`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -17322,7 +17322,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = mcSettingsRadioId || activeMcRadioId;
     const statusEl = document.getElementById('mc-passive-collection-status');
     if (!radioId) return;
-    if (statusEl) statusEl.textContent = 'Saving...';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/settings/mc_nodes/${encodeURIComponent(radioId)}/passive_collection`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -17336,7 +17336,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         const cb = document.getElementById('mc-passive-collection');
         if (cb) cb.checked = !!d.passive_collection;
         if (statusEl) {
-          statusEl.innerHTML = `<span style="color:var(--accent)">${d.passive_collection ? 'Passive collection enabled.' : 'Passive collection disabled.'}</span>`;
+          statusEl.innerHTML = `<span style="color:var(--accent)">${d.passive_collection ? 'Passive collection enabled.' : 'Passive collection désactivé.'}</span>`;
           setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 5000);
         }
       }).catch(e => {
@@ -17375,7 +17375,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const name = (document.getElementById('mc-device-name-input').value || '').trim();
     const statusEl = document.getElementById('mc-actions-status');
     if (!name) { if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Name required.</span>'; return; }
-    if (statusEl) statusEl.textContent = 'Saving…';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/device_name`, {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({name}),
@@ -17385,7 +17385,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           if (!mcLastStatus[radioId]) mcLastStatus[radioId] = {};
           mcLastStatus[radioId].node_name = name;
           if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Renamed.</span>';
-          btnFeedback(btn, '✓ Saved');
+          btnFeedback(btn, '✓ Enregistré');
         } else {
           if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
         }
@@ -17418,7 +17418,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         if (statusEl) statusEl.innerHTML = d.ok
           ? '<span style="color:var(--accent)">Coords set.</span>'
           : `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
-        if (d.ok) btnFeedback(btn, '✓ Saved');
+        if (d.ok) btnFeedback(btn, '✓ Enregistré');
         setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 3000);
       }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
   }
@@ -17429,7 +17429,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const current = parseInt(btn.dataset.policy ?? '0');
     const newPolicy = current === 1 ? 0 : 1;
     const statusEl = document.getElementById('mc-actions-status');
-    if (statusEl) statusEl.textContent = 'Saving…';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/loc_policy`, {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({policy: newPolicy}),
@@ -17437,9 +17437,9 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       .then(d => {
         if (d.ok) {
           btn.dataset.policy = String(newPolicy);
-          btn.textContent = newPolicy === 1 ? 'Enabled' : 'Disabled';
+          btn.textContent = newPolicy === 1 ? 'Activé' : 'Désactivé';
           btn.style.color = newPolicy === 1 ? 'var(--accent)' : '';
-          if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Position sharing updated.</span>';
+          if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Partage de position mis à jour.</span>';
         } else {
           if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Failed')}</span>`;
         }
@@ -17507,7 +17507,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (keyType === 'custom' && (keyHex.length !== 32 || !/^[0-9a-f]+$/.test(keyHex))) {
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">Key must be exactly 32 hex characters.</span>'; return;
     }
-    if (statusEl) statusEl.textContent = 'Saving…';
+    if (statusEl) statusEl.textContent = 'Enregistrement…';
     const body = {name, key_type: keyType};
     if (keyType === 'custom') body.key = keyHex;
     fetch(BASE_PATH + `/api/mc/${encodeURIComponent(radioId)}/channels/${idx}`, {
@@ -17516,7 +17516,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     }).then(r => r.json().then(d => ({ok: r.ok, d}))).then(({ok, d}) => {
       if (!ok || d.error) { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(d.error || 'Save failed.')}</span>`; return; }
       if (statusEl) statusEl.innerHTML = '<span style="color:var(--accent)">Saved.</span>';
-      btnFeedback(btn, '✓ Saved');
+      btnFeedback(btn, '✓ Enregistré');
       loadMcChannelsList(radioId);
       closeMcChEdit();
     }).catch(e => { if (statusEl) statusEl.innerHTML = `<span style="color:var(--red)">${escHtml(e.message)}</span>`; });
@@ -17527,7 +17527,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (radioId === null || _editingMcChIdx === null) return;
     const idx  = _editingMcChIdx;
     const name = (document.getElementById('mc-ch-name').value || '').trim() || `CH${idx}`;
-    document.getElementById('confirm-ok').textContent = 'Remove';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Remove channel "${name}"? This clears the slot on the device and removes its chat history.`, () => {
       const statusEl = document.getElementById('mc-channels-remove-status');
       if (statusEl) { statusEl.textContent = `Removing channel ${idx}…`; statusEl.style.color = 'var(--muted)'; }
@@ -17557,7 +17557,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const idx  = _editingMcChIdx;
     const name = (document.getElementById('mc-ch-name').value || '').trim() || `CH${idx}`;
     const statusEl = document.getElementById('mc-channels-status');
-    document.getElementById('confirm-ok').textContent = 'Delete';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Delete saved MC chat history for "${name}"?`, () => {
       const before = mcMessages.length;
       mcMessages = mcMessages.filter(m => !(
@@ -17581,7 +17581,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           }
         })
         .catch(e => console.warn('MC archive clear failed:', e));
-      btnFeedback(btn, '✓ Cleared');
+      btnFeedback(btn, '✓ Effacé');
       setTimeout(() => { if (statusEl) statusEl.textContent = ''; }, 4000);
       document.getElementById('confirm-ok').textContent = 'OK';
     });
@@ -17605,7 +17605,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         if (btn) btn.textContent = `Debug Events (${remaining}s)`;
         if (remaining <= 0) {
           clearInterval(t);
-          if (btn) { btn.disabled = false; btn.textContent = 'Debug Events'; }
+          if (btn) { btn.disabled = false; btn.textContent = 'Événements de débogage'; }
           if (statusEl) statusEl.textContent = '';
         }
       }, 1000);
@@ -17726,22 +17726,22 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const panel    = document.getElementById('sense-panel');
     const logPanel = document.getElementById('sense-log-panel');
     const overlayPanel = document.getElementById('overlay-panel');
-    const isOpen = open !== undefined ? open : panel.style.display === 'none';
-    panel.style.display    = isOpen ? 'flex' : 'none';
-    logPanel.style.display = isOpen ? 'flex' : 'none';
+    const isOuverte = open !== undefined ? open : panel.style.display === 'none';
+    panel.style.display    = isOuverte ? 'flex' : 'none';
+    logPanel.style.display = isOuverte ? 'flex' : 'none';
     const mpr = document.getElementById('map-panels-right');
-    if (mpr) mpr.style.display = isOpen ? 'none' : '';
-    if (overlayPanel) overlayPanel.style.display = isOpen ? 'none' : '';
-    document.getElementById('map-btn-map').classList.toggle('active', !isOpen);
-    document.getElementById('map-btn-sense').classList.toggle('active', isOpen);
+    if (mpr) mpr.style.display = isOuverte ? 'none' : '';
+    if (overlayPanel) overlayPanel.style.display = isOuverte ? 'none' : '';
+    document.getElementById('map-btn-map').classList.toggle('active', !isOuverte);
+    document.getElementById('map-btn-sense').classList.toggle('active', isOuverte);
     const netFilter     = document.getElementById('map-net-filter');
     const senseNetFilter = document.getElementById('sense-net-filter');
-    if (netFilter)      netFilter.style.display      = isOpen ? 'none' : '';
-    if (senseNetFilter) senseNetFilter.style.display = isOpen ? ''     : 'none';
-    localStorage.setItem('sensePanelOpen', isOpen ? '1' : '0');
+    if (netFilter)      netFilter.style.display      = isOuverte ? 'none' : '';
+    if (senseNetFilter) senseNetFilter.style.display = isOuverte ? ''     : 'none';
+    localStorage.setItem('sensePanelOuverte', isOpen ? '1' : '0');
     _updateNetworkPillVisibility();
     resizeMapView();
-    if (isOpen) {
+    if (isOuverte) {
       if (_mapLayerDraft) cancelMapLayerDraft();
       // Apply current network mode (MT or MC)
       switchSenseNet(_senseNet);
@@ -17788,10 +17788,10 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       const safeName = jsSafe(lbl);
       const rows = [
         `<div class="map-popup-name">${escHtml(lbl)}</div>`,
-        n.snr     != null ? `<div><b>SNR:</b> ${n.snr.toFixed ? n.snr.toFixed(1) : n.snr} dB</div>` : null,
-        n.hops    != null ? `<div><b>Hops:</b> ${n.hops === 0 ? 'Direct' : `${n.hops} hop${n.hops !== 1 ? 's' : ''} away`}</div>` : null,
-        n.ts      != null ? `<div><b>Last seen:</b> <span class="map-popup-lh" data-ts="${n.ts}">${senseTimeAgo(n.ts)}</span></div>` : null,
-        n.battery != null ? `<div><b>Battery:</b> ${n.battery}%</div>` : null,
+        n.snr     != null ? `<div><b>SNR :</b> ${n.snr.toFixed ? n.snr.toFixed(1) : n.snr} dB</div>` : null,
+        n.hops    != null ? `<div><b>Sauts :</b> ${n.hops === 0 ? 'Direct' : `${n.hops} hop${n.hops !== 1 ? 's' : ''} away`}</div>` : null,
+        n.ts      != null ? `<div><b>Dernière activité :</b> <span class="map-popup-lh" data-ts="${n.ts}">${senseTimeAgo(n.ts)}</span></div>` : null,
+        n.battery != null ? `<div><b>Batterie :</b> ${n.battery}%</div>` : null,
         n.voltage != null ? `<div><b>Voltage:</b> ${n.voltage.toFixed ? n.voltage.toFixed(2) : n.voltage}V</div>` : null,
         n.alt     != null ? `<div><b>Alt:</b> ${n.alt}m</div>` : null,
         n.sats    != null ? `<div><b>Sats:</b> ${n.sats}</div>` : null,
@@ -17799,11 +17799,11 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         n.role     ? `<div><b>Role:</b> ${escHtml(n.role)}</div>` : null,
         `<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
           <button class="map-popup-btn" title="Afficher dans la liste des nœuds" onclick="showNodeInList('${jsSafe(n.from_id)}')">Liste</button>
-          <button class="map-popup-btn" title="Send direct message" onclick="openMapDM('${jsSafe(n.from_id)}','${safeName}')">DM</button>
-          <button class="map-popup-btn" title="Traceroute to this node" onclick="openMapTR('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">TR</button>
-          <button class="map-popup-btn" title="Set position" onclick="openMapPos('${jsSafe(n.from_id)}','${safeName}')">Pos</button>
-          <button class="map-popup-btn" title="Node info &amp; settings" onclick="openMapInfo('${jsSafe(n.from_id)}','${safeName}')">Info</button>
-          <button class="map-popup-btn danger" title="Delete from device" onclick="deleteNode('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">Supprimer</button>
+          <button class="map-popup-btn" title="Envoyer un message direct" onclick="openMapDM('${jsSafe(n.from_id)}','${safeName}')">DM</button>
+          <button class="map-popup-btn" title="Traceroute vers ce nœud" onclick="openMapTR('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">TR</button>
+          <button class="map-popup-btn" title="Définir la position" onclick="openMapPos('${jsSafe(n.from_id)}','${safeName}')">Pos</button>
+          <button class="map-popup-btn" title="Informations et paramètres du nœud" onclick="openMapInfo('${jsSafe(n.from_id)}','${safeName}')">Info</button>
+          <button class="map-popup-btn danger" title="Supprimer de l’appareil" onclick="deleteNode('${jsSafe(n.from_id)}','${safeName}','${jsSafe(n.radio_id || activeRadioId || '')}')">Supprimer</button>
         </div>`,
       ].filter(Boolean).join('');
       return rows;
@@ -18496,7 +18496,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           .sort((a,b) => parseInt(a[0]) - parseInt(b[0]))
           .map(([v,n]) => `<option value="${escHtml(v)}">${escHtml(_formatMtDeviceRoleLabel(n))}</option>`).join('');
         roleSel.value = d.role;
-        document.getElementById('node-cfg-led-heartbeat-disabled').checked = !!d.led_heartbeat_disabled;
+        document.getElementById('node-cfg-led-heartbeat-désactivé').checked = !!d.led_heartbeat_désactivé;
 
         // Populate region dropdown
         const regionSel = document.getElementById('node-cfg-region');
@@ -18611,29 +18611,29 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (!long_name || !short_name) {
       nodeCfgStatus('owner', 'Long name and short name required.', false); return;
     }
-    nodeCfgStatus('owner', 'Saving…', true);
+    nodeCfgStatus('owner', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/owner`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({long_name, short_name})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('owner', d.error || 'Saved.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('owner', 'Error: ' + escHtml(String(e)), false));
   }
 
   function saveNodeDevice(btn) {
     const radioId = _selectedNodeId;
     const role    = parseInt(document.getElementById('node-cfg-role').value);
-    const led_heartbeat_disabled = document.getElementById('node-cfg-led-heartbeat-disabled').checked;
-    nodeCfgStatus('device', 'Saving…', true);
+    const led_heartbeat_désactivé = document.getElementById('node-cfg-led-heartbeat-désactivé').checked;
+    nodeCfgStatus('device', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/device`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({role, led_heartbeat_disabled})
+      body: JSON.stringify({role, led_heartbeat_désactivé})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('device', d.error || 'Saved. Reboot may be needed.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('device', 'Error: ' + escHtml(String(e)), false));
   }
 
@@ -18650,7 +18650,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       body: JSON.stringify({region, modem_preset, tx_power, hop_limit})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('lora', d.error || 'Saved. Reboot node to apply region/preset.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('lora', 'Error: ' + escHtml(String(e)), false));
   }
 
@@ -18693,7 +18693,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = _selectedNodeId;
     if (!radioId) return;
     const label = document.querySelector('#node-cfg-tabs .btn.active')?.textContent || radioId;
-    document.getElementById('confirm-ok').textContent = 'Clear';
+    document.getElementById('confirm-ok').textContent = 'Effacer';
     showConfirm(`Effacer tous les nœuds distants mémorisés pour "${label}"? La radio sélectionnée elle-même reste intacte.`, async () => {
       const st = document.getElementById('node-cfg-actions-status');
       if (st) st.innerHTML = '<span style="color:var(--muted)">Clearing known nodes…</span>';
@@ -18717,14 +18717,14 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   }
 
   function clearGpsHistory(btn) {
-    document.getElementById('confirm-ok').textContent = 'Clear';
+    document.getElementById('confirm-ok').textContent = 'Effacer';
     showConfirm('Delete all GPS movement history for all nodes? This cannot be undone.', async () => {
       const st = document.getElementById('gps-clear-status');
       if (st) st.innerHTML = '<span style="color:var(--muted)">Clearing…</span>';
       try {
         const r = await fetch(BASE_PATH + '/api/db/gps_history/clear', {method:'POST'});
         const d = await r.json();
-        if (r.ok) btnFeedback(btn, '✓ Cleared');
+        if (r.ok) btnFeedback(btn, '✓ Effacé');
         if (st) st.innerHTML = r.ok
           ? '<span style="color:var(--green)">GPS history cleared.</span>'
           : `<span style="color:#f87171">${escHtml(d.error || 'Failed.')}</span>`;
@@ -18740,7 +18740,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   let _editingChIndex = null;
   let _chCache = [];
 
-  const CH_ROLES      = {0: 'Disabled', 1: 'Primary', 2: 'Secondary'};
+  const CH_ROLES      = {0: 'Désactivé', 1: 'Principal', 2: 'Secondaire'};
   const CH_ROLE_COLOR = {0: 'var(--muted)', 1: 'var(--green)', 2: 'var(--accent)'};
 
   function loadNodeChannels() {
@@ -18764,8 +18764,8 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
             <span style="font-size:11px;color:${roleColor};width:68px;text-align:right;flex-shrink:0">${roleLabel}</span>
             ${ch.role !== 0
               ? `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="shareMtChannel(${ch.index})" title="Afficher les données de partage du canal">Infos/Partage</button>`
-              : `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0;opacity:.45;cursor:default" disabled>Infos/Partage</button>`}
-            <button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="openChEdit(${ch.index})" title="Edit channel settings">Edit</button>
+              : `<button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0;opacity:.45;cursor:default" désactivé>Infos/Partage</button>`}
+            <button class="btn" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="openChEdit(${ch.index})" title="Modifier les paramètres du canal">Modifier</button>
           </div>`;
         }).join('');
       })
@@ -18947,7 +18947,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     if (psk_type === 'custom' && !psk_hex) {
       nodeCfgStatus('channels', 'Enter a custom PSK hex string.', false); return;
     }
-    nodeCfgStatus('channels', 'Saving…', true);
+    nodeCfgStatus('channels', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/channels/${_editingChIndex}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -18955,7 +18955,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     }).then(r => r.json().then(d => ({ok: r.ok, d}))).then(({ok, d}) => {
       if (!ok || d.error) { nodeCfgStatus('channels', d.error || 'Save failed.', false); return; }
       nodeCfgStatus('channels', 'Saved.', true);
-      btnFeedback(btn, '✓ Saved');
+      btnFeedback(btn, '✓ Enregistré');
       loadNodeChannels();
       closeChEdit();
       initChat();   // refresh chat tab tabs too
@@ -18963,7 +18963,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   }
 
   function removeNodeChannel(index, btn) {
-    document.getElementById('confirm-ok').textContent = 'Remove';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Remove channel ${index}? This disables the channel and clears its name and key.`, () => _doRemoveNodeChannel(index, btn));
   }
   function _doRemoveNodeChannel(index, btn) {
@@ -18993,7 +18993,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = _selectedNodeId;
     const ch = _chCache.find(c => c.index === index);
     const label = ch?.name || `CH${index}`;
-    document.getElementById('confirm-ok').textContent = 'Delete';
+    document.getElementById('confirm-ok').textContent = 'Supprimer';
     showConfirm(`Delete saved MT chat history for "${label}"?`, async () => {
       nodeCfgStatus('channels', 'Deleting history…', true);
       try {
@@ -19007,7 +19007,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         renderChannelTabs();
         updateUnreadDots();
         nodeCfgStatus('channels', `Deleted ${d.removed_db ?? 0} saved message${(d.removed_db ?? 0) === 1 ? '' : 's'}.`, true);
-        btnFeedback(btn, '✓ Cleared');
+        btnFeedback(btn, '✓ Effacé');
       } catch (e) {
         nodeCfgStatus('channels', 'Error: ' + escHtml(String(e)), false);
       } finally {
@@ -19018,7 +19018,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
 
   // ── Position ────────────────────────────────────────────────────────────────
   function precMeterLabel(m) {
-    return m === 0 ? 'Actual position' : `~${m} m radius`;
+    return m === 0 ? 'Position réelle' : `~${m} m radius`;
   }
   function metersToBit(m) {
     if (m === 0) return 32;
@@ -19122,7 +19122,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         return;
       }
     }
-    nodeCfgStatus('position', 'Saving…', true);
+    nodeCfgStatus('position', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/position`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -19136,7 +19136,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
                             alt: fixed_alt})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('position', d.error || 'Saved.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('position', 'Error: ' + escHtml(String(e)), false));
   }
 
@@ -19165,14 +19165,14 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = _selectedNodeId;
     const is_power_saving         = document.getElementById('node-cfg-power-saving').checked;
     const on_battery_shutdown_after_secs = parseInt(document.getElementById('node-cfg-shutdown-secs').value) || 0;
-    nodeCfgStatus('power', 'Saving…', true);
+    nodeCfgStatus('power', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/power`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({power_saving: is_power_saving, shutdown_after_secs: on_battery_shutdown_after_secs})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('power', d.error || 'Saved.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('power', 'Error: ' + escHtml(String(e)), false));
   }
 
@@ -19190,7 +19190,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const screen_on_secs = parseInt(document.getElementById('node-cfg-screen-secs').value) || 0;
     const flip_screen    = document.getElementById('node-cfg-flip-screen').checked;
     const units          = parseInt(document.getElementById('node-cfg-display-units').value);
-    nodeCfgStatus('display', 'Saving…', true);
+    nodeCfgStatus('display', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/display`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -19206,14 +19206,14 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const radioId = _selectedNodeId;
     const device_update_interval      = parseInt(document.getElementById('node-cfg-tel-device').value) || 0;
     const environment_update_interval = parseInt(document.getElementById('node-cfg-tel-env').value)    || 0;
-    nodeCfgStatus('telemetry', 'Saving…', true);
+    nodeCfgStatus('telemetry', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/telemetry`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({tel_device: device_update_interval, tel_env: environment_update_interval})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('telemetry', d.error || 'Saved.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('telemetry', 'Error: ' + escHtml(String(e)), false));
   }
 
@@ -19228,7 +19228,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const json_enabled = document.getElementById('node-cfg-mqtt-json').checked;
     const tls        = document.getElementById('node-cfg-mqtt-tls').checked;
     const map_reporting = document.getElementById('node-cfg-mqtt-map').checked;
-    nodeCfgStatus('mqtt', 'Saving…', true);
+    nodeCfgStatus('mqtt', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/mqtt`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -19237,7 +19237,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
                             mqtt_tls: tls, mqtt_map: map_reporting})
     }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       nodeCfgStatus('mqtt', d.error || 'Saved.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
       if (!d.error && password) {
         document.getElementById('node-cfg-mqtt-password').value = '';
         document.getElementById('node-cfg-mqtt-password').placeholder = '(set — leave blank to keep)';
@@ -19266,7 +19266,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const bt_enabled  = document.getElementById('node-cfg-bt-enabled').checked;
     const bt_mode     = parseInt(document.getElementById('node-cfg-bt-mode').value);
     const bt_fixed_pin = parseInt(document.getElementById('node-cfg-bt-pin').value) || 0;
-    nodeCfgStatus('bluetooth', 'Saving…', true);
+    nodeCfgStatus('bluetooth', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/bluetooth`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -19276,7 +19276,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       return r.json();
     }).then(d => {
       nodeCfgStatus('bluetooth', d.error || 'Saved. Reboot to apply.', !d.error);
-      if (!d.error) btnFeedback(btn, '✓ Saved');
+      if (!d.error) btnFeedback(btn, '✓ Enregistré');
     }).catch(e => nodeCfgStatus('bluetooth', 'Error: ' + escHtml(String(e)), false));
   }
 
@@ -19289,7 +19289,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const wifi_psk     = document.getElementById('node-cfg-wifi-psk').value;
     const payload      = {wifi_enabled, wifi_ap_mode, wifi_ssid};
     if (wifi_psk.trim()) payload.wifi_psk = wifi_psk;
-    nodeCfgStatus('network', 'Saving…', true);
+    nodeCfgStatus('network', 'Enregistrement…', true);
     fetch(BASE_PATH + `/api/radio/${encodeURIComponent(radioId)}/config/network`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -19300,7 +19300,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     }).then(d => {
       nodeCfgStatus('network', d.error || 'Saved. Reboot to apply.', !d.error);
       if (!d.error) {
-        btnFeedback(btn, '✓ Saved');
+        btnFeedback(btn, '✓ Enregistré');
         const pskEl = document.getElementById('node-cfg-wifi-psk');
         pskEl.value = '';
         pskEl.type  = 'password';
@@ -19793,130 +19793,130 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     plan: {
       cat:'PLAN', label:'PLAN',
       fields:[
-        {name:'Zone / Itinéraire', hint:'Basecamp, route, work area, or planned collection point'},
-        {name:'Objectif', hint:'What should be achieved', multiline:true},
-        {name:'Fenêtre / Horaires', hint:'Start time, end time, update cadence, or time limit'},
-        {name:'Personnes / Nœuds / Ressources', hint:'Operators, MC contacts, MT nodes, RPTRs, vehicles, stations (# to mention node)'},
-        {name:'Configuration MC / MT', hint:'Radios, channels, contacts, antenna, power, GPS, Silent status', multiline:true},
-        {name:'Points de contrôle / Déclencheurs', hint:'When to log POSITION, COMMS, CONTACT, ALERT, or SITREP', multiline:true},
-        {name:'Risques / Contraintes', hint:'Weather, power, access, RF path, USB/GPS, time, safety', multiline:true},
-        {name:'Plan de communications', hint:'Who to ping, where to report, fallback channel/path', multiline:true},
-        {name:'Critères d’abandon / modification', hint:'When to stop, return, change route, or switch mode'},
-        {name:'Notes', hint:'Extra planning context', multiline:true},
+        {name:'Zone / Itinéraire', hint:'Basecamp, itinéraire, zone de travail ou point de collecte prévu'},
+        {name:'Objectif', hint:'Ce qui doit être accompli', multiline:true},
+        {name:'Fenêtre / Horaires', hint:'Heure de début, heure de fin, fréquence des mises à jour ou limite de temps'},
+        {name:'Personnes / Nœuds / Ressources', hint:'Opérateurs, contacts MC, nœuds MT, répéteurs, véhicules, stations (# pour mentionner un nœud)'},
+        {name:'Configuration MC / MT', hint:'Radios, canaux, contacts, antenne, alimentation, GPS, état silencieux', multiline:true},
+        {name:'Points de contrôle / Déclencheurs', hint:'Quand enregistrer POSITION, COMMS, CONTACT, ALERT ou SITREP', multiline:true},
+        {name:'Risques / Contraintes', hint:'Météo, alimentation, accès, liaison RF, USB/GPS, temps, sécurité', multiline:true},
+        {name:'Plan de communications', hint:'Qui contacter par ping, où rendre compte, canal/itinéraire de secours', multiline:true},
+        {name:'Critères d’abandon / modification', hint:'Quand arrêter, revenir, changer d’itinéraire ou changer de mode'},
+        {name:'Notes', hint:'Contexte de planification supplémentaire', multiline:true},
       ],
     },
     sitrep: {
       cat:'SITREP', label:'SITREP',
       fields:[
-        {name:'Location / Area', hint:'Site, route, grid, or operating area'},
-        {name:'Situation', hint:'What is happening now', multiline:true},
-        {name:'Status', hint:'Normal, degraded, blocked, urgent...'},
-        {name:'Known Nodes / Assets', hint:'Nodes, teams, vehicles, stations (# to mention node)'},
-        {name:'Issues / Risks', hint:'Outages, safety issues, weather, access, interference'},
-        {name:'Intent / Plan', hint:'Next steps or operating plan', multiline:true},
-        {name:'Next Update', hint:'When another report is expected'},
-        {name:'Notes', hint:'Extra context', multiline:true},
+        {name:'Localisation / Zone', hint:'Site, itinéraire, secteur ou zone opérationnelle'},
+        {name:'Situation', hint:'Situation actuelle', multiline:true},
+        {name:'État', hint:'Normal, dégradé, bloqué, urgent...'},
+        {name:'Nœuds / Ressources connus', hint:'Nœuds, équipes, véhicules, stations (# pour mentionner un nœud)'},
+        {name:'Problèmes / Risques', hint:'Pannes, sécurité, météo, accès, interférences'},
+        {name:'Intention / Plan', hint:'Prochaines étapes ou plan opérationnel', multiline:true},
+        {name:'Prochaine mise à jour', hint:'Moment du prochain compte rendu'},
+        {name:'Notes', hint:'Contexte supplémentaire', multiline:true},
       ],
     },
     contact: {
-      cat:'CONTACT', label:'First Contact',
+      cat:'CONTACT', label:'Premier contact',
       fields:[
-        {name:'Node / Station', hint:'Node or station heard (# to mention node)'},
-        {name:'Callsign / Handle', hint:'Operator, callsign, or informal handle'},
-        {name:'Network / Channel', hint:'MT channel, MC contact, frequency, or room'},
-        {name:'First Heard', hint:'Time first heard or observed'},
-        {name:'Signal', hint:'SNR/RSSI/quality report'},
-        {name:'Hops', hint:'Direct, 1 hop, 2 hops, flood, unknown'},
-        {name:'Distance', hint:'Estimated distance if known'},
-        {name:'Position', hint:'Coordinates, place, grid, or unknown'},
-        {name:'Action / Follow-up', hint:'DM sent, pinged, added to contacts, monitor...'},
-        {name:'Notes', hint:'Extra contact details', multiline:true},
+        {name:'Nœud / Station', hint:'Nœud ou station entendue (# pour mentionner un nœud)'},
+        {name:'Indicatif / Nom', hint:'Opérateur, indicatif ou nom usuel'},
+        {name:'Réseau / Canal', hint:'Canal MT, contact MC, fréquence ou salle'},
+        {name:'Première détection', hint:'Heure de première détection ou observation'},
+        {name:'Signal', hint:'Rapport SNR/RSSI/qualité'},
+        {name:'Sauts', hint:'Direct, 1 saut, 2 sauts, flood, inconnu'},
+        {name:'Distance', hint:'Distance estimée si connue'},
+        {name:'Position', hint:'Coordonnées, lieu, grille ou inconnue'},
+        {name:'Action / Suivi', hint:'DM envoyé, ping, ajouté aux contacts, surveillance...'},
+        {name:'Notes', hint:'Détails supplémentaires sur le contact', multiline:true},
       ],
     },
     commscheck: {
-      cat:'COMMS', label:'COMMS CHECK',
+      cat:'COMMS', label:'VÉRIFICATION DES COMMUNICATIONS',
       fields:[
-        {name:'From', hint:'Calling station (# to mention node)'},
-        {name:'To', hint:'Receiving station or group (# to mention node)'},
-        {name:'Network / Channel', hint:'MT channel, MC room/contact, or frequency'},
-        {name:'Message / Check', hint:'What was sent or tested', multiline:true},
-        {name:'Signal', hint:'SNR/RSSI/readability'},
-        {name:'Hops', hint:'Direct, 1 hop, 2 hops, flood, unknown'},
-        {name:'Distance', hint:'Estimated distance if known'},
-        {name:'Result', hint:'Good copy, weak, no ack, delayed, failed...'},
-        {name:'Follow-up', hint:'Retry, change channel, move antenna, monitor...'},
-        {name:'Notes', hint:'Extra RF/path context', multiline:true},
+        {name:'De', hint:'Station appelante (# pour mentionner un nœud)'},
+        {name:'À', hint:'Station ou groupe destinataire (# pour mentionner un nœud)'},
+        {name:'Réseau / Canal', hint:'Canal MT, salle/contact MC ou fréquence'},
+        {name:'Message / Vérification', hint:'Message envoyé ou test effectué', multiline:true},
+        {name:'Signal', hint:'SNR/RSSI/lisibilité'},
+        {name:'Sauts', hint:'Direct, 1 saut, 2 sauts, flood, inconnu'},
+        {name:'Distance', hint:'Distance estimée si connue'},
+        {name:'Résultat', hint:'Bonne réception, faible, sans accusé, retardé, échec...'},
+        {name:'Suivi', hint:'Réessayer, changer de canal, déplacer l’antenne, surveiller...'},
+        {name:'Notes', hint:'Contexte RF / chemin supplémentaire', multiline:true},
       ],
     },
     alert: {
       cat:'ALERT', label:'ALERT',
       fields:[
-        {name:'Priority', hint:'Low, medium, high, urgent'},
-        {name:'Type', hint:'Safety, weather, power, comms, security, other'},
-        {name:'Location', hint:'Place, grid, coordinates, or affected area'},
-        {name:'Affected Node(s) / People', hint:'Who or what is affected (# to mention node)'},
-        {name:'Details', hint:'What happened and why it matters', multiline:true},
-        {name:'Immediate Action', hint:'Action already taken or needed now', multiline:true},
-        {name:'Status', hint:'Open, monitoring, contained, resolved'},
-        {name:'Follow-up', hint:'Who checks next and when'},
+        {name:'Priorité', hint:'Faible, moyen, élevé, urgent'},
+        {name:'Type', hint:'Sécurité, météo, alimentation, communications, sécurité informatique, autre'},
+        {name:'Localisation', hint:'Lieu, grille, coordonnées ou zone affectée'},
+        {name:'Nœud(s) / Personnes concernés', hint:'Personne ou élément affecté (# pour mentionner un nœud)'},
+        {name:'Détails', hint:'Ce qui s’est passé et pourquoi c’est important', multiline:true},
+        {name:'Action immédiate', hint:'Action déjà effectuée ou nécessaire immédiatement', multiline:true},
+        {name:'État', hint:'Ouvert, surveillance, contenu, résolu'},
+        {name:'Suivi', hint:'Qui effectue le prochain contrôle et quand'},
         {name:'Notes', hint:'Extra details', multiline:true},
       ],
     },
     action: {
       cat:'ACTION', label:'ACTION',
       fields:[
-        {name:'Task / Action', hint:'Specific action to perform', multiline:true},
-        {name:'Assigned To', hint:'Person, node, or team (# to mention node)'},
-        {name:'Location', hint:'Where the action applies'},
-        {name:'Due / Time', hint:'Deadline or execution time'},
-        {name:'Status', hint:'Planned, in progress, blocked, complete'},
-        {name:'Result', hint:'Outcome after action', multiline:true},
-        {name:'Follow-up', hint:'Next action or check-in'},
-        {name:'Notes', hint:'Extra context', multiline:true},
+        {name:'Tâche / Action', hint:'Action précise à effectuer', multiline:true},
+        {name:'Responsable', hint:'Personne, nœud ou équipe (# pour mentionner un nœud)'},
+        {name:'Localisation', hint:'Lieu concerné par l’action'},
+        {name:'Échéance / Heure', hint:'Échéance ou heure d’exécution'},
+        {name:'État', hint:'Planifié, en cours, bloqué, terminé'},
+        {name:'Résultat', hint:'Résultat après l’action', multiline:true},
+        {name:'Suivi', hint:'Prochaine action ou vérification'},
+        {name:'Notes', hint:'Contexte supplémentaire', multiline:true},
       ],
     },
     position: {
-      cat:'POSITION', label:'POSITION UPDATE',
+      cat:'POSITION', label:'MISE À JOUR DE POSITION',
       fields:[
-        {name:'Node / Asset', hint:'Node, person, vehicle, station (# to mention node)'},
-        {name:'Coordinates / Place', hint:'Lat/lon, grid, landmark, or route point'},
-        {name:'Source', hint:'GPS, manual, report, map pick, inferred'},
-        {name:'Accuracy / Confidence', hint:'Exact, approximate, stale, unknown'},
-        {name:'Movement / Heading', hint:'Static, moving, heading/speed if known'},
-        {name:'Last Heard / Seen', hint:'Time or age of position'},
-        {name:'Notes', hint:'Extra position context', multiline:true},
+        {name:'Nœud / Équipement', hint:'Nœud, personne, véhicule, station (# pour mentionner un nœud)'},
+        {name:'Coordonnées / Lieu', hint:'Latitude/longitude, grille, repère ou point d’itinéraire'},
+        {name:'Source', hint:'GPS, manuel, compte rendu, sélection carte, déduit'},
+        {name:'Précision / Confiance', hint:'Exact, approximatif, obsolète, inconnu'},
+        {name:'Mouvement / Direction', hint:'Statique, en mouvement, direction/vitesse si connues'},
+        {name:'Dernière détection / vue', hint:'Heure ou ancienneté de la position'},
+        {name:'Notes', hint:'Contexte supplémentaire sur la position', multiline:true},
       ],
     },
     intel: {
       cat:'INTEL', label:'INTEL',
       fields:[
-        {name:'Who / Source', hint:'Person, node, station, team, or reporting source (# to mention node)'},
-        {name:'Where / Location', hint:'Place, coordinates, grid, route, or area'},
-        {name:'When Observed', hint:'Exact time, time window, or age of report'},
-        {name:'What Happened', hint:'Observed activity, object, contact, change, or report', multiline:true},
-        {name:'Intel Tags', hint:'Personnel, Recon, Location, Signal, Movement, Infrastructure, custom...'},
-        {name:'Reliability / Confidence', hint:'Confirmed, likely, possible, unconfirmed, stale'},
-        {name:'Source Type', hint:'Direct observation, radio report, relay, passive RF, map, inference'},
-        {name:'Direction / Movement', hint:'Static, moving, heading, route, speed, unknown'},
-        {name:'Related Nodes / Assets', hint:'Nodes, contacts, vehicles, sites (# to mention node)'},
-        {name:'Assessment', hint:'Why it matters or likely meaning', multiline:true},
-        {name:'Required Action', hint:'Monitor, verify, contact, avoid, dispatch, none'},
-        {name:'Notes', hint:'Extra context', multiline:true},
+        {name:'Qui / Source', hint:'Personne, nœud, station, équipe ou source du compte rendu (# pour mentionner un nœud)'},
+        {name:'Où / Localisation', hint:'Lieu, coordonnées, grille, itinéraire ou zone'},
+        {name:'Date / Heure d’observation', hint:'Heure exacte, période ou ancienneté du compte rendu'},
+        {name:'Ce qui s’est passé', hint:'Activité, objet, contact, changement ou information observée', multiline:true},
+        {name:'Tags renseignement', hint:'Personnel, Reconnaissance, Localisation, Signal, Mouvement, Infrastructure, personnalisé...'},
+        {name:'Fiabilité / Confiance', hint:'Confirmé, probable, possible, non confirmé, obsolète'},
+        {name:'Type de source', hint:'Observation directe, compte rendu radio, relais, RF passive, carte, déduction'},
+        {name:'Direction / Mouvement', hint:'Statique, en mouvement, direction, itinéraire, vitesse, inconnu'},
+        {name:'Nœuds / Ressources associés', hint:'Nœuds, contacts, véhicules, sites (# pour mentionner un nœud)'},
+        {name:'Évaluation', hint:'Pourquoi c’est important ou signification probable', multiline:true},
+        {name:'Action requise', hint:'Surveiller, vérifier, contacter, éviter, envoyer, aucune'},
+        {name:'Notes', hint:'Contexte supplémentaire', multiline:true},
       ],
     },
     weather: {
-      cat:'WEATHER', label:'WEATHER',
+      cat:'WEATHER', label:'MÉTÉO',
       fields:[
-        {name:'Location / Area', hint:'Site, route, station, or operating area'},
-        {name:'Temperature', hint:'deg C, feel, trend'},
-        {name:'Wind', hint:'Direction, speed, gusts'},
-        {name:'Conditions', hint:'Clear, overcast, fog, rain, snow...'},
-        {name:'Visibility', hint:'km, good/limited/poor'},
-        {name:'Precipitation', hint:'None, light rain, heavy rain, snow, hail...'},
-        {name:'Pressure', hint:'hPa, rising/falling/stable'},
-        {name:'Forecast / Trend', hint:'Expected changes', multiline:true},
-        {name:'Operational Impact', hint:'Effect on RF, access, safety, power, or route', multiline:true},
-        {name:'Notes', hint:'Extra weather context', multiline:true},
+        {name:'Localisation / Zone', hint:'Site, itinéraire, station ou zone opérationnelle'},
+        {name:'Température', hint:'°C, ressenti, tendance'},
+        {name:'Vent', hint:'Direction, vitesse, rafales'},
+        {name:'Conditions', hint:'Dégagé, couvert, brouillard, pluie, neige...'},
+        {name:'Visibilité', hint:'km, bonne/limitée/faible'},
+        {name:'Précipitations', hint:'Aucune, pluie légère, forte pluie, neige, grêle...'},
+        {name:'Pression', hint:'hPa, en hausse/baisse/stable'},
+        {name:'Prévisions / Tendance', hint:'Évolution prévue', multiline:true},
+        {name:'Impact opérationnel', hint:'Effet sur la RF, l’accès, la sécurité, l’alimentation ou l’itinéraire', multiline:true},
+        {name:'Notes', hint:'Contexte météo supplémentaire', multiline:true},
       ],
     },
   };
@@ -19924,91 +19924,91 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
   const LOG_SOP_PREFILLS = {
     note: {
       category: 'NOTE',
-      body: 'Field note:\nArea / station:\nFact:\nConfidence:\nFollow-up:',
+      body: 'Note de terrain :\nZone / station :\nFait :\nConfiance :\nSuivi :',
     },
     plan: {
-      mission: 'Planning',
+      mission: 'Planification',
       template: 'plan',
       values: {
-        'Area / Route': 'CD / planned operating area',
-        Objective: 'Define what should be achieved before starting.',
-        'Window / Timing': 'Start now; update on movement, contact, degraded comms, or stop.',
-        'People / Nodes / Assets': 'CD, MC radio, MT node, GPS',
-        'MC / MT Setup': 'Confirm MC/MT connected, channels/contacts selected, antenna/power/GPS checked.',
-        'Checkpoints / Triggers': 'Log POSITION at start/turn/stop/end. Log COMMS after radio/terrain changes. Log ALERT for actionable risk.',
-        'Risks / Constraints': 'Battery, weather, GPS fix, USB stability, RF path, access.',
-        'Comms Plan': 'Ping/check selected MC/MT stations before movement; retry or change position if no ack.',
-        'Abort / Change Criteria': 'Stop or change plan if comms, power, GPS, weather, or access becomes unsafe/unusable.',
+        'Area / Route': 'CD / zone opérationnelle prévue',
+        Objective: 'Définir ce qui doit être accompli avant le départ.',
+        'Fenêtre / Horaires': 'Démarrer maintenant ; mettre à jour lors d’un déplacement, d’un contact, d’une dégradation des communications ou d’un arrêt.',
+        'Personnes / Nœuds / Ressources': 'CD, radio MC, nœud MT, GPS',
+        'Configuration MC / MT': 'Confirmer que MC/MT est connecté, que les canaux/contacts sont sélectionnés et que l’antenne/alimentation/GPS sont vérifiés.',
+        'Points de contrôle / Déclencheurs': 'Enregistrer POSITION au départ/changement de direction/arrêt/fin. Enregistrer COMMS après une modification de la radio/du terrain. Enregistrer ALERT pour tout risque nécessitant une action.',
+        'Risques / Contraintes': 'Batterie, météo, position GPS, stabilité USB, liaison RF, accès.',
+        'Plan de communications': 'Effectuer un ping/test des stations MC/MT sélectionnées avant le déplacement ; réessayer ou changer de position en l’absence d’accusé de réception.',
+        'Critères d’abandon / modification': 'Arrêter ou modifier le plan si les communications, l’alimentation, le GPS, la météo ou l’accès deviennent dangereux/inexploitables.',
       },
     },
     sitrep: {
       template: 'sitrep',
       values: {
-        'Location / Area': 'CD / current operating area',
-        'Situation': 'Normal watch. MC and MT status being checked.',
-        'Status': 'Normal',
-        'Known Nodes / Assets': 'CD, MC radio, MT node',
-        'Issues / Risks': 'None reported',
-        'Intent / Plan': 'Continue monitoring. Update on change or next scheduled check.',
-        'Next Update': '30-60 min or on state change',
+        'Localisation / Zone': 'CD / zone opérationnelle actuelle',
+        'Situation': 'Surveillance normale. État de MC et MT en cours de vérification.',
+        'État': 'Normal',
+        'Nœuds / Ressources connus': 'CD, radio MC, nœud MT',
+        'Problèmes / Risques': 'Aucun problème signalé',
+        'Intention / Plan': 'Continuer la surveillance. Mettre à jour en cas de changement ou au prochain contrôle prévu.',
+        'Prochaine mise à jour': '30 à 60 min ou en cas de changement d’état',
       },
     },
     commscheck: {
       template: 'commscheck',
       values: {
         From: 'CD',
-        To: 'Selected MC / MT station',
-        'Network / Channel': 'MC / MT',
-        'Message / Check': 'Ping / check message sent.',
-        Result: 'Pending',
-        'Follow-up': 'Retry, move antenna, or verify route if no ack.',
+        To: 'Station MC / MT sélectionnée',
+        'Réseau / Canal': 'MC / MT',
+        'Message / Vérification': 'Message de ping / vérification envoyé.',
+        Result: 'En attente',
+        'Suivi': 'Réessayer, déplacer l’antenne ou vérifier l’itinéraire en l’absence d’accusé de réception.',
       },
     },
     contact: {
       template: 'contact',
       values: {
-        'Node / Station': '#',
-        'Network / Channel': 'MC / MT',
-        'First Heard': 'Now',
-        'Action / Follow-up': 'Add contact, ping, monitor, or verify position.',
+        'Nœud / Station': '#',
+        'Réseau / Canal': 'MC / MT',
+        'Première détection': 'Maintenant',
+        'Action / Suivi': 'Ajouter le contact, effectuer un ping, surveiller ou vérifier la position.',
       },
     },
     position: {
       template: 'position',
       values: {
-        'Node / Asset': 'CD / selected node',
-        Source: 'GPS / manual / report',
-        'Accuracy / Confidence': 'Approximate',
-        'Movement / Heading': 'Static',
+        'Nœud / Équipement': 'CD / nœud sélectionné',
+        Source: 'GPS / manuel / rapport',
+        'Précision / Confiance': 'Approximative',
+        'Mouvement / Direction': 'Statique',
       },
     },
     alert: {
       template: 'alert',
       values: {
-        Priority: 'Medium',
-        Type: 'Comms / safety / power / weather',
-        Status: 'Open',
-        'Immediate Action': 'Stabilize, verify, and assign follow-up.',
+        Priority: 'Moyenne',
+        Type: 'Communications / sécurité / alimentation / météo',
+        Status: 'Ouverte',
+        'Action immédiate': 'Stabiliser, vérifier et attribuer le suivi.',
       },
     },
     action: {
       template: 'action',
       values: {
-        'Task / Action': 'Specific next step',
-        'Assigned To': 'CD / operator / node',
-        Status: 'Planned',
-        'Follow-up': 'Confirm result and close with SITREP if needed.',
+        'Tâche / Action': 'Étape suivante précise',
+        'Responsable': 'CD / opérateur / nœud',
+        Status: 'Planifiée',
+        'Suivi': 'Confirmer le résultat et clôturer avec un SITREP si nécessaire.',
       },
     },
     intel: {
       template: 'intel',
       values: {
-        'Who / Source': 'CD / MC / MT / RC',
-        'What Happened': 'Observed signal, contact, movement, infrastructure, or collection result.',
-        'Intel Tags': 'Signal',
-        'Reliability / Confidence': 'Unconfirmed',
-        'Source Type': 'Direct observation / radio report / passive RF / RC collection',
-        'Required Action': 'Monitor / verify / none',
+        'Qui / Source': 'CD / MC / MT / RC',
+        'Ce qui s’est passé': 'Signal, contact, mouvement, infrastructure ou résultat de collecte observé.',
+        'Tags renseignement': 'Signal',
+        'Fiabilité / Confiance': 'Non confirmé',
+        'Type de source': 'Observation directe / rapport radio / RF passive / collecte RC',
+        'Action requise': 'Surveiller / vérifier / aucun',
       },
     },
     'mobile-start': {
@@ -20017,66 +20017,66 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       values: {
         'Area / Route': 'Mobile CD route / operating area',
         Objective: 'Move through planned area while maintaining MC / MT awareness and logging contacts, positions, and comms state.',
-        'Window / Timing': 'Start now; next update at first stop / turn point / 30 min.',
-        'People / Nodes / Assets': 'CD, MC radio, MT node, GPS',
-        'MC / MT Setup': 'Confirm MC/MT connected, channel/contact selected, antenna/power/GPS checked.',
-        'Checkpoints / Triggers': 'POSITION at start/turn/stop/end. COMMS after terrain/antenna/radio change. CONTACT for new stations. ALERT for actionable risk.',
-        'Risks / Constraints': 'GPS fix, battery, weather, terrain, USB stability, RF shadow.',
-        'Comms Plan': 'Run MC/MT check before moving; retry from alternate position if no ack.',
-        'Abort / Change Criteria': 'Stop or return if power, weather, access, GPS, or comms state becomes unacceptable.',
+        'Fenêtre / Horaires': 'Start now; next update at first stop / turn point / 30 min.',
+        'Personnes / Nœuds / Ressources': 'CD, radio MC, nœud MT, GPS',
+        'Configuration MC / MT': 'Confirm MC/MT connected, channel/contact selected, antenna/power/GPS checked.',
+        'Points de contrôle / Déclencheurs': 'POSITION at start/turn/stop/end. COMMS after terrain/antenna/radio change. CONTACT for new stations. ALERT for actionable risk.',
+        'Risques / Contraintes': 'GPS fix, battery, weather, terrain, USB stability, RF shadow.',
+        'Plan de communications': 'Run MC/MT check before moving; retry from alternate position if no ack.',
+        'Critères d’abandon / modification': 'Stop or return if power, weather, access, GPS, or comms state becomes unacceptable.',
       },
     },
     'quick-sitrep': {
       template: 'sitrep',
       values: {
-        'Location / Area': 'CD / current operating area',
-        Situation: 'Current status update.',
-        Status: 'Normal / degraded / blocked / urgent',
-        'Known Nodes / Assets': 'CD, MC radio, MT node',
-        'Issues / Risks': 'None reported',
-        'Intent / Plan': 'Continue current plan. Update on change.',
-        'Next Update': '30-60 min or on state change',
+        'Localisation / Zone': 'CD / zone opérationnelle actuelle',
+        Situation: 'Mise à jour de l’état actuel.',
+        'État': 'Normal / dégradé / bloqué / urgent',
+        'Nœuds / Ressources connus': 'CD, radio MC, nœud MT',
+        'Problèmes / Risques': 'Aucun problème signalé',
+        'Intention / Plan': 'Continuer le plan actuel. Mettre à jour en cas de changement.',
+        'Prochaine mise à jour': '30 à 60 min ou en cas de changement d’état',
       },
     },
     'basecamp-open': {
-      mission: 'Basecamp watch',
+      mission: 'Surveillance du camp de base',
       template: 'sitrep',
       values: {
-        'Location / Area': 'Basecamp / static CD station',
-        Situation: 'Station watch opened. MC and MT monitoring active.',
-        Status: 'Basecamp open',
-        'Known Nodes / Assets': 'CD, MC radio, MT node, GPS, power source, antenna',
-        'Issues / Risks': 'Power, weather, radio path, GPS availability',
-        'Intent / Plan': 'Maintain watch, log contacts, run comms checks, track open actions.',
-        'Next Update': '30-60 min or on state change',
+        'Localisation / Zone': 'Camp de base / station CD fixe',
+        Situation: 'Surveillance de la station ouverte. Surveillance MC et MT active.',
+        'État': 'Camp de base ouvert',
+        'Nœuds / Ressources connus': 'CD, radio MC, nœud MT, GPS, alimentation, antenne',
+        'Problèmes / Risques': 'Alimentation, météo, liaison radio, disponibilité GPS',
+        'Intention / Plan': 'Maintenir la surveillance, enregistrer les contacts, effectuer les vérifications de communication et suivre les actions en cours.',
+        'Prochaine mise à jour': '30 à 60 min ou en cas de changement d’état',
       },
     },
     'rc-collect': {
       mission: 'RC / RPTR watch',
       template: 'intel',
       values: {
-        'Who / Source': 'Remote Collector / RPTR',
-        'What Happened': 'Collection started / imported. Summarize new nodes, strong signals, stale data, or unusual paths.',
-        'Intel Tags': 'Signal, Recon',
-        'Reliability / Confidence': 'Collector report; verify important items',
-        'Source Type': 'RC collection',
-        'Related Nodes / Assets': 'Argus mobile RPTR / selected RC',
+        'Qui / Source': 'Remote Collector / RPTR',
+        'Ce qui s’est passé': 'Collection started / imported. Summarize new nodes, strong signals, stale data, or unusual paths.',
+        'Tags renseignement': 'Signal, Recon',
+        'Fiabilité / Confiance': 'Collector report; verify important items',
+        'Type de source': 'RC collection',
+        'Nœuds / Ressources associés': 'Argus mobile RPTR / selected RC',
         Assessment: 'Compare against local CD view and follow up on important differences.',
-        'Required Action': 'Monitor / collect again / add contact / verify route',
+        'Action requise': 'Monitor / collect again / add contact / verify route',
       },
     },
     'degraded-comms': {
       mission: 'Degraded comms',
       template: 'alert',
       values: {
-        Priority: 'Medium',
+        Priority: 'Moyenne',
         Type: 'Comms',
         Location: 'CD / affected area',
-        'Affected Node(s) / People': 'MC / MT station(s)',
+        'Nœud(s) / Personnes concernés': 'MC / MT station(s)',
         Details: 'Expected comms path is degraded or unavailable.',
-        'Immediate Action': 'Check radio state, power, antenna, channel, path, and retry from alternate position if mobile.',
-        Status: 'Open',
-        'Follow-up': 'Log each test as COMMS. Close with SITREP when stable.',
+        'Action immédiate': 'Check radio state, power, antenna, channel, path, and retry from alternate position if mobile.',
+        Status: 'Ouverte',
+        'Suivi': 'Log each test as COMMS. Close with SITREP when stable.',
       },
     },
   };
@@ -20197,7 +20197,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     return Number.isFinite(ts) ? ts : Math.floor(Date.now() / 1000);
   }
 
-  function tocSetNow() {
+  function tocSetMaintenant() {
     _tocSetDateTimeFields();
   }
 
@@ -20362,7 +20362,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const value = jsSafe(tag);
     const bg = active ? 'var(--accent)' : '#a855f722';
     const color = active ? 'var(--accent-contrast,#000)' : '#c084fc';
-    return `<button onclick="tocFilterByTag('${value}')" title="Filter by tag" style="background:${bg};color:${color};border:1px solid #a855f755;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600;cursor:pointer">#${safe}</button>`;
+    return `<button onclick="tocFilterByTag('${value}')" title="Filtrer par étiquette" style="background:${bg};color:${color};border:1px solid #a855f755;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600;cursor:pointer">#${safe}</button>`;
   }
 
   function _tocRenderTags(value) {
@@ -20496,7 +20496,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         const color = type === 'mt' ? _TOC_MT_COLOR : _TOC_MC_COLOR;
         const safeRest = rest.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
         const safeName = name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-        const badge = `<button onclick="tocOpenMention('${type}','${safeRest}','${safeName}',event)" style="background:${color}22;color:${color};border:1px solid ${color}55;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600;cursor:pointer">#${_tocEscape(name)}</button>`;
+        const badge = `<button onclick="tocOuverteMention('${type}','${safeRest}','${safeName}',event)" style="background:${color}22;color:${color};border:1px solid ${color}55;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600;cursor:pointer">#${_tocEscape(name)}</button>`;
         return badge + _tocEscape(tail);
       }
       // overlay mention: @[Name](overlay:id)
@@ -20845,7 +20845,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Carte</button>`);
       }
       btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Journal</button>`);
-      btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trail</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trace</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openNoteEdit('${safeId}','${safeNm}','${safeRid}');${hide}" title="Personal notes for this node">Note</button>`);
     } else {
       btns.push(`<button class="map-popup-btn" onclick="showNodeInList('${safeId}');${hide}" title="Look up in node history">Liste</button>`);
@@ -20853,14 +20853,14 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       btns.push(`<button class="map-popup-btn" style="opacity:0.35;cursor:default" disabled title="Aucune position GPS">Carte</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openMtNodeDetails('${safeId}');${hide}">Info</button>`);
       btns.push(`<button class="map-popup-btn" onclick="tocFromMtNode('${safeId}');${hide}">Journal</button>`);
-      btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trail</button>`);
+      btns.push(`<button class="map-popup-btn" onclick="openGpsTrail('${safeId}','${safeNm}');${hide}">Trace</button>`);
       btns.push(`<button class="map-popup-btn" onclick="openNoteEdit('${safeId}','${safeNm}','${safeRid}');${hide}" title="Personal notes for this node">Note</button>`);
     }
 
     const nodeInfo = n
       ? `<div style="color:var(--muted);font-size:10px;margin-bottom:2px">${escHtml(nodeId)}</div>
          <div style="color:var(--muted)">SNR ${snrStr(n.snr)} · Batt ${battStr(n.battery)}</div>
-         <div style="color:var(--muted);font-size:10px;margin-top:2px">Last seen: ${nodeLastHeardLabel(n)}</div>`
+         <div style="color:var(--muted);font-size:10px;margin-top:2px">Dernière activité : ${nodeLastHeardLabel(n)}</div>`
       : `<div style="color:var(--muted);font-size:10px;margin-bottom:2px">${escHtml(nodeId)}</div>
          <div style="color:var(--muted);font-size:11px;margin-top:2px">Not in live data</div>`;
 
@@ -20880,7 +20880,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     }, 0);
   }
 
-  function tocOpenMention(type, rest, name, evt) {
+  function tocOuverteMention(type, rest, name, evt) {
     if (evt && evt.stopPropagation) evt.stopPropagation();
     if (type === 'mt') {
       _tocShowMtMentionPopup(evt, rest, name);
@@ -21127,7 +21127,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     _tocMissionOptions = values;
     if (sel) {
       const current = sel.value;
-      sel.innerHTML = '<option value="">Any mission</option>' + values
+      sel.innerHTML = '<option value="">Toute mission</option>' + values
         .map(m => `<option value="${_tocEscape(m)}">${_tocEscape(m)}</option>`)
         .join('');
       if ([...missions.keys()].includes(String(current || '').toLowerCase())) sel.value = current;
@@ -21160,7 +21160,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const missionMode = document.getElementById('toc-filter-mission-mode')?.value || 'include';
     const stats = _tocMissionStats();
     if (!stats.length) {
-      wrap.innerHTML = '<span style="color:var(--muted);font-size:12px">Aucune mission pour le moment. Add a Mission / Folder name to any log entry.</span>';
+      wrap.innerHTML = '<span style="color:var(--muted);font-size:12px">Aucune mission pour le moment. Ajoutez un nom de mission / dossier à une entrée du journal.</span>';
       return;
     }
     wrap.innerHTML = stats.map(m => {
@@ -21176,7 +21176,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       return `<button class="toc-mission-chip ${chipClass}" onclick="tocFilterMission('${jsSafe(m.name)}')" title="${_tocEscape(title)}">` +
         `<span class="toc-mission-chip-name">📁 ${_tocEscape(m.name)}</span>` +
         `<span class="toc-mission-chip-count">${m.count}</span>` +
-        `<span class="toc-mission-chip-meta">Last ${_tocEscape(_formatAppDateTime(m.lastTs))}${cats ? ' · ' + _tocEscape(cats) : ''}</span>` +
+        `<span class="toc-mission-chip-meta">Dernière activité : ${_tocEscape(_formatAppDateTime(m.lastTs))}${cats ? ' · ' + _tocEscape(cats) : ''}</span>` +
         `</button>`;
     }).join('');
   }
@@ -21329,13 +21329,13 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         const d = _appDate(e.ts);
         const mission = _tocMissionFromBody(e.body);
         const group = viewMode === 'mission'
-          ? (mission || 'Unfiled')
+          ? (mission || 'Sans dossier')
           : _formatAppDate(d, {weekday: true});
         if (group !== lastGroup) {
           const gr = document.createElement('tr');
           gr.dataset.tocGroup = group;
           const filter = viewMode === 'mission' && mission
-            ? `<button onclick="document.getElementById('toc-filter-mission').value='${jsSafe(mission)}';tocRenderLog()" title="Filter this mission" style="margin-left:8px;background:none;border:none;color:var(--accent);cursor:pointer;font-size:11px">filter</button>`
+            ? `<button onclick="document.getElementById('toc-filter-mission').value='${jsSafe(mission)}';tocRenderLog()" title="Filtrer cette mission" style="margin-left:8px;background:none;border:none;color:var(--accent);cursor:pointer;font-size:11px">filtrer</button>`
             : '';
           gr.innerHTML = `<td colspan="4" style="padding:8px 8px 4px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)">${_tocEscape(group)}${filter}</td>`;
           tbody.appendChild(gr);
@@ -21381,7 +21381,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     const grouped = (document.getElementById('toc-view-mode')?.value || 'grouped') === 'grouped';
     const mission = _tocMissionFromBody(e.body);
     const missionBadge = mission
-      ? `<button onclick="document.getElementById('toc-filter-mission').value='${jsSafe(mission)}';tocRenderLog()" title="Filter mission/folder" style="background:#14b8a622;color:#5eead4;border:1px solid #14b8a655;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600;cursor:pointer;margin-bottom:4px">📁 ${_tocEscape(mission)}</button><br>`
+      ? `<button onclick="document.getElementById('toc-filter-mission').value='${jsSafe(mission)}';tocRenderLog()" title="Filtrer mission/dossier" style="background:#14b8a622;color:#5eead4;border:1px solid #14b8a655;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600;cursor:pointer;margin-bottom:4px">📁 ${_tocEscape(mission)}</button><br>`
       : '';
     const coords = _tocExtractCoords(e.body);
     const mapBtn = coords
@@ -21391,17 +21391,17 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
     tr.innerHTML = `
       <td style="padding:6px 8px;color:var(--muted);font-size:11px;font-family:monospace;white-space:nowrap;vertical-align:top">${grouped ? tocFmtTime(e.ts) : tocFmtDate(e.ts)}</td>
       <td style="padding:6px 8px;vertical-align:top">
-        <span onclick="document.getElementById('toc-filter-category').value='${e.category}';tocRenderLog()" title="Filter by ${e.category}" style="background:${color};color:#fff;border-radius:4px;padding:2px 6px;font-size:10px;font-weight:600;letter-spacing:.4px;white-space:nowrap;cursor:pointer">${e.category}</span>
+        <span onclick="document.getElementById('toc-filter-category').value='${e.category}';tocRenderLog()" title="Filtrer par ${e.category}" style="background:${color};color:#fff;border-radius:4px;padding:2px 6px;font-size:10px;font-weight:600;letter-spacing:.4px;white-space:nowrap;cursor:pointer">${e.category}</span>
       </td>
       <td style="padding:6px 8px;vertical-align:top;width:100%">${missionBadge}${tocRenderBody(_tocWithoutMission(e.body))}</td>
       <td style="padding:6px 4px;vertical-align:top;white-space:nowrap">
-        ${mapBtn}<button onclick="tocShareViaMc(${e.id})" title="Share via active MC chat target" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
+        ${mapBtn}<button onclick="tocShareViaMc(${e.id})" title="Partager via la cible de discussion MC active" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
           onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">⇄</button>
-        <button onclick="tocDuplicate(${e.id})" title="Duplicate" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
+        <button onclick="tocDuplicate(${e.id})" title="Dupliquer" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
           onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">⧉</button>
-        <button onclick="tocEdit(${e.id})" title="Edit" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
+        <button onclick="tocEdit(${e.id})" title="Modifier" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
           onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">✎</button>
-        <button onclick="tocDelete(${e.id},this)" title="Delete" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
+        <button onclick="tocDelete(${e.id},this)" title="Supprimer" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 3px"
           onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--muted)'">✕</button>
       </td>`;
     return tr;
@@ -21433,7 +21433,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
         obj[inp.dataset.tocField] = inp.value.trim();
       });
       if (!Object.values(obj).some(v => v)) return;
-      if (mission.trim()) obj['Mission / Folder'] = mission.trim();
+      if (mission.trim()) obj['Mission / Dossier'] = mission.trim();
       bodyStr = _tocStructuredMarkdown(obj);
     } else {
       bodyStr = (document.getElementById('toc-body').value || '').trim();
@@ -21493,13 +21493,13 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       // body is already HTML-escaped plain text like "NodeName entered geofenceName"
       const detail = a.body.replace(/<[^>]+>/g, '');
       const body = _tocStructuredMarkdown({
-        Priority: 'Medium',
+        Priority: 'Moyenne',
         Type: 'Geofence',
         Location: '',
         'Affected Node(s) / People': '',
         Details: `${detail}\nTime: ${_formatAppDateTime(ts)}`,
         'Immediate Action': '',
-        Status: 'Open',
+        Status: 'Ouverte',
         'Follow-up': '',
         Notes: '',
       });
@@ -21569,7 +21569,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       return;
     }
     list.innerHTML = hits.map(c => {
-      const hop = c.hops >= 0 ? mcPathHopLabel(c.hops) : 'Path unknown';
+      const hop = c.hops >= 0 ? mcPathHopLabel(c.hops) : 'Chemin inconnu';
       return `<button class="btn" style="display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;text-align:left;padding:7px 9px" onclick="tocShareViaMcTarget(${entryId},'${jsSafe(c.id)}','${jsSafe(c.name)}')">` +
         `<span style="min-width:0"><span style="display:block;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis">${escHtml(c.name)}</span>` +
         `<span style="display:block;font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis">${escHtml(c.id)} · ${escHtml(hop)} · ${escHtml(c.seen || '—')}</span></span>` +
@@ -21621,7 +21621,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
           <span>Share this Log entry to <b>${escHtml(label)}</b>?</span>
           <span style="display:flex;gap:6px">
             <button class="btn" onclick="tocRenderMcSharePicker(${id})" style="padding:3px 8px;font-size:11px">Annuler</button>
-            <button class="btn-primary" onclick="tocConfirmMcShareTarget(${id},'${jsSafe(targetId)}','${jsSafe(label)}')" style="padding:3px 10px;font-size:11px">Send</button>
+            <button class="btn-primary" onclick="tocConfirmMcShareTarget(${id},'${jsSafe(targetId)}','${jsSafe(label)}')" style="padding:3px 10px;font-size:11px">Envoyer</button>
           </span>
         </div>`;
     }
@@ -21722,7 +21722,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       Distance: _mtNodeDistanceLabel(n),
       Position: '',
       'Action / Follow-up': '',
-      Notes: n.last_heard_ts ? `Last seen: ${_formatAppDateTime(n.last_heard_ts)}` : '',
+      Notes: n.last_heard_ts ? `Dernière activité : ${_formatAppDateTime(n.last_heard_ts)}` : '',
     });
     _tocPrefill(hasPos ? 'POSITION' : 'CONTACT', body);
   }
@@ -21757,7 +21757,7 @@ async function doMcStatusReq(pubkeyPrefix, radioId, name) {
       Distance: _mcNodeDistanceLabel(c, radioId || ''),
       Position: '',
       'Action / Follow-up': '',
-      Notes: seenTs ? `Last seen: ${_formatAppDateTime(seenTs)}` : '',
+      Notes: seenTs ? `Dernière activité : ${_formatAppDateTime(seenTs)}` : '',
     });
     _tocPrefill(hasPos ? 'POSITION' : 'CONTACT', body);
   }

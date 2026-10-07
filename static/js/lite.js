@@ -2103,18 +2103,20 @@ function quickLog(cat, tpl) {
 }
 
 const LOG_TEMPLATES = {
-  plan: `Area / Route:\nObjective:\nWindow / Timing:\nMC / MT Setup:\nCheckpoints:\nRisks:\nComms Plan:\nAbort criteria:`,
-  sitrep: `Location / Area:\nSituation:\nStatus:\nKnown Nodes:\nIssues / Risks:\nIntent / Plan:\nNext Update:`,
-  commscheck: `From:\nTo:\nNetwork / Channel:\nResult:\nFollow-up:`,
-  contact: `Node / Station:\nNetwork / Channel:\nFirst Heard:\nAction:`,
-  position: `Node / Asset:\nSource:\nAccuracy:\nMovement:`,
-  alert: `Priority:\nType:\nStatus:\nImmediate Action:`,
-  action: `Task:\nAssigned To:\nStatus:\nFollow-up:`,
+  plan: `Zone / Itinéraire :\nObjectif :\nFenêtre / Horaire :\nConfiguration MC / MT :\nPoints de contrôle :\nRisques :\nPlan de communication :\nCritères d'abandon :`,
+  sitrep: `Localisation / Zone :\nSituation :\nÉtat actuel :\nNœuds connus :\nProblèmes / Risques :\nIntention / Plan :\nProchaine mise à jour :`,
+  commscheck: `De :\nÀ :\nRéseau / Canal :\nRésultat :\nSuivi :`,
+  contact: `Nœud / Station :\nRéseau / Canal :\nPremière détection :\nAction :`,
+  position: `Nœud / Équipement :\nSource :\nPrécision :\nMouvement :`,
+  intel: `Source :\nRéseau / Canal :\nInformation :\nConfiance :\nAction / Vérification :`,
+  alert: `Priorité :\nType :\nÉtat :\nAction immédiate :`,
+  action: `Tâche :\nResponsable :\nÉtat :\nSuivi :`,
 };
 
 const LOG_CAT_TPL = {
   PLAN: 'plan', SITREP: 'sitrep', COMMS: 'commscheck',
-  CONTACT: 'contact', POSITION: 'position', ALERT: 'alert', ACTION: 'action',
+  CONTACT: 'contact', POSITION: 'position', INTEL: 'intel',
+  ALERT: 'alert', ACTION: 'action',
 };
 
 // Maps template field labels (lowercased) to keys on a pendingLogContext object,

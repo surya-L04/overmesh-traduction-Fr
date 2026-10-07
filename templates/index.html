@@ -18,7 +18,7 @@
 <div id="confirm-modal" class="modal-overlay" onclick="if(event.target===this)confirmCancel()">
   <div class="modal-box" style="width:320px">
     <div class="modal-header">
-      <span class="modal-title" id="confirm-title">Confirm</span>
+      <span class="modal-title" id="confirm-title">Confirmer</span>
     </div>
     <div class="modal-body">
       <p id="confirm-msg" style="margin:0 0 16px;font-size:13px;color:var(--text)"></p>
@@ -34,7 +34,7 @@
 <div id="node-cleanup-modal" class="modal-overlay" onclick="if(event.target===this)closeNodeCleanupModal()">
   <div class="modal-box" style="width:460px;max-width:94vw">
     <div class="modal-header">
-      <span class="modal-title">Clean up stale nodes</span>
+      <span class="modal-title">Nettoyer les nœuds obsolètes</span>
       <button class="modal-close" onclick="closeNodeCleanupModal()">&#10005;</button>
     </div>
     <div class="modal-body">
@@ -48,9 +48,9 @@
       <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;flex-shrink:0">
         <span id="node-cleanup-count" style="font-size:12px;color:var(--muted)"></span>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
-          <button id="node-cleanup-cancel" class="btn-secondary" onclick="closeNodeCleanupModal()">Cancel</button>
-          <button id="node-cleanup-del-all" class="btn-secondary node-cleanup-del" style="border-color:var(--red);color:var(--red)" onclick="commitNodeCleanup('all')">Delete all</button>
-          <button id="node-cleanup-del-selected" class="btn-secondary node-cleanup-del" style="border-color:var(--red);color:var(--red)" onclick="commitNodeCleanup('selected')">Delete selected</button>
+          <button id="node-cleanup-cancel" class="btn-secondary" onclick="closeNodeCleanupModal()">Annuler</button>
+          <button id="node-cleanup-del-all" class="btn-secondary node-cleanup-del" style="border-color:var(--red);color:var(--red)" onclick="commitNodeCleanup('all')">Tout supprimer</button>
+          <button id="node-cleanup-del-selected" class="btn-secondary node-cleanup-del" style="border-color:var(--red);color:var(--red)" onclick="commitNodeCleanup('selected')">Supprimer la sélection</button>
         </div>
       </div>
     </div>
@@ -76,12 +76,12 @@
 <div id="polar-customize-modal" class="modal-overlay" onclick="if(event.target===this)closePolarCustomize()">
   <div class="modal-box" style="width:300px">
     <div class="modal-header">
-      <span class="modal-title">Polar Grid</span>
+      <span class="modal-title">Grille polaire</span>
       <button class="modal-close" onclick="closePolarCustomize()">&#10005;</button>
     </div>
     <div class="modal-body">
       <div style="margin-bottom:16px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Color</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Couleur</div>
         <div id="pgpicker-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:10px"></div>
         <div style="display:flex;gap:6px;align-items:center">
           <div id="pgpicker-preview" style="width:24px;height:24px;border-radius:5px;border:1px solid var(--border);flex-shrink:0"></div>
@@ -94,10 +94,10 @@
         </div>
       </div>
       <div>
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Hardness</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">Intensité</div>
         <input type="range" id="polar-hardness-slider" min="0.1" max="1" step="0.05" style="width:100%;accent-color:var(--accent)" oninput="setPolarGridHardness(parseFloat(this.value))">
         <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px">
-          <span>Pale</span><span>Vivid</span>
+          <span>Pâle</span><span>Vif</span>
         </div>
       </div>
       <div style="margin-top:14px">
@@ -115,7 +115,7 @@
 <div id="alert-modal" class="modal-overlay" onclick="if(event.target===this)alertClose()">
   <div class="modal-box" style="width:320px">
     <div class="modal-header">
-      <span class="modal-title">Notice</span>
+      <span class="modal-title">Information</span>
     </div>
     <div class="modal-body">
       <p id="alert-msg" style="margin:0 0 16px;font-size:13px;color:var(--text)"></p>
@@ -131,13 +131,13 @@
   <div class="modal-box" style="width:360px;max-width:calc(100vw - 24px)">
     <div class="modal-header">
       <span class="modal-title">Log as...</span>
-      <button class="modal-close" onclick="_tocPickTemplateClose()" title="Close">&#x2715;</button>
+      <button class="modal-close" onclick="_tocPickTemplateClose()" title="Fermer">&#x2715;</button>
     </div>
     <div class="modal-body">
       <div id="toc-tpl-picker-preview" style="font-size:11px;color:var(--muted);margin-bottom:12px;max-height:42px;overflow:hidden;text-overflow:ellipsis;line-height:1.4"></div>
       <div id="toc-tpl-picker-grid" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px"></div>
       <div style="display:flex;justify-content:flex-end">
-        <button class="btn-secondary" onclick="_tocPickTemplateClose()">Cancel</button>
+        <button class="btn-secondary" onclick="_tocPickTemplateClose()">Annuler</button>
       </div>
     </div>
   </div>
@@ -148,22 +148,22 @@
   <div class="modal-box" style="width:420px;max-width:calc(100vw - 24px)">
     <div class="modal-header">
       <span class="modal-title">OverMesh</span>
-      <button class="modal-close" onclick="closeOmIntro(true)" title="Close">&#x2715;</button>
+      <button class="modal-close" onclick="closeOmIntro(true)" title="Fermer">&#x2715;</button>
     </div>
     <div class="modal-body">
       <div style="font-size:13px;color:var(--text);line-height:1.45">
-        <p style="margin:0 0 10px">OverMesh is a local operator console for Meshtastic and MeshCore radios.</p>
+        <p style="margin:0 0 10px">OverMesh est une console opérateur locale pour les radios Meshtastic et MeshCore.</p>
         <div style="display:grid;gap:8px;margin:12px 0">
-          <div><b>1.</b> Add radios in <span style="color:var(--accent)">Settings</span>.</div>
-          <div><b>2.</b> Use <span style="color:var(--accent)">Chat</span>, <span style="color:var(--accent)">Nodes</span>, and <span style="color:var(--accent)">Sense/Map</span> for daily operation.</div>
-          <div><b>3.</b> Keep radio transmit actions deliberate; Silent Running blocks OM-initiated transmissions when enabled.</div>
-          <div><b>4.</b> Check <span style="color:var(--accent)">Settings -> App</span> for updates so OM stays current.</div>
+          <div><b>1.</b> Ajouter des radios dans <span style="color:var(--accent)">Paramètres</span>.</div>
+          <div><b>2.</b> Utiliser <span style="color:var(--accent)">Chat</span>, <span style="color:var(--accent)">Nœuds</span> et <span style="color:var(--accent)">Détection/Carte</span> pour les opérations quotidiennes.</div>
+          <div><b>3.</b> Effectuer les transmissions radio avec discernement ; le mode silencieux bloque les transmissions initiées par OM lorsqu’il est activé.</div>
+          <div><b>4.</b> Consulter <span style="color:var(--accent)">Paramètres -> App</span> pour les mises à jour afin de maintenir OM à jour.</div>
         </div>
-        <div style="color:var(--muted);font-size:12px">This intro can be opened again from Settings → App.</div>
+        <div style="color:var(--muted);font-size:12px">Cette introduction peut être rouverte depuis Paramètres → App.</div>
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
-        <button class="btn-secondary" onclick="switchTab('settings');switchSettingsTab('app');closeOmIntro(true)">Settings</button>
-        <button class="btn-secondary" style="border-color:var(--accent);color:var(--accent)" onclick="closeOmIntro(true)">Start</button>
+        <button class="btn-secondary" onclick="switchTab('settings');switchSettingsTab('app');closeOmIntro(true)">Paramètres</button>
+        <button class="btn-secondary" style="border-color:var(--accent);color:var(--accent)" onclick="closeOmIntro(true)">Démarrer</button>
       </div>
     </div>
   </div>
@@ -173,13 +173,13 @@
 <div id="manual-modal" class="modal-overlay" onclick="if(event.target===this)closeOmManual()">
   <div class="modal-box" style="width:760px;max-width:calc(100vw - 24px);max-height:calc(100vh - 40px);display:flex;flex-direction:column">
     <div class="modal-header">
-      <span class="modal-title">OverMesh Manual</span>
-      <button class="modal-close" onclick="closeOmManual()" title="Close">&#x2715;</button>
+      <span class="modal-title">Manuel OverMesh</span>
+      <button class="modal-close" onclick="closeOmManual()" title="Fermer">&#x2715;</button>
     </div>
     <div class="modal-body" style="display:flex;flex-direction:column;gap:12px;min-height:0">
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <input id="manual-search" class="settings-input" placeholder="Search manual..." style="flex:1;min-width:180px" oninput="renderOmManual(this.value)">
-        <button class="btn-secondary" onclick="document.getElementById('manual-search').value='';renderOmManual('')" title="Clear search">Clear</button>
+        <input id="manual-search" class="settings-input" placeholder="Rechercher dans le manuel..." style="flex:1;min-width:180px" oninput="renderOmManual(this.value)">
+        <button class="btn-secondary" onclick="document.getElementById('manual-search').value='';renderOmManual('')" title="Effacer la recherche">Effacer</button>
       </div>
       <div id="manual-results" style="overflow:auto;min-height:180px;max-height:calc(100vh - 210px);padding-right:4px"></div>
     </div>
@@ -191,7 +191,7 @@
   <div class="modal-box">
     <div class="modal-header">
       <span class="modal-title" id="modal-title"></span>
-      <button class="modal-close" onclick="closeModal()" title="Close">&#x2715;</button>
+      <button class="modal-close" onclick="closeModal()" title="Fermer">&#x2715;</button>
     </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
@@ -199,7 +199,7 @@
 
 
 <div id="app-topo-bg" aria-hidden="true"></div>
-<div id="silent-banner">Silent Running active — all radio transmissions blocked<button onclick="toggleSilentMode()">Disable</button></div>
+<div id="silent-banner">Mode silencieux actif — toutes les transmissions radio sont bloquées<button onclick="toggleSilentMode()">Désactiver</button></div>
 <div id="header">
   <div style="height:28px;aspect-ratio:848/202;flex-shrink:0;background:var(--accent);
     -webkit-mask-image:url('/static/Overmesh_logo.png');mask-image:url('/static/Overmesh_logo.png');
@@ -221,25 +221,25 @@
   <span id="header-mc-count" style="display:none;font-size:12px;color:var(--muted);white-space:nowrap;margin-left:4px"></span>
   <div class="header-spacer"></div>
   <span id="last-updated" style="font-size:12px;color:var(--muted);white-space:nowrap"></span>
-  <button class="btn" id="header-refresh-btn" onclick="loadCurrent(this)" title="Refresh MT and MC state from connected radios"><span class="btn-icon">↻</span><span class="btn-label">Refresh</span></button>
-  <button class="btn" id="silent-btn" onclick="toggleSilentMode()" title="Enable Silent Running — suppresses all radio transmissions">Silent</button>
-  <select id="language-selector" class="settings-select" title="Language" aria-label="Language">
-    <option value="en">English</option>
+  <button class="btn" id="header-refresh-btn" onclick="loadCurrent(this)" title="Actualiser l’état MT et MC depuis les radios connectées"><span class="btn-icon">↻</span><span class="btn-label">Actualiser</span></button>
+  <button class="btn" id="silent-btn" onclick="toggleSilentMode()" title="Activer le mode silencieux — bloque toutes les transmissions radio">Silencieux</button>
+  <select id="language-selector" class="settings-select" title="Langue" aria-label="Langue">
+    <option value="en">Anglais</option>
     <option value="fr">Français</option>
   </select>
   <div id="alerts-btn-wrap">
-    <button class="btn" id="alerts-btn" onclick="toggleAlertsPanel(event)" title="Alert history">&#128276;<span id="alerts-badge">0</span></button>
+    <button class="btn" id="alerts-btn" onclick="toggleAlertsPanel(event)" title="Historique des alertes">&#128276;<span id="alerts-badge">0</span></button>
     <div id="alerts-panel" onclick="event.stopPropagation()"></div>
   </div>
   <form id="logout-form" action="{{ base_path }}/logout" method="POST" style="display:none;margin:0">
-    <button type="submit" class="btn" title="Log out" style="color:var(--muted)">Log out</button>
+    <button type="submit" class="btn" title="Log out" style="color:var(--muted)">Déconnexion</button>
   </form>
   <div id="power-btn-wrap">
-    <button id="shutdown-btn" onclick="togglePowerMenu(event)" title="Power options">&#x23FB;</button>
+    <button id="shutdown-btn" onclick="togglePowerMenu(event)" title="Options d’alimentation">&#x23FB;</button>
     <div id="power-menu">
-      <button onclick="doRestart()" title="Restart the OverMesh server process">&#x21BA; Restart</button>
-      <button class="pm-danger" onclick="doShutdown()" title="Shut down the OverMesh server">&#x23FB; Shutdown</button>
-      {% if auth_enabled %}<button onclick="document.getElementById('logout-form').submit()" title="Log out and return to login screen">&#x21E5; Log out</button>{% endif %}
+      <button onclick="doRestart()" title="Redémarrer le serveur OverMesh">&#x21BA; Redémarrer</button>
+      <button class="pm-danger" onclick="doShutdown()" title="Arrêter le serveur OverMesh">&#x23FB; Arrêter</button>
+      {% if auth_enabled %}<button onclick="document.getElementById('logout-form').submit()" title="Se déconnecter et revenir à l’écran de connexion">&#x21E5; Déconnexion</button>{% endif %}
     </div>
   </div>
   <div id="clock">
@@ -263,11 +263,11 @@
       <!-- Live controls -->
       <div id="live-controls" style="display:flex;gap:8px;align-items:center">
         <div class="search-wrap">
-          <input id="node-search" type="text" placeholder="Search nodes..." data-i18n-placeholder="nodes.search" oninput="renderLive()"
+          <input id="node-search" type="text" placeholder="Rechercher des nœuds..." data-i18n-placeholder="nodes.search" oninput="renderLive()"
             style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 28px 4px 10px;border-radius:6px;font-size:12px;width:180px;">
-          <button class="search-clear" onclick="clearSearch('node-search')" title="Clear search">✕</button>
+          <button class="search-clear" onclick="clearSearch('node-search')" title="Effacer la recherche">✕</button>
         </div>
-        <button class="btn active" id="fav-filter-btn" onclick="toggleFavFirst()" title="Sort favourited nodes to top" >&#9733; <span data-i18n="nodes.fav_first">Fav first</span></button>
+        <button class="btn active" id="fav-filter-btn" onclick="toggleFavFirst()" title="Sort favourited nodes to top" >&#9733; <span data-i18n="nodes.fav_first">Favoris en premier</span></button>
         <div class="view-toggle" id="nodes-net-filter" style="margin-left:4px">
           <div id="nodes-mt-pill" class="btn btn-net-mt active" onclick="toggleNodeFilter('mt')" title="Show/hide Meshtastic nodes">MT</div>
           <div id="nodes-mc-pill" class="btn btn-net-mc active" onclick="toggleNodeFilter('mc')" title="Show/hide MeshCore contacts">MC</div>
@@ -277,15 +277,15 @@
       <!-- History controls -->
       <div id="history-controls" style="display:none;gap:8px;align-items:center">
         <div class="search-wrap">
-          <input id="history-search" type="text" placeholder="Search history..." data-i18n-placeholder="nodes.search_history" oninput="filterHistory()"
+          <input id="history-search" type="text" placeholder="Rechercher dans l’historique..." data-i18n-placeholder="nodes.search_history" oninput="filterHistory()"
             style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:4px 28px 4px 10px;border-radius:6px;font-size:12px;width:180px;">
-          <button class="search-clear" onclick="clearSearch('history-search')" title="Clear search">✕</button>
+          <button class="search-clear" onclick="clearSearch('history-search')" title="Effacer la recherche">✕</button>
         </div>
         <div class="view-toggle" style="margin-right:2px">
           <div id="hist-mt-pill" class="btn btn-net-mt active" onclick="toggleHistoryNet('mt')" title="Show/hide Meshtastic nodes">MT</div>
           <div id="hist-mc-pill" class="btn btn-net-mc active" onclick="toggleHistoryNet('mc')" title="Show/hide MeshCore contacts">MC</div>
         </div>
-        <button class="btn active" id="db-fav-first-btn" onclick="toggleDbFavFirst()" title="Sort favourited nodes to top" >&#9733; <span data-i18n="nodes.fav_first">Fav first</span></button>
+        <button class="btn active" id="db-fav-first-btn" onclick="toggleDbFavFirst()" title="Sort favourited nodes to top" >&#9733; <span data-i18n="nodes.fav_first">Favoris en premier</span></button>
         <button class="btn" id="db-show-ignored-btn" onclick="toggleShowIgnored()" title="Show only ignored Meshtastic nodes">&#128683; <span data-i18n="nodes.mt_ignored">MT ignored</span></button>
         <button class="btn" id="mc-show-ignored-btn" onclick="toggleMcShowIgnored()" title="Show only ignored MeshCore contacts">&#128683; <span data-i18n="nodes.mc_ignored">MC ignored</span></button>
       </div>
@@ -300,20 +300,20 @@
         <thead>
           <tr>
             <th style="width:32px"></th>
-            <th class="sortable" data-col="long_name"     onclick="setLiveSort('long_name')"><span data-i18n="nodes.name">Name</span> <span class="sort-arrow"></span></th>
-            <th><span data-i18n="nodes.short">Short</span></th>
+            <th class="sortable" data-col="long_name"     onclick="setLiveSort('long_name')"><span data-i18n="nodes.name">Nom</span> <span class="sort-arrow"></span></th>
+            <th><span data-i18n="nodes.short">Court</span></th>
             <th class="sortable" data-col="snr"          onclick="setLiveSort('snr')"><span data-i18n="nodes.snr">SNR</span> <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="battery"      onclick="setLiveSort('battery')"><span data-i18n="nodes.battery">Battery</span> <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="hops_away"    onclick="setLiveSort('hops_away')"><span data-i18n="nodes.hops">Hops</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="battery"      onclick="setLiveSort('battery')"><span data-i18n="nodes.battery">Batterie</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="hops_away"    onclick="setLiveSort('hops_away')"><span data-i18n="nodes.hops">Sauts</span> <span class="sort-arrow"></span></th>
             <th class="sortable" data-col="_dist" onclick="setLiveSort('_dist')"><span data-i18n="nodes.distance">Distance</span> <span class="sort-arrow"></span></th>
-            <th class="sortable" data-col="last_heard_ts" onclick="setLiveSort('last_heard_ts')"><span data-i18n="nodes.last_seen">Last Seen</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-col="last_heard_ts" onclick="setLiveSort('last_heard_ts')"><span data-i18n="nodes.last_seen">Dernière activité</span> <span class="sort-arrow"></span></th>
             <th></th>
             <th><span data-i18n="nodes.note">Note</span></th>
             <th><span data-i18n="nodes.radio">Radio</span></th>
             <th style="width:28px"></th>
           </tr>
         </thead>
-        <tbody id="live-tbody"><tr><td colspan="12" class="no-data"><span data-i18n="common.loading">Loading...</span></td></tr></tbody>
+        <tbody id="live-tbody"><tr><td colspan="12" class="no-data"><span data-i18n="common.loading">Chargement...</span></td></tr></tbody>
       </table>
     </div>
 
@@ -323,19 +323,19 @@
         <thead>
           <tr>
             <th style="width:32px"></th>
-            <th class="sortable" data-dbcol="long_name"    onclick="setDbSort('long_name')"><span data-i18n="nodes.name">Name</span> <span class="sort-arrow"></span></th>
-            <th><span data-i18n="nodes.short">Short</span></th>
-            <th class="sortable" data-dbcol="first_seen"   onclick="setDbSort('first_seen')"><span data-i18n="nodes.first_added">First Added</span> <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="last_seen"    onclick="setDbSort('last_seen')"><span data-i18n="nodes.last_seen">Last Seen</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="long_name"    onclick="setDbSort('long_name')"><span data-i18n="nodes.name">Nom</span> <span class="sort-arrow"></span></th>
+            <th><span data-i18n="nodes.short">Court</span></th>
+            <th class="sortable" data-dbcol="first_seen"   onclick="setDbSort('first_seen')"><span data-i18n="nodes.first_added">Première apparition</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="last_seen"    onclick="setDbSort('last_seen')"><span data-i18n="nodes.last_seen">Dernière activité</span> <span class="sort-arrow"></span></th>
             <th class="sortable" data-dbcol="last_snr"     onclick="setDbSort('last_snr')"><span data-i18n="nodes.snr">SNR</span> <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="last_battery" onclick="setDbSort('last_battery')"><span data-i18n="nodes.battery">Battery</span> <span class="sort-arrow"></span></th>
-            <th class="sortable" data-dbcol="hops_away"    onclick="setDbSort('hops_away')"><span data-i18n="nodes.hops">Hops</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="last_battery" onclick="setDbSort('last_battery')"><span data-i18n="nodes.battery">Batterie</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-dbcol="hops_away"    onclick="setDbSort('hops_away')"><span data-i18n="nodes.hops">Sauts</span> <span class="sort-arrow"></span></th>
             <th><span data-i18n="nodes.distance">Distance</span></th>
             <th><span data-i18n="nodes.note">Note</span></th>
             <th style="width:64px"></th>
           </tr>
         </thead>
-        <tbody id="history-tbody"><tr><td colspan="11" class="no-data"><span data-i18n="common.loading">Loading...</span></td></tr></tbody>
+        <tbody id="history-tbody"><tr><td colspan="11" class="no-data"><span data-i18n="common.loading">Chargement...</span></td></tr></tbody>
       </table>
     </div>
 
@@ -355,14 +355,14 @@
     </div>
     <!-- MT pane -->
     <div id="chat-mt-pane" style="display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden">
-      <div id="chat-messages"><div class="chat-empty" data-i18n="chat.no_messages">No messages yet</div></div>
+      <div id="chat-messages"><div class="chat-empty" data-i18n="chat.no_messages">Aucun message pour le moment</div></div>
       <div class="chat-input-bar">
         <input type="text" id="chat-input" data-i18n-placeholder="chat.message" placeholder="Message..." maxlength="200"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                oninput="_mtUpdateCharCount()" onkeydown="if(event.key==='Enter')sendChat()">
         <span id="mt-char-counter" style="font-size:11px;color:var(--muted);flex-shrink:0;min-width:28px;text-align:right">200</span>
         <button class="emoji-btn" onclick="toggleEmojiPicker('chat-input',this)" title="Emoji">😊</button>
-        <button class="dm-send" onclick="sendChat()" title="Send message" data-i18n="chat.send">Send</button>
+        <button class="dm-send" onclick="sendChat()" title="Envoyer le message" data-i18n="chat.send">Envoyer</button>
       </div>
     </div>
     <!-- MC pane -->
@@ -378,11 +378,11 @@
                oninput="_mcUpdateByteCount()" onkeydown="if(event.key==='Enter')sendMcChan()">
         <span id="mc-byte-counter" style="font-size:11px;color:var(--muted);flex-shrink:0;min-width:28px;text-align:right">160</span>
         <button class="emoji-btn" onclick="toggleEmojiPicker('mc-chat-input',this)" title="Emoji">😊</button>
-        <button class="dm-send" id="mc-send-btn" onclick="sendMcChan()" title="Send message to active MC channel" data-i18n="chat.mc_send">Send</button>
+        <button class="dm-send" id="mc-send-btn" onclick="sendMcChan()" title="Envoyer le message sur le canal MC actif" data-i18n="chat.mc_send">Envoyer</button>
         <div id="mc-advert-wrap" style="position:relative;flex-shrink:0">
           <button class="btn btn-net-mc network-accent-mc" id="mc-advert-btn" style="font-size:12px;padding:0 10px;height:36px;display:inline-flex;align-items:center" onclick="toggleMcAdvertMenu(event)" title="Annonce — annonce ce nœud sur le réseau MeshCore"><span data-i18n="chat.mc_advert">Advert</span> &#9650;</button>
           <div id="mc-advert-menu" style="display:none;position:absolute;bottom:calc(100% + 4px);right:0;background:var(--bg2);border:1px solid var(--border);border-radius:6px;min-width:140px;z-index:999;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.4)">
-            <button class="mc-advert-item" style="border-bottom:1px solid var(--border)" onclick="mcSendAdvert(false)"><span data-i18n="chat.mc_local">Local</span> <span style="color:var(--muted);font-size:11px" data-i18n="chat.mc_no_hops">(no hops)</span></button>
+            <button class="mc-advert-item" style="border-bottom:1px solid var(--border)" onclick="mcSendAdvert(false)"><span data-i18n="chat.mc_local">Local</span> <span style="color:var(--muted);font-size:11px" data-i18n="chat.mc_no_hops">(sans saut)</span></button>
             <button class="mc-advert-item" onclick="mcSendAdvert(true)"><span data-i18n="chat.mc_flood">Flood</span></button>
           </div>
         </div>
@@ -394,15 +394,15 @@
     <!-- Map toolbar -->
     <div class="toolbar" id="map-toolbar" style="padding:4px 8px;flex-shrink:0;margin-bottom:0">
       <div class="view-toggle">
-        <div class="btn active" id="map-btn-map" data-i18n="map.map"   onclick="toggleSensePanel(false)" title="Show map view">Map</div>
-        <div class="btn"        id="map-btn-sense" data-i18n="map.sense" onclick="toggleSensePanel(true)"  title="Open Sense panel — scan and detect nearby nodes">Sense</div>
+        <div class="btn active" id="map-btn-map" data-i18n="map.map"   onclick="toggleSensePanel(false)" title="Show map view">Carte</div>
+        <div class="btn"        id="map-btn-sense" data-i18n="map.sense" onclick="toggleSensePanel(true)"  title="Open Sense panel — scan and detect nearby nodes">Détection</div>
       </div>
       <!-- Map mode: MT/MC map filter pill -->
       <div class="view-toggle" id="map-net-filter" style="margin-left:8px">
         <div id="map-mt-pill" class="btn btn-net-mt active" onclick="toggleMapFilter('mt')" title="Show/hide Meshtastic nodes on map">MT</div>
         <div id="map-mc-pill" class="btn btn-net-mc active" onclick="toggleMapFilter('mc')" title="Show/hide MeshCore contacts on map">MC</div>
       </div>
-      <button id="signal-heatmap-toolbar-btn" data-i18n="map.heat" class="btn" onclick="toggleSignalHeatmap()" title="Toggle signal heatmap. It follows the visible MT/MC selector and uses separate palettes when both are enabled." style="margin-left:8px">Heat</button>
+      <button id="signal-heatmap-toolbar-btn" data-i18n="map.heat" class="btn" onclick="toggleSignalHeatmap()" title="Toggle signal heatmap. It follows the visible MT/MC selector and uses separate palettes when both are enabled." style="margin-left:8px">Chaleur</button>
       <!-- Sense mode: MT/MC sense selector pill (hidden when Map is active) -->
       <div class="view-toggle" id="sense-net-filter" style="margin-left:8px;display:none">
         <div class="btn btn-net-mt active" id="sense-net-mt" onclick="switchSenseNet('mt')" title="Meshtastic Sense">MT</div>
@@ -420,30 +420,30 @@
         <div id="sense-mt-wrap" style="display:flex;flex-direction:column;flex:1;min-height:0">
           <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;flex-shrink:0">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-              <button id="sense-btn" onclick="triggerSense()" title="One-shot: broadcast position request to entire mesh and collect responses for 60s" style="background:var(--accent);color:#0a0f1e;border:none;border-radius:6px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer" data-i18n="map.sense_mesh">Sense Mesh</button>
+              <button id="sense-btn" onclick="triggerSense()" title="One-shot: broadcast position request to entire mesh and collect responses for 60s" style="background:var(--accent);color:#0a0f1e;border:none;border-radius:6px;padding:8px 18px;font-weight:700;font-size:13px;cursor:pointer" data-i18n="map.sense_mesh">Détecter le maillage</button>
               <div id="sense-mt-toggle" class="view-toggle">
-                <div class="btn active" id="sense-passive-btn" data-i18n="map.passive" onclick="toggleSensePassive()" title="Continuously capture any heard packets — no broadcast. Each radio tracks its own nodes independently. Nodes are kept for 2h after last heard, then expire. Clear only happens on a manual Sense Mesh run.">Passive</div>
-                <div class="btn" id="sense-active-btn"  onclick="toggleSenseActive()"  title="Periodically broadcast position requests at cooldown interval" data-i18n="map.active">Active</div>
+                <div class="btn active" id="sense-passive-btn" data-i18n="map.passive" onclick="toggleSensePassive()" title="Capturer en continu tous les paquets entendus — sans diffusion. Chaque radio suit ses propres nœuds indépendamment. Les nœuds sont conservés pendant 2 h après leur dernière activité, puis expirent. L’effacement n’a lieu que lors d’une exécution manuelle de Sense Mesh.">Passif</div>
+                <div class="btn" id="sense-active-btn"  onclick="toggleSenseActive()"  title="Diffuser périodiquement des demandes de position selon l’intervalle défini" data-i18n="map.active">Actif</div>
               </div>
             </div>
             <div id="sense-mt-info" style="display:flex;flex-direction:column;gap:4px">
-              <div style="font-size:11px;color:var(--muted)">⚠️ Active broadcasts to the <strong>entire mesh</strong>. Use sparingly.</div>
+              <div style="font-size:11px;color:var(--muted)">⚠️ La diffusion active couvre l’ensemble du maillage. À utiliser avec parcimonie.</div>
               <div id="sense-cooldown-bar" style="display:none;font-size:12px;color:var(--muted)">Cooldown: <span id="sense-cooldown-val">—</span></div>
             </div>
             <div id="sense-status" style="font-size:12px;color:var(--accent);min-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
           </div>
           <div id="sense-summary" style="display:none;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;flex-shrink:0">
-            <div class="sense-card-stat"><div id="sense-stat-responses">0</div><div data-i18n="map.responded">Responded</div></div>
-            <div class="sense-card-stat"><div id="sense-stat-gps">0</div><div data-i18n="map.with_gps">With GPS</div></div>
-            <div class="sense-card-stat"><div id="sense-stat-snr">—</div><div data-i18n="map.avg_snr">Avg SNR</div></div>
+            <div class="sense-card-stat"><div id="sense-stat-responses">0</div><div data-i18n="map.responded">Réponses reçues</div></div>
+            <div class="sense-card-stat"><div id="sense-stat-gps">0</div><div data-i18n="map.with_gps">Avec GPS</div></div>
+            <div class="sense-card-stat"><div id="sense-stat-snr">—</div><div data-i18n="map.avg_snr">SNR moyen</div></div>
           </div>
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-shrink:0">
-            <span style="font-size:11px;color:var(--muted)" data-i18n="map.nodes_detected">Nodes detected</span>
+            <span style="font-size:11px;color:var(--muted)" data-i18n="map.nodes_detected">Nœuds détectés</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-nodes-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="filterSenseNodes()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
-              <button class="search-clear" onclick="clearSearch('sense-nodes-search')" title="Clear search">✕</button>
+              <input id="sense-nodes-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filtrer…" oninput="filterSenseNodes()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <button class="search-clear" onclick="clearSearch('sense-nodes-search')" title="Effacer la recherche">✕</button>
             </div>
-            <button data-i18n="map.clear" onclick="clearSenseList()" title="Clear detected nodes list" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:11px;color:var(--muted);cursor:pointer;flex-shrink:0;white-space:nowrap">Clear</button>
+            <button data-i18n="map.clear" onclick="clearSenseList()" title="Effacer la liste des nœuds détectés" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:11px;color:var(--muted);cursor:pointer;flex-shrink:0;white-space:nowrap">Effacer</button>
           </div>
           <div id="sense-nodes" style="display:flex;flex-direction:column;gap:8px;overflow-y:auto;flex:1;min-height:0"></div>
         </div>
@@ -451,14 +451,14 @@
         <!-- MC sense content -->
         <div id="sense-mc-wrap" style="display:none;flex-direction:column;flex:1;min-height:0">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-shrink:0;flex-wrap:wrap">
-            <button id="mc-scan-btn" data-i18n="map.scan" class="btn" onclick="startMcScan()" title="Send one MC advert and listen for contact responses during the scan window" style="display:none">Scan</button>
+            <button id="mc-scan-btn" data-i18n="map.scan" class="btn" onclick="startMcScan()" title="Send one MC advert and listen for contact responses during the scan window" style="display:none">Analyser</button>
             <span id="mc-scan-status" style="display:none;font-size:11px;color:var(--muted);white-space:nowrap"></span>
             <button id="mc-trace-btn" data-i18n="map.trace" class="btn" onclick="doMcTrace()" title="Send one mesh-wide MC Trace probe and draw returned hop data" style="display:none">Trace</button>
-            <button id="mc-neighbors-btn" class="btn" onclick="doMcNeighbors()" title="Show contacts by last known MC path: direct, nearby, recent, or all" style="display:none" data-i18n="map.last_heard">Last Heard</button>
+            <button id="mc-neighbors-btn" class="btn" onclick="doMcNeighbors()" title="Show contacts by last known MC path: direct, nearby, recent, or all" style="display:none" data-i18n="map.last_heard">Dernière activité</button>
             <span style="flex:1"></span>
             <span id="sense-mc-status" style="font-size:11px;color:var(--muted);white-space:nowrap"></span>
           </div>
-          <div id="mc-trace-warning" title="Trace is a mesh-wide broadcast. Use deliberately." style="display:none;font-size:11px;color:var(--muted);margin-bottom:8px;flex-shrink:0">⚠️ Trace broadcasts to the <strong>entire mesh</strong>. Use sparingly.</div>
+          <div id="mc-trace-warning" title="La trace est diffusée sur l’ensemble du maillage. À utiliser avec discernement." style="display:none;font-size:11px;color:var(--muted);margin-bottom:8px;flex-shrink:0">⚠️ La trace est diffusée sur l’ensemble du maillage. À utiliser avec parcimonie.</div>
           <div id="sense-mc-stats" style="display:flex;gap:8px;margin-bottom:6px;flex-shrink:0;font-size:10px;color:var(--muted)">
             <span id="sense-mc-stat-total">0 contacts</span>
             <span style="color:var(--border)">·</span>
@@ -469,8 +469,8 @@
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-shrink:0">
             <span style="font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap">MeshCore</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-mc-nodes-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="renderMcSensePanel()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
-              <button class="search-clear" onclick="clearSearch('sense-mc-nodes-search');renderMcSensePanel()" title="Clear filter">✕</button>
+              <input id="sense-mc-nodes-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filtrer…" oninput="renderMcSensePanel()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <button class="search-clear" onclick="clearSearch('sense-mc-nodes-search');renderMcSensePanel()" title="Effacer le filtre">✕</button>
             </div>
           </div>
           <div id="sense-mc-nodes" style="display:flex;flex-direction:column;gap:5px;overflow-y:auto;flex:1;min-height:0"></div>
@@ -480,11 +480,11 @@
       <!-- Map view -->
       <div id="map-view-map" style="flex:1;min-width:0;position:relative">
     <div id="map-pick-banner">Cliquez sur la carte pour définir la position du nœud</div>
-    <button id="map-pick-cancel" data-i18n="map.cancel" onclick="cancelMapPick()" title="Cancel position pick">Cancel</button>
+    <button id="map-pick-cancel" data-i18n="map.cancel" onclick="cancelMapPick()" title="Annuler le choix de position">Annuler</button>
     <div id="wp-pick-banner">Cliquez sur la carte pour placer un repère</div>
-    <button id="wp-pick-cancel" data-i18n="map.cancel" onclick="cancelWaypointPick()" title="Cancel waypoint placement">Cancel</button>
+    <button id="wp-pick-cancel" data-i18n="map.cancel" onclick="cancelWaypointPick()" title="Cancel waypoint placement">Annuler</button>
     <div id="overlay-pick-banner">Mode édition du calque</div>
-    <button id="overlay-pick-cancel" data-i18n="map.cancel" onclick="cancelMapLayerDraft()" title="Cancel overlay editing">Cancel</button>
+    <button id="overlay-pick-cancel" data-i18n="map.cancel" onclick="cancelMapLayerDraft()" title="Cancel overlay editing">Annuler</button>
     <div id="map"></div>
     <div id="map-dm-window">
       <div id="map-dm-header">
@@ -495,18 +495,18 @@
       <div id="map-dm-input-row">
         <input id="map-dm-input" type="text" data-i18n-placeholder="map.message" placeholder="Message…" maxlength="200"
                onkeydown="if(event.key==='Enter')sendMapDM()">
-        <button onclick="sendMapDM()" title="Send direct message" data-i18n="map.send">Send</button>
+        <button onclick="sendMapDM()" title="Send direct message" data-i18n="map.send">Envoyer</button>
       </div>
     </div>
     <div id="map-search-wrap">
-      <input id="map-search-input" type="text" placeholder="Search nodes..." data-i18n-placeholder="nodes.search" autocomplete="off">
-      <button class="search-clear" onclick="clearSearch('map-search-input')" title="Clear search">✕</button>
+      <input id="map-search-input" type="text" placeholder="Rechercher des nœuds..." data-i18n-placeholder="nodes.search" autocomplete="off">
+      <button class="search-clear" onclick="clearSearch('map-search-input')" title="Effacer la recherche">✕</button>
     </div>
     <div id="map-right-panels"></div>
     <div id="map-panels-right">
       <div id="marks-panel">
         <div id="marks-panel-hdr" onclick="toggleMarksPanel()">
-          <span style="font-size:12px;font-weight:600;color:var(--text)" data-i18n="map.marks">Marks</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text)" data-i18n="map.marks">Marqueurs</span>
           <span id="marks-panel-count" style="font-size:11px;color:var(--muted)"></span>
           <span id="marks-panel-chev" style="font-size:10px;color:var(--muted);margin-left:auto">▼</span>
         </div>
@@ -514,7 +514,7 @@
       </div>
       <div id="notes-panel">
         <div id="notes-panel-hdr" onclick="toggleNotesPanel()">
-          <span style="font-size:12px;font-weight:600;color:var(--text)">Self Notes</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text)">Notes personnelles</span>
           <span id="notes-panel-count" style="font-size:11px;color:var(--muted)"></span>
           <span id="notes-panel-chev" style="font-size:10px;color:var(--muted);margin-left:auto">▼</span>
         </div>
@@ -522,7 +522,7 @@
       </div>
       <div id="overlay-panel">
         <div id="overlay-panel-hdr" onclick="toggleOverlayPanel()">
-          <span style="font-size:12px;font-weight:600;color:var(--text)">Overlays</span>
+          <span style="font-size:12px;font-weight:600;color:var(--text)">Superpositions</span>
           <span id="overlay-panel-count" style="font-size:11px;color:var(--muted)"></span>
           <span id="overlay-panel-chev" style="font-size:10px;color:var(--muted);margin-left:auto">▼</span>
         </div>
@@ -536,10 +536,10 @@
         <!-- MT response log -->
         <div id="sense-mt-log-wrap" style="display:flex;flex-direction:column;flex:1;min-height:0">
           <div style="padding:8px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:6px">
-            <span style="font-size:11px;color:var(--muted);white-space:nowrap">Response log</span>
+            <span style="font-size:11px;color:var(--muted);white-space:nowrap">Journal des réponses</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-log-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="filterSenseLog()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
-              <button class="search-clear" onclick="clearSearch('sense-log-search')" title="Clear search">✕</button>
+              <input id="sense-log-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filtrer…" oninput="filterSenseLog()" style="width:100%;font-size:11px;padding:2px 22px 2px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <button class="search-clear" onclick="clearSearch('sense-log-search')" title="Effacer la recherche">✕</button>
             </div>
           </div>
           <div id="sense-log" style="flex:1;min-height:0;overflow-y:auto;padding:8px;font-size:11px;font-family:monospace;color:var(--muted)"><span id="sense-log-empty">No sense run yet.</span></div>
@@ -548,16 +548,16 @@
         <div id="sense-mc-log-wrap" style="display:none;flex-direction:column;flex:1;min-height:0">
           <!-- Contact detail (shown when a card is selected on the left) -->
           <div id="mc-sense-detail" style="display:none;padding:8px 10px;border-bottom:1px solid var(--border);flex-shrink:0;position:relative">
-            <button onclick="_closeMcSenseDetail()" title="Close" style="position:absolute;top:4px;right:6px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;line-height:1">✕</button>
+            <button onclick="_closeMcSenseDetail()" title="Fermer" style="position:absolute;top:4px;right:6px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;line-height:1">✕</button>
             <div id="mc-sense-detail-content"></div>
           </div>
           <div style="padding:8px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:6px">
-            <span style="font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0">MC activity</span>
+            <span style="font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0">Activité MC</span>
             <div class="search-wrap" style="flex:1">
-              <input id="sense-mc-log-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filter…" oninput="renderMcSenseLog()" style="width:100%;font-size:11px;padding:1px 22px 1px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
-              <button class="search-clear" onclick="clearSearch('sense-mc-log-search');renderMcSenseLog()" title="Clear filter">✕</button>
+              <input id="sense-mc-log-search" data-i18n-placeholder="map.filter" type="text" placeholder="Filtrer…" oninput="renderMcSenseLog()" style="width:100%;font-size:11px;padding:1px 22px 1px 6px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);box-sizing:border-box">
+              <button class="search-clear" onclick="clearSearch('sense-mc-log-search');renderMcSenseLog()" title="Effacer le filtre">✕</button>
             </div>
-            <button data-i18n="map.clear" onclick="clearMcSenseLog()" style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:10px;color:var(--muted);cursor:pointer;flex-shrink:0" title="Clear MC activity log">Clear</button>
+            <button data-i18n="map.clear" onclick="clearMcSenseLog()" style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:10px;color:var(--muted);cursor:pointer;flex-shrink:0" title="Clear MC activity log">Effacer</button>
           </div>
           <div id="sense-mc-log" style="flex:1;min-height:0;overflow-y:auto;padding:8px;font-size:11px;font-family:monospace;color:var(--muted)"><span id="sense-mc-log-empty">No MC activity yet.</span></div>
         </div>
@@ -569,11 +569,11 @@
   <div class="panel" id="panel-bot">
     <div class="toolbar">
       <div class="view-toggle">
-        <button id="bot-btn-activity" class="btn active" onclick="setBotView('activity')" title="View bot activity log">Activity</button>
-        <button id="bot-btn-settings" class="btn" onclick="setBotView('settings')" title="Configure bot settings">Settings</button>
+        <button id="bot-btn-activity" class="btn active" onclick="setBotView('activity')" title="Afficher le journal d’activité du bot">Activité</button>
+        <button id="bot-btn-settings" class="btn" onclick="setBotView('settings')" title="Configurer les paramètres du bot">Paramètres</button>
       </div>
       <div class="toolbar-spacer"></div>
-      <span class="section-title" id="bot-status-label">Bot disabled</span>
+      <span class="section-title" id="bot-status-label">Bot désactivé</span>
     </div>
     <!-- Activity view -->
     <div id="bot-view-activity">
@@ -602,82 +602,82 @@
             <input type="checkbox" id="bot-enable" onchange="saveBotConfig()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">Enable bot</span>
+          <span style="font-size:13px">Activer le bot</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
           <span style="font-size:13px;color:var(--muted);white-space:nowrap">[</span>
           <input type="text" id="bot-label" maxlength="40" class="bot-field" style="flex:1" placeholder="OM Bot">
           <span style="font-size:13px;color:var(--muted);white-space:nowrap">]</span>
-          <button class="map-popup-btn" onclick="saveBotConfig()" style="padding:4px 12px;font-size:12px">Save</button>
+          <button class="map-popup-btn" onclick="saveBotConfig()" style="padding:4px 12px;font-size:12px">Enregistrer</button>
         </div>
       </div>
 
       <div class="bot-settings-section">
-        <h3>Listen Channels</h3>
+        <h3>Canaux d’écoute</h3>
         <div id="bot-channels" style="display:flex;gap:16px;flex-wrap:wrap"></div>
       </div>
 
       <div class="bot-settings-section">
-        <h3>Commands</h3>
+        <h3>Commandes</h3>
         <table class="bot-cmd-table">
-          <thead><tr><th>Command</th><th>Enabled</th><th>Respond via</th></tr></thead>
+          <thead><tr><th>Commande</th><th>Activé</th><th>Répondre via</th></tr></thead>
           <tbody id="bot-cmd-tbody"></tbody>
         </table>
       </div>
 
       <div class="bot-settings-section">
-        <h3>Relay</h3>
+        <h3>Relais</h3>
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <div class="view-toggle">
-            <div class="btn active" id="relay-mode-dm"        onclick="setRelayMode('dm')"        title="Relay incoming messages as direct messages to the target node">DM to node</div>
-            <div class="btn"        id="relay-mode-broadcast" onclick="setRelayMode('broadcast')" title="Relay incoming messages as channel broadcasts — more reliable in sparse meshes">Broadcast</div>
+            <div class="btn active" id="relay-mode-dm"        onclick="setRelayMode('dm')"        title="Relayer les messages entrants comme messages directs vers le nœud cible">Message direct au nœud</div>
+            <div class="btn"        id="relay-mode-broadcast" onclick="setRelayMode('broadcast')" title="Relayer les messages entrants comme diffusions sur le canal — plus fiable dans les maillages peu denses">Diffusion</div>
           </div>
           <div id="relay-channel-row" style="display:none;align-items:center;gap:6px;font-size:13px">
-            <span style="color:var(--muted)">Channel:</span>
+            <span style="color:var(--muted)">Canal :</span>
             <input id="relay-broadcast-ch" type="number" min="0" max="7" value="0" class="bot-field" style="width:56px" onchange="saveBotConfig()">
           </div>
         </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:6px">DM: private to target node. Broadcast: more reliable in sparse meshes.</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px">Message direct : privé vers le nœud cible. Diffusion : plus fiable dans les maillages peu denses.</div>
       </div>
 
       <div class="bot-settings-section">
-        <h3>MOTD (Message of the Day)</h3>
+        <h3>MOTD (Message du jour)</h3>
         <div style="display:flex;flex-direction:column;gap:10px">
           <div style="display:flex;align-items:center;gap:12px">
             <label class="bot-toggle">
               <input type="checkbox" id="motd-enable" onchange="saveBotConfig()">
               <span class="bot-toggle-slider"></span>
             </label>
-            <span style="font-size:13px">Enable scheduled MOTD</span>
+            <span style="font-size:13px">Activer le MOTD programmé</span>
           </div>
           <div style="display:flex;align-items:center;gap:10px;font-size:13px;flex-wrap:wrap">
             <div class="view-toggle" style="flex-shrink:0">
-              <div class="btn active" id="motd-mode-interval" onclick="setMotdMode('interval')" title="Send MOTD at a regular interval">Every X hours</div>
-              <div class="btn"        id="motd-mode-fixed"    onclick="setMotdMode('fixed')"    title="Send MOTD at a fixed time each day">Fixed time</div>
+              <div class="btn active" id="motd-mode-interval" onclick="setMotdMode('interval')" title="Envoyer le MOTD à intervalles réguliers">Toutes les X heures</div>
+              <div class="btn"        id="motd-mode-fixed"    onclick="setMotdMode('fixed')"    title="Envoyer le MOTD à une heure fixe chaque jour">Heure fixe</div>
             </div>
             <div id="motd-interval-row" style="display:flex;align-items:center;gap:6px">
               <input id="motd-interval" type="number" min="1" max="168" class="bot-field" style="width:64px" onchange="saveBotConfig()">
-              <span style="color:var(--muted)">hours</span>
+              <span style="color:var(--muted)">heures</span>
             </div>
             <div id="motd-fixed-row" style="display:none;align-items:center;gap:6px">
               <input id="motd-fixed-time" type="time" class="bot-field" onchange="saveBotConfig()">
-              <span style="color:var(--muted)">daily</span>
+              <span style="color:var(--muted)">quotidiennement</span>
             </div>
           </div>
           <div>
-            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Send MOTD on channels:</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Envoyer le MOTD sur les canaux :</div>
             <div id="motd-channels" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px"></div>
           </div>
           <div>
-            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Custom message:</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Message personnalisé :</div>
             <div style="display:flex;gap:8px">
               <input id="motd-message" type="text" maxlength="100" class="bot-field" style="flex:1" placeholder="[your message]">
-              <button class="map-popup-btn" onclick="saveBotConfig()" style="padding:4px 12px;font-size:12px" title="Save bot configuration">Save</button>
+              <button class="map-popup-btn" onclick="saveBotConfig()" style="padding:4px 12px;font-size:12px" title="Enregistrer la configuration du bot">Enregistrer</button>
   </div>
           </div>
-          <div style="font-size:11px;color:var(--muted)">Broadcast format: Bot active | N nodes online | [your message]</div>
+          <div style="font-size:11px;color:var(--muted)">Format de diffusion : Bot actif | N nœuds en ligne | [votre message]</div>
           <div style="display:flex;align-items:center;gap:10px">
-            <button class="map-popup-btn" onclick="testMotd()" style="padding:6px 14px;font-size:12px" title="Send MOTD broadcast immediately on all connected radios">Test now</button>
+            <button class="map-popup-btn" onclick="testMotd()" style="padding:6px 14px;font-size:12px" title="Envoyer immédiatement le MOTD sur toutes les radios connectées">Tester maintenant</button>
             <span id="motd-test-status" style="font-size:12px;color:var(--muted)"></span>
           </div>
         </div>
@@ -722,23 +722,23 @@
           <input id="toc-date" type="date" title="Entry date"
                  style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;width:130px">
           <span id="toc-time-wrap" style="display:flex;gap:3px;align-items:center"></span>
-          <button class="btn" onclick="tocSetNow()" title="Use current date and time" style="padding:4px 8px;font-size:12px">Now</button>
+          <button class="btn" onclick="tocSetNow()" title="Utiliser la date et l’heure actuelles" style="padding:4px 8px;font-size:12px">Now</button>
         </div>
         <select id="toc-template" onchange="tocApplyTemplate(this.value)" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;flex:1;min-width:140px">
           <option value="">— template —</option>
           <option value="plan">PLAN</option>
           <option value="sitrep">SITREP</option>
-          <option value="contact">First Contact</option>
-          <option value="commscheck">COMMS CHECK</option>
+          <option value="contact">Premier contact</option>
+          <option value="commscheck">VÉRIFICATION COMMS</option>
           <option value="alert">ALERT</option>
           <option value="action">ACTION</option>
-          <option value="position">POSITION UPDATE</option>
+          <option value="position">MISE À JOUR POSITION</option>
           <option value="intel">INTEL</option>
           <option value="weather">WEATHER</option>
         </select>
         <button class="btn" id="toc-pin-template-btn" onclick="tocTogglePinnedTemplate()" title="Pin or unpin selected template" style="padding:4px 8px;font-size:12px">☆</button>
         <button class="btn" onclick="tocAttachLocalPosition()" title="Attach local/manual position to the entry. You can also type +GPS in a Log text field." style="padding:4px 8px;font-size:12px">+GPS</button>
-        <button class="btn" id="toc-clear-btn" onclick="tocClear()" title="Clear all fields" style="flex-shrink:0">Clear</button>
+        <button class="btn" id="toc-clear-btn" onclick="tocClear()" title="Clear all fields" style="flex-shrink:0">Effacer</button>
       </div>
       <div class="toc-mission-row">
         <label for="toc-mission" style="font-size:11px;color:var(--muted);white-space:nowrap">Mission / Dossier :</label>
@@ -787,10 +787,10 @@
       <div class="search-wrap" style="flex:1;min-width:160px">
         <input id="toc-filter-text" type="text" placeholder="Search log…" oninput="tocRenderLog()"
                style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;width:100%;box-sizing:border-box">
-        <button class="search-clear" onclick="clearSearch('toc-filter-text');tocRenderLog()" title="Clear search">✕</button>
+        <button class="search-clear" onclick="clearSearch('toc-filter-text');tocRenderLog()" title="Effacer la recherche">✕</button>
       </div>
       <select id="toc-filter-category" onchange="tocRenderLog()" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px">
-        <option value="">All categories</option>
+        <option value="">Toutes les catégories</option>
         <option value="NOTE">NOTE</option>
         <option value="PLAN">PLAN</option>
         <option value="SITREP">SITREP</option>
@@ -803,13 +803,13 @@
         <option value="WEATHER">WEATHER</option>
       </select>
       <select id="toc-filter-tag" onchange="tocRenderLog()" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;max-width:170px">
-        <option value="">Any tag</option>
+        <option value="">N’importe quel tag</option>
       </select>
       <select id="toc-filter-mention" onchange="tocRenderLog()" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;max-width:170px">
-        <option value="">Any node</option>
+        <option value="">N’importe quel nœud</option>
       </select>
       <select id="toc-filter-mission" onchange="tocRenderLog()" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;max-width:190px">
-        <option value="">Any mission</option>
+        <option value="">N’importe quelle mission</option>
       </select>
       <input type="hidden" id="toc-filter-mission-mode" value="include">
       <span style="font-size:11px;color:var(--muted);white-space:nowrap">From</span>
@@ -819,9 +819,9 @@
       <input id="toc-filter-to" type="date" title="To date" onchange="tocRenderLog()"
              style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px;width:130px">
       <select id="toc-view-mode" onchange="tocRenderLog()" title="Log layout" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:12px">
-        <option value="grouped">Grouped</option>
+        <option value="grouped">Groupé</option>
         <option value="mission">Missions</option>
-        <option value="flat">Flat</option>
+        <option value="flat">À plat</option>
       </select>
       <button class="btn" onclick="tocClearFilters()" title="Clear log filters" style="padding:4px 8px;font-size:12px">Clear filters</button>
       <span id="toc-filter-count" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
@@ -832,7 +832,7 @@
       <table id="toc-table" style="width:100%;border-collapse:collapse;font-size:12px">
         <thead>
           <tr style="color:var(--muted);border-bottom:1px solid var(--border)">
-            <th style="text-align:left;padding:4px 8px;font-weight:600;white-space:nowrap">Time</th>
+            <th style="text-align:left;padding:4px 8px;font-weight:600;white-space:nowrap">Heure</th>
             <th style="text-align:left;padding:4px 8px;font-weight:600">Type</th>
             <th style="text-align:left;padding:4px 8px;font-weight:600;width:100%">Entry</th>
             <th style="padding:4px 8px"></th>
@@ -848,117 +848,117 @@
     <div id="log-subtab-sop" class="log-sop" style="display:none">
       <div class="log-sop-header">
         <div>
-          <div class="log-sop-kicker">Operating Procedure</div>
-          <h2>MC / MT Log Standard</h2>
+          <div class="log-sop-kicker">Procédure opérationnelle</div>
+          <h2>Norme du journal MC / MT</h2>
         </div>
-        <div class="log-sop-callout">The log is the operational record for all MeshCore (MC) and Meshtastic (MT) activity. Log facts, not conversation. If it happened and it matters, it goes in the log.</div>
+        <div class="log-sop-callout">Le journal est le registre opérationnel de toute l’activité MeshCore (MC) et Meshtastic (MT). Consignez les faits, pas les conversations. Si cela s’est produit et que c’est important, cela doit figurer dans le journal.</div>
       </div>
 
       <section class="log-sop-section">
-        <h3>Entry Standard</h3>
+        <h3>Norme des entrées</h3>
         <ul class="log-sop-list">
-          <li>Log time, network, station or node, and current status. Every entry.</li>
-          <li>Use <code>#</code> mentions to tie entries to MC / MT contacts by name.</li>
-          <li>State confidence. Choose one: confirmed / likely / possible / unconfirmed / stale / inferred.</li>
-          <li>Attach <code>+GPS</code> when position matters. Do not estimate coordinates.</li>
-          <li>Close every ALERT and ACTION. An unresolved entry is an open task.</li>
-          <li>Chat is for conversation. Log is for record. Keep them separate.</li>
+          <li>Indiquer l’heure, le réseau, la station ou le nœud, ainsi que l’état actuel pour chaque entrée.</li>
+          <li>Utiliser les mentions <code>#</code> pour associer les contacts MC / MT à leur nom.</li>
+          <li>Indiquer le niveau de confiance. Choisir : confirmé / probable / possible / non confirmé / obsolète / déduit.</li>
+          <li>Ajouter <code>+GPS</code> lorsque la position est importante. Ne pas estimer les coordonnées.</li>
+          <li>Clôturer chaque ALERT et ACTION. Une entrée non résolue constitue une tâche en cours.</li>
+          <li>Le Chat sert aux conversations. Le Journal sert aux enregistrements. Les garder séparés.</li>
         </ul>
       </section>
 
       <section class="log-sop-section">
-        <h3>Quick Launch</h3>
+        <h3>Lancement rapide</h3>
         <div class="log-sop-actionbar">
-          <button class="log-sop-action" onclick="logSopUse('plan')" title="Prefill a PLAN entry — define objective, route, and comms before any activation">Plan</button>
-          <button class="log-sop-action" onclick="logSopUse('mobile-start')" title="Prefill a mobile movement plan — use when departing with the Cyberdeck">Depart</button>
-          <button class="log-sop-action" onclick="logSopUse('basecamp-open')" title="Prefill a static station opening report">Station open</button>
-          <button class="log-sop-action" onclick="logSopUse('quick-sitrep')" title="Prefill a current status SITREP">SITREP</button>
-          <button class="log-sop-action" onclick="logSopUse('rc-collect')" title="Prefill a Remote Collector sweep note">Collector sweep</button>
-          <button class="log-sop-action" onclick="logSopUse('degraded-comms')" title="Prefill a degraded comms alert">Comms lost</button>
+          <button class="log-sop-action" onclick="logSopUse('plan')" title="Préremplir une entrée PLAN — définir l’objectif, l’itinéraire et les communications avant toute activation">Plan</button>
+          <button class="log-sop-action" onclick="logSopUse('mobile-start')" title="Préremplir un plan de déplacement — à utiliser au départ avec le Cyberdeck">Départ</button>
+          <button class="log-sop-action" onclick="logSopUse('basecamp-open')" title="Préremplir un rapport d’ouverture de station fixe">Ouverture station</button>
+          <button class="log-sop-action" onclick="logSopUse('quick-sitrep')" title="Préremplir un SITREP sur l’état actuel">SITREP</button>
+          <button class="log-sop-action" onclick="logSopUse('rc-collect')" title="Préremplir une note de collecte distante">Collecte distante</button>
+          <button class="log-sop-action" onclick="logSopUse('degraded-comms')" title="Préremplir une alerte de communications dégradées">Communications perdues</button>
         </div>
       </section>
 
       <section class="log-sop-section">
-        <h3>Op Phase</h3>
+        <h3>Phase opérationnelle</h3>
         <div class="log-sop-kv">
-          <span>PREP</span><p>Log PLAN. Confirm radio state, GPS fix, and power. No movement without a plan on record.</p>
-          <span>MOBILE</span><p>POSITION at departure, checkpoints, and arrival. COMMS on radio or terrain change. CONTACT on new stations.</p>
-          <span>STATIC</span><p>SITREP (Situation Report) on open. SITREP every 30–60 min or on any state change. INTEL after RC (Remote Collector) import.</p>
-          <span>RECOVER</span><p>Final SITREP. Export log. Record open items and next planned activation.</p>
+          <span>PREP</span><p>Journaliser le PLAN. Confirmer l’état de la radio, la position GPS et l’alimentation. Aucun déplacement sans plan enregistré.</p>
+          <span>MOBILE</span><p>POSITION au départ, aux points de contrôle et à l’arrivée. COMMS en cas de changement de radio ou de terrain. CONTACT pour les nouvelles stations.</p>
+          <span>STATIC</span><p>SITREP (rapport de situation) à l’ouverture. SITREP toutes les 30 à 60 minutes ou à chaque changement d’état. INTEL après importation d’un RC (collecteur distant).</p>
+          <span>RECOVER</span><p>SITREP final. Exporter le journal. Enregistrer les éléments en cours et la prochaine activation prévue.</p>
         </div>
       </section>
 
       <section class="log-sop-section">
-        <h3>Category Reference</h3>
+        <h3>Référence des catégories</h3>
         <div class="log-sop-grid">
-          <button class="log-sop-rule" onclick="logSopUse('note')" title="Prefill a NOTE entry"><strong>NOTE</strong><span>Unverified observation. Not yet classified. Review and promote when facts are clear.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('plan')" title="Prefill a PLAN entry"><strong>PLAN</strong><span>Pre-move or pre-watch order. Objective, route, comms plan, risk, and reporting triggers.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('sitrep')" title="Prefill a SITREP entry"><strong>SITREP</strong><span>Full status at a point in time. Network, assets, issues, intent, and next update.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('commscheck')" title="Prefill a COMMS CHECK entry"><strong>COMMS</strong><span>Radio check, ping, message path, relay test, or failed contact. Log results, not discussion.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('contact')" title="Prefill a CONTACT entry"><strong>CONTACT</strong><span>New station identified. First heard, path, signal, and follow-up action.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('position')" title="Prefill a POSITION entry"><strong>POSITION</strong><span>Own station, mobile node, RPTR (Repeater), or remote asset. GPS when available; state confidence if not.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('alert')" title="Prefill an ALERT entry"><strong>ALERT</strong><span>Actionable problem. Power, comms outage, weather, or safety. Requires a response now.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('action')" title="Prefill an ACTION entry"><strong>ACTION</strong><span>Assigned task with owner and status. Must be closed or superseded when complete.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('intel')" title="Prefill an INTEL entry"><strong>INTEL</strong><span>Observed pattern, RC find, signal, movement, or infrastructure. Tag and assess reliability.</span></button>
-          <button class="log-sop-rule" onclick="logSopUse('weather')" title="Prefill a WEATHER entry"><strong>WEATHER</strong><span>Conditions affecting operations. Temperature, wind, precipitation, visibility, and RF impact.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('note')" title="Préremplir une entrée NOTE"><strong>NOTE</strong><span>Observation non vérifiée. Pas encore classifiée. À revoir et à reclasser lorsque les faits sont établis.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('plan')" title="Préremplir une entrée PLAN"><strong>PLAN</strong><span>Ordre avant déplacement ou surveillance. Objectif, itinéraire, plan de communications, risques et déclencheurs de compte rendu.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('sitrep')" title="Préremplir une entrée SITREP"><strong>SITREP</strong><span>État complet à un instant donné. Réseau, équipements, problèmes, intentions et prochaine mise à jour.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('commscheck')" title="Préremplir une entrée COMMS CHECK"><strong>COMMS</strong><span>Test radio, ping, chemin de message, test de relais ou contact échoué. Journaliser les résultats, pas les discussions.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('contact')" title="Préremplir une entrée CONTACT"><strong>CONTACT</strong><span>Nouvelle station identifiée. Première détection, chemin, signal et action de suivi.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('position')" title="Préremplir une entrée POSITION"><strong>POSITION</strong><span>Station locale, nœud mobile, RPTR (répéteur) ou équipement distant. GPS lorsqu’il est disponible ; indiquer le niveau de confiance sinon.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('alert')" title="Préremplir une entrée ALERT"><strong>ALERT</strong><span>Problème nécessitant une action. Alimentation, panne de communications, météo ou sécurité. Nécessite une intervention immédiate.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('action')" title="Préremplir une entrée ACTION"><strong>ACTION</strong><span>Tâche attribuée avec responsable et état. Doit être clôturée ou remplacée lorsqu’elle est terminée.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('intel')" title="Préremplir une entrée INTEL"><strong>INTEL</strong><span>Motif observé, découverte RC, signal, mouvement ou infrastructure. Ajouter une étiquette et évaluer la fiabilité.</span></button>
+          <button class="log-sop-rule" onclick="logSopUse('weather')" title="Préremplir une entrée WEATHER"><strong>WEATHER</strong><span>Conditions affectant les opérations. Température, vent, précipitations, visibilité et impact RF.</span></button>
         </div>
       </section>
 
       <section class="log-sop-section">
-        <h3>Mobile Operations</h3>
+        <h3>Opérations mobiles</h3>
         <ol class="log-sop-list">
-          <li>Log PLAN before departure: objective, route, radio state, GPS state, risks, and first checkpoint.</li>
-          <li>Confirm MC / MT connectivity before moving. Log COMMS if no acknowledgement from target station.</li>
-          <li>Log POSITION at departure, each turn or stop, and arrival. Attach GPS when available.</li>
-          <li>Log COMMS after any terrain, antenna, channel, or radio change. Record result and retry plan if failed.</li>
-          <li>Log CONTACT for new MC / MT stations: first heard, path, signal, distance if known.</li>
-          <li>Log INTEL for signal patterns, RC captures, movement observations, or infrastructure notes. Tag accordingly.</li>
-          <li>Log ALERT only for actionable risk. Reserve it for things that need a response, not every problem.</li>
-          <li>Close the route with SITREP: current status, contacts added, unresolved actions, and next planned activation.</li>
+          <li>Journaliser le PLAN avant le départ : objectif, itinéraire, état de la radio, état du GPS, risques et premier point de contrôle.</li>
+          <li>Confirmer la connectivité MC / MT avant de se déplacer. Journaliser COMMS en l’absence d’accusé de réception de la station cible.</li>
+          <li>Journaliser POSITION au départ, à chaque changement de direction ou arrêt, et à l’arrivée. Ajouter le GPS lorsqu’il est disponible.</li>
+          <li>Journaliser COMMS après tout changement de terrain, d’antenne, de canal ou de radio. Enregistrer le résultat et le plan de nouvelle tentative en cas d’échec.</li>
+          <li>Journaliser CONTACT pour les nouvelles stations MC / MT : première détection, chemin, signal et distance si connue.</li>
+          <li>Journaliser INTEL pour les motifs de signal, captures RC, observations de mouvements ou notes sur les infrastructures. Ajouter les étiquettes appropriées.</li>
+          <li>Journaliser ALERT uniquement pour les risques nécessitant une action. La réserver aux situations nécessitant une intervention, et non à chaque problème.</li>
+          <li>Clôturer l’itinéraire avec un SITREP : état actuel, contacts ajoutés, actions non résolues et prochaine activation prévue.</li>
         </ol>
       </section>
 
       <section class="log-sop-section">
-        <h3>Static Station</h3>
+        <h3>Station fixe</h3>
         <ol class="log-sop-list">
-          <li>Open with SITREP: location, power, GPS state, MC radios, MT nodes, antenna setup, monitoring channels.</li>
-          <li>Log SITREP every 30–60 minutes, or immediately after any meaningful change.</li>
-          <li>Log COMMS for net checks, MC pings, MT channel checks, messages, relay behavior, and failed paths.</li>
-          <li>Log CONTACT for new arrivals, renamed nodes, unexpected stations, or stations to be added to contacts.</li>
-          <li>Log ACTION for assigned tasks: add contact, move antenna, retry route, restart radio, verify position.</li>
-          <li>Log ALERT for power loss, weather, safety risk, device failure, or loss of expected comms path.</li>
-          <li>At shutdown or handover: export log, add final SITREP with open items and next activation plan.</li>
+          <li>Commencer par un SITREP : emplacement, alimentation, état du GPS, radios MC, nœuds MT, configuration des antennes et canaux surveillés.</li>
+          <li>Journaliser un SITREP toutes les 30 à 60 minutes, ou immédiatement après tout changement significatif.</li>
+          <li>Journaliser COMMS pour les tests du réseau, les pings MC, les vérifications de canaux MT, les messages, le comportement des relais et les chemins en échec.</li>
+          <li>Journaliser CONTACT pour les nouvelles stations, les nœuds renommés, les stations inattendues ou celles à ajouter aux contacts.</li>
+          <li>Journaliser ACTION pour les tâches attribuées : ajouter un contact, déplacer une antenne, retenter un itinéraire, redémarrer une radio, vérifier une position.</li>
+          <li>Journaliser ALERT en cas de perte d’alimentation, de problème météo, de risque de sécurité, de panne d’équipement ou de perte du chemin de communications attendu.</li>
+          <li>À l’arrêt ou lors du transfert : exporter le journal et ajouter un SITREP final avec les éléments en cours et le plan de la prochaine activation.</li>
         </ol>
       </section>
 
       <section class="log-sop-section">
-        <h3>Remote Assets</h3>
+        <h3>Ressources distantes</h3>
         <ul class="log-sop-list">
-          <li>Treat each RC / RPTR unit as a remote station with a callsign (e.g. <strong>Argus</strong>). Log by callsign.</li>
-          <li>Before deploying, log POSITION: placement, antenna orientation, power state, and confidence level.</li>
-          <li>Log COMMS for each session: login, OMCOLLECT command, relay import result, or failed attempt.</li>
-          <li>After collection, log INTEL: new stations found, strong signals, unusual paths, stale data, and assessment.</li>
-          <li>Log ACTION for follow-up: redeploy, reset, firmware check, route verify, or next scheduled collection.</li>
+          <li>Considérer chaque unité RC / RPTR comme une station distante avec un indicatif (par exemple <strong>Argus</strong>). Journaliser par indicatif.</li>
+          <li>Avant le déploiement, journaliser POSITION : emplacement, orientation de l’antenne, état de l’alimentation et niveau de confiance.</li>
+          <li>Journaliser COMMS pour chaque session : connexion, commande OMCOLLECT, résultat de l’importation par le relais ou tentative échouée.</li>
+          <li>Après la collecte, journaliser INTEL : nouvelles stations trouvées, signaux forts, chemins inhabituels, données obsolètes et évaluation.</li>
+          <li>Journaliser ACTION pour le suivi : redéploiement, réinitialisation, vérification du firmware, vérification de l’itinéraire ou prochaine collecte planifiée.</li>
         </ul>
       </section>
 
       <section class="log-sop-section">
-        <h3>Degraded Comms</h3>
+        <h3>Communications dégradées</h3>
         <ul class="log-sop-list">
-          <li>On first sign of degradation: log ALERT with affected network, scope, and immediate mitigation step.</li>
-          <li>Log COMMS for each test attempt. Record what changed between attempts, not the discussion around it.</li>
-          <li>Log ACTION for each named step: move, retry, swap radio, check power, restart service, verify route.</li>
-          <li>When stable: log SITREP. State what is restored, what remains degraded, and the next check time.</li>
+          <li>Dès les premiers signes de dégradation : journaliser ALERT avec le réseau concerné, l’étendue du problème et la mesure d’atténuation immédiate.</li>
+          <li>Journaliser COMMS pour chaque tentative de test. Enregistrer ce qui a changé entre les tentatives, et non les discussions qui les entourent.</li>
+          <li>Journaliser ACTION pour chaque étape définie : déplacement, nouvelle tentative, remplacement de radio, vérification de l’alimentation, redémarrage du service, vérification de l’itinéraire.</li>
+          <li>Une fois la situation stabilisée : journaliser SITREP. Indiquer ce qui est rétabli, ce qui reste dégradé et l’heure de la prochaine vérification.</li>
         </ul>
       </section>
 
       <section class="log-sop-section">
         <h3>Cadence</h3>
         <div class="log-sop-kv">
-          <span>Mobile</span><p>Scheduled: departure, checkpoints, arrival. Triggered: terrain change, new contact, comms failure, ALERT.</p>
-          <span>Static</span><p>Scheduled: every 30–60 min. Triggered: state change, new contact, ALERT, RC collection import.</p>
-          <span>Remote</span><p>Triggered: before collection, after import, after failed session, on redeploy or reset.</p>
-          <span>Incident</span><p>On detection. After each material change. On resolution or stabilization.</p>
+          <span>Mobile</span><p>Planifié : départ, points de contrôle, arrivée. Déclenché : changement de terrain, nouveau contact, perte de communications, ALERT.</p>
+          <span>Fixe</span><p>Planifié : toutes les 30 à 60 minutes. Déclenché : changement d’état, nouveau contact, ALERT, importation d’une collecte RC.</p>
+          <span>Distant</span><p>Déclenché : avant la collecte, après l’importation, après une session échouée, lors d’un redéploiement ou d’une réinitialisation.</p>
+          <span>Incident</span><p>À la détection. Après chaque changement significatif. Lors de la résolution ou de la stabilisation.</p>
         </div>
       </section>
     </div>
@@ -974,7 +974,7 @@
       <button class="settings-tab active" id="stab-mt"    onclick="switchSettingsTab('mt')"    title="Meshtastic node settings">Meshtastic</button>
       <button class="settings-tab"        id="stab-mc"    onclick="switchSettingsTab('mc')"    style="display:none" title="MeshCore radio settings">MeshCore</button>
       <button class="settings-tab"        id="stab-app"   onclick="switchSettingsTab('app')"   title="App preferences, theme, and map tiles">App</button>
-      <button class="settings-tab"        id="stab-cross" onclick="switchSettingsTab('cross')" style="display:none" title="Cross-system bridge settings (MT ↔ MC)">Cross-system</button>
+      <button class="settings-tab"        id="stab-cross" onclick="switchSettingsTab('cross')" style="display:none" title="Paramètres du pont entre systèmes (MT ↔ MC)">Interconnexion des systèmes</button>
     </div>
 
     <div id="st-mt">
@@ -983,7 +983,7 @@
       <h2 class="settings-title">Radios</h2>
       <div id="settings-nodes-list"></div>
 
-      <h3 class="settings-subtitle">Add radio</h3>
+      <h3 class="settings-subtitle">Ajouter une radio</h3>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
         <label class="settings-label" style="margin:0">Type:</label>
         <div class="view-toggle">
@@ -1010,7 +1010,7 @@
           </div>
         </div>
         <div>
-          <label class="settings-label">Name</label>
+          <label class="settings-label">Nom</label>
           <input id="settings-node-name" class="settings-input" placeholder="e.g. Home Node" maxlength="30" style="width:160px">
         </div>
         <button class="btn" onclick="settingsAddNode()" title="Add this Meshtastic radio to OverMesh">Add</button>
@@ -1040,7 +1040,7 @@
             <label class="settings-label">Short Name <span style="font-weight:400">(max 4 chars)</span></label>
             <input id="node-cfg-short-name" class="settings-input" maxlength="4" style="width:80px">
           </div>
-          <button class="btn" onclick="saveNodeOwner(this)" title="Save long name and short name to the node">Save</button>
+          <button class="btn" onclick="saveNodeOwner(this)" title="Save long name and short name to the node">Enregistrer</button>
         </div>
         <div id="node-cfg-owner-status" style="font-size:12px;min-height:16px;margin-top:6px"></div>
 
@@ -1048,14 +1048,14 @@
         <h3 class="settings-subtitle">Device Role</h3>
         <div style="display:flex;gap:8px;align-items:flex-end">
           <div>
-            <label class="settings-label">Role</label>
+            <label class="settings-label">Rôle</label>
             <select id="node-cfg-role" class="settings-select" style="min-width:180px"></select>
           </div>
-          <button class="btn" onclick="saveNodeDevice(this)" title="Save device role to the node">Save</button>
+          <button class="btn" onclick="saveNodeDevice(this)" title="Save device role to the node">Enregistrer</button>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
           <input type="checkbox" id="node-cfg-led-heartbeat-disabled">
-          <label for="node-cfg-led-heartbeat-disabled" class="settings-label" style="margin:0">Disable LED heartbeat</label>
+          <label for="node-cfg-led-heartbeat-disabled" class="settings-label" style="margin:0">Désactiver le signal lumineux LED</label>
         </div>
         <div id="node-cfg-device-status" style="font-size:12px;min-height:16px;margin-top:6px"></div>
 
@@ -1078,62 +1078,62 @@
             <label class="settings-label">Hop Limit <span style="font-weight:400">(1–7)</span></label>
             <input id="node-cfg-hoplimit" type="number" class="settings-input" min="1" max="7" style="width:55px">
           </div>
-          <button class="btn" onclick="saveNodeLora(this)" title="Save LoRa region, modem preset and hop limit to the node">Save</button>
+          <button class="btn" onclick="saveNodeLora(this)" title="Save LoRa region, modem preset and hop limit to the node">Enregistrer</button>
         </div>
-        <p style="font-size:11px;color:var(--muted);margin:8px 0 0">Region and preset changes take effect after node reboot. Hop limit applies immediately (also used for Traceroute).</p>
+        <p style="font-size:11px;color:var(--muted);margin:8px 0 0">Les changements de région et de préréglage prennent effet après le redémarrage du nœud. La limite de sauts s’applique immédiatement (également utilisée pour Traceroute).</p>
         <div id="node-cfg-lora-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
         <!-- Channels -->
-        <h3 class="settings-subtitle">Channels</h3>
+        <h3 class="settings-subtitle">Canaux</h3>
         <div id="node-cfg-channels-list" style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:4px"></div>
         <div id="node-cfg-channels-remove-status" style="font-size:12px;min-height:16px;margin-bottom:4px"></div>
 
         <!-- Inline edit panel -->
         <div id="node-cfg-channel-edit" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:4px">
-          <div style="font-size:12px;font-weight:600;margin-bottom:12px" id="node-cfg-ch-edit-title">Edit Channel 0</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:12px" id="node-cfg-ch-edit-title">Modifier le canal 0</div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
             <div>
-              <label class="settings-label">Name <span style="font-weight:400">(max 11 chars)</span></label>
+              <label class="settings-label">Nom <span style="font-weight:400">(11 caractères max.)</span></label>
               <input id="node-cfg-ch-name" class="settings-input" maxlength="11" style="width:160px">
             </div>
             <div>
-              <label class="settings-label">Role</label>
+              <label class="settings-label">Rôle</label>
               <select id="node-cfg-ch-role" class="settings-select">
-                <option value="0">Disabled</option>
-                <option value="1">Primary</option>
-                <option value="2">Secondary</option>
+                <option value="0">Désactivé</option>
+                <option value="1">Principal</option>
+                <option value="2">Secondaire</option>
               </select>
             </div>
           </div>
           <div style="margin-top:10px">
-            <label class="settings-label">Encryption Key</label>
+            <label class="settings-label">Clé de chiffrement</label>
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
               <select id="node-cfg-ch-psk-type" class="settings-select" onchange="chPskTypeChange()">
-                <option value="keep">Keep existing</option>
-                <option value="default">Default (LongFast key)</option>
-                <option value="random">Random (new secure key)</option>
-                <option value="custom">Custom (hex)</option>
+                <option value="keep">Conserver l’existant</option>
+                <option value="default">Par défaut (clé LongFast)</option>
+                <option value="random">Aléatoire (nouvelle clé sécurisée)</option>
+                <option value="custom">Personnalisée (hexadécimal)</option>
               </select>
             </div>
-            <input id="node-cfg-ch-psk-hex" class="settings-input" placeholder="hex or base64 — e.g. d4f1bb3a… or OG8mgh5H…"
+            <input id="node-cfg-ch-psk-hex" class="settings-input" placeholder="hexadécimal ou base64 — ex. d4f1bb3a… ou OG8mgh5H…"
                    style="width:100%;margin-top:6px;display:none;font-family:monospace;font-size:11px">
             <div id="node-cfg-ch-key-row" style="display:none;margin-top:8px">
               <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
-                <span style="font-size:11px;color:var(--muted)">Current key (base64):</span>
+                <span style="font-size:11px;color:var(--muted)">Clé actuelle (base64) :</span>
                 <button type="button" id="btn-ch-key-eye" onclick="toggleNodeChKeyVis()"
-                        style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;cursor:pointer;color:var(--muted);font-size:11px">Show</button>
+                        style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;cursor:pointer;color:var(--muted);font-size:11px">Afficher</button>
                 <button type="button" onclick="copyNodeChKey(this)"
-                        style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;cursor:pointer;color:var(--muted);font-size:11px">Copy</button>
+                        style="background:none;border:1px solid var(--border);border-radius:4px;padding:1px 6px;cursor:pointer;color:var(--muted);font-size:11px">Copier</button>
               </div>
               <input id="node-cfg-ch-key-display" type="password" readonly class="settings-input"
                      style="width:100%;font-family:monospace;font-size:11px" placeholder="—">
             </div>
           </div>
           <div style="display:flex;gap:8px;margin-top:12px">
-            <button class="btn" onclick="saveNodeChannel(this)" title="Save channel settings to node">Save</button>
-            <button class="btn" onclick="closeChEdit()" style="background:var(--bg3)" title="Discard changes">Cancel</button>
-            <button class="btn" onclick="clearNodeChannelHistory(_editingChIndex, this)" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Delete saved chat history for this MT channel">Delete History</button>
-            <button id="btn-ch-remove" class="btn" onclick="removeNodeChannel(_editingChIndex, this)" style="margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Disable this channel and clear its name and key">Remove</button>
+            <button class="btn" onclick="saveNodeChannel(this)" title="Enregistrer les paramètres du canal sur le nœud">Enregistrer</button>
+            <button class="btn" onclick="closeChEdit()" style="background:var(--bg3)" title="Annuler les modifications">Annuler</button>
+            <button class="btn" onclick="clearNodeChannelHistory(_editingChIndex, this)" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Supprimer l’historique enregistré de ce canal MT">Supprimer l’historique</button>
+            <button id="btn-ch-remove" class="btn" onclick="removeNodeChannel(_editingChIndex, this)" style="margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Désactiver ce canal et effacer son nom et sa clé">Supprimer</button>
           </div>
           <div id="node-cfg-channels-status" style="font-size:12px;min-height:16px;margin-top:6px"></div>
         </div>
@@ -1142,88 +1142,88 @@
         <h3 class="settings-subtitle">Position</h3>
 
         <!-- Onboard GPS -->
-        <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Onboard GPS</div>
+        <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">GPS intégré</div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
           <div>
-            <label class="settings-label">GPS Mode</label>
+            <label class="settings-label">Mode GPS</label>
             <select id="node-cfg-gps-mode" class="settings-select">
-              <option value="0">Disabled</option>
-              <option value="1">Enabled</option>
-              <option value="2">Not Present</option>
+              <option value="0">Désactivé</option>
+              <option value="1">Activé</option>
+              <option value="2">Absent</option>
             </select>
           </div>
           <div>
-            <label class="settings-label">Broadcast every (s) <span style="font-weight:400">(0 = smart)</span></label>
+            <label class="settings-label">Diffusion toutes les (s) <span style="font-weight:400">(0 = automatique)</span></label>
             <input id="node-cfg-pos-broadcast" type="number" class="settings-input" min="0" style="width:80px">
           </div>
           <div style="display:flex;align-items:center;gap:6px;padding-bottom:2px">
             <input type="checkbox" id="node-cfg-smart-pos">
-            <label for="node-cfg-smart-pos" class="settings-label" style="margin:0">Smart position</label>
+            <label for="node-cfg-smart-pos" class="settings-label" style="margin:0">Position intelligente</label>
           </div>
         </div>
         <div style="margin-top:10px">
-          <label class="settings-label">Broadcast precision: <span id="node-cfg-pos-prec-val" style="color:var(--accent)">Exact position</span> <span style="font-weight:400;color:var(--muted)">(slide right = more private)</span></label>
+          <label class="settings-label">Précision de diffusion : <span id="node-cfg-pos-prec-val" style="color:var(--accent)">Position exacte</span> <span style="font-weight:400;color:var(--muted)">(glisser vers la droite = plus privé)</span></label>
           <input type="range" id="node-cfg-pos-precision" min="0" max="1000" step="100" style="width:200px;vertical-align:middle"
                  oninput="document.getElementById('node-cfg-pos-prec-val').textContent=precMeterLabel(parseInt(this.value))">
         </div>
 
         <!-- Fixed Position -->
         <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
-        <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Fixed Position</div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Override the node's GPS with a static coordinate. Enable the checkbox to enter coordinates manually, pick from the map, or fill from a USB GPS dongle.</div>
+        <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Position fixe</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Remplacer le GPS du nœud par des coordonnées fixes. Activez la case à cocher pour saisir les coordonnées manuellement, les choisir sur la carte ou les remplir depuis un dongle GPS USB.</div>
         <div style="display:flex;align-items:center;gap:6px">
           <input type="checkbox" id="node-cfg-fixed-pos" onchange="toggleFixedCoords()">
-          <label for="node-cfg-fixed-pos" class="settings-label" style="margin:0">Enable fixed position</label>
+          <label for="node-cfg-fixed-pos" class="settings-label" style="margin:0">Activer la position fixe</label>
         </div>
         <div id="node-cfg-fixed-coords" style="display:none;margin-top:10px;flex-wrap:wrap;gap:8px">
           <div><label class="settings-label">Latitude</label><input id="node-cfg-fixed-lat" class="settings-input" style="width:110px" placeholder="46.05870"></div>
           <div><label class="settings-label">Longitude</label><input id="node-cfg-fixed-lon" class="settings-input" style="width:110px" placeholder="14.49656"></div>
           <div><label class="settings-label">Altitude (m)</label><input id="node-cfg-fixed-alt" type="number" class="settings-input" style="width:70px" value="0"></div>
-          <div style="align-self:flex-end"><button class="btn" onclick="startMapPick(this)" title="Click on the map to set position">Pick on map</button></div>
-          <div style="align-self:flex-end"><button id="btn-from-gps" class="btn" onclick="fillPositionFromGps(this)" title="Fill from USB GPS dongle (configure dongle in App tab)" disabled>Fill from GPS dongle</button></div>
+          <div style="align-self:flex-end"><button class="btn" onclick="startMapPick(this)" title="Cliquer sur la carte pour définir la position">Choisir sur la carte</button></div>
+          <div style="align-self:flex-end"><button id="btn-from-gps" class="btn" onclick="fillPositionFromGps(this)" title="Remplir depuis le dongle GPS USB (configurer le dongle dans l’onglet App)" disabled>Remplir depuis le dongle GPS</button></div>
         </div>
         <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-          <button class="btn" onclick="saveNodePosition(this)" title="Save position settings to the node">Save</button>
-          <button class="btn" onclick="removeNodePosition(this)" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Clear fixed position — onboard GPS resumes">Clear fixed position</button>
+          <button class="btn" onclick="saveNodePosition(this)" title="Enregistrer les paramètres de position sur le nœud">Enregistrer</button>
+          <button class="btn" onclick="removeNodePosition(this)" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Effacer la position fixe — le GPS intégré reprend">Effacer la position fixe</button>
         </div>
         <div id="node-cfg-position-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
         <!-- Power -->
-        <h3 class="settings-subtitle">Power</h3>
+        <h3 class="settings-subtitle">Alimentation</h3>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
           <div style="display:flex;align-items:center;gap:6px;padding-bottom:2px">
             <input type="checkbox" id="node-cfg-power-saving">
-            <label for="node-cfg-power-saving" class="settings-label" style="margin:0">Low power mode</label>
+            <label for="node-cfg-power-saving" class="settings-label" style="margin:0">Mode basse consommation</label>
           </div>
           <div>
-            <label class="settings-label">Auto-shutdown after (s) <span style="font-weight:400">(0 = never)</span></label>
+            <label class="settings-label">Arrêt automatique après (s) <span style="font-weight:400">(0 = jamais)</span></label>
             <input id="node-cfg-shutdown-secs" type="number" class="settings-input" min="0" style="width:90px">
           </div>
-          <button class="btn" onclick="saveNodePower(this)" title="Save power management settings to the node">Save</button>
+          <button class="btn" onclick="saveNodePower(this)" title="Enregistrer les paramètres de gestion de l’alimentation sur le nœud">Enregistrer</button>
         </div>
         <div id="node-cfg-power-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
         <!-- Display -->
-        <h3 class="settings-subtitle">Display</h3>
+        <h3 class="settings-subtitle">Affichage</h3>
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
           <div>
-            <label class="settings-label">Screen timeout (s) <span style="font-weight:400">(0 = always on)</span></label>
+            <label class="settings-label">Délai d’extinction de l’écran (s) <span style="font-weight:400">(0 = toujours allumé)</span></label>
             <input id="node-cfg-screen-secs" type="number" class="settings-input" min="0" style="width:80px">
           </div>
-          <button class="btn" onclick="quickScreenOff(this)" title="Set to 10s — effectively always off">Turn off</button>
-          <button class="btn" onclick="quickScreenOn(this)" title="Set to 0 — never sleep">Always on</button>
+          <button class="btn" onclick="quickScreenOff(this)" title="Définir sur 10 s — écran pratiquement toujours éteint">Éteindre</button>
+          <button class="btn" onclick="quickScreenOn(this)" title="Définir sur 0 — ne jamais mettre en veille">Toujours allumé</button>
           <div>
-            <label class="settings-label">Units</label>
+            <label class="settings-label">Unités</label>
             <select id="node-cfg-display-units" class="settings-select">
-              <option value="0">Metric</option>
-              <option value="1">Imperial</option>
+              <option value="0">Métrique</option>
+              <option value="1">Impérial</option>
             </select>
           </div>
           <div style="display:flex;align-items:center;gap:6px;padding-bottom:2px">
             <input type="checkbox" id="node-cfg-flip-screen">
             <label for="node-cfg-flip-screen" class="settings-label" style="margin:0">Flip screen</label>
           </div>
-          <button class="btn" onclick="saveNodeDisplay(this)" title="Save display settings to the node">Save</button>
+          <button class="btn" onclick="saveNodeDisplay(this)" title="Save display settings to the node">Enregistrer</button>
         </div>
         <div id="node-cfg-display-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
@@ -1235,10 +1235,10 @@
             <input id="node-cfg-tel-device" type="number" class="settings-input" min="0" style="width:90px">
           </div>
           <div>
-            <label class="settings-label">Environment metrics every (s)</label>
+            <label class="settings-label">Métriques d’environnement toutes les (s)</label>
             <input id="node-cfg-tel-env" type="number" class="settings-input" min="0" style="width:90px">
           </div>
-          <button class="btn" onclick="saveNodeTelemetry(this)" title="Save telemetry broadcast intervals to the node">Save</button>
+          <button class="btn" onclick="saveNodeTelemetry(this)" title="Enregistrer les intervalles de diffusion de télémétrie sur le nœud">Enregistrer</button>
         </div>
         <div id="node-cfg-telemetry-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
@@ -1246,68 +1246,68 @@
         <h3 class="settings-subtitle">MQTT</h3>
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
           <input type="checkbox" id="node-cfg-mqtt-enabled">
-          <label for="node-cfg-mqtt-enabled" class="settings-label" style="margin:0">Enabled</label>
+          <label for="node-cfg-mqtt-enabled" class="settings-label" style="margin:0">Activé</label>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:8px">
           <div>
-            <label class="settings-label">Broker address</label>
+            <label class="settings-label">Adresse du broker</label>
             <input id="node-cfg-mqtt-address" class="settings-input" style="width:200px" placeholder="mqtt.meshtastic.org">
           </div>
           <div>
-            <label class="settings-label">Username</label>
+            <label class="settings-label">Nom d’utilisateur</label>
             <input id="node-cfg-mqtt-username" class="settings-input" style="width:120px">
           </div>
           <div>
-            <label class="settings-label">Password</label>
+            <label class="settings-label">Mot de passe</label>
             <input id="node-cfg-mqtt-password" type="password" class="settings-input" style="width:120px" autocomplete="new-password">
           </div>
         </div>
         <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px">
-          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-encryption"> Encryption</label>
-          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-json"> JSON output</label>
+          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-encryption"> Chiffrement</label>
+          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-json"> Sortie JSON</label>
           <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-tls"> TLS</label>
-          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-map"> Map reporting</label>
+          <label style="display:flex;align-items:center;gap:5px;font-size:12px"><input type="checkbox" id="node-cfg-mqtt-map"> Rapport sur la carte</label>
         </div>
-        <button class="btn" onclick="saveNodeMqtt(this)" title="Save MQTT settings to the node">Save</button>
+        <button class="btn" onclick="saveNodeMqtt(this)" title="Enregistrer les paramètres MQTT sur le nœud">Enregistrer</button>
         <div id="node-cfg-mqtt-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
         <!-- Bluetooth -->
         <h3 class="settings-subtitle">Bluetooth</h3>
         <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
           <label style="display:flex;align-items:center;gap:5px;font-size:12px">
-            <input type="checkbox" id="node-cfg-bt-enabled"> Enabled
+            <input type="checkbox" id="node-cfg-bt-enabled"> Activé
           </label>
           <div>
-            <label class="settings-label">PIN mode</label>
+            <label class="settings-label">Mode PIN</label>
             <select id="node-cfg-bt-mode" class="settings-select" onchange="btModeChange()">
-              <option value="0">No PIN</option>
-              <option value="1">Fixed PIN</option>
-              <option value="2">Random PIN</option>
+              <option value="0">Sans PIN</option>
+              <option value="1">PIN fixe</option>
+              <option value="2">PIN aléatoire</option>
             </select>
           </div>
           <div id="node-cfg-bt-pin-wrap" style="display:none">
-            <label class="settings-label">Fixed PIN (6 digits)</label>
+            <label class="settings-label">PIN fixe (6 chiffres)</label>
             <input id="node-cfg-bt-pin" type="number" class="settings-input" min="0" max="999999" style="width:100px">
           </div>
         </div>
-        <button class="btn" onclick="saveNodeBluetooth(this)" style="margin-top:8px" title="Save Bluetooth settings to the node">Save</button>
+        <button class="btn" onclick="saveNodeBluetooth(this)" style="margin-top:8px" title="Enregistrer les paramètres Bluetooth sur le nœud">Enregistrer</button>
         <div id="node-cfg-bluetooth-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
         <!-- Network / WiFi -->
-        <h3 class="settings-subtitle">Network / WiFi</h3>
+        <h3 class="settings-subtitle">Réseau / WiFi</h3>
         <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
           <label style="display:flex;align-items:center;gap:5px;font-size:12px">
-            <input type="checkbox" id="node-cfg-wifi-enabled"> WiFi enabled
+            <input type="checkbox" id="node-cfg-wifi-enabled"> WiFi activé
           </label>
           <label style="display:flex;align-items:center;gap:5px;font-size:12px">
-            <input type="checkbox" id="node-cfg-wifi-ap-mode"> AP mode <span style="color:var(--muted);font-size:11px">(uncheck = client/station)</span>
+            <input type="checkbox" id="node-cfg-wifi-ap-mode"> Mode point d’accès <span style="color:var(--muted);font-size:11px">(décoché = client/station)</span>
           </label>
           <div>
             <label class="settings-label">SSID</label>
             <input id="node-cfg-wifi-ssid" class="settings-input" maxlength="32" style="width:180px">
           </div>
           <div>
-            <label class="settings-label">Password</label>
+            <label class="settings-label">Mot de passe</label>
             <div style="display:flex;gap:4px;align-items:center">
               <input id="node-cfg-wifi-psk" type="password" class="settings-input" style="width:160px">
               <button type="button" id="node-cfg-wifi-psk-eye" onclick="togglePwdVis('node-cfg-wifi-psk','node-cfg-wifi-psk-eye')" style="background:none;border:1px solid var(--border);border-radius:4px;padding:2px 6px;cursor:pointer;color:var(--muted);font-size:13px" title="Show/hide password">👁</button>
@@ -1315,7 +1315,7 @@
           </div>
         </div>
         <p style="font-size:11px;color:var(--muted);margin:6px 0 0">Note: enabling WiFi disables Bluetooth on ESP32 nodes. Reboot required after saving.</p>
-        <button class="btn" onclick="saveNodeNetwork(this)" style="margin-top:8px" title="Save WiFi/network settings to the node — reboot required">Save</button>
+        <button class="btn" onclick="saveNodeNetwork(this)" style="margin-top:8px" title="Save WiFi/network settings to the node — reboot required">Enregistrer</button>
         <div id="node-cfg-network-status" style="font-size:12px;min-height:16px;margin-top:4px"></div>
 
         <!-- Node actions -->
@@ -1399,7 +1399,7 @@
           </div>
         </div>
         <div>
-          <label class="settings-label">Name</label>
+          <label class="settings-label">Nom</label>
           <input id="settings-mc-node-name" class="settings-input" placeholder="e.g. TTGO" maxlength="30" style="width:140px">
         </div>
         <button class="btn" onclick="settingsMcAddNode()" title="Add this MeshCore radio to OverMesh">Add</button>
@@ -1439,7 +1439,7 @@
         </select>
         <span class="settings-label" style="margin:0">TX Power (dBm)</span>
         <div style="display:flex;align-items:center;gap:6px">
-          <input id="mc-tx-power" class="settings-input" type="number" min="1" max="30" style="width:70px" title="EU 868 MHz: 14 dBm legal max · EU 869.4–869.65 MHz: 27 dBm · Common EU default: 17 dBm · SX1276 max: 20 dBm · SX1262 max: 22 dBm · US 915 MHz: up to 30 dBm">
+          <input id="mc-tx-power" class="settings-input" type="number" min="1" max="30" style="width:70px" title="EU 868 MHz : 14 dBm maximum légal · EU 869.4–869.65 MHz : 27 dBm · valeur par défaut courante dans l’UE : 17 dBm · SX1276 maximum : 20 dBm · SX1262 maximum : 22 dBm · US 915 MHz : jusqu’à 30 dBm">
           <span id="mc-tx-power-max" style="color:var(--muted);font-size:11px"></span>
         </div>
       </div>
@@ -1453,13 +1453,13 @@
       <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:6px">
         <div>
           <label class="settings-label">Default MC path hash</label>
-          <select id="mc-path-hash-mode" class="settings-select" title="Preferred MeshCore path hash size for stored routes and firmware default when supported">
-            <option value="0">1B/hop - legacy compatible</option>
-            <option value="1">2B/hop - balanced</option>
-            <option value="2">3B/hop - most specific</option>
+          <select id="mc-path-hash-mode" class="settings-select" title="Taille de hachage de chemin MeshCore préférée pour les routes enregistrées et comme valeur par défaut du firmware lorsqu’elle est prise en charge">
+            <option value="0">1 octet/saut - compatible avec l’ancien format</option>
+            <option value="1">2 octets/saut - équilibré</option>
+            <option value="2">3 octets/saut - plus précis</option>
           </select>
         </div>
-        <button class="btn btn-net-mc" onclick="saveMcPathHashMode(this)" title="Save preferred MeshCore path hash mode">Save Path Mode</button>
+        <button class="btn btn-net-mc" onclick="saveMcPathHashMode(this)" title="Enregistrer le mode de hachage de chemin">Enregistrer le mode de hachage</button>
       </div>
       <div style="font-size:11px;color:var(--muted);max-width:560px;margin-bottom:4px">OM applies this to the radio when supported and uses it when saving MC contact routes. If the radio rejects the selected mode, OM falls back to the highest mode it can apply.</div>
       <div id="mc-path-hash-status" style="font-size:12px;min-height:16px;color:var(--muted);margin-bottom:14px"></div>
@@ -1474,7 +1474,7 @@
       </label>
       <div id="mc-force-flood-status" style="font-size:12px;min-height:16px;color:var(--muted);margin-bottom:14px"></div>
       <div style="margin-bottom:14px">
-        <button class="btn" onclick="mcResetAllPaths(this)" title="Clear all stored contact routes on this MC radio, including manually-set ones">Reset All Paths</button>
+        <button class="btn" onclick="mcResetAllPaths(this)" title="Effacer tous les chemins de contacts enregistrés sur cette radio MC, y compris ceux définis manuellement">Reset All Paths</button>
         <span id="mc-reset-all-paths-status" style="font-size:12px;color:var(--muted);margin-left:8px"></span>
       </div>
 
@@ -1490,7 +1490,7 @@
         <button class="btn" onclick="saveMcDeviceName(this)" title="Rename device">Rename</button>
       </div>
       <div style="margin-bottom:8px">
-        <label class="settings-label">Precision: <span id="mc-coords-prec-val" style="color:var(--accent)">Actual position</span> <span style="font-weight:400;color:var(--muted)">(slide right = more private)</span></label>
+        <label class="settings-label">Précision : <span id="mc-coords-prec-val" style="color:var(--accent)">Position réelle</span> <span style="font-weight:400;color:var(--muted)">(glisser vers la droite = plus privé)</span></label>
         <input type="range" id="mc-coords-precision" min="0" max="1000" step="100" value="0" style="width:200px;vertical-align:middle;margin-top:4px"
                oninput="document.getElementById('mc-coords-prec-val').textContent=precMeterLabel(parseInt(this.value))">
       </div>
@@ -1503,8 +1503,8 @@
           <label class="settings-label">Longitude</label>
           <input id="mc-coords-lon" class="settings-input" type="number" step="0.000001" style="width:120px" placeholder="14.50">
         </div>
-        <button class="btn" onclick="startMcMapPick()" title="Click on the map to set position">Select on map</button>
-        <button class="btn" onclick="saveMcCoords(this)" title="Set GPS coordinates on MC device">Save</button>
+        <button class="btn" onclick="startMcMapPick()" title="Click on the map to set position">Sélectionner sur la carte</button>
+        <button class="btn" onclick="saveMcCoords(this)" title="Set GPS coordinates on MC device">Enregistrer</button>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
         <label class="settings-label" style="margin-bottom:0">Share position in adverts:</label>
@@ -1528,7 +1528,7 @@
 
       <!-- Inline edit panel -->
       <div id="mc-channel-edit" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:4px">
-        <div style="font-size:12px;font-weight:600;margin-bottom:12px" id="mc-ch-edit-title">Edit Channel 0</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:12px" id="mc-ch-edit-title">Modifier le canal 0</div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
           <div>
             <label class="settings-label">Name <span style="font-weight:400">(max 32 chars)</span></label>
@@ -1536,23 +1536,23 @@
           </div>
         </div>
         <div style="margin-top:10px">
-          <label class="settings-label">Encryption Key</label>
+          <label class="settings-label">Clé de chiffrement</label>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
             <select id="mc-ch-key-type" class="settings-select" onchange="mcChKeyTypeChange()">
-              <option value="keep">Keep existing</option>
+              <option value="keep">Conserver l’existant</option>
               <option value="auto">Auto-derive from name</option>
-              <option value="random">Random (new secure key)</option>
-              <option value="custom">Custom (hex)</option>
+              <option value="random">Aléatoire (nouvelle clé sécurisée)</option>
+              <option value="custom">Personnalisée (hexadécimal)</option>
             </select>
           </div>
           <input id="mc-ch-key-hex" class="settings-input" placeholder="32 hex chars (16 bytes)"
                  style="width:100%;margin-top:6px;display:none;font-family:monospace;font-size:11px" maxlength="32">
         </div>
         <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="btn" onclick="saveMcChannel(this)" title="Save channel settings to device">Save</button>
-          <button class="btn" onclick="closeMcChEdit()" style="background:var(--bg3)" title="Discard changes">Cancel</button>
-          <button class="btn" onclick="clearMcChannelHistory(this)" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Delete saved chat history for this MC channel">Delete History</button>
-          <button class="btn" onclick="removeMcChannel(this)" style="margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Clear this channel slot on the device">Remove</button>
+          <button class="btn" onclick="saveMcChannel(this)" title="Enregistrer les paramètres du canal sur l’appareil">Enregistrer</button>
+          <button class="btn" onclick="closeMcChEdit()" style="background:var(--bg3)" title="Annuler les modifications">Annuler</button>
+          <button class="btn" onclick="clearMcChannelHistory(this)" style="background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Supprimer l’historique enregistré de ce canal MC">Supprimer l’historique</button>
+          <button class="btn" onclick="removeMcChannel(this)" style="margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--muted)" title="Effacer cet emplacement de canal sur l’appareil">Supprimer</button>
         </div>
         <div id="mc-channels-status" style="font-size:12px;min-height:16px;margin-top:6px"></div>
       </div>
@@ -1620,8 +1620,8 @@
         <button class="btn" onclick="passiveIntelRunCleanup(this)" title="Delete observations older than the configured TTL">Run TTL cleanup</button>
         <label style="display:flex;align-items:center;gap:6px;font-size:12px">
           <span style="color:var(--muted)">Keep last</span>
-          <input id="passive-ttl-days" class="settings-input" type="number" min="1" max="365" value="30" style="width:52px;text-align:center">
-          <span style="color:var(--muted)">days</span>
+          <input id="passive-ttl-jours" class="settings-input" type="number" min="1" max="365" value="30" style="width:52px;text-align:center">
+          <span style="color:var(--muted)">jours</span>
         </label>
         <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="passiveIntelClearAll(this)" title="Delete ALL passive observations for this MC radio">Clear all</button>
       </div>
@@ -1644,7 +1644,7 @@
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
         <label style="font-size:12px;color:var(--muted)">Auto-collect every</label>
         <select id="rc-auto-collect-interval" class="settings-select" style="font-size:12px" onchange="setRcAutoCollect(this.value)">
-          <option value="0">Off</option>
+          <option value="0">Désactivé</option>
           <option value="30">30 min</option>
           <option value="60">1 hr</option>
           <option value="120">2 hr</option>
@@ -1680,9 +1680,9 @@
     <div id="st-app" style="display:none">
     <!-- App -->
     <div class="settings-section">
-      <h2 class="settings-title">Appearance</h2>
+      <h2 class="settings-title">Apparence</h2>
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="settings-label" style="margin:0;white-space:nowrap">UI Zoom</span>
+        <span class="settings-label" style="margin:0;white-space:nowrap">Zoom de l’interface</span>
         <input type="range" id="settings-zoom-slider"
                min="70" max="170" step="5" value="100"
                oninput="settingsSetZoom(this.value)">
@@ -1692,64 +1692,64 @@
       </div>
 
       <div style="margin-top:14px;display:flex;align-items:center;gap:10px">
-        <span class="settings-label" style="margin:0;white-space:nowrap">Accent colour</span>
+        <span class="settings-label" style="margin:0;white-space:nowrap">Couleur d’accent</span>
         <div id="settings-accent-swatch"
              onclick="openCPicker()"
              title="Choose colour"
              style="width:32px;height:24px;border-radius:6px;background:var(--accent);cursor:pointer;border:1px solid var(--border);flex-shrink:0;transition:border-color 0.15s"
              onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"></div>
         <button class="btn" onclick="settingsResetAccentColor(this)" style="font-size:12px;padding:3px 10px" title="Reset to default accent colour">Reset</button>
-        <span style="font-size:11px;color:var(--muted)">Pick any hue — shades auto-derive</span>
+        <span style="font-size:11px;color:var(--muted)">Choisissez une teinte — les nuances sont générées automatiquement</span>
       </div>
     </div>
 
-    <!-- System -->
+    <!-- Système -->
     <div class="settings-section">
-      <h2 class="settings-title">System</h2>
+      <h2 class="settings-title">Système</h2>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start">
         <div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">OverMesh update</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Mise à jour d’OverMesh</div>
           <div id="settings-update-summary" style="font-size:12px;color:var(--muted);line-height:1.45">Checking version…</div>
           <div id="settings-update-log" style="display:none;margin-top:8px;max-height:120px;overflow:auto;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:11px;color:var(--muted);white-space:pre-wrap"></div>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
-          <button class="btn" id="settings-update-check-btn" onclick="settingsLoadUpdateStatus(true, this)" title="Check GitHub for a newer OverMesh commit">Check</button>
-          <button class="btn" id="settings-update-run-btn" onclick="runOverMeshUpdate()" disabled title="Pull the latest OverMesh code">Update</button>
-          <button class="btn" id="settings-update-restart-btn" onclick="restartOverMeshNow(this)" style="display:none" title="Restart OverMesh after an update">Restart</button>
+          <button class="btn" id="settings-update-check-btn" onclick="settingsLoadUpdateStatus(true, this)" title="Vérifier sur GitHub s’il existe une version plus récente d’OverMesh">Vérifier</button>
+          <button class="btn" id="settings-update-run-btn" onclick="runOverMeshUpdate()" disabled title="Récupérer le dernier code d’OverMesh">Mettre à jour</button>
+          <button class="btn" id="settings-update-restart-btn" onclick="restartOverMeshNow(this)" style="display:none" title="Redémarrer OverMesh après une mise à jour">Redémarrer</button>
         </div>
       </div>
       <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:start">
         <div>
-          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Clean up stale nodes</div>
-          <div style="font-size:12px;color:var(--muted);line-height:1.45">Remove MeshCore contacts and Meshtastic nodes not heard from within the entered number of days, across every connected radio. You pick what actually gets deleted; your own node and favourited nodes are always kept.</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Nettoyer les nœuds obsolètes</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.45">Supprime les contacts MeshCore et les nœuds Meshtastic qui n’ont pas été entendus depuis le nombre de jours indiqué, sur toutes les radios connectées. Vous choisissez ce qui est réellement supprimé ; votre propre nœud et les nœuds favoris sont toujours conservés.</div>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center">
           <input type="number" id="settings-node-cleanup-days" min="1" step="1" value="30"
                  style="width:70px;padding:4px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:13px"
-                 title="Nodes not heard from in this many days will be removed">
-          <span style="font-size:12px;color:var(--muted)">days</span>
-          <button class="btn" id="settings-node-cleanup-btn" onclick="runStaleNodeCleanup(this)" title="Remove nodes not heard from within the entered number of days">Clean up</button>
+                 title="Les nœuds qui n’ont pas été entendus depuis ce nombre de jours seront supprimés">
+          <span style="font-size:12px;color:var(--muted)">jours</span>
+          <button class="btn" id="settings-node-cleanup-btn" onclick="runStaleNodeCleanup(this)" title="Supprimer les nœuds qui n’ont pas été entendus depuis le nombre de jours indiqué">Nettoyer</button>
         </div>
       </div>
       <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
       <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap">
         <div>
-          <div style="font-size:13px;font-weight:600;color:var(--text)">Help</div>
-          <div style="font-size:12px;color:var(--muted)">Open the short intro or the searchable app manual.</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text)">Aide</div>
+          <div style="font-size:12px;color:var(--muted)">Ouvrir la courte introduction ou le manuel de l’application avec recherche.</div>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn" onclick="showOmIntro(true)" title="Open the OverMesh intro guide">Show Intro</button>
-          <button class="btn" onclick="showOmManual()" title="Open the searchable OverMesh manual">Manual</button>
+          <button class="btn" onclick="showOmIntro(true)" title="Ouvrir le guide d’introduction d’OverMesh">Afficher l’introduction</button>
+          <button class="btn" onclick="showOmManual()" title="Ouvrir le manuel d’OverMesh avec recherche">Manuel</button>
         </div>
       </div>
     </div>
 
-    <!-- Behaviour -->
+    <!-- Comportement -->
     <div class="settings-section">
-      <h2 class="settings-title">Behaviour</h2>
+      <h2 class="settings-title">Comportement</h2>
       <div style="display:flex;align-items:center;gap:10px">
-        <span class="settings-label" style="margin:0;white-space:nowrap">Sense cooldown</span>
+        <span class="settings-label" style="margin:0;white-space:nowrap">Délai de détection</span>
         <input type="number" id="settings-sense-cooldown"
                min="10" max="3600" step="1" value="180"
                style="width:80px;padding:4px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:13px"
@@ -1757,27 +1757,27 @@
         <span style="font-size:12px;color:var(--muted)">sec</span>
         <span id="settings-sense-cooldown-display" style="font-size:12px;color:var(--muted)">(3 min)</span>
       </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:3px">Minimum time between Sense alerts for the same node.</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px">Temps minimum entre deux alertes de détection pour le même nœud.</div>
 
       <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span class="settings-label" style="margin:0;white-space:nowrap">Units</span>
+        <span class="settings-label" style="margin:0;white-space:nowrap">Unités</span>
         <select id="settings-distance-unit" onchange="saveDistanceUnit(this.value)"
                 style="padding:4px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:13px">
           <option value="km">Standard (km)</option>
           <option value="mi">Imperial (mi)</option>
         </select>
-        <span class="settings-label" style="margin:0 0 0 10px;white-space:nowrap">Time</span>
+        <span class="settings-label" style="margin:0 0 0 10px;white-space:nowrap">Heure</span>
         <select id="settings-time-format" onchange="saveTimeFormat(this.value)"
                 style="padding:4px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:13px">
-          <option value="24h">24-hour</option>
+          <option value="24h">24 heures</option>
           <option value="12h">AM/PM</option>
         </select>
         <span class="settings-label" style="margin:0 0 0 10px;white-space:nowrap">Date</span>
         <select id="settings-date-format" onchange="saveDateFormat(this.value)"
                 style="padding:4px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:13px">
-          <option value="eu">Day-first (DD.MM.YYYY)</option>
-          <option value="us">Month-first (MM/DD/YYYY)</option>
+          <option value="eu">Jour en premier (JJ.MM.AAAA)</option>
+          <option value="us">Mois en premier (MM/JJ/AAAA)</option>
           <option value="iso">ISO (YYYY-MM-DD)</option>
         </select>
       </div>
@@ -1785,27 +1785,27 @@
       <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
       <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Notifications</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px">In-app</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px">Dans l’application</div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="inapp-notif-messages" onchange="saveInAppNotifPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">New messages</span>
+          <span style="font-size:13px">Nouveaux messages</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="inapp-notif-nodes" onchange="saveInAppNotifPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">New node seen</span>
+          <span style="font-size:13px">Nouveau nœud détecté</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="inapp-notif-returned" onchange="saveInAppNotifPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">Seen again after a long time</span>
+          <span style="font-size:13px">Revu après une longue période</span>
           <input
             id="inapp-notif-returned-gap-value"
             type="number"
@@ -1820,100 +1820,100 @@
             onchange="saveInAppNotifPrefs()"
             style="padding:5px 7px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-size:12px"
           >
-            <option value="hours">hours</option>
-            <option value="days">days</option>
+            <option value="hours">heures</option>
+            <option value="days">jours</option>
           </select>
         </div>
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px">Browser</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px">Navigateur</div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="notif-messages" onchange="saveNotifPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">New messages</span>
+          <span style="font-size:13px">Nouveaux messages</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="notif-nodes" onchange="saveNotifPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">Node comes online</span>
+          <span style="font-size:13px">Nœud en ligne</span>
         </div>
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px">Sound</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px">Son</div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="sound-notif-messages" onchange="saveSoundPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">New messages</span>
+          <span style="font-size:13px">Nouveaux messages</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="sound-notif-radios" onchange="saveSoundPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">Radio connected to OM</span>
+          <span style="font-size:13px">Radio connectée à OM</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="sound-notif-nodes" onchange="saveSoundPrefs()">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">New node or contact discovered</span>
+          <span style="font-size:13px">Nouveau nœud ou contact découvert</span>
         </div>
 
-        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px">Alert Panel</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-top:4px">Panneau des alertes</div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-messages" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">Incoming messages</span>
+          <span style="font-size:13px">Messages entrants</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-geofence" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">Geofence enter / leave</span>
+          <span style="font-size:13px">Entrée / sortie de géofence</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-node-new" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">New node / contact seen</span>
+          <span style="font-size:13px">Nouveau nœud / contact détecté</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-node-return" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">Node / contact seen again</span>
+          <span style="font-size:13px">Nœud / contact revu</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-radio" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">Radio connected / disconnected</span>
+          <span style="font-size:13px">Radio connectée / déconnectée</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-rc-obs" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">RC collector obs count</span>
+          <span style="font-size:13px">Nombre d’observations du collecteur RC</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-rc-collect" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">RC collect summary (auto)</span>
+          <span style="font-size:13px">Résumé de collecte RC (auto)</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle"><input type="checkbox" id="alert-log-rc-new-node" onchange="saveAlertLogPrefs()"><span class="bot-toggle-slider"></span></label>
-          <span style="font-size:13px">RC new node detected</span>
+          <span style="font-size:13px">Nouveau nœud RC détecté</span>
         </div>
       </div>
 
       <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span class="settings-label" style="margin:0;white-space:nowrap">External map</span>
+        <span class="settings-label" style="margin:0;white-space:nowrap">Carte externe</span>
         <select id="ext-map-select" onchange="saveExtMapPref(this.value)"
                 style="padding:4px 8px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:13px">
           <option value="osm">OpenStreetMap</option>
           <option value="google">Google Maps</option>
         </select>
-        <span style="font-size:11px;color:var(--muted)">Used for "Open in map" links on Marks</span>
+        <span style="font-size:11px;color:var(--muted)">Utilisée pour les liens « Ouvrir sur la carte » des repères</span>
       </div>
 
     </div>
 
     <!-- Automation Bridge -->
     <div class="settings-section">
-      <h2 class="settings-title">Automation Bridge</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 12px 0">Local hooks for Home Assistant and other automations while OverMesh owns the radios.</p>
+      <h2 class="settings-title">Pont d’automatisation</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 12px 0">Actions locales pour Home Assistant et les autres automatisations pendant qu’OverMesh gère les radios.</p>
       <div style="display:grid;grid-template-columns:minmax(0,1fr);gap:14px">
         <div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
@@ -1921,16 +1921,16 @@
               <input type="checkbox" id="bridge-webhooks-enabled" onchange="saveBridgeSettings()">
               <span class="bot-toggle-slider"></span>
             </label>
-            <span style="font-size:13px;font-weight:600">Send incoming messages to HTTP webhooks</span>
+            <span style="font-size:13px;font-weight:600">Envoyer les messages entrants vers des webhooks HTTP</span>
           </div>
-          <label class="settings-label">Webhook URLs</label>
+          <label class="settings-label">URLs des webhooks</label>
           <textarea id="bridge-webhook-urls" class="settings-input" rows="3"
                     placeholder="http://homeassistant.local:8123/api/webhook/overmesh"
                     style="width:100%;max-width:640px;resize:vertical;line-height:1.4"
                     onchange="saveBridgeSettings()"></textarea>
-          <div style="font-size:11px;color:var(--muted);margin-top:4px">One URL per line. OverMesh posts normalized inbound MT and MC messages as JSON.</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">Une URL par ligne. OverMesh publie les messages MT et MC entrants normalisés au format JSON.</div>
           <div style="margin-top:8px;max-width:360px">
-            <label class="settings-label">Webhook secret header</label>
+            <label class="settings-label">En-tête secret du webhook</label>
             <input id="bridge-webhook-secret" class="settings-input" type="password" autocomplete="new-password"
                    placeholder="optional X-OverMesh-Secret" style="width:100%" onchange="saveBridgeSettings()">
           </div>
@@ -1941,14 +1941,14 @@
               <input type="checkbox" id="bridge-ingest-enabled" onchange="saveBridgeSettings()">
               <span class="bot-toggle-slider"></span>
             </label>
-            <span style="font-size:13px;font-weight:600">Allow external systems to send mesh messages</span>
+            <span style="font-size:13px;font-weight:600">Autoriser les systèmes externes à envoyer des messages sur le maillage</span>
           </div>
           <div style="max-width:360px">
-            <label class="settings-label">Bearer token</label>
+            <label class="settings-label">Jeton Bearer</label>
             <input id="bridge-ingest-token" class="settings-input" type="password" autocomplete="new-password"
                    placeholder="required when enabled" style="width:100%" onchange="saveBridgeSettings()">
           </div>
-          <div style="font-size:11px;color:var(--muted);margin-top:6px">Endpoint: <code>/api/bridge/send</code>. Use <code>Authorization: Bearer TOKEN</code> or <code>X-OverMesh-Token</code>.</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:6px">Point d’accès : <code>/api/bridge/send</code>. Utilisez <code>Authorization: Bearer TOKEN</code> ou <code>X-OverMesh-Token</code>.</div>
         </div>
       </div>
       <div id="bridge-settings-status" style="font-size:12px;min-height:16px;margin-top:8px;color:var(--muted)"></div>
@@ -1956,8 +1956,8 @@
 
     <!-- GPS Receiver -->
     <div class="settings-section">
-      <h2 class="settings-title">GPS Receiver</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 12px 0">USB GPS receiver for location data. Two modes: <b>Direct serial</b> (OM owns the port) or <b>OPS-TOC proxy</b> (polls OPS-TOC when both apps run together — avoids serial conflicts). Can auto-push coordinates to connected nodes.</p>
+      <h2 class="settings-title">Récepteur GPS</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 12px 0">Récepteur GPS USB pour les données de position. Deux modes : <b>Série directe</b> (OM utilise le port) ou <b>Proxy OPS-TOC</b> (interroge OPS-TOC lorsque les deux applications fonctionnent ensemble — évite les conflits de port série). Peut envoyer automatiquement les coordonnées aux nœuds connectés.</p>
       <div style="display:flex;gap:16px;align-items:flex-start">
         <!-- Controls (left) -->
         <div style="flex:1;min-width:0">
@@ -1965,7 +1965,7 @@
           <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
             <label class="settings-label" style="margin:0;white-space:nowrap">Source</label>
             <select id="gps-source-select" class="settings-select" style="flex:1" onchange="gpsSourceChanged()">
-              <option value="direct">Direct serial port</option>
+              <option value="direct">Port série direct</option>
               <option value="proxy">OPS-TOC proxy (localhost:8090)</option>
             </select>
           </div>
@@ -1980,28 +1980,28 @@
               <input type="checkbox" id="gps-enabled-toggle" onchange="saveGpsSettings()">
               <span class="bot-toggle-slider"></span>
             </label>
-            <span style="font-size:13px">Enable GPS dongle</span>
+            <span style="font-size:13px">Activer le dongle GPS</span>
           </div>
           <!-- Position privacy -->
           <div style="margin-top:14px">
-            <label class="settings-label">Position privacy: <span id="gps-precision-label" style="color:var(--accent)">Exact position</span> <span style="font-weight:400;color:var(--muted)">(slide right = more private)</span></label>
-            <div style="font-size:11px;color:var(--muted);margin:2px 0 4px 0">Blurs coordinates before sending to nodes.</div>
+            <label class="settings-label">Confidentialité de la position: <span id="gps-precision-label" style="color:var(--accent)">Position exacte</span> <span style="font-weight:400;color:var(--muted)">(glisser vers la droite = plus privé)</span></label>
+            <div style="font-size:11px;color:var(--muted);margin:2px 0 4px 0">Floute les coordonnées avant de les envoyer aux nœuds.</div>
             <input type="range" id="gps-precision-slider" min="0" max="1000" step="100" value="0" style="width:200px;vertical-align:middle"
                    oninput="document.getElementById('gps-precision-label').textContent=precMeterLabel(parseInt(this.value))"
                    onchange="saveGpsSettings()">
           </div>
           <!-- Push to nodes -->
           <div style="border-top:1px solid var(--border);margin:14px 0 10px 0"></div>
-          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Push to Nodes</div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Envoyer aux nœuds</div>
           <div style="display:flex;align-items:center;gap:12px">
             <label class="bot-toggle">
               <input type="checkbox" id="gps-auto-push-toggle" onchange="saveGpsSettings()">
               <span class="bot-toggle-slider"></span>
             </label>
-            <span style="font-size:13px">Auto-push to all nodes <span style="color:var(--muted);font-size:11px">(when fix is available)</span></span>
+            <span style="font-size:13px">Envoi automatique à tous les nœuds <span style="color:var(--muted);font-size:11px">(lorsqu’une position GPS est disponible)</span></span>
           </div>
           <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-            <label style="font-size:12px;color:var(--muted)">Interval:</label>
+            <label style="font-size:12px;color:var(--muted)">Intervalle :</label>
             <input type="number" id="gps-push-interval-val" min="1" max="3600" step="1" value="30"
               style="width:60px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:3px 6px;color:var(--fg);font-size:12px"
               onchange="saveGpsSettings()" title="Interval between auto-pushes">
@@ -2013,21 +2013,21 @@
             </select>
           </div>
           <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-            <button class="btn btn-sm" onclick="gpsPushToNode()" title="Send current GPS fix to all connected nodes as their fixed position">Send to nodes now</button>
+            <button class="btn btn-sm" onclick="gpsPushToNode()" title="Send current GPS fix to all connected nodes as their fixed position">Envoyer aux nœuds maintenant</button>
             <span id="gps-push-status" style="font-size:12px;color:var(--muted)"></span>
           </div>
           <div id="gps-status" style="font-size:12px;min-height:16px;margin-top:6px;color:var(--muted)"></div>
         </div>
         <!-- Live status card (right) -->
         <div id="gps-live-card" style="min-width:155px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:12px;flex-shrink:0">
-          <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">GPS Signal</div>
-          <div id="gps-card-fix" style="margin-bottom:8px;font-size:13px;color:var(--muted)">● No signal</div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Signal GPS</div>
+          <div id="gps-card-fix" style="margin-bottom:8px;font-size:13px;color:var(--muted)">● Aucun signal</div>
           <table style="border-collapse:collapse;width:100%">
-            <tr><td style="color:var(--muted);padding-right:10px;padding-bottom:4px">Sats</td><td id="gps-card-sats" style="font-family:monospace;color:var(--text)">—</td></tr>
+            <tr><td style="color:var(--muted);padding-right:10px;padding-bottom:4px">Satellites</td><td id="gps-card-sats" style="font-family:monospace;color:var(--text)">—</td></tr>
             <tr><td style="color:var(--muted);padding-bottom:4px">Lat</td><td id="gps-card-lat" style="font-family:monospace;color:var(--text)">—</td></tr>
             <tr><td style="color:var(--muted);padding-bottom:4px">Lon</td><td id="gps-card-lon" style="font-family:monospace;color:var(--text)">—</td></tr>
             <tr><td style="color:var(--muted);padding-bottom:4px">Alt</td><td id="gps-card-alt" style="font-family:monospace;color:var(--text)">—</td></tr>
-            <tr><td style="color:var(--muted)">Speed</td><td id="gps-card-speed" style="font-family:monospace;color:var(--text)">—</td></tr>
+            <tr><td style="color:var(--muted)">Vitesse</td><td id="gps-card-speed" style="font-family:monospace;color:var(--text)">—</td></tr>
           </table>
         </div>
       </div>
@@ -2035,8 +2035,8 @@
 
     <!-- OM Position -->
     <div class="settings-section">
-      <h2 class="settings-title">OM Position</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 12px 0">App-only local position for OverMesh. Not sent to radios. Used as the map origin and for range circles when there is no live GPS fix.</p>
+      <h2 class="settings-title">Position OverMesh</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 12px 0">Position locale propre à l’application OverMesh. Non envoyée aux radios. Utilisée comme origine de la carte et pour les cercles de portée lorsqu’aucune position GPS en direct n’est disponible.</p>
       <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap">
         <div style="min-width:140px">
           <label class="settings-label" style="margin-bottom:4px">Latitude</label>
@@ -2050,46 +2050,46 @@
                  style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg2);color:var(--text);font-size:13px"
                  placeholder="14.505751">
         </div>
-        <button class="btn btn-sm" onclick="startOmMapPick()">Select on map</button>
-        <button class="btn btn-sm" onclick="saveOmManualPosition(this)">Save</button>
+        <button class="btn btn-sm" onclick="startOmMapPick()">Sélectionner sur la carte</button>
+        <button class="btn btn-sm" onclick="saveOmManualPosition(this)">Enregistrer</button>
         <button class="btn btn-sm" style="color:var(--red);border-color:var(--red)"
                 onmouseenter="this.style.background='rgba(248,81,73,0.12)'"
                 onmouseleave="this.style.background=''"
-                onclick="clearOmManualPosition(this)">Clear</button>
+                onclick="clearOmManualPosition(this)">Effacer</button>
       </div>
       <div id="om-pos-status" style="font-size:12px;min-height:16px;margin-top:8px;color:var(--muted)"></div>
     </div>
 
     <!-- Map API Keys -->
     <div class="settings-section">
-      <h2 class="settings-title">Map API Keys</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 10px 0">Required for Thunderforest layers (TF Landscape ★, TF Outdoors ★). Free API key at <a href="https://www.thunderforest.com/docs/apikeys/" target="_blank" style="color:var(--accent)">thunderforest.com</a>.</p>
+      <h2 class="settings-title">Clés API cartographiques</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 10px 0">Requis pour les couches Thunderforest (TF Landscape ★, TF Outdoors ★). Clé API gratuite sur <a href="https://www.thunderforest.com/docs/apikeys/" target="_blank" style="color:var(--accent)">thunderforest.com</a>.</p>
       <div class="settings-row" style="align-items:flex-end;gap:8px;max-width:480px">
         <div style="flex:1">
-          <label class="settings-label" for="tf-api-key-input">Thunderforest API key</label>
+          <label class="settings-label" for="tf-api-key-input">Clé API Thunderforest</label>
           <input id="tf-api-key-input" class="settings-input" type="text" placeholder="Enter API key..." maxlength="64" style="font-family:monospace">
         </div>
-        <button class="btn-primary" onclick="saveThunderforestKey()">Save</button>
+        <button class="btn-primary" onclick="saveThunderforestKey()">Enregistrer</button>
       </div>
       <div id="tf-key-status" style="font-size:12px;color:var(--muted);margin-top:6px;min-height:16px"></div>
-      <p style="color:var(--muted);font-size:12px;margin:16px 0 10px 0">Required for MapTiler layers (MT Satellite Hybrid ★, MT Topo ★, MT Streets ★, MT Winter ★). Free tier: 100k tiles/month. API key at <a href="https://cloud.maptiler.com/account/keys/" target="_blank" style="color:var(--accent)">cloud.maptiler.com</a>.</p>
+      <p style="color:var(--muted);font-size:12px;margin:16px 0 10px 0">Required pour les couches MapTiler (MT Satellite Hybrid ★, MT Topo ★, MT Streets ★, MT Winter ★). Offre gratuite : 100 000 tuiles/mois. Clé API sur <a href="https://cloud.maptiler.com/account/keys/" target="_blank" style="color:var(--accent)">cloud.maptiler.com</a>.</p>
       <div class="settings-row" style="align-items:flex-end;gap:8px;max-width:480px">
         <div style="flex:1">
-          <label class="settings-label" for="mt-api-key-input">MapTiler API key</label>
+          <label class="settings-label" for="mt-api-key-input">Clé API MapTiler</label>
           <input id="mt-api-key-input" class="settings-input" type="text" placeholder="Enter API key..." maxlength="64" style="font-family:monospace">
         </div>
-        <button class="btn-primary" onclick="saveMapTilerKey()">Save</button>
+        <button class="btn-primary" onclick="saveMapTilerKey()">Enregistrer</button>
       </div>
       <div id="mt-key-status" style="font-size:12px;color:var(--muted);margin-top:6px;min-height:16px"></div>
     </div>
 
     <!-- Offline maps -->
     <div class="settings-section">
-      <h2 class="settings-title">Offline Maps</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 10px 0">Save map tiles to your browser so the map works without internet. Tiles are stored in your browser's IndexedDB.</p>
+      <h2 class="settings-title">Cartes hors ligne</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 10px 0">Enregistrez les tuiles cartographiques dans votre navigateur pour utiliser la carte sans Internet. Les tuiles sont stockées dans l’IndexedDB de votre navigateur.</p>
       <div class="settings-row" style="align-items:center;gap:8px">
         <div>
-          <span class="settings-label">Use OPS-TOC locally stored maps</span>
+          <span class="settings-label">Utiliser les cartes stockées localement par OPS-TOC</span>
           <div style="color:var(--muted);font-size:11px;margin-top:2px">Opt-in. Adds OPS-TOC downloaded MBTiles to OM's Map/Sense layer picker under Locally Stored Maps. Leave off for standalone OM installs.</div>
         </div>
         <label class="bot-toggle" style="margin-left:auto;flex-shrink:0">
@@ -2099,7 +2099,7 @@
       </div>
       <div class="settings-row" style="align-items:flex-end;gap:8px">
         <div style="flex:1;min-width:220px">
-          <label class="settings-label" for="shared-tile-server-url">Shared tile server URL</label>
+          <label class="settings-label" for="shared-tile-server-url">URL du serveur de tuiles partagé</label>
           <input id="shared-tile-server-url" class="settings-input" placeholder="http://this-host:8092" onchange="settingsSetSharedTileServerUrl(this.value)">
         </div>
         <button class="btn-sm" onclick="loadMapAppTileLayers({force:true})" title="Refresh shared local tile list">Refresh local layers</button>
@@ -2108,8 +2108,8 @@
       <div style="border-top:1px solid var(--border);margin:10px 0 8px 0"></div>
       <div class="settings-row" style="align-items:center;gap:8px">
         <div>
-          <span class="settings-label">Auto-cache browsed tiles</span>
-          <div style="color:var(--muted);font-size:11px;margin-top:2px">Every tile you view on the map is automatically saved for offline use. Convenient but grows the cache over time.</div>
+          <span class="settings-label">Mettre automatiquement en cache les tuiles consultées</span>
+          <div style="color:var(--muted);font-size:11px;margin-top:2px">Chaque tuile consultée sur la carte est automatiquement enregistrée pour une utilisation hors ligne. Pratique, mais le cache augmente avec le temps.</div>
         </div>
         <label class="bot-toggle" style="margin-left:auto;flex-shrink:0">
           <input type="checkbox" id="tile-autocache-toggle" onchange="setAutoCacheTiles(this.checked)">
@@ -2117,30 +2117,30 @@
         </label>
       </div>
       <div class="settings-row" style="align-items:center;gap:8px">
-        <span class="settings-label">Cached tiles</span>
+        <span class="settings-label">Tuiles en cache</span>
         <span id="tile-cache-count" style="color:var(--muted);font-size:12px">—</span>
         <button class="btn-sm" style="margin-left:auto" onclick="clearTileCache(this)" title="Delete all cached map tiles from browser storage">Clear cache</button>
       </div>
 
       <div style="border-top:1px solid var(--border);margin:10px 0 8px 0"></div>
-      <div style="font-weight:600;font-size:12px;margin-bottom:4px">Save current map view</div>
+      <div style="font-weight:600;font-size:12px;margin-bottom:4px">Enregistrer la vue actuelle</div>
       <div style="color:var(--muted);font-size:11px;margin-bottom:6px">Layer: <span id="tile-save-layer-label" style="color:var(--text)">OpenStreetMap</span></div>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 8px 0">Go to the Map tab, navigate to the area you want, then come back here and click Save. Downloads tiles for the current viewport.</p>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 8px 0">Allez dans l’onglet Carte, placez-vous sur la zone souhaitée, puis revenez ici et cliquez sur Enregistrer. Les tuiles de la zone actuellement affichée seront téléchargées.</p>
       <div class="settings-row" style="align-items:center;gap:8px">
-        <span class="settings-label">Extra zoom levels</span>
+        <span class="settings-label">Niveaux de zoom supplémentaires</span>
         <input type="number" id="tile-extra-zoom" value="2" min="0" max="4"
                style="width:52px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:3px 6px;font-size:12px"
                oninput="updateTileEstimate()">
-        <span style="color:var(--muted);font-size:11px">levels deeper than current view</span>
+        <span style="color:var(--muted);font-size:11px">niveaux plus profonds que la vue actuelle</span>
       </div>
       <div style="color:var(--muted);font-size:11px;margin:3px 0 6px 12px">
-        0 = only the zoom level you're viewing now<br>
-        2 = current zoom + 2 levels deeper (more detail, more tiles)<br>
-        4 = maximum — can be a very large download
+        0 = uniquement le niveau de zoom actuellement affiché<br>
+        2 = zoom actuel + 2 niveaux supplémentaires (plus de détails, plus de tuiles)<br>
+        4 = maximum — peut représenter un téléchargement très volumineux
       </div>
       <div id="tile-estimate" style="color:var(--muted);font-size:11px;margin:2px 0 6px 0;padding-left:2px"></div>
       <div class="settings-row" style="align-items:center;gap:8px">
-        <button class="btn-primary" id="tile-save-btn" onclick="saveTilesCurrentView(this)" title="Download and cache map tiles for the currently visible map area">Save current map view</button>
+        <button class="btn-primary" id="tile-save-btn" onclick="saveTilesCurrentView(this)" title="Télécharger et mettre en cache les tuiles de la zone actuellement visible">Enregistrer la vue actuelle</button>
       </div>
       <div id="tile-progress-wrap" style="display:none;margin-top:8px">
         <div style="background:var(--bg3);border-radius:4px;height:5px;overflow:hidden;margin-bottom:4px">
@@ -2152,56 +2152,56 @@
 
     <!-- Map Regions -->
     <div class="settings-section">
-      <h2 class="settings-title">Map Regions</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 8px 0">Download a named area at a range of zoom levels. Good for pre-loading a whole country or city for offline use.</p>
+      <h2 class="settings-title">Régions cartographiques</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 8px 0">Téléchargez une zone nommée sur plusieurs niveaux de zoom. Pratique pour précharger un pays ou une ville entière afin de l’utiliser hors ligne.</p>
 
       <!-- Search -->
       <div class="settings-row" style="gap:6px">
-        <input type="text" id="region-search" placeholder="Search for a place…"
+        <input type="text" id="region-search" placeholder="Rechercher un lieu…"
                style="flex:1;padding:5px 8px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:4px;font-size:12px"
                onkeydown="if(event.key==='Enter')searchRegion()">
-        <button class="btn-sm" onclick="searchRegion()" title="Search for a location to download tiles for">Search</button>
+        <button class="btn-sm" onclick="searchRegion()" title="Rechercher un lieu pour télécharger ses tuiles">Rechercher</button>
       </div>
       <div id="region-search-results" style="display:none;margin:4px 0;max-height:160px;overflow-y:auto;background:var(--bg3);border:1px solid var(--border);border-radius:4px;font-size:12px"></div>
 
       <!-- Quick regions -->
       <div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 2px 0">
-        <span style="color:var(--muted);font-size:11px;width:100%;margin-bottom:2px">Quick add:</span>
-        <button class="btn-sm" onclick="pickQuickRegion('Slovenia')"  title="Pre-load Slovenia">Slovenia</button>
-        <button class="btn-sm" onclick="pickQuickRegion('Croatia')"   title="Pre-load Croatia">Croatia</button>
-        <button class="btn-sm" onclick="pickQuickRegion('Austria')"   title="Pre-load Austria">Austria</button>
-        <button class="btn-sm" onclick="pickQuickRegion('Italy')"     title="Pre-load Italy">Italy</button>
-        <button class="btn-sm" onclick="pickQuickRegion('Trieste')"   title="Pre-load Trieste area">Trieste</button>
-        <button class="btn-sm" onclick="pickQuickRegion('Ljubljana')" title="Pre-load Ljubljana area">Ljubljana</button>
+        <span style="color:var(--muted);font-size:11px;width:100%;margin-bottom:2px">Ajout rapide :</span>
+        <button class="btn-sm" onclick="pickQuickRegion('Slovenia')"  title="Précharger la Slovénie">Slovenia</button>
+        <button class="btn-sm" onclick="pickQuickRegion('Croatia')"   title="Précharger la Croatie">Croatia</button>
+        <button class="btn-sm" onclick="pickQuickRegion('Austria')"   title="Précharger l’Autriche">Austria</button>
+        <button class="btn-sm" onclick="pickQuickRegion('Italy')"     title="Précharger l’Italie">Italy</button>
+        <button class="btn-sm" onclick="pickQuickRegion('Trieste')"   title="Précharger la région de Trieste">Trieste</button>
+        <button class="btn-sm" onclick="pickQuickRegion('Ljubljana')" title="Précharger la région de Ljubljana">Ljubljana</button>
       </div>
 
       <!-- Configure + download panel -->
       <div id="region-config" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px;margin:8px 0">
         <div style="font-weight:600;font-size:13px;margin-bottom:8px" id="region-config-title"></div>
         <div class="settings-row" style="gap:8px;align-items:center;flex-wrap:wrap">
-          <span class="settings-label">Min zoom</span>
+          <span class="settings-label">Zoom minimal</span>
           <input type="number" id="region-min-z" value="9" min="1" max="18"
                  style="width:52px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:3px 6px;font-size:12px"
                  oninput="updateRegionEstimate()">
-          <span class="settings-label" style="margin-left:8px">Max zoom</span>
+          <span class="settings-label" style="margin-left:8px">Zoom maximal</span>
           <input type="number" id="region-max-z" value="14" min="1" max="19"
                  style="width:52px;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:3px 6px;font-size:12px"
                  oninput="updateRegionEstimate()">
         </div>
         <div style="color:var(--muted);font-size:11px;margin:3px 0 4px 0">
-          Zoom level guide: 6=country overview · 9=city/region · 12=streets · 14=detailed streets · 16=buildings<br>
-          Wider range = more tiles = larger download. Recommended: min 9, max 14.
+          Guide des niveaux de zoom : 6=vue du pays · 9=ville/région · 12=rues · 14=rues détaillées · 16=bâtiments<br>
+          Plage plus large = davantage de tuiles = téléchargement plus volumineux. Recommandé : minimum 9, maximum 14.
         </div>
         <div class="settings-row" style="gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px">
-          <span class="settings-label">Map layer</span>
+          <span class="settings-label">Calque cartographique</span>
           <select id="region-dl-layer" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:3px 6px;font-size:12px">
             <!-- populated by showRegionConfig() -->
           </select>
         </div>
         <div id="region-config-estimate" style="color:var(--muted);font-size:11px;margin:4px 0 8px 0"></div>
         <div style="display:flex;gap:6px">
-          <button class="btn-primary" id="region-dl-btn" onclick="downloadSelectedRegion()" title="Download and cache tiles for the selected region">Download</button>
-          <button class="btn-sm" onclick="cancelRegionConfig()" title="Cancel region download setup">Cancel</button>
+          <button class="btn-primary" id="region-dl-btn" onclick="downloadSelectedRegion()" title="Télécharger et mettre en cache les tuiles de la région sélectionnée">Télécharger</button>
+          <button class="btn-sm" onclick="cancelRegionConfig()" title="Annuler la configuration du téléchargement de la région">Annuler</button>
         </div>
         <div id="region-dl-progress" style="display:none;margin-top:8px">
           <div style="background:var(--bg);border-radius:4px;height:5px;overflow:hidden;margin-bottom:4px">
@@ -2217,31 +2217,31 @@
 
     <!-- Map Layers -->
     <div class="settings-section">
-      <h2 class="settings-title">Map Layers</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 8px 0">Import GeoJSON overlays such as zones, routes, POIs, or boundaries. Saved layers can be shown on the map and toggled on/off.</p>
+      <h2 class="settings-title">Calques cartographiques</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 8px 0">Importez des calques GeoJSON tels que des zones, des itinéraires, des points d’intérêt ou des limites. Les calques enregistrés peuvent être affichés sur la carte et activés ou désactivés.</p>
       <div style="display:grid;gap:8px;max-width:760px">
         <div class="settings-row" style="gap:8px;align-items:center;flex-wrap:wrap">
           <div style="flex:1;min-width:180px">
-            <label class="settings-label" for="map-layer-name">Layer name</label>
-            <input id="map-layer-name" class="settings-input" maxlength="60" placeholder="e.g. Patrol route, Event boundary">
+            <label class="settings-label" for="map-layer-name">Nom du calque</label>
+            <input id="map-layer-name" class="settings-input" maxlength="60" placeholder="ex. Itinéraire de patrouille, limite d’événement">
           </div>
           <div style="width:96px;flex-shrink:0">
-            <label class="settings-label" for="map-layer-color">Color</label>
+            <label class="settings-label" for="map-layer-color">Couleur</label>
             <input id="map-layer-color" type="color" value="#f59e0b" style="width:100%;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px">
           </div>
           <div style="display:flex;align-items:flex-end;gap:6px;flex-wrap:wrap">
-            <button class="btn-sm" type="button" onclick="document.getElementById('map-layer-file').click()">Choose file</button>
-            <button class="btn-primary" type="button" onclick="saveMapLayer(this)">Import layer</button>
+            <button class="btn-sm" type="button" onclick="document.getElementById('map-layer-file').click()">Choisir un fichier</button>
+            <button class="btn-primary" type="button" onclick="saveMapLayer(this)">Importer le calque</button>
           </div>
         </div>
         <input id="map-layer-file" type="file" accept=".json,.geojson,application/geo+json,application/json" style="display:none" onchange="handleMapLayerFileInput(event)">
         <div>
           <label class="settings-label" for="map-layer-geojson">GeoJSON</label>
-          <textarea id="map-layer-geojson" class="settings-input" placeholder='Paste GeoJSON here, e.g. {"type":"FeatureCollection",...}' style="width:100%;min-height:140px;resize:vertical;font-family:monospace"></textarea>
+          <textarea id="map-layer-geojson" class="settings-input" placeholder='Collez le GeoJSON ici, ex. {"type":"FeatureCollection",...}' style="width:100%;min-height:140px;resize:vertical;font-family:monospace"></textarea>
         </div>
         <div id="map-layer-status" style="font-size:12px;color:var(--muted);min-height:16px"></div>
         <div style="border-top:1px solid var(--border);margin:2px 0 0 0"></div>
-        <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px">Saved layers</div>
+        <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px">Calques enregistrés</div>
         <div id="map-layer-list" style="display:grid;gap:6px"></div>
       </div>
     </div>
@@ -2254,23 +2254,23 @@
       <div id="gps-clear-status" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:16px"></div>
     </div>
     <div class="settings-section">
-      <h2 class="settings-title">Authentication</h2>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 12px">Optional username/password login. Off by default. Set credentials before enabling.</p>
+      <h2 class="settings-title">Authentification</h2>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 12px">Connexion facultative par nom d’utilisateur/mot de passe. Désactivée par défaut. Définissez les identifiants avant de l’activer.</p>
       <div style="display:grid;gap:10px;max-width:400px">
         <div style="display:flex;align-items:center;gap:12px">
           <label class="bot-toggle">
             <input type="checkbox" id="auth-enabled-toggle" onchange="saveAuthEnabled(this.checked)">
             <span class="bot-toggle-slider"></span>
           </label>
-          <span style="font-size:13px">Require login</span>
+          <span style="font-size:13px">Exiger une connexion</span>
         </div>
         <div style="display:grid;gap:6px">
-          <label class="settings-label">Username</label>
+          <label class="settings-label">Nom d’utilisateur</label>
           <input type="text" id="auth-username" class="settings-input" autocomplete="off" placeholder="admin">
         </div>
         <div style="display:grid;gap:6px">
-          <label class="settings-label">New password</label>
-          <input type="password" id="auth-password" class="settings-input" autocomplete="new-password" placeholder="leave blank to keep current">
+          <label class="settings-label">Nouveau mot de passe</label>
+          <input type="password" id="auth-password" class="settings-input" autocomplete="new-password" placeholder="laisser vide pour conserver l’actuel">
         </div>
         <div style="display:flex;gap:8px">
           <button class="btn" onclick="saveAuthCredentials()">Save credentials</button>
@@ -2283,7 +2283,7 @@
 
     <div id="st-cross" style="display:none">
     <div class="settings-section">
-      <h2 class="settings-title">Cross-system</h2>
+      <h2 class="settings-title">Interconnexion des systèmes</h2>
       <p style="color:var(--muted);font-size:12px;margin:0 0 10px">Manual MT↔MC channel mirror / bridge. Forwarded messages are always tagged with source system and original sender.</p>
       <div style="display:grid;gap:10px;max-width:760px">
         <div id="cross-rules-list" style="display:grid;gap:8px"></div>
@@ -2297,61 +2297,61 @@
           <label style="display:grid;gap:4px;font-size:12px">
             <span>Mode</span>
             <select id="cross-mode" onchange="_crossMarkDirty()">
-              <option value="mirror">Mirror</option>
-              <option value="bridge">Bridge</option>
+              <option value="mirror">Miroir</option>
+              <option value="bridge">Pont</option>
             </select>
           </label>
-          <div style="font-size:12px;color:var(--muted);padding-top:22px">Mirror = one way. Bridge = both ways.</div>
+          <div style="font-size:12px;color:var(--muted);padding-top:22px">Miroir = un seul sens. Pont = dans les deux sens.</div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
           <div style="display:grid;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg2)">
             <div style="font-size:12px;font-weight:600;color:var(--text)">Source</div>
             <label style="display:grid;gap:4px;font-size:12px">
-              <span>Source system</span>
+              <span>Système source</span>
               <select id="cross-source-network" onchange="crossSourceNetworkChanged();_crossMarkDirty()">
                 <option value="mt">MT</option>
                 <option value="mc">MC</option>
               </select>
             </label>
             <label style="display:grid;gap:4px;font-size:12px">
-              <span>Source radio</span>
+              <span>Radio source</span>
               <select id="cross-source-radio" onchange="crossSourceRadioChanged();_crossMarkDirty()"></select>
             </label>
             <label style="display:grid;gap:4px;font-size:12px">
-              <span>Source channel</span>
+              <span>Canal source</span>
               <select id="cross-source-channel" onchange="_crossMarkDirty()"></select>
             </label>
           </div>
           <div style="display:grid;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg2)">
-            <div style="font-size:12px;font-weight:600;color:var(--text)">Target</div>
+            <div style="font-size:12px;font-weight:600;color:var(--text)">Cible</div>
             <label style="display:grid;gap:4px;font-size:12px">
-              <span id="cross-target-radio-label">Target radio</span>
+              <span id="cross-target-radio-label">Radio cible</span>
               <select id="cross-target-radio" onchange="crossTargetRadioChanged();_crossMarkDirty()"></select>
             </label>
             <label style="display:grid;gap:4px;font-size:12px">
-              <span>Target channel</span>
+              <span>Canal cible</span>
               <select id="cross-target-channel" onchange="_crossMarkDirty()"></select>
             </label>
             <label style="display:grid;gap:4px;font-size:12px">
-              <span>Sender filter</span>
+              <span>Filtre expéditeur</span>
               <select id="cross-sender-filter-mode" onchange="_crossMarkDirty()">
-                <option value="any">Any sender</option>
-                <option value="allow">Only these</option>
-                <option value="block">All except these</option>
+                <option value="any">N’importe quel expéditeur</option>
+                <option value="allow">Uniquement ceux-ci</option>
+                <option value="block">Tous sauf ceux-ci</option>
               </select>
             </label>
           </div>
         </div>
         <label style="display:grid;gap:4px;font-size:12px">
-          <span>Sender list</span>
-          <input type="text" id="cross-sender-filters" placeholder="Comma-separated names or IDs" oninput="_crossMarkDirty()">
+          <span>Liste des expéditeurs</span>
+          <input type="text" id="cross-sender-filters" placeholder="Noms ou ID séparés par des virgules" oninput="_crossMarkDirty()">
         </label>
         <div style="color:var(--muted);font-size:11px;padding:12px;background:var(--bg3);border-radius:6px;border:1px solid var(--border);line-height:1.6">
-          <strong>Current scope:</strong> manual MT↔MC channel rules only.<br>
-          <strong>Mirror</strong> sends traffic one way, from the selected source channel to the selected target channel. Use it for monitoring, snooping, or copying one network into the other.<br>
-          <strong>Bridge</strong> links the two selected channels both ways, so messages from either side are forwarded to the other.<br>
-          <strong>Sender filter</strong> can limit forwarding to specific names/IDs, or exclude selected ones.<br>
-          Every forwarded message is clearly tagged with source system, original sender, and source channel, for example <code>[MT-&gt;MC Name / CH0]</code> or <code>[MC-&gt;MT Name / CH2]</code>.
+          <strong>Portée actuelle :</strong> règles manuelles de canaux MT↔MC uniquement.<br>
+          <strong>Miroir</strong> transmet le trafic dans un seul sens, du canal source sélectionné vers le canal cible. À utiliser pour surveiller ou copier un réseau vers l’autre.<br>
+          <strong>Pont</strong> relie les deux canaux sélectionnés dans les deux sens, afin que les messages de chaque côté soient transmis à l’autre.<br>
+          <strong>Filtre expéditeur</strong> permet de limiter la transmission à certains noms/ID, ou d’exclure ceux sélectionnés.<br>
+          Chaque message transféré indique clairement le système source, l’expéditeur d’origine et le canal source, par exemple <code>[MT-&gt;MC Name / CH0]</code> ou <code>[MC-&gt;MT Name / CH2]</code>.
         </div>
       </div>
     </div>
@@ -2389,8 +2389,8 @@
 <div id="cpicker-overlay" onclick="closeCPicker()">
   <div id="cpicker-modal" onclick="event.stopPropagation()">
     <div id="cpicker-header">
-      <button class="cpicker-hbtn" onclick="closeCPicker()">Cancel</button>
-      <span>Choose a colour</span>
+      <button class="cpicker-hbtn" onclick="closeCPicker()">Annuler</button>
+      <span>Choisir une couleur</span>
       <button class="cpicker-hbtn primary" onclick="cpickerSelect()">Select</button>
     </div>
     <div id="cpicker-grid"></div>
